@@ -18,6 +18,13 @@ import Sidebar from '../../components/Sidebar/';
 class MainApp extends React.Component {
 	constructor(props) {
 		super(props);
+
+		firebase.auth().onAuthStateChanged((user) => {
+			if (!user) {
+				window.location.href = '/';
+			}
+		});
+
 	}
 
 	render() {
