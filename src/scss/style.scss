@@ -14,6 +14,10 @@ html, body {
 	height: 100%;
 	overflow: hidden !important;
 }
+.app {
+	max-width: 1700px;
+	margin: 0 auto;
+}
 
 .ui.button {
 	border-radius: 10px !important;
