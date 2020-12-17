@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './scss/style.scss';
+import firebase from "firebase";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+} from "react-router-dom";
+import SignIn from "./views/auth/SignIn/";
+import SignUp from "./views/auth/SignUp/";
+import ProfilePage from "./views/auth/ProfilePage/";
+import PasswordReset from "./views/auth/PasswordReset/";
+import MainApp from "./views/App/";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isLoggedIn: false,
+		}
+	}
+
+	componentDidMount() {
+
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({isLoggedIn: true});
+			}
+		});
+
+	}
+
+	render() {
+		return (
+			<Router>
+				<Switch>
+
+					{this.state.isLoggedIn ? (
+						<Route path="/app">
+							<MainApp />
+						</Route>
+					) : (null)}
+
+					<Route path="/signup">
+						<SignUp />
+					</Route>
+					<Route exact path="/">
+						<SignIn />
+					</Route>
+				</Switch>
+			</Router>
+		);
+	}
+};
 export default App;

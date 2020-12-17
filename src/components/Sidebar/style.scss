@@ -1,0 +1,11 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden !important;
+}
+.sidebar {
+	width: 400px;
+	height: 100%;
+	float: left;
+	background: red;
+}

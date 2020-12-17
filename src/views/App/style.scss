@@ -1,0 +1,28 @@
+body {
+	overflow: hidden;
+}
+.loginContainer {
+
+	margin: 50px auto;
+	width: 350px;
+	text-align: center;
+
+	img.logo {
+		height: 40px;
+	}
+
+	.formContainer {
+		margin-top: 40px;
+
+		.ui.button {
+			margin: 5px;
+		}
+
+		.or-text {
+			display: block;
+			font-size:16px;
+			margin: 15px 0;
+		}
+	}
+
+}
