@@ -38,12 +38,9 @@ class App extends React.Component {
 			<Router>
 				<Switch>
 
-					{this.state.isLoggedIn ? (
-						<Route path="/app">
-							<MainApp />
-						</Route>
-					) : (null)}
-
+					<Route path="/app">
+						<MainApp />
+					</Route>
 					<Route path="/signup">
 						<SignUp />
 					</Route>
