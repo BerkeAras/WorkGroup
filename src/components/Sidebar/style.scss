@@ -6,7 +6,9 @@ body {
 }
 .sidebar {
     width: 400px;
-    height: 100%;
+    padding: 20px;
     float: left;
-    background: red;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px -9px #00000030;
 }
