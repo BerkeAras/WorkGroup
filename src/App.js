@@ -5,7 +5,8 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link
+	Link,
+	Redirect
 } from "react-router-dom";
 import SignIn from "./views/auth/SignIn/";
 import SignUp from "./views/auth/SignUp/";
