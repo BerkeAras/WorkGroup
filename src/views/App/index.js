@@ -14,7 +14,7 @@ import firebase from 'firebase'
 
 // Components
 import Sidebar from '../../components/Sidebar/'
-import Header from '../../components/Header/';
+import Header from '../../components/Header/'
 
 class MainApp extends React.Component {
     constructor(props) {
