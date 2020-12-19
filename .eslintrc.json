@@ -1,11 +1,12 @@
 {
+    "parser": "babel-eslint",
     "env": {
         "browser": true,
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -18,7 +19,11 @@
         "react"
     ],
     "rules": {
-        "no-unused-vars": "off",
-        "no-extra-semi": "off"
+        "no-unused-vars": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

@@ -2,19 +2,15 @@ import React from 'react';
 import './style.scss';
 
 class Sidebar extends React.Component {
+  render() {
+    return (
+      <div className="sidebar">
 
-	render() {
+        <h1>Sidebar</h1>
 
-		return (
-			<div className="sidebar">
-
-				<h1>Sidebar</h1>
-
-			</div>
-		)
-
-	}
-
+      </div>
+    );
+  }
 }
 
 export default Sidebar;
