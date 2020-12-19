@@ -1,17 +1,128 @@
+@import '../../scss/variables';
+
 html, body {
 	width: 100%;
 	height: 100%;
 	overflow: hidden !important;
 }
 .header {
+    position: relative;
     width: 100%;
     height: 50px;
     padding: 0 20px;
     border-radius: 10px;
     background-color: white;
+    margin: 20px 0;
+    box-shadow: 0px 7px 13px 0px #0000000f;
 
     .header__logo {
         height: 30px;
         margin: 10px 0;
+        float: left;
     }
+
+    .header__menu-items {
+        float: right;
+        height: 100%;
+
+        .header__menu-item {
+            display: inline-block;
+            line-height: 40px;
+            font-size: 17px;
+            color: #000000;
+            font-weight: 600;
+            background: white;
+            padding: 0 12px;
+            border-radius: 7px;
+            margin: 5px 0 5px 5px;
+
+            &:hover {
+                background-color: #f7f7f7;
+            }
+            &--active {
+                background-color: #f7f7f7;
+                color: $primary-color;
+            }
+        }
+    
+        .header__menu-mobile-close {
+            display: none;
+            float: left;
+            height: 40px;
+            width: 40px;
+            border-radius: 100px;
+            background: #f7f7f7;
+            margin: 5px 15px 5px 5px;
+            text-align: center;
+            cursor: pointer;
+    
+            &:hover {
+                color: $primary-color;
+            }
+    
+            svg {
+                margin: 8px;
+            }
+        }
+
+        &--mobile-visible {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: block !important;
+            background: white;
+            width: 100vw;
+            height: unset;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+
+            .header__menu-mobile-close {
+                display: inline-block;
+            }
+        }
+    }
+
+    .header__dropdown-button, .header__menu-mobile-button {
+        float: right;
+        height: 40px;
+        width: 40px;
+        border-radius: 100px;
+        background: #f7f7f7;
+        margin: 5px 0 5px 15px;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary-color;
+        }
+
+        svg {
+            margin: 8px;
+        }
+    }
+    .header__menu-mobile-button {
+        display: none;
+    }
+}
+@media (max-width: 1300px) {
+
+    .header {
+        margin-top: 0;
+        border-radius: 0 0 10px 10px;
+    }
+
+}
+@media (max-width: 600px) {
+
+    .header {
+        .header__menu-items {
+            display: none;
+        }
+        .header__menu-mobile-button {
+            display: inline-block;
+        }
+    }
+
 }

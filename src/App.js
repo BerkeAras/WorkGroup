@@ -12,6 +12,7 @@ import SignIn from "./views/auth/SignIn/";
 import SignUp from "./views/auth/SignUp/";
 import ProfilePage from "./views/auth/ProfilePage/";
 import PasswordReset from "./views/auth/PasswordReset/";
+import LogOut from "./views/auth/LogOut/";
 import MainApp from "./views/App/";
 
 
@@ -40,11 +41,14 @@ class App extends React.Component {
 				<Switch>
 
 					{this.state.isLoggedIn ? (
-						<Route path="/app">
+						<Route exact path="/app">
 							<MainApp />
 						</Route>
 					) : (null)}
 
+					<Route exact path="/logout">
+						<LogOut />
+					</Route>
 					<Route path="/signup">
 						<SignUp />
 					</Route>

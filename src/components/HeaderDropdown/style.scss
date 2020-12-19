@@ -1,0 +1,33 @@
+@import '../../scss/variables';
+
+.header__dropdown {
+    display: inline-block;
+    position: absolute;
+    top: 47px;
+    right: 20px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0px 7px 19px 8px #0000000f;
+    border-radius: 10px;
+    width: 260px;
+
+    .header__dropdown-item {
+        display: inline-block;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: black;
+        transition: all .1s;
+        margin-bottom: 4px;
+
+        &:hover {
+            background: #f7f7f7;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+    }
+}
