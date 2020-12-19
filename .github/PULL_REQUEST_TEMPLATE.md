@@ -1,30 +1,31 @@
 ## Pull request checklist
 
 Please check if your PR fulfills the following requirements:
-- [ ] Prettier (`npm run prettier`) has passed locally and any fixes were made for failures
-- [ ] Test (`npm run test`) has passed locally
 
+-   [ ] Prettier (`npm run prettier`) has passed locally and any fixes were made for failures
+-   [ ] Test (`npm run test`) has passed locally
 
 ## Pull request type
 
 Please check the type of change your PR introduces:
-- [ ] Bugfix
-- [ ] Feature
-- [ ] Style changes
-- [ ] Code style update (formatting, renaming)
-- [ ] Refactoring (no functional changes, no api changes)
-- [ ] Build related changes
-- [ ] Documentation content changes
-- [ ] Other (please describe): 
 
+-   [ ] Bugfix
+-   [ ] Feature
+-   [ ] Style changes
+-   [ ] Code style update (formatting, renaming)
+-   [ ] Refactoring (no functional changes, no api changes)
+-   [ ] Build related changes
+-   [ ] Documentation content changes
+-   [ ] Other (please describe):
 
 ## What is the current behavior?
+
 <!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
 
 Issue Number: N/A
 
-
 ## What is the new behavior?
+
 <!-- Please describe the behavior or changes that are being added by this PR. -->
 
 -
@@ -33,11 +34,10 @@ Issue Number: N/A
 
 ## Does this introduce a breaking change?
 
-- [ ] Yes
-- [ ] No
+-   [ ] Yes
+-   [ ] No
 
 <!-- If this introduces a breaking change, please describe the impact and migration path for existing applications below. -->
-
 
 ## Other information
 
