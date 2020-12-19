@@ -1,18 +1,19 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import ReactDOM from 'react-dom'
+import firebase from 'firebase'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import firebase from 'firebase'
 import 'semantic-ui-css/semantic.min.css'
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: process.env.REACT_APP_APIKEY,
     authDomain: process.env.REACT_APP_AUTHDOMAIN,
     projectId: process.env.REACT_APP_PROJECTID,
     storageBucket: process.env.REACT_APP_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID
+    appId: process.env.REACT_APP_APPID,
 }
 
 firebase.initializeApp(firebaseConfig)

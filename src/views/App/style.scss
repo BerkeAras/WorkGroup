@@ -1,14 +1,12 @@
 body {
-	overflow: hidden;
+    overflow: hidden;
 }
 .app {
-	padding: 0 calc((100% - 1700px) / 2);
-	background: #e5eaec;
+    padding: 0 calc((100% - 1700px) / 2);
+    background: #e5eaec;
 }
 @media (max-width: 1300px) {
-
     .app {
         padding: 0;
     }
-
 }
