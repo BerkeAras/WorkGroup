@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom'
 import './style.scss'
 import { Button, Input } from 'semantic-ui-react'
-import firebase from 'firebase'
 import logo from '../../static/logo.svg'
 
 // Components
@@ -19,6 +18,10 @@ import Header from '../../components/Header'
 class MainApp extends React.Component {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount() {
+
     }
 
     render() {

@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message } from 'semantic-ui-react'
-import firebase from 'firebase'
 import logo from '../../../static/logo.svg'
 
 class SignUp extends React.Component {
@@ -17,12 +16,14 @@ class SignUp extends React.Component {
         super(props)
 
         this.state = {
+            name: '',
             email: '',
             password: '',
             passwordRepeat: '',
             error: false,
             isSigningUp: false,
         }
+        this.nameChangeHandler = this.nameChangeHandler.bind(this)
         this.emailChangeHandler = this.emailChangeHandler.bind(this)
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
         this.passwordRepeatChangeHandler = this.passwordRepeatChangeHandler.bind(
@@ -32,13 +33,13 @@ class SignUp extends React.Component {
     }
 
     componentDidMount() {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                window.location.href = '/app'
-            }
-        })
+        
     }
 
+    nameChangeHandler(event) {
+        this.setState({ name: event.target.value })
+    }
+    
     emailChangeHandler(event) {
         this.setState({ email: event.target.value })
     }
@@ -57,24 +58,55 @@ class SignUp extends React.Component {
 
         if (this.state.password === this.state.passwordRepeat) {
             if (
+                this.state.name.trim() !== '' &&
                 this.state.email.trim() !== '' &&
                 this.state.password.trim() !== '' &&
                 this.state.passwordRepeat.trim() !== ''
             ) {
                 setTimeout(() => {
-                    firebase
-                        .auth()
-                        .createUserWithEmailAndPassword(
-                            this.state.email,
-                            this.state.password
-                        )
-                        .then((user) => {
-                            window.location.href = '/app'
+                    
+                    const requestOptions = {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: this.state.name,
+                            email: this.state.email,
+                            password: this.state.password,
+                            password_confirmation: this.state.passwordRepeat
                         })
-                        .catch((error) => {
-                            this.setState({ error: 'already_registered' })
-                            this.setState({ isSigningUp: false })
-                        })
+                    };
+                    fetch(process.env.REACT_APP_API_URL + '/api/auth/register', requestOptions)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message == "Register success") {
+
+                                const requestOptions = {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        email: this.state.email,
+                                        password: this.state.password,
+                                    })
+                                };
+                                fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        if (data.message == "Login success") {
+                                            localStorage.setItem('token', data.data.token);
+                                            this.setState({isLoggedIn: true});
+                                            location.href = "/";
+                                        }
+                                    });
+
+                            } else if (data.message == "User existing") {
+
+                                this.setState({error: "already_registered"});
+                                this.setState({isSigningUp: false })
+
+                            }
+                        });
+
                 }, 1000)
             } else {
                 this.setState({ error: 'inputs_empty' })
@@ -128,6 +160,15 @@ class SignUp extends React.Component {
 
                     <form className="" onSubmit={this.handleSubmit}>
                         <Input
+                            autoFocus
+                            fluid
+                            onChange={this.nameChangeHandler}
+                            type="text"
+                            placeholder="Name"
+                            id="userName"
+                        />
+                        <br />
+                        <Input
                             fluid
                             onChange={this.emailChangeHandler}
                             type="email"
@@ -167,8 +208,6 @@ class SignUp extends React.Component {
 
                         <Button href="/">Already registered? Sign In!</Button>
                     </form>
-                    <p className="or-text">or</p>
-                    <Button primary>Sign Up with Google</Button>
                 </div>
             </div>
         )

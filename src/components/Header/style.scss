@@ -20,6 +20,15 @@ body {
         height: 30px;
         margin: 10px 0;
         float: left;
+
+        img {
+            height: 100%;
+        }
+
+        &:focus {
+            outline: 1px dashed black !important;
+            outline-offset: 2px !important;
+        }
     }
 
     .header__menu-items {
@@ -43,6 +52,10 @@ body {
             &--active {
                 background-color: #f7f7f7;
                 color: $primary-color;
+            }
+            &:focus {
+                outline: 1px dashed black !important;
+                outline-offset: 2px !important;
             }
         }
 
@@ -102,6 +115,11 @@ body {
 
         svg {
             margin: 8px;
+        }
+
+        &:focus {
+            outline: 1px dashed black !important;
+            outline-offset: 2px !important;
         }
     }
     .header__menu-mobile-button {

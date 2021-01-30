@@ -39,11 +39,12 @@ class Header extends React.Component {
     render() {
         return (
             <div className="header">
-                <NavLink exact to="/">
-                    <img src={logo} alt="Logo" className="header__logo" />
+                <NavLink exact to="/" class="header__logo">
+                    <img src={logo} alt="Logo" />
                 </NavLink>
 
                 <div
+                    tabIndex={0}
                     onClick={this.showHeaderDropdown}
                     className="header__dropdown-button"
                 >

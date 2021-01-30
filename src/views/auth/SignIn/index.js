@@ -8,8 +8,7 @@ import {
     Redirect,
 } from 'react-router-dom'
 import './style.scss'
-import { Button, Input, Message } from 'semantic-ui-react'
-import firebase from 'firebase'
+import { Button, Input, Message, Card } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 
 class SignIn extends React.Component {
@@ -28,11 +27,7 @@ class SignIn extends React.Component {
     }
 
     componentDidMount() {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                window.location.href = '/app'
-            }
-        })
+        
     }
 
     emailChangeHandler(event) {
@@ -47,19 +42,26 @@ class SignIn extends React.Component {
         this.setState({ isLoggingIn: true })
 
         setTimeout(() => {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(
-                    this.state.email,
-                    this.state.password
-                )
-                .then((user) => {
-                    window.location.href = '/app'
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password,
                 })
-                .catch((error) => {
-                    this.setState({ error: true })
-                    this.setState({ isLoggingIn: false })
-                })
+            };
+            fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.message == "Login success") {
+                        localStorage.setItem('token', data.data.token);
+                        this.setState({isLoggedIn: true});
+                        location.href = "/";
+                    }
+                });
+
         }, 1000)
 
         event.preventDefault()
@@ -69,57 +71,62 @@ class SignIn extends React.Component {
         return (
             <div className="loginContainer">
                 <img className="logo" alt="Logo" src={logo} />
-                <div className="formContainer">
-                    {this.state.error ? (
-                        <Message negative>
-                            <Message.Header>
-                                Oh no! An error occurred 😢.
-                            </Message.Header>
-                            <p>E-Mail or password incorrect!</p>
-                        </Message>
-                    ) : (
-                        <div />
-                    )}
 
-                    <form className="" onSubmit={this.handleSubmit}>
-                        <Input
-                            fluid
-                            onChange={this.emailChangeHandler}
-                            type="email"
-                            placeholder="E-Mail"
-                            id="userEmail"
-                        />
-                        <br />
-                        <Input
-                            fluid
-                            onChange={this.passwordChangeHandler}
-                            type="password"
-                            placeholder="Password"
-                            id="userPassword"
-                        />
-                        <br />
-                        {this.state.isLoggingIn ? (
-                            <Button loading primary type="submit">
-                                Sign In
-                            </Button>
-                        ) : (
-                            <Button
-                                primary
-                                type="submit"
-                                onClick={this.handleSubmit}
-                            >
-                                Sign In
-                            </Button>
-                        )}
+                <Card className="login-card">
+                    <Card.Content>
+                        <div className="formContainer">
 
-                        <Button href="/signUp">No account? Sign Up!</Button>
-                    </form>
-                    <p className="or-text">or</p>
-                    <Button primary>Sign In with Google</Button>
-                    <p className="text-center my-3">
-                        <br /> <Link to="/passwordReset">Forgot Password?</Link>
-                    </p>
-                </div>
+                            {this.state.error ? (
+                                <Message negative>
+                                    <Message.Header>
+                                        Oh no! An error occurred 😢.
+                                    </Message.Header>
+                                    <p>E-Mail or password incorrect!</p>
+                                </Message>
+                            ) : (
+                                <div />
+                            )}
+
+                            <form className="" onSubmit={this.handleSubmit}>
+                                <Input
+                                    fluid
+                                    onChange={this.emailChangeHandler}
+                                    type="email"
+                                    placeholder="E-Mail"
+                                    id="userEmail"
+                                />
+                                <br />
+                                <Input
+                                    fluid
+                                    onChange={this.passwordChangeHandler}
+                                    type="password"
+                                    placeholder="Password"
+                                    id="userPassword"
+                                />
+                                <br />
+                                {this.state.isLoggingIn ? (
+                                    <Button loading primary type="submit">
+                                        Sign In
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        primary
+                                        type="submit"
+                                        onClick={this.handleSubmit}
+                                    >
+                                        Sign In
+                                    </Button>
+                                )}
+
+                                <Button href="/signUp">No account? Sign Up!</Button>
+                            </form>
+                            <p className="text-center my-3">
+                                <br /> <Link to="/password-reset">Forgot Password?</Link>
+                            </p>
+                        </div>
+                        
+                    </Card.Content>
+                </Card>
             </div>
         )
     }

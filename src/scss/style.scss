@@ -20,6 +20,11 @@ body {
 
 .ui.button {
     border-radius: 10px !important;
+
+    &:focus {
+        outline: 1px dashed black !important;
+        outline-offset: 2px !important;
+    }
 }
 
 .input input {
