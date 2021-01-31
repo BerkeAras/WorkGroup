@@ -20,9 +20,7 @@ class MainApp extends React.Component {
         super(props)
     }
 
-    componentDidMount() {
-
-    }
+    componentDidMount() {}
 
     render() {
         return (

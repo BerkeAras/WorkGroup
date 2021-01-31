@@ -21,7 +21,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
+        "test": "npm run lint",
         "eject": "react-scripts eject",
         "prettier": "prettier --write .",
         "lint": "eslint --fix --ext .js,.jsx ."
@@ -48,6 +48,7 @@
         "eslint-plugin-jsx-a11y": "^6.4.1",
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "prettier": "2.2.1"
+        "prettier": "2.2.1",
+        "react-app-env": "^1.2.3"
     }
 }

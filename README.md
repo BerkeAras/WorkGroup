@@ -19,8 +19,6 @@
   </p>
 </p>
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Contents</summary>
@@ -46,24 +44,24 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 WorkGroup is an open source, selfhosted social-media platform for companies.
 
 Here's why:
-* Good networking is very important in companies.
-* Self hosted platforms are very important for companies with critical information.
+
+-   Good networking is very important in companies.
+-   Self hosted platforms are very important for companies with critical information.
 
 ### Built With
 
-* [React](https://reactjs.org/)
-* [Semantic UI](https://semantic-ui.com/)
-
+-   [React](https://reactjs.org/)
+-   [Semantic UI](https://semantic-ui.com/)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
@@ -71,34 +69,35 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
+-   npm
+    ```sh
+    npm install npm@latest -g
+    ```
 
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/BerkeAras/WorkGroup.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `.env`
-   ```JS
-   REACT_APP_API_URL=YourApiUrl
-   ```
-
+    ```sh
+    git clone https://github.com/BerkeAras/WorkGroup.git
+    ```
+2. Install NPM packages
+    ```sh
+    npm install
+    ```
+3. Enter your API in `.env`
+    ```JS
+    REACT_APP_API_URL=YourApiUrl
+    ```
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/BerkeAras/WorkGroup/issues) for a list of proposed features (and known issues).
 
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -109,13 +108,14 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
+
 ## Contact
 
 Berke Aras - [@brk_ars](http://instagram.com/brk_ars) - hello@berkearas.de

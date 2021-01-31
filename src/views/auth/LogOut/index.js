@@ -17,26 +17,27 @@ class LogOut extends React.Component {
     }
 
     componentDidMount() {
-        
-        var logoutHeader = new Headers();
-        logoutHeader.append("Authorization", "Bearer " + localStorage.getItem('token'));
+        var logoutHeader = new Headers()
+        logoutHeader.append(
+            'Authorization',
+            'Bearer ' + localStorage.getItem('token')
+        )
 
         var requestOptions = {
             method: 'DELETE',
             headers: logoutHeader,
-            redirect: 'follow'
-        };
+            redirect: 'follow',
+        }
 
-        fetch("http://localhost:8000/api/auth/invalidate", requestOptions)
-            .then(response => {
-                response.text();
+        fetch('http://localhost:8000/api/auth/invalidate', requestOptions)
+            .then((response) => {
+                response.text()
             })
-            .then(result => {
-                localStorage.clear();
-                location.href = "/";
+            .then((result) => {
+                localStorage.clear()
+                location.href = '/'
             })
-            .catch(error => console.log('error', error));
-
+            .catch((error) => console.log('error', error))
     }
 
     render() {
