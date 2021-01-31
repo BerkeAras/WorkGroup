@@ -4,12 +4,12 @@ import SidebarPopularItems from '../SidebarPopularItems'
 import { Card } from 'semantic-ui-react'
 import logo from '../../static/logo.svg'
 
-class Sidebar extends React.Component {
+class SidebarLeft extends React.Component {
     componentDidMount() {}
 
     render() {
         return (
-            <div className="sidebar">
+            <div className="sidebar_left">
                 <Card>
                     <Card.Content extra>Popular Topics</Card.Content>
                     <Card.Content>
@@ -48,4 +48,4 @@ class Sidebar extends React.Component {
     }
 }
 
-export default Sidebar
+export default SidebarLeft;

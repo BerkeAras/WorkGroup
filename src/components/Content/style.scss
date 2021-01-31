@@ -1,0 +1,11 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+}
+.content_container {
+    float: left;
+    width: calc(100% - 290px - 290px);
+    padding: 0 30px 30px 30px;
+}
