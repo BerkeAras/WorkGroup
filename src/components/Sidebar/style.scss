@@ -5,10 +5,27 @@ body {
     overflow: hidden !important;
 }
 .sidebar {
-    width: 400px;
-    padding: 10px;
     float: left;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 7px 13px 0px #0000000f;
+    width: 290px;
+
+    .card {
+        margin-bottom: 40px;
+
+        .about-card-content {
+            text-align: center;
+
+            .about-logo {
+                display: block;
+                width: 100%;
+                text-align: center;
+                color: #9aa1a5;
+                font-size: 14px;
+
+                img {
+                    height: 20px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
 }
