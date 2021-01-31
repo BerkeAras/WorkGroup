@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import './scss/style.scss'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import SignIn from './views/auth/SignIn'
 import SignUp from './views/auth/SignUp'
 import ProfilePage from './views/auth/ProfilePage'
@@ -32,15 +26,9 @@ class App extends React.Component {
     componentDidMount() {
         const that = this
 
-        if (
-            localStorage.getItem('token') !== null &&
-            localStorage.getItem('token') !== undefined
-        ) {
+        if (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
             var tokenHeaders = new Headers()
-            tokenHeaders.append(
-                'Authorization',
-                'Bearer ' + localStorage.getItem('token')
-            )
+            tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
             var requestOptions = {
                 method: 'GET',
@@ -49,10 +37,7 @@ class App extends React.Component {
             }
 
             // eslint-disable-next-line no-undef
-            fetch(
-                process.env.REACT_APP_API_URL + '/api/auth/user',
-                requestOptions
-            )
+            fetch(process.env.REACT_APP_API_URL + '/api/auth/user', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                     if (result.message == 'Authenticated user') {
@@ -61,18 +46,13 @@ class App extends React.Component {
                         localStorage.setItem('user_email', result.data.email)
 
                         this.setLoggedInStatus(true)
-                    } else if (
-                        result.message ==
-                        'Token Signature could not be verified.'
-                    ) {
+                    } else if (result.message == 'Token Signature could not be verified.') {
                         localStorage.clear()
                         this.setLoggedInStatus(false)
                     } else if (result.message == '405 Method Not Allowed') {
                         localStorage.clear()
                         this.setLoggedInStatus(false)
-                    } else if (
-                        result.message == 'The token has been blacklisted'
-                    ) {
+                    } else if (result.message == 'The token has been blacklisted') {
                         localStorage.clear()
                         this.setLoggedInStatus(false)
                     }
@@ -85,7 +65,6 @@ class App extends React.Component {
         return (
             <Router>
                 <Switch>
-                    
                     {this.state.isLoggedIn ? (
                         <React.Fragment>
                             <Route exact path="/">

@@ -43,64 +43,31 @@ class Header extends React.Component {
                     <img src={logo} alt="Logo" />
                 </NavLink>
 
-                <div
-                    tabIndex={0}
-                    onClick={this.showHeaderDropdown}
-                    className="header__dropdown-button"
-                >
+                <div tabIndex={0} onClick={this.showHeaderDropdown} className="header__dropdown-button">
                     <MoreVertical></MoreVertical>
                 </div>
 
-                <div
-                    onClick={this.showMobileMenu}
-                    className="header__menu-mobile-button"
-                >
+                <div onClick={this.showMobileMenu} className="header__menu-mobile-button">
                     <Menu></Menu>
                 </div>
 
-                <div
-                    className={`header__menu-items ${
-                        this.state.mobileMenuVisible
-                            ? 'header__menu-items--mobile-visible'
-                            : ''
-                    }`}
-                >
-                    <div
-                        onClick={this.hideMobileMenu}
-                        className="header__menu-mobile-close"
-                    >
+                <div className={`header__menu-items ${this.state.mobileMenuVisible ? 'header__menu-items--mobile-visible' : ''}`}>
+                    <div onClick={this.hideMobileMenu} className="header__menu-mobile-close">
                         <X></X>
                     </div>
 
-                    <NavLink
-                        exact
-                        className="header__menu-item"
-                        activeClassName="header__menu-item--active"
-                        to="/app"
-                    >
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app">
                         Home
                     </NavLink>
-                    <NavLink
-                        exact
-                        className="header__menu-item"
-                        activeClassName="header__menu-item--active"
-                        to="/app/today"
-                    >
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/today">
                         Today
                     </NavLink>
-                    <NavLink
-                        exact
-                        className="header__menu-item"
-                        activeClassName="header__menu-item--active"
-                        to="/app/groups"
-                    >
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
                         Groups
                     </NavLink>
                 </div>
 
-                {this.state.dropdownVisible && (
-                    <HeaderDropdown></HeaderDropdown>
-                )}
+                {this.state.dropdownVisible && <HeaderDropdown></HeaderDropdown>}
             </div>
         )
     }

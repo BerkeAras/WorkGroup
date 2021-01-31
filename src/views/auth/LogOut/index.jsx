@@ -1,12 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState } from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
@@ -18,10 +12,7 @@ class LogOut extends React.Component {
 
     componentDidMount() {
         var logoutHeader = new Headers()
-        logoutHeader.append(
-            'Authorization',
-            'Bearer ' + localStorage.getItem('token')
-        )
+        logoutHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         var requestOptions = {
             method: 'DELETE',

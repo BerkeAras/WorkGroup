@@ -10,10 +10,7 @@ class SidebarPopularItems extends React.Component {
 
     componentDidMount() {
         var tokenHeaders = new Headers()
-        tokenHeaders.append(
-            'Authorization',
-            'Bearer ' + localStorage.getItem('token')
-        )
+        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         var requestOptions = {
             method: 'GET',
@@ -38,7 +35,6 @@ class SidebarPopularItems extends React.Component {
     render() {
         return (
             <div className="topic-container">
-                
                 {this.state.isLoading ? (
                     <div>
                         <Placeholder>
@@ -57,11 +53,7 @@ class SidebarPopularItems extends React.Component {
                 ) : (
                     this.state.topics.map((topic) => {
                         return (
-                            <a
-                                key={`topic-${topic.id}`}
-                                className="topic-item"
-                                href={`/app/topics/` + topic.topic}
-                            >
+                            <a key={`topic-${topic.id}`} className="topic-item" href={`/app/topics/` + topic.topic}>
                                 <Icon name="hashtag" /> {topic.topic}
                             </a>
                         )

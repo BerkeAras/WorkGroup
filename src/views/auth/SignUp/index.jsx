@@ -1,12 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState } from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
@@ -26,9 +20,7 @@ class SignUp extends React.Component {
         this.nameChangeHandler = this.nameChangeHandler.bind(this)
         this.emailChangeHandler = this.emailChangeHandler.bind(this)
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
-        this.passwordRepeatChangeHandler = this.passwordRepeatChangeHandler.bind(
-            this
-        )
+        this.passwordRepeatChangeHandler = this.passwordRepeatChangeHandler.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -55,12 +47,7 @@ class SignUp extends React.Component {
         this.setState({ error: false })
 
         if (this.state.password === this.state.passwordRepeat) {
-            if (
-                this.state.name.trim() !== '' &&
-                this.state.email.trim() !== '' &&
-                this.state.password.trim() !== '' &&
-                this.state.passwordRepeat.trim() !== ''
-            ) {
+            if (this.state.name.trim() !== '' && this.state.email.trim() !== '' && this.state.password.trim() !== '' && this.state.passwordRepeat.trim() !== '') {
                 setTimeout(() => {
                     const requestOptions = {
                         method: 'POST',
@@ -73,10 +60,7 @@ class SignUp extends React.Component {
                         }),
                     }
                     // eslint-disable-next-line no-undef
-                    fetch(
-                        process.env.REACT_APP_API_URL + '/api/auth/register',
-                        requestOptions
-                    )
+                    fetch(process.env.REACT_APP_API_URL + '/api/auth/register', requestOptions)
                         .then((response) => response.json())
                         .then((data) => {
                             if (data.message == 'Register success') {
@@ -91,19 +75,12 @@ class SignUp extends React.Component {
                                     }),
                                 }
                                 // eslint-disable-next-line no-undef
-                                fetch(
-                                    process.env.REACT_APP_API_URL +
-                                        '/api/auth/login',
-                                    requestOptions
-                                )
+                                fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
                                     .then((response) => response.json())
                                     .then((data) => {
                                         console.log(data)
                                         if (data.message == 'Login success') {
-                                            localStorage.setItem(
-                                                'token',
-                                                data.data.token
-                                            )
+                                            localStorage.setItem('token', data.data.token)
                                             this.setState({ isLoggedIn: true })
                                             location.href = '/'
                                         }
@@ -131,12 +108,9 @@ class SignUp extends React.Component {
             <div className="loginContainer">
                 <img className="logo" alt="Logo" src={logo} />
                 <div className="formContainer">
-                    
                     {this.state.error === 'already_registered' ? (
                         <Message negative>
-                            <Message.Header>
-                                Oh no!An error occurred😢.
-                            </Message.Header>
+                            <Message.Header>Oh no!An error occurred😢.</Message.Header>
                             <p> This E - Mail is already registered! </p>
                         </Message>
                     ) : (
@@ -144,9 +118,7 @@ class SignUp extends React.Component {
                     )}
                     {this.state.error === 'password_does_not_match' ? (
                         <Message negative>
-                            <Message.Header>
-                                Oh no!An error occurred😢.
-                            </Message.Header>
+                            <Message.Header>Oh no!An error occurred😢.</Message.Header>
                             <p> The Passwords does not match! </p>
                         </Message>
                     ) : (
@@ -154,65 +126,31 @@ class SignUp extends React.Component {
                     )}
                     {this.state.error === 'inputs_empty' ? (
                         <Message negative>
-                            <Message.Header>
-                                Oh no!An error occurred😢.
-                            </Message.Header>
+                            <Message.Header>Oh no!An error occurred😢.</Message.Header>
                             <p> Please fill out everything! </p>
                         </Message>
                     ) : (
                         <div />
                     )}
                     <form className="" onSubmit={this.handleSubmit}>
-                        <Input
-                            autoFocus
-                            fluid
-                            onChange={this.nameChangeHandler}
-                            type="text"
-                            placeholder="Name"
-                            id="userName"
-                        />
+                        <Input autoFocus fluid onChange={this.nameChangeHandler} type="text" placeholder="Name" id="userName" />
                         <br />
-                        <Input
-                            fluid
-                            onChange={this.emailChangeHandler}
-                            type="email"
-                            placeholder="E-Mail"
-                            id="userEmail"
-                        />
+                        <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
                         <br />
-                        <Input
-                            fluid
-                            onChange={this.passwordChangeHandler}
-                            type="password"
-                            placeholder="Password"
-                            id="userPassword"
-                        />
+                        <Input fluid onChange={this.passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
                         <br />
-                        <Input
-                            fluid
-                            onChange={this.passwordRepeatChangeHandler}
-                            type="password"
-                            placeholder="Repeat password"
-                            id="userPasswordRepeat"
-                        />
+                        <Input fluid onChange={this.passwordRepeatChangeHandler} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
                         <br />
                         {this.state.isSigningUp ? (
                             <Button loading primary type="submit">
                                 Sign Up
                             </Button>
                         ) : (
-                            <Button
-                                primary
-                                type="submit"
-                                onClick={this.handleSubmit}
-                            >
+                            <Button primary type="submit" onClick={this.handleSubmit}>
                                 Sign Up
                             </Button>
                         )}
-                        <Button href="/">
-                            
-                            Already registered ? Sign In!
-                        </Button>
+                        <Button href="/">Already registered ? Sign In!</Button>
                     </form>
                 </div>
             </div>
