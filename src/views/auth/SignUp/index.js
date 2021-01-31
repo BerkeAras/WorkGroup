@@ -32,14 +32,12 @@ class SignUp extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    componentDidMount() {
-        
-    }
+    componentDidMount() {}
 
     nameChangeHandler(event) {
         this.setState({ name: event.target.value })
     }
-    
+
     emailChangeHandler(event) {
         this.setState({ email: event.target.value })
     }
@@ -64,50 +62,51 @@ class SignUp extends React.Component {
                 this.state.passwordRepeat.trim() !== ''
             ) {
                 setTimeout(() => {
-                    
                     const requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            name: this.state.name,
-                            email: this.state.email,
-                            password: this.state.password,
-                            password_confirmation: this.state.passwordRepeat
-                        })
-                    };
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: this.state.name,
+                                email: this.state.email,
+                                password: this.state.password,
+                                password_confirmation: this.state.passwordRepeat,
+                            }),
+                        }
+                        // eslint-disable-next-line no-undef
                     fetch(process.env.REACT_APP_API_URL + '/api/auth/register', requestOptions)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.message == "Register success") {
-
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.message == 'Register success') {
                                 const requestOptions = {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                        email: this.state.email,
-                                        password: this.state.password,
-                                    })
-                                };
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            email: this.state.email,
+                                            password: this.state.password,
+                                        }),
+                                    }
+                                    // eslint-disable-next-line no-undef
                                 fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log(data);
-                                        if (data.message == "Login success") {
-                                            localStorage.setItem('token', data.data.token);
-                                            this.setState({isLoggedIn: true});
-                                            location.href = "/";
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        console.log(data)
+                                        if (data.message == 'Login success') {
+                                            localStorage.setItem(
+                                                'token',
+                                                data.data.token
+                                            )
+                                            this.setState({ isLoggedIn: true })
+                                            location.href = '/'
                                         }
-                                    });
-
-                            } else if (data.message == "User existing") {
-
-                                this.setState({error: "already_registered"});
-                                this.setState({isSigningUp: false })
-
+                                    })
+                            } else if (data.message == 'User existing') {
+                                this.setState({ error: 'already_registered' })
+                                this.setState({ isSigningUp: false })
                             }
-                        });
-
-                }, 1000)
+                        })
+                }, 300)
             } else {
                 this.setState({ error: 'inputs_empty' })
                 this.setState({ isSigningUp: false })
@@ -121,95 +120,107 @@ class SignUp extends React.Component {
     }
 
     render() {
-        return (
-            <div className="loginContainer">
-                <img className="logo" alt="Logo" src={logo} />
-                <div className="formContainer">
-                    {this.state.error === 'already_registered' ? (
-                        <Message negative>
-                            <Message.Header>
-                                Oh no! An error occurred 😢.
-                            </Message.Header>
-                            <p>This E-Mail is already registered!</p>
-                        </Message>
-                    ) : (
-                        <div />
-                    )}
+        return ( <
+            div className = "loginContainer" >
+            <
+            img className = "logo"
+            alt = "Logo"
+            src = { logo }
+            /> <
+            div className = "formContainer" > {
+                this.state.error === 'already_registered' ? ( <
+                    Message negative >
+                    <
+                    Message.Header >
+                    Oh no!An error occurred😢. <
+                    /Message.Header> <
+                    p > This E - Mail is already registered! < /p> < /
+                    Message >
+                ) : ( <
+                    div / >
+                )
+            }
 
-                    {this.state.error === 'password_does_not_match' ? (
-                        <Message negative>
-                            <Message.Header>
-                                Oh no! An error occurred 😢.
-                            </Message.Header>
-                            <p>The Passwords does not match!</p>
-                        </Message>
-                    ) : (
-                        <div />
-                    )}
+            {
+                this.state.error === 'password_does_not_match' ? ( <
+                    Message negative >
+                    <
+                    Message.Header >
+                    Oh no!An error occurred😢. <
+                    /Message.Header> <
+                    p > The Passwords does not match! < /p> < /
+                    Message >
+                ) : ( <
+                    div / >
+                )
+            }
 
-                    {this.state.error === 'inputs_empty' ? (
-                        <Message negative>
-                            <Message.Header>
-                                Oh no! An error occurred 😢.
-                            </Message.Header>
-                            <p>Please fill out everything!</p>
-                        </Message>
-                    ) : (
-                        <div />
-                    )}
+            {
+                this.state.error === 'inputs_empty' ? ( <
+                    Message negative >
+                    <
+                    Message.Header >
+                    Oh no!An error occurred😢. <
+                    /Message.Header> <
+                    p > Please fill out everything! < /p> < /
+                    Message >
+                ) : ( <
+                    div / >
+                )
+            }
 
-                    <form className="" onSubmit={this.handleSubmit}>
-                        <Input
-                            autoFocus
-                            fluid
-                            onChange={this.nameChangeHandler}
-                            type="text"
-                            placeholder="Name"
-                            id="userName"
-                        />
-                        <br />
-                        <Input
-                            fluid
-                            onChange={this.emailChangeHandler}
-                            type="email"
-                            placeholder="E-Mail"
-                            id="userEmail"
-                        />
-                        <br />
-                        <Input
-                            fluid
-                            onChange={this.passwordChangeHandler}
-                            type="password"
-                            placeholder="Password"
-                            id="userPassword"
-                        />
-                        <br />
-                        <Input
-                            fluid
-                            onChange={this.passwordRepeatChangeHandler}
-                            type="password"
-                            placeholder="Repeat password"
-                            id="userPasswordRepeat"
-                        />
-                        <br />
-                        {this.state.isSigningUp ? (
-                            <Button loading primary type="submit">
-                                Sign Up
-                            </Button>
-                        ) : (
-                            <Button
-                                primary
-                                type="submit"
-                                onClick={this.handleSubmit}
-                            >
-                                Sign Up
-                            </Button>
-                        )}
+            <
+            form className = ""
+            onSubmit = { this.handleSubmit } >
+            <
+            Input autoFocus fluid onChange = { this.nameChangeHandler }
+            type = "text"
+            placeholder = "Name"
+            id = "userName" /
+            >
+            <
+            br / >
+            <
+            Input fluid onChange = { this.emailChangeHandler }
+            type = "email"
+            placeholder = "E-Mail"
+            id = "userEmail" /
+            >
+            <
+            br / >
+            <
+            Input fluid onChange = { this.passwordChangeHandler }
+            type = "password"
+            placeholder = "Password"
+            id = "userPassword" /
+            >
+            <
+            br / >
+            <
+            Input fluid onChange = { this.passwordRepeatChangeHandler }
+            type = "password"
+            placeholder = "Repeat password"
+            id = "userPasswordRepeat" /
+            >
+            <
+            br / > {
+                this.state.isSigningUp ? ( <
+                    Button loading primary type = "submit" >
+                    Sign Up <
+                    /Button>
+                ) : ( <
+                    Button primary type = "submit"
+                    onClick = { this.handleSubmit } >
+                    Sign Up <
+                    /Button>
+                )
+            }
 
-                        <Button href="/">Already registered? Sign In!</Button>
-                    </form>
-                </div>
-            </div>
+            <
+            Button href = "/" > Already registered ? Sign In! < /Button> < /
+            form > <
+            /div> < /
+            div >
         )
     }
 }

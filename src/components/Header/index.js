@@ -38,8 +38,8 @@ class Header extends React.Component {
     }
     render() {
         return (
-            <div className="header">
-                <NavLink exact to="/" class="header__logo">
+            <div className="nav-header">
+                <NavLink exact to="/" className="header__logo">
                     <img src={logo} alt="Logo" />
                 </NavLink>
 

@@ -1,12 +1,12 @@
 @import '../../scss/variables';
-
 html,
 body {
     width: 100%;
     height: 100%;
     overflow: hidden !important;
 }
-.header {
+
+.nav-header {
     position: relative;
     width: 100%;
     height: 50px;
@@ -14,27 +14,22 @@ body {
     border-radius: 10px;
     background-color: white;
     margin: 20px 0;
-    box-shadow: 0px 7px 13px 0px #0000000f;
-
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     .header__logo {
         height: 30px;
         margin: 10px 0;
         float: left;
-
         img {
             height: 100%;
         }
-
         &:focus {
             outline: 1px dashed black !important;
             outline-offset: 2px !important;
         }
     }
-
     .header__menu-items {
         float: right;
         height: 100%;
-
         .header__menu-item {
             display: inline-block;
             line-height: 40px;
@@ -45,7 +40,6 @@ body {
             padding: 0 12px;
             border-radius: 7px;
             margin: 5px 0 5px 5px;
-
             &:hover {
                 background-color: #f7f7f7;
             }
@@ -58,7 +52,6 @@ body {
                 outline-offset: 2px !important;
             }
         }
-
         .header__menu-mobile-close {
             display: none;
             float: left;
@@ -69,16 +62,13 @@ body {
             margin: 5px 15px 5px 5px;
             text-align: center;
             cursor: pointer;
-
             &:hover {
                 color: $primary-color;
             }
-
             svg {
                 margin: 8px;
             }
         }
-
         &--mobile-visible {
             position: fixed;
             top: 0;
@@ -91,13 +81,11 @@ body {
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
-
             .header__menu-mobile-close {
                 display: inline-block;
             }
         }
     }
-
     .header__dropdown-button,
     .header__menu-mobile-button {
         float: right;
@@ -108,15 +96,12 @@ body {
         margin: 5px 0 5px 15px;
         text-align: center;
         cursor: pointer;
-
         &:hover {
             color: $primary-color;
         }
-
         svg {
             margin: 8px;
         }
-
         &:focus {
             outline: 1px dashed black !important;
             outline-offset: 2px !important;
@@ -126,12 +111,14 @@ body {
         display: none;
     }
 }
+
 @media (max-width: 1300px) {
     .header {
         margin-top: 0;
         border-radius: 0 0 10px 10px;
     }
 }
+
 @media (max-width: 600px) {
     .header {
         .header__menu-items {

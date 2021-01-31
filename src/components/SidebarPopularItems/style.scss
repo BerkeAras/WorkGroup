@@ -1,15 +1,5 @@
-@import '../../scss/variables';
-.header__dropdown {
-    display: inline-block;
-    position: absolute;
-    top: 47px;
-    right: 20px;
-    background: white;
-    padding: 10px;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-    border-radius: 10px;
-    width: 260px;
-    .header__dropdown-item {
+.topic-container {
+    .topic-item {
         display: inline-block;
         width: 100%;
         padding: 11px 10px;
@@ -20,8 +10,24 @@
         color: black;
         transition: all 0.1s;
         margin-bottom: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
         &:hover {
             background: #f7f7f7;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+    }
+    .placeholder {
+        height: 41px;
+        border-radius: 10px;
+        opacity: 0.7;
+        margin-top: 0 !important;
+        margin-bottom: 4px;
+        .line {
+            opacity: 0;
         }
         &:last-of-type {
             margin-bottom: 0 !important;
