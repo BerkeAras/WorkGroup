@@ -107,7 +107,7 @@ class SignUp extends React.Component {
                             }
                         });
 
-                }, 1000)
+                }, 300)
             } else {
                 this.setState({ error: 'inputs_empty' })
                 this.setState({ isSigningUp: false })

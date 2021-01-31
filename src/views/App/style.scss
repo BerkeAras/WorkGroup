@@ -1,15 +1,18 @@
 body {
     overflow: hidden;
 }
+
 .app {
-    padding: 0 calc((100% - 1700px) / 2);
+    padding: 0 calc((100% - 1200px) / 2);
     background: #e5eaec;
 }
+
 @media (max-width: 1300px) {
     .app {
         padding: 0;
     }
 }
+
 div#root div[location] {
     height: 100%;
 }

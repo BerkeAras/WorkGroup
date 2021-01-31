@@ -19,7 +19,7 @@ class LogOut extends React.Component {
     componentDidMount() {
         
         var logoutHeader = new Headers();
-        logoutHeader.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjExODIyNTE2LCJleHAiOjE2MTE4MjYxMTYsIm5iZiI6MTYxMTgyMjUxNiwianRpIjoiYjgzMDk0MjVlMzc2OTQ0MjFhMTJiZTViYzQxNzM0YjkifQ.txTZk_2ydrOAdjWYxQdMUB_cyjsCmTmKFVHVe56wGF4");
+        logoutHeader.append("Authorization", "Bearer " + localStorage.getItem('token'));
 
         var requestOptions = {
             method: 'DELETE',
@@ -28,7 +28,9 @@ class LogOut extends React.Component {
         };
 
         fetch("http://localhost:8000/api/auth/invalidate", requestOptions)
-            .then(response => response.text())
+            .then(response => {
+                response.text();
+            })
             .then(result => {
                 localStorage.clear();
                 location.href = "/";

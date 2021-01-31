@@ -51,18 +51,30 @@ class SignIn extends React.Component {
                     password: this.state.password,
                 })
             };
-            fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.message == "Login success") {
-                        localStorage.setItem('token', data.data.token);
-                        this.setState({isLoggedIn: true});
-                        location.href = "/";
-                    }
-                });
 
-        }, 1000)
+            fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
+                .then(response => {
+                    if (response.status == 200) {
+                        response.json().then(json => {
+                            if (json.message == "Login success") {
+                                localStorage.setItem('token', json.data.token);
+                                this.setState({isLoggedIn: true});
+                                location.href = "/";        
+                            } else {
+                                this.setState({isLoggedIn: false});
+                                this.setState({isLoggingIn: false});
+                                this.setState({error: true});
+                            }
+                        })
+                    } else {
+                        this.setState({isLoggedIn: false});
+                        this.setState({isLoggingIn: false});
+                        this.setState({error: true});
+                    }
+
+                })
+
+        }, 300);
 
         event.preventDefault()
     }
