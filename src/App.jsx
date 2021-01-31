@@ -49,7 +49,10 @@ class App extends React.Component {
             }
 
             // eslint-disable-next-line no-undef
-            fetch(process.env.REACT_APP_API_URL + '/api/auth/user', requestOptions)
+            fetch(
+                process.env.REACT_APP_API_URL + '/api/auth/user',
+                requestOptions
+            )
                 .then((response) => response.json())
                 .then((result) => {
                     if (result.message == 'Authenticated user') {
@@ -79,57 +82,40 @@ class App extends React.Component {
     }
 
     render() {
-        return ( <
-            Router >
-            <
-            Switch > {
-                this.state.isLoggedIn ? ( <
-                    React.Fragment >
-                    <
-                    Route exact path = "/" >
-                    <
-                    Redirect to = "/app" / >
-                    <
-                    /Route> <
-                    Route exact path = "/app" >
-                    <
-                    MainApp / >
-                    <
-                    /Route> <
-                    Route exact path = "/logout" >
-                    <
-                    LogOut / >
-                    <
-                    /Route> <
-                    /React.Fragment>
-                ) : ( <
-                    React.Fragment >
-                    <
-                    Route exact path = "/" >
-                    <
-                    SignIn / >
-                    <
-                    /Route> <
-                    Route path = "/app" >
-                    <
-                    Redirect to = "/" / >
-                    <
-                    /Route> <
-                    Route exact path = "/signup" >
-                    <
-                    SignUp / >
-                    <
-                    /Route> <
-                    Route exact path = "/password-reset" >
-                    <
-                    PasswordReset / >
-                    <
-                    /Route> <
-                    /React.Fragment>
-                )
-            } <
-            /Switch> <
-            /Router>
+        return (
+            <Router>
+                <Switch>
+                    
+                    {this.state.isLoggedIn ? (
+                        <React.Fragment>
+                            <Route exact path="/">
+                                <Redirect to="/app" />
+                            </Route>
+                            <Route exact path="/app">
+                                <MainApp />
+                            </Route>
+                            <Route exact path="/logout">
+                                <LogOut />
+                            </Route>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <Route exact path="/">
+                                <SignIn />
+                            </Route>
+                            <Route path="/app">
+                                <Redirect to="/" />
+                            </Route>
+                            <Route exact path="/signup">
+                                <SignUp />
+                            </Route>
+                            <Route exact path="/password-reset">
+                                <PasswordReset />
+                            </Route>
+                        </React.Fragment>
+                    )}
+                </Switch>
+            </Router>
         )
     }
 }

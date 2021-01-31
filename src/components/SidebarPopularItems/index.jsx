@@ -38,6 +38,7 @@ class SidebarPopularItems extends React.Component {
     render() {
         return (
             <div className="topic-container">
+                
                 {this.state.isLoading ? (
                     <div>
                         <Placeholder>
