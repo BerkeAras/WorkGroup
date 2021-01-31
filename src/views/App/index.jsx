@@ -6,8 +6,10 @@ import { Button, Input } from 'semantic-ui-react'
 import logo from '../../static/logo.svg'
 
 // Components
-import Sidebar from '../../components/Sidebar'
+import SidebarLeft from '../../components/SidebarLeft'
+import SidebarRight from '../../components/SidebarRight'
 import Header from '../../components/Header'
+import Content from '../../components/Content'
 
 class MainApp extends React.Component {
     constructor(props) {
@@ -20,7 +22,11 @@ class MainApp extends React.Component {
         return (
             <div className="app">
                 <Header />
-                <Sidebar />
+                <div className="main_content">
+                    <SidebarLeft />
+                    <Content />
+                    <SidebarRight />
+                </div>
             </div>
         )
     }
