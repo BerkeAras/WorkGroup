@@ -21,36 +21,16 @@ class HeaderDropdown extends React.Component {
     render() {
         return (
             <div className="header__dropdown">
-                <NavLink
-                    exact
-                    className="header__dropdown-item"
-                    activeClassName="header__dropdown-item--active"
-                    to="/app"
-                >
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app">
                     My Account
                 </NavLink>
-                <NavLink
-                    exact
-                    className="header__dropdown-item"
-                    activeClassName="header__dropdown-item--active"
-                    to="/app/today"
-                >
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/today">
                     App Settings
                 </NavLink>
-                <NavLink
-                    exact
-                    className="header__dropdown-item"
-                    activeClassName="header__dropdown-item--active"
-                    to="/app/groups"
-                >
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/groups">
                     Get help
                 </NavLink>
-                <NavLink
-                    exact
-                    className="header__dropdown-item"
-                    activeClassName="header__dropdown-item--active"
-                    to="/logout"
-                >
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/logout">
                     Log out
                 </NavLink>
             </div>
