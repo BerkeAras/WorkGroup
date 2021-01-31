@@ -85,7 +85,7 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-3. Enter your API in `.env`
+3. Enter your API URL in `.env` (Clone the API from [WorkGroup-API](https://github.com/BerkeAras/WorkGroup-API))
     ```JS
     REACT_APP_API_URL=YourApiUrl
     ```
