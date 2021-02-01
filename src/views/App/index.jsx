@@ -27,9 +27,7 @@ class MainApp extends React.Component {
                 <div className="main_content">
                     <SidebarLeft />
                     <Content>
-                        
                         <CreatePostForm />
-
                     </Content>
                     <SidebarRight />
                 </div>

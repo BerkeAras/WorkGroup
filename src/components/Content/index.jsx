@@ -1,21 +1,17 @@
 import React from 'react'
 import './style.scss'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 class SidebarRight extends React.Component {
     componentDidMount() {}
 
     render() {
-        return (
-            <div className="content_container">
-                {this.props.children}
-            </div>
-        )
+        return <div className="content_container">{this.props.children}</div>
     }
 }
 
 SidebarRight.propTypes = {
-    children: PropTypes.node.isRequired
-};
+    children: PropTypes.node.isRequired,
+}
 
-export default SidebarRight;
+export default SidebarRight

@@ -2,10 +2,10 @@ import React from 'react'
 import './style.scss'
 import { Card, Icon } from 'semantic-ui-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faUserFriends, faCalendarWeek } from "@fortawesome/free-solid-svg-icons";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUser, faUserFriends, faCalendarWeek } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUser, faUserFriends, faCalendarWeek);
+library.add(faUser, faUserFriends, faCalendarWeek)
 
 class SidebarRight extends React.Component {
     componentDidMount() {}
@@ -35,4 +35,4 @@ class SidebarRight extends React.Component {
     }
 }
 
-export default SidebarRight;
+export default SidebarRight
