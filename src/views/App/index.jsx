@@ -11,6 +11,8 @@ import SidebarRight from '../../components/SidebarRight'
 import Header from '../../components/Header'
 import Content from '../../components/Content'
 
+import CreatePostForm from '../../components/_App_CreatePostForm'
+
 class MainApp extends React.Component {
     constructor(props) {
         super(props)
@@ -24,7 +26,11 @@ class MainApp extends React.Component {
                 <Header />
                 <div className="main_content">
                     <SidebarLeft />
-                    <Content />
+                    <Content>
+                        
+                        <CreatePostForm />
+
+                    </Content>
                     <SidebarRight />
                 </div>
             </div>

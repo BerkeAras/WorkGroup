@@ -1,0 +1,55 @@
+.new_post {
+    .card {
+        width: 100% !important;
+        margin: 0 !important;
+
+        .input {
+            width: 100% !important;
+            cursor: pointer !important;
+            input {
+                cursor: pointer !important;
+                border-radius: 1000px !important;
+            }
+        }
+    }
+}
+.modals {
+    justify-content: normal !important;
+    .modal {
+        flex: none !important;
+        margin-top: 100px !important;
+        border-radius: 10px !important;
+
+        .header {
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .actions {
+            border-radius: 0 0 10px 10px !important;
+
+            .left-actions {
+                float: left !important;
+            }
+        }
+
+        .content {
+            max-height: 600px;
+            overflow: auto;
+        }
+
+        .fake-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: none;
+            outline: none;
+            font-size: 17px;
+        }
+        .fake-textarea[placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #555;
+            font-size: 17px;
+        }
+    }
+}
+.dimmer {
+    background-color: #00000080 !important;
+}
