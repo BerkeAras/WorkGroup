@@ -48,4 +48,4 @@ class SidebarLeft extends React.Component {
     }
 }
 
-export default SidebarLeft;
+export default SidebarLeft
