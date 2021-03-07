@@ -27,6 +27,17 @@
             letter-spacing: 0.5px;
         }
     }
+    a.liked,
+    a.true {
+        i {
+            color: #ff2733 !important;
+        }
+    }
+}
+.load-more-container {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
 }
 
 .ui.text.loader {
