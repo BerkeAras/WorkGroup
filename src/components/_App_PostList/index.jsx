@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import './style.scss'
-import { Feed, Icon, Card, Loader } from 'semantic-ui-react'
-import { InfiniteScroll } from 'react-simple-infinite-scroll'
+import { Feed, Icon, Card, Loader, Button } from 'semantic-ui-react'
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+import unknownAvatar from '../../static/unknown.png'
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -9,8 +11,9 @@ class PostsList extends React.Component {
         this.state = {
             items: [],
             isLoading: true,
-            cursor: 0,
+            cursor: 1,
             loaded: false,
+            isLoadingMore: false,
             emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
         }
     }
@@ -67,7 +70,8 @@ class PostsList extends React.Component {
     }
 
     loadMore = () => {
-        console.log('Loading More...')
+        
+        this.setState({ isLoadingMore: true })
 
         var loadingHeader = new Headers()
         loadingHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -83,11 +87,17 @@ class PostsList extends React.Component {
             .then((res) => res.json())
             .then(
                 (res) => {
+                    this.setState({ isLoadingMore: false })
                     if (res['status_code'] !== undefined) {
                         console.error('ERROR: ' + res['message'])
-                        localStorage.clear()
-                        location.href = '/?error_happened'
+                        //localStorage.clear()
+                        //location.href = '/?error_happened'
                     } else {
+
+                        if (this.state.items.length > 60) {
+                            this.setState({ items: [] })
+                        }
+
                         this.setState((state) => ({
                             items: [...state.items, ...res],
                             cursor: this.state.cursor + 1,
@@ -102,49 +112,159 @@ class PostsList extends React.Component {
             )
     }
 
+    getDate(date) {
+        var newDate = new Date(date); 
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+        var todaysDate = new Date();
+
+        let dateString = "";
+
+        if(newDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+
+            todaysDate = new Date();
+            let currentHours = todaysDate.getHours();
+            currentHours = ("0" + currentHours).slice(-2);
+
+            dateString = "Today, " + currentHours + ":" + (todaysDate.getMinutes()<10?'0':'') + todaysDate.getMinutes();
+        } else {
+
+            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options);
+
+        }
+
+        return dateString;
+
+    }
+
+    getLikes(likes) {
+
+        let returnStr = "0 Likes";
+
+        if (likes == 1) {
+            returnStr = "1 Like";
+        } else {
+            returnStr = likes + " Likes";
+        }
+
+        return returnStr;
+
+    }
+
+    toggleLike(e) {
+        e.preventDefault();
+        let element;
+
+        if (e.target.tagName === "I") {
+            element = e.target.parentNode;
+        } else {
+            element = e.target;
+        }
+
+        element.parentNode.style.pointerEvents = "none";
+
+        let postId = element.parentNode.id;
+        postId = postId.replace("post_id_", "");
+
+        var header = new Headers()
+        header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        header.append('Content-Type', 'application/json')
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header,
+            body: JSON.stringify({
+                id: postId
+            })
+        }
+
+        let likeCount = parseInt(element.textContent.substr(0, element.textContent.indexOf(' ')));
+
+        fetch(process.env.REACT_APP_API_URL + '/api/content/likePost', requestOptions)
+            .then((response) => response.text())
+            .then((result) => {                
+                if (result === "unliked") {
+                    likeCount = likeCount - 1;
+
+                    element.parentNode.classList.remove("liked");
+
+                    if (likeCount == 1) {element.textContent = "1 Like";}
+                    else {element.textContent = likeCount + " Likes";}
+                } else {
+                    likeCount = likeCount + 1;
+
+                    element.parentNode.classList.add("liked");
+
+                    if (likeCount == 1) {element.textContent = "1 Like";}
+                    else {element.textContent = likeCount + " Likes";}
+                }
+
+                element.parentNode.style.pointerEvents = "all";
+            });
+
+    }
+
     render() {
         return (
             <div>
                 {this.state.loaded === true && (
-                    <InfiniteScroll className="infinite-scroll" throttle={64} threshold={300} isLoading={this.state.isLoading} hasMore={true} onLoadMore={this.loadMore}>
-                        <Feed>
-                            {this.state.items.length > 0 ? (
-                                this.state.items.map((item) => (
+                    <Feed>
+                        {this.state.items.length > 0 ? (
+                            <React.Fragment>
+                                {this.state.items.map((item) => (
                                     <Feed.Event key={item.id}>
                                         <Feed.Label>
-                                            <img src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+                                            {item.avatar == "" ? (
+                                                <img src={unknownAvatar} />
+                                            ) : (
+                                                <img src={process.env.REACT_APP_API_URL + "/static/" + item.avatar} />
+                                            )}
                                         </Feed.Label>
                                         <Feed.Content>
                                             <Feed.Summary>
                                                 <Feed.User>
-                                                    {item.id} {item.name}
+                                                    {item.name}
                                                 </Feed.User>
-                                                <Feed.Date>{item.created_at}</Feed.Date>
+                                                <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                             </Feed.Summary>
                                             <Feed.Extra text>
                                                 <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
                                             </Feed.Extra>
                                             <Feed.Meta>
-                                                <Feed.Like>
-                                                    <Icon name="like" />4 Likes
+                                                <Feed.Like onClick={this.toggleLike} id={"post_id_" + item.id} className={item.hasLiked}>
+                                                    <Icon name="like" /><span>{this.getLikes(item.likes)}</span>
                                                 </Feed.Like>
                                             </Feed.Meta>
                                         </Feed.Content>
                                     </Feed.Event>
-                                ))
-                            ) : (
-                                <Feed.Event>
-                                    <Feed.Content>
-                                        <div className="empty-feed">
-                                            <Icon name="lightning" size="big" />
-                                            <br />
-                                            <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
-                                        </div>
-                                    </Feed.Content>
-                                </Feed.Event>
-                            )}
-                        </Feed>
-                    </InfiniteScroll>
+                                ))}
+
+                                <div className="load-more-container">
+
+                                    {this.state.isLoadingMore === true ? (
+                                        <Button loading primary>
+                                            Load more
+                                        </Button>
+                                    ) : (
+                                        <Button primary onClick={this.loadMore}>
+                                            Load more
+                                        </Button>
+                                    )}
+
+                                </div>
+                            </React.Fragment>
+                        ) : (
+                            <Feed.Event>
+                                <Feed.Content>
+                                    <div className="empty-feed">
+                                        <Icon name="lightning" size="big" />
+                                        <br />
+                                        <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
+                                    </div>
+                                </Feed.Content>
+                            </Feed.Event>
+                        )}
+                    </Feed>
                 )}
                 {this.state.isLoading && <Loader active>Loading Feed</Loader>}
             </div>
