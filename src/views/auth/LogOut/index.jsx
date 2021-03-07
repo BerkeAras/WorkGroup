@@ -20,7 +20,7 @@ class LogOut extends React.Component {
             redirect: 'follow',
         }
 
-        fetch('http://localhost:8000/api/auth/invalidate', requestOptions)
+        fetch(process.env.REACT_APP_API_URL + '/api/auth/invalidate', requestOptions)
             .then((response) => {
                 response.text()
             })

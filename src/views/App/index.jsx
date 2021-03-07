@@ -12,6 +12,7 @@ import Header from '../../components/Header'
 import Content from '../../components/Content'
 
 import CreatePostForm from '../../components/_App_CreatePostForm'
+import PostList from '../../components/_App_PostList'
 
 class MainApp extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class MainApp extends React.Component {
                     <SidebarLeft />
                     <Content>
                         <CreatePostForm />
+                        <PostList />
                     </Content>
                     <SidebarRight />
                 </div>

@@ -19,6 +19,8 @@
         "react-ionicons": "^4.0.5",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.1",
+        "react-simple-infinite-scroll": "0.0.1",
+        "react-virtual-scrolling": "^1.1.4",
         "sass": "^1.30.0",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^2.0.1",

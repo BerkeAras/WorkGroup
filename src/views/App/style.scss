@@ -1,3 +1,5 @@
+@import '../../scss/variables';
+
 body {
     overflow: hidden;
 }
@@ -5,6 +7,7 @@ body {
 .app {
     padding: 0 calc((100% - 1200px) / 2);
     background: #e5eaec;
+    overflow: auto !important;
 }
 
 @media (max-width: 1300px) {
@@ -15,4 +18,11 @@ body {
 
 div#root div[location] {
     height: 100%;
+}
+
+body ::-webkit-scrollbar {
+    width: 7px !important;
+}
+body ::-webkit-scrollbar-thumb {
+    background: $primary-color !important;
 }

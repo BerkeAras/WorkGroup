@@ -10,7 +10,16 @@ import convertToMarkup from './convertToMarkup'
 import convertToText from './convertToText'
 import convertOnPaste from './convertOnPaste'
 
+const utilizeFocus = () => {
+    const ref = React.createRef()
+    const setFocus = () => {ref.current &&  ref.current.focus()}
+
+    return {setFocus, ref} 
+}
+    
 class CreatePostForm extends React.Component {
+
+
     constructor(props) {
         super(props)
         this.state = {
@@ -20,6 +29,12 @@ class CreatePostForm extends React.Component {
             isPosting: false,
         }
         this.publishPost = this.publishPost.bind(this)
+        this.inputFocus = utilizeFocus();
+    }
+
+    reloadPage = () => {
+        // Force a render without state change...
+        document.querySelector('.header__logo').click();
     }
 
     publishPost = () => {
@@ -106,7 +121,7 @@ class CreatePostForm extends React.Component {
                     </Card.Content>
                 </Card>
 
-                <Modal onClose={() => this.setState({ modalOpen: false })} onOpen={() => this.setState({ modalOpen: true })} open={this.state.modalOpen} size="tiny">
+                <Modal onClose={() => this.setState({ modalOpen: false })} onOpen={() => {this.setState({ modalOpen: true });this.inputFocus.setFocus}} open={this.state.modalOpen} size="tiny">
                     <Modal.Header>Create a new post</Modal.Header>
                     <Modal.Content>
                         <div
@@ -119,11 +134,12 @@ class CreatePostForm extends React.Component {
                             role="textarea"
                             placeholder="Share something about your thoughts…"
                             contentEditable="true"
+                            ref={this.inputFocus.ref}
                         ></div>
                     </Modal.Content>
                     <Modal.Actions>
                         <div className="left-actions">
-                            <Popup trigger={<Button icon="picture" basic></Button>} content="Upload images" position="bottom left" />
+                            <Popup trigger={<Button onClick={() => this.fileInputRef.current.click()} icon="picture" basic></Button>} content="Upload images" position="bottom left" />
                             <Popup trigger={<Button icon="file pdf" basic></Button>} content="Upload PDF" position="bottom left" />
                         </div>
 
@@ -137,11 +153,17 @@ class CreatePostForm extends React.Component {
                         )}
                     </Modal.Actions>
                 </Modal>
-                <Modal onClose={() => this.setState({ successModalOpen: false })} onOpen={() => this.setState({ successModalOpen: true })} open={this.state.successModalOpen} size="mini">
+                <input
+                    ref={this.fileInputRef}
+                    type="file"
+                    hidden
+                    onChange={this.fileChange}
+                />
+                <Modal onClose={() => {this.setState({ successModalOpen: false });this.reloadPage()}} onOpen={() => this.setState({ successModalOpen: true })} open={this.state.successModalOpen} size="mini">
                     <Modal.Header>Post created!</Modal.Header>
                     <Modal.Content>Your post has been created and can now be read by other users!</Modal.Content>
                     <Modal.Actions>
-                        <Button color="black" onClick={() => this.setState({ successModalOpen: false })}>
+                        <Button color="black" onClick={() => {this.setState({ successModalOpen: false });this.reloadPage()}}>
                             Dismiss
                         </Button>
                     </Modal.Actions>

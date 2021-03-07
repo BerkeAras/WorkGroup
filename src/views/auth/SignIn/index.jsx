@@ -75,9 +75,12 @@ class SignIn extends React.Component {
                 <Card className="login-card">
                     <Card.Content>
                         <div className="formContainer">
+
+                            <h3>Sign In into WorkGroup</h3>
+
                             {this.state.error ? (
                                 <Message negative>
-                                    <Message.Header>Oh no!An error occurred😢.</Message.Header>
+                                    <Message.Header>Oh no! An error occurred😢.</Message.Header>
                                     <p> E - Mail or password incorrect! </p>
                                 </Message>
                             ) : (

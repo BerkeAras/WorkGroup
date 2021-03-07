@@ -51,13 +51,19 @@ class SidebarPopularItems extends React.Component {
                         </Placeholder>
                     </div>
                 ) : (
-                    this.state.topics.map((topic) => {
-                        return (
-                            <a key={`topic-${topic.id}`} className="topic-item" href={`/app/topics/` + topic.topic}>
-                                <Icon name="hashtag" /> {topic.topic}
-                            </a>
-                        )
-                    })
+                    <React.Fragment>
+                        {this.state.topics.length == 0 ? (
+                            <span className="empty-topics">Sorry. We could not find any topics.</span>
+                        ) : (
+                            this.state.topics.map((topic) => {
+                                return (
+                                    <a key={`topic-${topic.id}`} className="topic-item" href={`/app/topics/` + topic.topic}>
+                                        <Icon name="hashtag" /> {topic.topic}
+                                    </a>
+                                )
+                            })
+                        )}
+                    </React.Fragment>
                 )}
             </div>
         )

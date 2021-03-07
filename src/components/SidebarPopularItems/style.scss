@@ -33,4 +33,12 @@
             margin-bottom: 0 !important;
         }
     }
+    .empty-topics {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        font-style: italic;
+        opacity: .6;
+        font-weight: 100;
+    }
 }
