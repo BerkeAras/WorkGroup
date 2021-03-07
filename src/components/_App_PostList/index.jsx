@@ -10,6 +10,8 @@ class PostsList extends React.Component {
             items: [],
             isLoading: true,
             cursor: 0,
+            loaded: false,
+            emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
         }
     }
 
@@ -90,6 +92,7 @@ class PostsList extends React.Component {
                             items: [...state.items, ...res],
                             cursor: this.state.cursor + 1,
                             isLoading: false,
+                            loaded: true,
                         }))
                     }
                 },
@@ -102,33 +105,47 @@ class PostsList extends React.Component {
     render() {
         return (
             <div>
-                <InfiniteScroll className="infinite-scroll" throttle={100} threshold={100} isLoading={this.state.isLoading} hasMore={true} onLoadMore={this.loadMore}>
-                    <Feed>
-                        {this.state.items.length > 0
-                            ? this.state.items.map((item) => (
-                                  <Feed.Event key={item.id}>
-                                      <Feed.Label>
-                                          <img src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
-                                      </Feed.Label>
-                                      <Feed.Content>
-                                          <Feed.Summary>
-                                              <Feed.User>{item.name}</Feed.User>
-                                              <Feed.Date>{item.created_at}</Feed.Date>
-                                          </Feed.Summary>
-                                          <Feed.Extra text>
-                                              <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
-                                          </Feed.Extra>
-                                          <Feed.Meta>
-                                              <Feed.Like>
-                                                  <Icon name="like" />4 Likes
-                                              </Feed.Like>
-                                          </Feed.Meta>
-                                      </Feed.Content>
-                                  </Feed.Event>
-                              ))
-                            : null}
-                    </Feed>
-                </InfiniteScroll>
+                {this.state.loaded === true && (
+                    <InfiniteScroll className="infinite-scroll" throttle={64} threshold={300} isLoading={this.state.isLoading} hasMore={true} onLoadMore={this.loadMore}>
+                        <Feed>
+                            {this.state.items.length > 0 ? (
+                                this.state.items.map((item) => (
+                                    <Feed.Event key={item.id}>
+                                        <Feed.Label>
+                                            <img src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+                                        </Feed.Label>
+                                        <Feed.Content>
+                                            <Feed.Summary>
+                                                <Feed.User>
+                                                    {item.id} {item.name}
+                                                </Feed.User>
+                                                <Feed.Date>{item.created_at}</Feed.Date>
+                                            </Feed.Summary>
+                                            <Feed.Extra text>
+                                                <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
+                                            </Feed.Extra>
+                                            <Feed.Meta>
+                                                <Feed.Like>
+                                                    <Icon name="like" />4 Likes
+                                                </Feed.Like>
+                                            </Feed.Meta>
+                                        </Feed.Content>
+                                    </Feed.Event>
+                                ))
+                            ) : (
+                                <Feed.Event>
+                                    <Feed.Content>
+                                        <div className="empty-feed">
+                                            <Icon name="lightning" size="big" />
+                                            <br />
+                                            <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
+                                        </div>
+                                    </Feed.Content>
+                                </Feed.Event>
+                            )}
+                        </Feed>
+                    </InfiniteScroll>
+                )}
                 {this.state.isLoading && <Loader active>Loading Feed</Loader>}
             </div>
         )
