@@ -11,8 +11,7 @@ class LogOut extends React.Component {
     }
 
     componentDidMount() {
-
-        document.title = 'Logout – WorkGroup';
+        document.title = 'Logout – WorkGroup'
 
         var logoutHeader = new Headers()
         logoutHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))

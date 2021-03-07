@@ -31,7 +31,7 @@ class PasswordReset extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Reset your Password – WorkGroup';
+        document.title = 'Reset your Password – WorkGroup'
     }
 
     emailChangeHandler(event) {

@@ -25,7 +25,7 @@ class SignUp extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Sign Up – WorkGroup';
+        document.title = 'Sign Up – WorkGroup'
     }
 
     nameChangeHandler(event) {

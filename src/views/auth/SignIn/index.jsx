@@ -21,7 +21,7 @@ class SignIn extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Sign In – WorkGroup';
+        document.title = 'Sign In – WorkGroup'
     }
 
     emailChangeHandler(event) {

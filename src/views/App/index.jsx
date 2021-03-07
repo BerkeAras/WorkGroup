@@ -20,7 +20,7 @@ class MainApp extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Feed – WorkGroup';
+        document.title = 'Feed – WorkGroup'
     }
 
     render() {
