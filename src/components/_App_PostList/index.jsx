@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import './style.scss'
 import { Feed, Icon, Card, Loader, Button } from 'semantic-ui-react'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -70,7 +70,6 @@ class PostsList extends React.Component {
     }
 
     loadMore = () => {
-        
         this.setState({ isLoadingMore: true })
 
         var loadingHeader = new Headers()
@@ -93,7 +92,6 @@ class PostsList extends React.Component {
                         //localStorage.clear()
                         //location.href = '/?error_happened'
                     } else {
-
                         if (this.state.items.length > 60) {
                             this.setState({ items: [] })
                         }
@@ -113,58 +111,52 @@ class PostsList extends React.Component {
     }
 
     getDate(date) {
-        var newDate = new Date(date); 
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var newDate = new Date(date)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-        var todaysDate = new Date();
+        var todaysDate = new Date()
 
-        let dateString = "";
+        let dateString = ''
 
-        if(newDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+        if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+            todaysDate = new Date()
+            let currentHours = todaysDate.getHours()
+            currentHours = ('0' + currentHours).slice(-2)
 
-            todaysDate = new Date();
-            let currentHours = todaysDate.getHours();
-            currentHours = ("0" + currentHours).slice(-2);
-
-            dateString = "Today, " + currentHours + ":" + (todaysDate.getMinutes()<10?'0':'') + todaysDate.getMinutes();
+            dateString = 'Today, ' + currentHours + ':' + (todaysDate.getMinutes() < 10 ? '0' : '') + todaysDate.getMinutes()
         } else {
-
-            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options);
-
+            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
         }
 
-        return dateString;
-
+        return dateString
     }
 
     getLikes(likes) {
-
-        let returnStr = "0 Likes";
+        let returnStr = '0 Likes'
 
         if (likes == 1) {
-            returnStr = "1 Like";
+            returnStr = '1 Like'
         } else {
-            returnStr = likes + " Likes";
+            returnStr = likes + ' Likes'
         }
 
-        return returnStr;
-
+        return returnStr
     }
 
     toggleLike(e) {
-        e.preventDefault();
-        let element;
+        e.preventDefault()
+        let element
 
-        if (e.target.tagName === "I") {
-            element = e.target.parentNode;
+        if (e.target.tagName === 'I') {
+            element = e.target.parentNode
         } else {
-            element = e.target;
+            element = e.target
         }
 
-        element.parentNode.style.pointerEvents = "none";
+        element.parentNode.style.pointerEvents = 'none'
 
-        let postId = element.parentNode.id;
-        postId = postId.replace("post_id_", "");
+        let postId = element.parentNode.id
+        postId = postId.replace('post_id_', '')
 
         var header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -174,34 +166,39 @@ class PostsList extends React.Component {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                id: postId
-            })
+                id: postId,
+            }),
         }
 
-        let likeCount = parseInt(element.textContent.substr(0, element.textContent.indexOf(' ')));
+        let likeCount = parseInt(element.textContent.substr(0, element.textContent.indexOf(' ')))
 
         fetch(process.env.REACT_APP_API_URL + '/api/content/likePost', requestOptions)
             .then((response) => response.text())
-            .then((result) => {                
-                if (result === "unliked") {
-                    likeCount = likeCount - 1;
+            .then((result) => {
+                if (result === 'unliked') {
+                    likeCount = likeCount - 1
 
-                    element.parentNode.classList.remove("liked");
+                    element.parentNode.classList.remove('liked')
 
-                    if (likeCount == 1) {element.textContent = "1 Like";}
-                    else {element.textContent = likeCount + " Likes";}
+                    if (likeCount == 1) {
+                        element.textContent = '1 Like'
+                    } else {
+                        element.textContent = likeCount + ' Likes'
+                    }
                 } else {
-                    likeCount = likeCount + 1;
+                    likeCount = likeCount + 1
 
-                    element.parentNode.classList.add("liked");
+                    element.parentNode.classList.add('liked')
 
-                    if (likeCount == 1) {element.textContent = "1 Like";}
-                    else {element.textContent = likeCount + " Likes";}
+                    if (likeCount == 1) {
+                        element.textContent = '1 Like'
+                    } else {
+                        element.textContent = likeCount + ' Likes'
+                    }
                 }
 
-                element.parentNode.style.pointerEvents = "all";
-            });
-
+                element.parentNode.style.pointerEvents = 'all'
+            })
     }
 
     render() {
@@ -213,26 +210,19 @@ class PostsList extends React.Component {
                             <React.Fragment>
                                 {this.state.items.map((item) => (
                                     <Feed.Event key={item.id}>
-                                        <Feed.Label>
-                                            {item.avatar == "" ? (
-                                                <img src={unknownAvatar} />
-                                            ) : (
-                                                <img src={process.env.REACT_APP_API_URL + "/static/" + item.avatar} />
-                                            )}
-                                        </Feed.Label>
+                                        <Feed.Label>{item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}</Feed.Label>
                                         <Feed.Content>
                                             <Feed.Summary>
-                                                <Feed.User>
-                                                    {item.name}
-                                                </Feed.User>
+                                                <Feed.User>{item.name}</Feed.User>
                                                 <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                             </Feed.Summary>
                                             <Feed.Extra text>
                                                 <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
                                             </Feed.Extra>
                                             <Feed.Meta>
-                                                <Feed.Like onClick={this.toggleLike} id={"post_id_" + item.id} className={item.hasLiked}>
-                                                    <Icon name="like" /><span>{this.getLikes(item.likes)}</span>
+                                                <Feed.Like onClick={this.toggleLike} id={'post_id_' + item.id} className={item.hasLiked}>
+                                                    <Icon name="like" />
+                                                    <span>{this.getLikes(item.likes)}</span>
                                                 </Feed.Like>
                                             </Feed.Meta>
                                         </Feed.Content>
@@ -240,7 +230,6 @@ class PostsList extends React.Component {
                                 ))}
 
                                 <div className="load-more-container">
-
                                     {this.state.isLoadingMore === true ? (
                                         <Button loading primary>
                                             Load more
@@ -250,7 +239,6 @@ class PostsList extends React.Component {
                                             Load more
                                         </Button>
                                     )}
-
                                 </div>
                             </React.Fragment>
                         ) : (
