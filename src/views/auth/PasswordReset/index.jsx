@@ -19,7 +19,7 @@ class PasswordReset extends React.Component {
             pin: '',
             resetToken: '',
             password1: '',
-            password2: ''
+            password2: '',
         }
         this.emailChangeHandler = this.emailChangeHandler.bind(this)
         this.pinChangeHandler = this.pinChangeHandler.bind(this)
@@ -30,20 +30,22 @@ class PasswordReset extends React.Component {
         this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this)
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = 'Reset your Password – WorkGroup';
+    }
 
     emailChangeHandler(event) {
         this.setState({ email: event.target.value })
     }
-    
+
     pinChangeHandler(event) {
         this.setState({ pin: event.target.value })
     }
-   
+
     password1ChangeHandler(event) {
         this.setState({ password1: event.target.value })
     }
-    
+
     password2ChangeHandler(event) {
         this.setState({ password2: event.target.value })
     }
@@ -59,7 +61,7 @@ class PasswordReset extends React.Component {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: this.state.name,
-                        email: this.state.email
+                        email: this.state.email,
                     }),
                 }
                 // eslint-disable-next-line no-undef
@@ -68,9 +70,9 @@ class PasswordReset extends React.Component {
                     .then((data) => {
                         if (data.message == 'Reset success') {
                             this.setState({ isResetting: false })
-                            this.setState({ error: false })                 
+                            this.setState({ error: false })
                             this.setState({ success: false })
-                            this.setState({ showPinCard: "1" })
+                            this.setState({ showPinCard: '1' })
                             this.setState({ pinCardEmail: this.state.email })
                             this.setState({ resetToken: data.token })
                         } else if (data.message == 'User not existing') {
@@ -89,9 +91,9 @@ class PasswordReset extends React.Component {
 
         event.preventDefault()
     }
-    
+
     handlePinSubmit(event) {
-        event.preventDefault();
+        event.preventDefault()
         this.setState({ isResetting: true })
         this.setState({ error: false })
         this.setState({ success: false })
@@ -104,19 +106,19 @@ class PasswordReset extends React.Component {
                     body: JSON.stringify({
                         pin: this.state.pin,
                         email: this.state.email,
-                        token: this.state.resetToken
+                        token: this.state.resetToken,
                     }),
                 }
                 // eslint-disable-next-line no-undef
                 fetch(process.env.REACT_APP_API_URL + '/api/auth/reset/2', requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data);
+                        console.log(data)
                         if (data.message == 'PIN correct') {
                             this.setState({ isResetting: false })
-                            this.setState({ error: false })                 
+                            this.setState({ error: false })
                             this.setState({ success: false })
-                            this.setState({ showPinCard: "2" })
+                            this.setState({ showPinCard: '2' })
                         } else if (data.message == 'PIN incorrect') {
                             this.setState({ error: 'pin_incorrect' })
                             this.setState({ isResetting: false })
@@ -127,17 +129,15 @@ class PasswordReset extends React.Component {
             this.setState({ error: 'inputs_empty' })
             this.setState({ isResetting: false })
         }
-
     }
-    
+
     handlePasswordSubmit(event) {
-        event.preventDefault();
+        event.preventDefault()
         this.setState({ isResetting: true })
         this.setState({ error: false })
         this.setState({ success: false })
 
         if (this.state.password1.trim() !== '' && this.state.password2.trim() !== '') {
-
             if (this.state.password1 !== this.state.password2) {
                 this.setState({ error: 'password_does_not_match' })
                 this.setState({ isResetting: false })
@@ -151,48 +151,43 @@ class PasswordReset extends React.Component {
                             token: this.state.resetToken,
                             pin: this.state.pin,
                             password: this.state.password1,
-                            password_confirmation: this.state.password2
+                            password_confirmation: this.state.password2,
                         }),
                     }
-                    console.log(requestOptions);
+                    console.log(requestOptions)
                     // eslint-disable-next-line no-undef
                     fetch(process.env.REACT_APP_API_URL + '/api/auth/reset/3', requestOptions)
                         .then((response) => response.json())
                         .then((data) => {
                             if (data.message == 'Password resetted') {
                                 this.setState({ isResetting: false })
-                                this.setState({ error: false })                 
+                                this.setState({ error: false })
                                 this.setState({ success: false })
-                                this.setState({ showPinCard: "3" })
+                                this.setState({ showPinCard: '3' })
                             } else if (data.message == 'PIN incorrect') {
                                 this.setState({ error: 'pin_incorrect' })
                                 this.setState({ isResetting: false })
-                            } else if (data.message == "The given data failed to pass validation.") {
+                            } else if (data.message == 'The given data failed to pass validation.') {
                                 this.setState({ error: 'password_insecure' })
                                 this.setState({ isResetting: false })
                             }
                         })
                 }, 300)
             }
-
         } else {
             this.setState({ error: 'inputs_empty' })
             this.setState({ isResetting: false })
         }
-
     }
 
     render() {
         return (
-
             <div className="loginContainer">
                 <img className="logo" alt="Logo" src={logo} />
                 <Card className="login-card">
-
-                    {this.state.showPinCard == "0" && (
+                    {this.state.showPinCard == '0' && (
                         <Card.Content>
                             <div className="formContainer">
-
                                 <h3>Reset your WorkGroup Password</h3>
 
                                 {this.state.error === 'user_not_found' ? (
@@ -203,7 +198,7 @@ class PasswordReset extends React.Component {
                                 ) : (
                                     <div />
                                 )}
-                                
+
                                 {this.state.error === 'reset_error' ? (
                                     <Message negative>
                                         <Message.Header>Oh no! An error occurred😢.</Message.Header>
@@ -245,11 +240,10 @@ class PasswordReset extends React.Component {
                             </div>
                         </Card.Content>
                     )}
-                    
-                    {this.state.showPinCard == "1" && (
+
+                    {this.state.showPinCard == '1' && (
                         <Card.Content>
                             <div className="formContainer">
-
                                 <h3>Reset your WorkGroup Password</h3>
 
                                 {this.state.error === 'pin_incorrect' ? (
@@ -301,11 +295,10 @@ class PasswordReset extends React.Component {
                             </div>
                         </Card.Content>
                     )}
-                    
-                    {this.state.showPinCard == "2" && (
+
+                    {this.state.showPinCard == '2' && (
                         <Card.Content>
                             <div className="formContainer">
-
                                 <h3>Reset your WorkGroup Password</h3>
 
                                 {this.state.error === 'pin_incorrect' ? (
@@ -325,7 +318,7 @@ class PasswordReset extends React.Component {
                                 ) : (
                                     <div />
                                 )}
-                                
+
                                 {this.state.error === 'password_does_not_match' ? (
                                     <Message negative>
                                         <Message.Header>Oh no! An error occurred😢.</Message.Header>
@@ -370,11 +363,10 @@ class PasswordReset extends React.Component {
                             </div>
                         </Card.Content>
                     )}
-                    
-                    {this.state.showPinCard == "3" && (
+
+                    {this.state.showPinCard == '3' && (
                         <Card.Content>
                             <div className="formContainer">
-
                                 <h3>Reset your WorkGroup Password</h3>
 
                                 <Message positive>
@@ -388,10 +380,9 @@ class PasswordReset extends React.Component {
                             </div>
                         </Card.Content>
                     )}
-
                 </Card>
             </div>
         )
     }
 }
-export default PasswordReset;
+export default PasswordReset

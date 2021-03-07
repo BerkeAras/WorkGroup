@@ -19,7 +19,9 @@ class MainApp extends React.Component {
         super(props)
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = 'Feed – WorkGroup';
+    }
 
     render() {
         return (

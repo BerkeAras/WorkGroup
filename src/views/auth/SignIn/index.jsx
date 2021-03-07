@@ -20,7 +20,9 @@ class SignIn extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = 'Sign In – WorkGroup';
+    }
 
     emailChangeHandler(event) {
         this.setState({ email: event.target.value })
@@ -75,7 +77,6 @@ class SignIn extends React.Component {
                 <Card className="login-card">
                     <Card.Content>
                         <div className="formContainer">
-
                             <h3>Sign In into WorkGroup</h3>
 
                             {this.state.error ? (

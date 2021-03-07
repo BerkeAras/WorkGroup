@@ -24,7 +24,9 @@ class SignUp extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = 'Sign Up – WorkGroup';
+    }
 
     nameChangeHandler(event) {
         this.setState({ name: event.target.value })
@@ -105,13 +107,11 @@ class SignUp extends React.Component {
 
     render() {
         return (
-
             <div className="loginContainer">
                 <img className="logo" alt="Logo" src={logo} />
                 <Card className="login-card">
                     <Card.Content>
                         <div className="formContainer">
-
                             <h3>Sign Up to use WorkGroup</h3>
 
                             {this.state.error === 'already_registered' ? (

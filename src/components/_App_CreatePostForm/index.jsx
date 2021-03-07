@@ -12,14 +12,14 @@ import convertOnPaste from './convertOnPaste'
 
 const utilizeFocus = () => {
     const ref = React.createRef()
-    const setFocus = () => {ref.current &&  ref.current.focus()}
+    const setFocus = () => {
+        ref.current && ref.current.focus()
+    }
 
-    return {setFocus, ref} 
+    return { setFocus, ref }
 }
-    
+
 class CreatePostForm extends React.Component {
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -29,12 +29,12 @@ class CreatePostForm extends React.Component {
             isPosting: false,
         }
         this.publishPost = this.publishPost.bind(this)
-        this.inputFocus = utilizeFocus();
+        this.inputFocus = utilizeFocus()
     }
 
     reloadPage = () => {
         // Force a render without state change...
-        document.querySelector('.header__logo').click();
+        document.querySelector('.header__logo').click()
     }
 
     publishPost = () => {
@@ -121,7 +121,15 @@ class CreatePostForm extends React.Component {
                     </Card.Content>
                 </Card>
 
-                <Modal onClose={() => this.setState({ modalOpen: false })} onOpen={() => {this.setState({ modalOpen: true });this.inputFocus.setFocus}} open={this.state.modalOpen} size="tiny">
+                <Modal
+                    onClose={() => this.setState({ modalOpen: false })}
+                    onOpen={() => {
+                        this.setState({ modalOpen: true })
+                        this.inputFocus.setFocus
+                    }}
+                    open={this.state.modalOpen}
+                    size="tiny"
+                >
                     <Modal.Header>Create a new post</Modal.Header>
                     <Modal.Content>
                         <div
@@ -153,17 +161,26 @@ class CreatePostForm extends React.Component {
                         )}
                     </Modal.Actions>
                 </Modal>
-                <input
-                    ref={this.fileInputRef}
-                    type="file"
-                    hidden
-                    onChange={this.fileChange}
-                />
-                <Modal onClose={() => {this.setState({ successModalOpen: false });this.reloadPage()}} onOpen={() => this.setState({ successModalOpen: true })} open={this.state.successModalOpen} size="mini">
+                <input ref={this.fileInputRef} type="file" hidden onChange={this.fileChange} />
+                <Modal
+                    onClose={() => {
+                        this.setState({ successModalOpen: false })
+                        this.reloadPage()
+                    }}
+                    onOpen={() => this.setState({ successModalOpen: true })}
+                    open={this.state.successModalOpen}
+                    size="mini"
+                >
                     <Modal.Header>Post created!</Modal.Header>
                     <Modal.Content>Your post has been created and can now be read by other users!</Modal.Content>
                     <Modal.Actions>
-                        <Button color="black" onClick={() => {this.setState({ successModalOpen: false });this.reloadPage()}}>
+                        <Button
+                            color="black"
+                            onClick={() => {
+                                this.setState({ successModalOpen: false })
+                                this.reloadPage()
+                            }}
+                        >
                             Dismiss
                         </Button>
                     </Modal.Actions>
