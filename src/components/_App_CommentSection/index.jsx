@@ -109,6 +109,7 @@ class CommentSection extends React.Component {
 
     getDate(date) {
         var newDate = new Date(date)
+
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
         var todaysDate = new Date()
@@ -117,10 +118,11 @@ class CommentSection extends React.Component {
 
         if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
             todaysDate = new Date()
-            let currentHours = todaysDate.getHours()
+            newDate = new Date(date)
+            let currentHours = newDate.getHours()
             currentHours = ('0' + currentHours).slice(-2)
 
-            dateString = 'Today, ' + currentHours + ':' + (todaysDate.getMinutes() < 10 ? '0' : '') + todaysDate.getMinutes()
+            dateString = 'Today, ' + currentHours + ':' + (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()
         } else {
             dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
         }
