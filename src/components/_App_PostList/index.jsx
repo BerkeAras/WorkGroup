@@ -118,9 +118,8 @@ class PostsList extends React.Component {
     }
 
     getDate(date) {
-        
         var newDate = new Date(date)
-    
+
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
         var todaysDate = new Date()
