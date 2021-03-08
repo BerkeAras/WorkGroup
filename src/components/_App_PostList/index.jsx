@@ -145,19 +145,55 @@ class PostsList extends React.Component {
 
     toggleLike(e) {
         e.preventDefault()
-        let element
 
-        if (e.target.tagName === 'I') {
+        let element
+        let hasLiked = false
+        let newLikeCount
+        let currentLikeCount
+        let postId
+        let newLikeText
+
+        if (e.target.tagName.toLowerCase() === 'i' || e.target.tagName.toLowerCase() === 'span') {
             element = e.target.parentNode
         } else {
             element = e.target
         }
 
-        element.parentNode.style.pointerEvents = 'none'
+        // Has liked
+        hasLiked = element.classList.contains('liked')
 
-        let postId = element.parentNode.id
-        postId = postId.replace('post_id_', '')
+        // Update counter
+        currentLikeCount = element.querySelector('span').innerHTML.substr(0, element.querySelector('span').innerHTML.indexOf(' '))
+        currentLikeCount = parseInt(currentLikeCount)
 
+        if (hasLiked) {
+            newLikeCount = currentLikeCount - 1
+            hasLiked = false
+        } else {
+            newLikeCount = currentLikeCount + 1
+            hasLiked = true
+        }
+
+        if (newLikeCount === 1) {
+            newLikeText = '1 Like'
+        } else {
+            newLikeText = newLikeCount + ' Likes'
+        }
+
+        // Toggle liked-status
+        element.parentNode.style.pointerEvents = 'none' // Set PointerEvents to none to prevent multiple requests
+
+        postId = element.id.replace('post_id_', '')
+
+        element.querySelector('span').innerHTML = newLikeText
+
+        if (hasLiked) {
+            element.classList.add('liked')
+        } else {
+            element.classList.remove('liked')
+        }
+
+        // Request
         var header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         header.append('Content-Type', 'application/json')
@@ -170,33 +206,9 @@ class PostsList extends React.Component {
             }),
         }
 
-        let likeCount = parseInt(element.textContent.substr(0, element.textContent.indexOf(' ')))
-
         fetch(process.env.REACT_APP_API_URL + '/api/content/likePost', requestOptions)
             .then((response) => response.text())
             .then((result) => {
-                if (result === 'unliked') {
-                    likeCount = likeCount - 1
-
-                    element.parentNode.classList.remove('liked')
-
-                    if (likeCount == 1) {
-                        element.textContent = '1 Like'
-                    } else {
-                        element.textContent = likeCount + ' Likes'
-                    }
-                } else {
-                    likeCount = likeCount + 1
-
-                    element.parentNode.classList.add('liked')
-
-                    if (likeCount == 1) {
-                        element.textContent = '1 Like'
-                    } else {
-                        element.textContent = likeCount + ' Likes'
-                    }
-                }
-
                 element.parentNode.style.pointerEvents = 'all'
             })
     }
