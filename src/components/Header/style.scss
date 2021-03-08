@@ -22,16 +22,16 @@ body {
         img {
             height: 100%;
         }
-        transition: all .2s !important;
+        transition: all 0.2s !important;
         &:hover {
-            transform: scale(.98);
+            transform: scale(0.98);
         }
         &:focus {
             outline: 1px dashed black !important;
             outline-offset: 2px !important;
         }
         &:active {
-            transform: scale(.95);
+            transform: scale(0.95);
             outline: none !important;
         }
         &:last-of-type {
@@ -51,10 +51,10 @@ body {
             padding: 0 12px;
             border-radius: 7px;
             margin: 5px 0 5px 5px;
-            transition: all .2s;
+            transition: all 0.2s;
             &:hover {
                 background-color: #eeeeee;
-                transform: scale(.98);
+                transform: scale(0.98);
             }
             &--active {
                 background-color: #f7f7f7;
@@ -65,7 +65,7 @@ body {
                 outline-offset: 2px !important;
             }
             &:active {
-                transform: scale(.93);
+                transform: scale(0.93);
                 outline: none !important;
             }
         }
@@ -113,11 +113,11 @@ body {
         margin: 5px 0 5px 15px;
         text-align: center;
         cursor: pointer;
-        transition: all .2s;
+        transition: all 0.2s;
         &:hover {
             color: $primary-color;
             background-color: #eeeeee;
-            transform: scale(.98);
+            transform: scale(0.98);
         }
         svg {
             margin: 8px;
@@ -127,7 +127,7 @@ body {
             outline-offset: 2px !important;
         }
         &:active {
-            transform: scale(.93);
+            transform: scale(0.93);
             outline: none !important;
         }
     }
