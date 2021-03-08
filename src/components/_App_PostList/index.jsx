@@ -222,10 +222,12 @@ class PostsList extends React.Component {
                             <React.Fragment>
                                 {this.state.items.map((item) => (
                                     <Feed.Event key={item.id}>
-                                        <Feed.Label className="user-avatar" href={"/user/" + item.email}>{item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}</Feed.Label>
+                                        <Feed.Label className="user-avatar" href={'/user/' + item.email}>
+                                            {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}
+                                        </Feed.Label>
                                         <Feed.Content>
                                             <Feed.Summary>
-                                                <Feed.User href={"/user/" + item.email}>{item.name}</Feed.User>
+                                                <Feed.User href={'/user/' + item.email}>{item.name}</Feed.User>
                                                 <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                             </Feed.Summary>
                                             <Feed.Extra text>
