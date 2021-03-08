@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 import unknownAvatar from '../../static/unknown.png'
 
-import CommentSection from '../_App_CommentSection/';
+import CommentSection from '../_App_CommentSection/'
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -93,8 +93,8 @@ class PostsList extends React.Component {
                 (res) => {
                     this.setState({ isLoadingMore: false })
                     if (res['status_code'] !== undefined) {
-                        if (res["message"] === "Token has expired") {
-                            location.href = "/logout";
+                        if (res['message'] === 'Token has expired') {
+                            location.href = '/logout'
                             localStorage.clear()
                         }
                         console.error('ERROR: ' + res['message'])
@@ -149,7 +149,7 @@ class PostsList extends React.Component {
 
         return returnStr
     }
-    
+
     getComments(comments) {
         let returnStr = '0 Comments'
 
@@ -163,19 +163,21 @@ class PostsList extends React.Component {
     }
 
     toggleComment(e) {
-
-        Array.prototype.remove = function() {
-            var what, a = arguments, L = a.length, ax;
+        Array.prototype.remove = function () {
+            var what,
+                a = arguments,
+                L = a.length,
+                ax
             while (L && this.length) {
-                what = a[--L];
+                what = a[--L]
                 while ((ax = this.indexOf(what)) !== -1) {
-                    this.splice(ax, 1);
+                    this.splice(ax, 1)
                 }
             }
-            return this;
-        };        
+            return this
+        }
 
-        let element;
+        let element
 
         if (e.target.tagName.toLowerCase() === 'i' || e.target.tagName.toLowerCase() === 'span') {
             element = e.target.parentNode
@@ -183,35 +185,31 @@ class PostsList extends React.Component {
             element = e.target
         }
 
-        
-        let val = element.id.replace("post_comment_id_", "");
+        let val = element.id.replace('post_comment_id_', '')
         val = parseInt(val)
-                
-        let isVisible = this.state.visibleCommentSections.includes(val);
-        
-        let newStatus;
+
+        let isVisible = this.state.visibleCommentSections.includes(val)
+
+        let newStatus
 
         if (!isVisible) {
-            newStatus = true;
-
-            let visibleCommentSections = [...this.state.visibleCommentSections];
-
-            // Add item to it
-            visibleCommentSections.push(val);
-
-            // Set state
-            this.setState({ visibleCommentSections });
-
-        } else {
-            newStatus = false;
+            newStatus = true
 
             let visibleCommentSections = [...this.state.visibleCommentSections]
-            visibleCommentSections.remove(val);
 
-            this.setState({ visibleCommentSections });
+            // Add item to it
+            visibleCommentSections.push(val)
+
+            // Set state
+            this.setState({ visibleCommentSections })
+        } else {
+            newStatus = false
+
+            let visibleCommentSections = [...this.state.visibleCommentSections]
+            visibleCommentSections.remove(val)
+
+            this.setState({ visibleCommentSections })
         }
-
-
     }
 
     toggleLike(e) {
@@ -317,9 +315,7 @@ class PostsList extends React.Component {
                                                 </Feed.Meta>
                                             </Feed.Content>
                                         </Feed.Event>
-                                        {this.state.visibleCommentSections.includes(item.id) > 0 &&
-                                            <CommentSection postId={item.id.toString()} />
-                                        }
+                                        {this.state.visibleCommentSections.includes(item.id) > 0 && <CommentSection postId={item.id.toString()} />}
                                     </React.Fragment>
                                 ))}
 
