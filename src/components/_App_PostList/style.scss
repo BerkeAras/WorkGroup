@@ -1,6 +1,6 @@
 .event {
-    border-radius: 0.28571429rem !important;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5 !important;
+    border-radius: 0.28571429rem 0.28571429rem 0 0 !important;
+    box-shadow: 0 1px 3px 0 #d4d4d5;
     background: white !important;
     margin-top: 20px !important;
     padding: 15px !important;
@@ -33,7 +33,8 @@
             color: #ff2733 !important;
         }
     }
-    a.like {
+    a.like,
+    a.comment-button {
         padding: 2px 2px;
         &:focus {
             outline: 1px dashed black;
@@ -56,6 +57,19 @@
             }
         }
     }
+}
+
+.ui.feed > .event > .label {
+    height: 2.5em !important;
+}
+
+.comments-group {
+    border-radius: 0 0 0.28571429rem 0.28571429rem;
+    box-shadow: 0 2px 3px 0 #d4d4d5;
+    background: white !important;
+    padding: 15px !important;
+    margin-top: -1px !important;
+    border-top: 1px solid #eaeaea;
 }
 
 .load-more-container {

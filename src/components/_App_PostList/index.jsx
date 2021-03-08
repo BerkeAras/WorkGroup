@@ -1,9 +1,11 @@
 import React, { useRef } from 'react'
 import './style.scss'
-import { Feed, Icon, Card, Loader, Button } from 'semantic-ui-react'
+import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import unknownAvatar from '../../static/unknown.png'
+
+import CommentSection from '../_App_CommentSection/'
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -14,8 +16,11 @@ class PostsList extends React.Component {
             cursor: 1,
             loaded: false,
             isLoadingMore: false,
+            visibleCommentSections: [],
             emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
         }
+
+        this.toggleComment = this.toggleComment.bind(this)
     }
 
     componentDidMount() {
@@ -88,9 +93,11 @@ class PostsList extends React.Component {
                 (res) => {
                     this.setState({ isLoadingMore: false })
                     if (res['status_code'] !== undefined) {
+                        if (res['message'] === 'Token has expired') {
+                            location.href = '/logout'
+                            localStorage.clear()
+                        }
                         console.error('ERROR: ' + res['message'])
-                        //localStorage.clear()
-                        //location.href = '/?error_happened'
                     } else {
                         if (this.state.items.length > 60) {
                             this.setState({ items: [] })
@@ -143,6 +150,68 @@ class PostsList extends React.Component {
         return returnStr
     }
 
+    getComments(comments) {
+        let returnStr = '0 Comments'
+
+        if (comments == 1) {
+            returnStr = '1 Comment'
+        } else {
+            returnStr = comments + ' Comments'
+        }
+
+        return returnStr
+    }
+
+    toggleComment(e) {
+        Array.prototype.remove = function () {
+            var what,
+                a = arguments,
+                L = a.length,
+                ax
+            while (L && this.length) {
+                what = a[--L]
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1)
+                }
+            }
+            return this
+        }
+
+        let element
+
+        if (e.target.tagName.toLowerCase() === 'i' || e.target.tagName.toLowerCase() === 'span') {
+            element = e.target.parentNode
+        } else {
+            element = e.target
+        }
+
+        let val = element.id.replace('post_comment_id_', '')
+        val = parseInt(val)
+
+        let isVisible = this.state.visibleCommentSections.includes(val)
+
+        let newStatus
+
+        if (!isVisible) {
+            newStatus = true
+
+            let visibleCommentSections = [...this.state.visibleCommentSections]
+
+            // Add item to it
+            visibleCommentSections.push(val)
+
+            // Set state
+            this.setState({ visibleCommentSections })
+        } else {
+            newStatus = false
+
+            let visibleCommentSections = [...this.state.visibleCommentSections]
+            visibleCommentSections.remove(val)
+
+            this.setState({ visibleCommentSections })
+        }
+    }
+
     toggleLike(e) {
         e.preventDefault()
 
@@ -183,7 +252,7 @@ class PostsList extends React.Component {
         // Toggle liked-status
         element.parentNode.style.pointerEvents = 'none' // Set PointerEvents to none to prevent multiple requests
 
-        postId = element.id.replace('post_id_', '')
+        postId = element.id.replace('post_like_id_', '')
 
         element.querySelector('span').innerHTML = newLikeText
 
@@ -221,26 +290,33 @@ class PostsList extends React.Component {
                         {this.state.items.length > 0 ? (
                             <React.Fragment>
                                 {this.state.items.map((item) => (
-                                    <Feed.Event key={item.id}>
-                                        <Feed.Label className="user-avatar" href={'/user/' + item.email}>
-                                            {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}
-                                        </Feed.Label>
-                                        <Feed.Content>
-                                            <Feed.Summary>
-                                                <Feed.User href={'/user/' + item.email}>{item.name}</Feed.User>
-                                                <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
-                                            </Feed.Summary>
-                                            <Feed.Extra text>
-                                                <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
-                                            </Feed.Extra>
-                                            <Feed.Meta>
-                                                <Feed.Like href="#" onClick={this.toggleLike} id={'post_id_' + item.id} className={item.hasLiked}>
-                                                    <Icon name="like" />
-                                                    <span>{this.getLikes(item.likes)}</span>
-                                                </Feed.Like>
-                                            </Feed.Meta>
-                                        </Feed.Content>
-                                    </Feed.Event>
+                                    <React.Fragment key={item.id}>
+                                        <Feed.Event>
+                                            <Feed.Label className="user-avatar" href={'/user/' + item.email}>
+                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                <Feed.Summary>
+                                                    <Feed.User href={'/user/' + item.email}>{item.name}</Feed.User>
+                                                    <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
+                                                </Feed.Summary>
+                                                <Feed.Extra text>
+                                                    <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
+                                                </Feed.Extra>
+                                                <Feed.Meta>
+                                                    <Feed.Like href="#" onClick={this.toggleLike} id={'post_like_id_' + item.id} className={item.hasLiked}>
+                                                        <Icon name="like" />
+                                                        <span>{this.getLikes(item.likes)}</span>
+                                                    </Feed.Like>
+                                                    <a href="#" className="comment-button" onClick={this.toggleComment} id={'post_comment_id_' + item.id}>
+                                                        <Icon name="comment" />
+                                                        <span>{this.getComments(item.comments)}</span>
+                                                    </a>
+                                                </Feed.Meta>
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                        {this.state.visibleCommentSections.includes(item.id) > 0 && <CommentSection postId={item.id.toString()} />}
+                                    </React.Fragment>
                                 ))}
 
                                 <div className="load-more-container">

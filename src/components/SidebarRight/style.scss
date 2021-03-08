@@ -4,13 +4,12 @@ body {
     height: 100%;
     overflow: hidden !important;
 }
+
 .sidebar_right {
     float: right;
     width: 290px;
-
     .card {
         margin-bottom: 40px;
-
         .card-item {
             display: inline-block;
             width: 100%;
@@ -25,14 +24,22 @@ body {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-
             svg {
                 margin-right: 10px;
                 opacity: 0.8;
             }
-
+            transition: all 0.2s !important;
             &:hover {
-                background: #f7f7f7;
+                background-color: #eeeeee;
+                transform: scale(0.98);
+            }
+            &:focus {
+                outline: 1px dashed black !important;
+                outline-offset: 2px !important;
+            }
+            &:active {
+                transform: scale(0.95);
+                outline: none !important;
             }
             &:last-of-type {
                 margin-bottom: 0 !important;
