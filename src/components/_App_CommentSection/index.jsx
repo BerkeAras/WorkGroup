@@ -170,9 +170,9 @@ class CommentSection extends React.Component {
                     <Form.TextArea id={'comment_textarea_' + this.props.postId} placeholder={this.state.placeholder} />
 
                     {this.state.isPosting === true ? (
-                        <Button content="Add Reply" loading labelPosition="left" icon="edit" primary />
+                        <Button size="small" compact content="Add Reply" loading labelPosition="left" icon="edit" primary />
                     ) : (
-                        <Button content="Add Reply" onClick={this.handleSubmit} labelPosition="left" icon="edit" primary />
+                        <Button size="small" compact content="Add Reply" onClick={this.handleSubmit} labelPosition="left" icon="edit" primary />
                     )}
                 </Form>
             </Comment.Group>
