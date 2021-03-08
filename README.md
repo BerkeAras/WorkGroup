@@ -1,5 +1,10 @@
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/BerkeAras/WorkGroup/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/BerkeAras/WorkGroup/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://github.com/BerkeAras/WorkGroup/releases/)
+![Profile views](https://gpvc.arturio.dev/BerkeAras)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://GitHub.com/BerkeAras/WorkGroup/graphs/contributors/)
 <!-- PROJECT LOGO -->
-<br />
+<br /><br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="https://raw.githubusercontent.com/BerkeAras/WorkGroup/main/src/static/logo.svg" alt="Logo" height="50">
