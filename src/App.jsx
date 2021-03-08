@@ -91,6 +91,9 @@ class App extends React.Component {
                             <Route exact path="/password-reset">
                                 <PasswordReset />
                             </Route>
+                            <Route exact path="/logout">
+                                <LogOut />
+                            </Route>
                         </React.Fragment>
                     )}
                 </Switch>

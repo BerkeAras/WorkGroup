@@ -1,0 +1,15 @@
+.ui.comments .reply.form textarea {
+    height: 5em !important;
+    margin-top: 20px;
+}
+
+.empty-comments {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0 0 0;
+    font-size: 15px;
+    color: rgba(0, 0, 0, .4);
+    font-style: italic;
+    letter-spacing: 0.3px;
+}
