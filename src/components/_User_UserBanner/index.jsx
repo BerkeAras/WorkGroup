@@ -3,7 +3,7 @@ import './style.scss'
 import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
-import unknownBanner from '../../static/banner.jpg';
+import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'
 
 class UserBanner extends React.Component {
@@ -12,13 +12,12 @@ class UserBanner extends React.Component {
 
         this.state = {
             background: unknownBanner,
-            avatar: unknownAvatar
+            avatar: unknownAvatar,
         }
     }
 
     componentDidMount() {
-
-        let email = this.props.email;
+        let email = this.props.email
 
         var bannerHeader = new Headers()
         bannerHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -32,17 +31,14 @@ class UserBanner extends React.Component {
         this.setState({ isLoading: true, error: undefined })
         fetch(process.env.REACT_APP_API_URL + `/api/user/getBanner?email=${email}`, requestOptions)
             .then((res) => res.json())
-            .then(
-                (res) => {
-                    if (res[0].banner != "") {
-                        this.setState({background: res[0].banner});
-                    }
-                    if (res[0].avatar != "") {
-                        this.setState({avatar: res[0].avatar});
-                    }
+            .then((res) => {
+                if (res[0].banner != '') {
+                    this.setState({ background: res[0].banner })
                 }
-            )
-
+                if (res[0].avatar != '') {
+                    this.setState({ avatar: res[0].avatar })
+                }
+            })
     }
 
     render() {
@@ -50,10 +46,12 @@ class UserBanner extends React.Component {
             <div className="user-banner">
                 <img className="banner-image" src={this.state.background} alt="Banner" />
 
-                <img src={this.state.avatar} alt="Avatar" className="user-avatar"/><br />
+                <img src={this.state.avatar} alt="Avatar" className="user-avatar" />
+                <br />
 
                 <div className="banner-content">
-                    <span className="user-name">{localStorage.getItem('user_name')}</span><br />
+                    <span className="user-name">{localStorage.getItem('user_name')}</span>
+                    <br />
                     <span className="user-email">{localStorage.getItem('user_email')}</span>
                 </div>
             </div>

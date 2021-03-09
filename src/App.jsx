@@ -9,7 +9,7 @@ import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
 import User from './views/User'
 
-import FirstLogin from './components/_User_FirstLogin';
+import FirstLogin from './components/_User_FirstLogin'
 
 class App extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class App extends React.Component {
 
         this.state = {
             isLoggedIn: false,
-            first_login: false
+            first_login: false,
         }
         this.setLoggedInStatus = this.setLoggedInStatus.bind(this)
         this.handleStateChange = this.handleStateChange.bind(this)
@@ -65,23 +65,21 @@ class App extends React.Component {
                 .catch((error) => console.log('error', error))
         }
 
-        if (localStorage.getItem('first_login') == "true") {
-            this.setState({first_login: true});
+        if (localStorage.getItem('first_login') == 'true') {
+            this.setState({ first_login: true })
             localStorage.removeItem('first_login')
         }
     }
 
     handleStateChange() {
-        this.setState({first_login: false});
-        location.href = '/?';
+        this.setState({ first_login: false })
+        location.href = '/?'
     }
 
     render() {
         return (
             <Router>
-                {this.state.first_login && (
-                    <FirstLogin handleStateChange={this.handleStateChange} />
-                )}
+                {this.state.first_login && <FirstLogin handleStateChange={this.handleStateChange} />}
                 <Switch>
                     {this.state.isLoggedIn ? (
                         <React.Fragment>

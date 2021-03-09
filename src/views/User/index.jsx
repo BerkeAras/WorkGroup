@@ -10,14 +10,13 @@ import PropTypes from 'prop-types'
 import Header from '../../components/Header'
 import Content from '../../components/Content'
 
-import UserBanner from '../../components/_User_UserBanner';
+import UserBanner from '../../components/_User_UserBanner'
 
 function User() {
-
-    let { email } = useParams();
+    let { email } = useParams()
 
     useEffect(() => {
-        document.title = 'User – WorkGroup';
+        document.title = 'User – WorkGroup'
     })
 
     return (
@@ -27,8 +26,7 @@ function User() {
                 <UserBanner email={email}></UserBanner>
             </div>
         </div>
-    );
-
+    )
 }
 
-export default User;
+export default User

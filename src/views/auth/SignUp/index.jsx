@@ -84,7 +84,7 @@ class SignUp extends React.Component {
                                         if (data.message == 'Login success') {
                                             localStorage.setItem('token', data.data.token)
                                             this.setState({ isLoggedIn: true })
-                                            localStorage.setItem('first_login', true);
+                                            localStorage.setItem('first_login', true)
                                             location.href = '/'
                                         }
                                     })
