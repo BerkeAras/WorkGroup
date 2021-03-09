@@ -35,11 +35,15 @@ body {
     }
 }
 
-.input input {
+.input input,
+input.search,
+textarea {
     box-shadow: 0 0 0 3px transparent !important;
 }
 
-.input input:focus {
+.input input:focus,
+input.search:focus,
+textarea:focus {
     box-shadow: 0 0 0 2px #85b7d9 !important;
 }
 

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import './scss/style.scss'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import SignIn from './views/auth/SignIn'
 import SignUp from './views/auth/SignUp'
 import ProfilePage from './views/auth/ProfilePage'
 import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
+import User from './views/User'
+
+import FirstLogin from './components/_User_FirstLogin'
 
 class App extends React.Component {
     constructor(props) {
@@ -14,8 +17,10 @@ class App extends React.Component {
 
         this.state = {
             isLoggedIn: false,
+            first_login: false,
         }
         this.setLoggedInStatus = this.setLoggedInStatus.bind(this)
+        this.handleStateChange = this.handleStateChange.bind(this)
     }
 
     setLoggedInStatus = (status) => {
@@ -59,11 +64,22 @@ class App extends React.Component {
                 })
                 .catch((error) => console.log('error', error))
         }
+
+        if (localStorage.getItem('first_login') == 'true') {
+            this.setState({ first_login: true })
+            localStorage.removeItem('first_login')
+        }
+    }
+
+    handleStateChange() {
+        this.setState({ first_login: false })
+        location.href = '/?'
     }
 
     render() {
         return (
             <Router>
+                {this.state.first_login && <FirstLogin handleStateChange={this.handleStateChange} />}
                 <Switch>
                     {this.state.isLoggedIn ? (
                         <React.Fragment>
@@ -75,6 +91,9 @@ class App extends React.Component {
                             </Route>
                             <Route exact path="/logout">
                                 <LogOut />
+                            </Route>
+                            <Route path="/user/:email">
+                                <User />
                             </Route>
                         </React.Fragment>
                     ) : (
