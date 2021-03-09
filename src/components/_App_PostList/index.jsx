@@ -295,7 +295,7 @@ class PostsList extends React.Component {
                                     <React.Fragment key={item.id}>
                                         <Feed.Event>
                                             <Feed.Label className="user-avatar" href={'/user/' + item.email}>
-                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/static/' + item.avatar} />}
+                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + (item.avatar.replace("./", ""))} />}
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Feed.Summary>

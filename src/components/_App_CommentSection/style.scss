@@ -3,6 +3,15 @@
     margin-top: 20px;
 }
 
+.comments-group {
+    .avatar {
+        margin-top: 0 !important;
+        img {
+            border-radius: 1000px !important;
+        }
+    }
+}
+
 .empty-comments {
     display: inline-block;
     width: 100%;

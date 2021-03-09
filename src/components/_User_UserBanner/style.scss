@@ -1,0 +1,40 @@
+.user-banner {
+    width: 100%;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    img.banner-image {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px 10px 0 0;
+        object-fit: cover;
+    }
+    img.user-avatar {
+        border-radius: 10000px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-top: -50px;
+        margin-left: 50px;
+        border: 6px solid white;
+        background: white;
+    }
+    .banner-content {
+        width: 100%;
+        height: 200px;
+        margin-top: -58px;
+        padding: 75px 58px 20px 58px;
+        .user-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c86d0;
+        }
+        .user-email {
+            font-size: 17px;
+            display: inline-block;
+            margin-top: 7px;
+            color: #0000008a;
+            letter-spacing: .3px;
+        }
+    }
+}

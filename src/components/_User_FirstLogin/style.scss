@@ -1,0 +1,32 @@
+.first-login-modal {
+    .description {
+        text-align: center;
+    }
+    textarea {
+        resize: none !important;
+    }
+    .content {
+        height: 600px !important;
+        max-height: 600px !important;
+    }
+    img {
+        background: #f3f3f3;
+        object-fit: cover;
+    }
+    img.banner {
+        width: calc(100% + 3rem);
+        height: 200px;
+        object-fit: cover;
+        margin: 20px -1.5rem 0 -1.5rem;
+        cursor: pointer;
+    }
+    img.avatar {
+        width: 100px;
+        height: 100px;
+        margin-top: -54px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        border-radius: 1000px;
+        border: 5px solid white;
+    }
+}
