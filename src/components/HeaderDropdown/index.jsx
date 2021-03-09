@@ -21,7 +21,7 @@ class HeaderDropdown extends React.Component {
     render() {
         return (
             <div className="header__dropdown">
-                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app">
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to={'/user/' + localStorage.getItem('user_email')}>
                     My Account
                 </NavLink>
                 <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/today">
