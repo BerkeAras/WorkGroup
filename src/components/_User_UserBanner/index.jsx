@@ -33,10 +33,10 @@ class UserBanner extends React.Component {
             .then((res) => res.json())
             .then((res) => {
                 if (res[0].banner != '' && res[0].banner != undefined) {
-                    this.setState({ background: process.env.REACT_APP_API_URL + "/" + (res[0].banner).replace("./", "") })
+                    this.setState({ background: process.env.REACT_APP_API_URL + '/' + res[0].banner.replace('./', '') })
                 }
                 if (res[0].avatar != '' && res[0].avatar != undefined) {
-                    this.setState({ avatar: process.env.REACT_APP_API_URL + "/" + (res[0].avatar).replace("./", "") })
+                    this.setState({ avatar: process.env.REACT_APP_API_URL + '/' + res[0].avatar.replace('./', '') })
                 }
             })
     }
@@ -50,10 +50,19 @@ class UserBanner extends React.Component {
                 <br />
 
                 <div className="banner-content">
-
                     {localStorage.getItem('user_email') == this.props.email && (
-                        <Button size="tiny" basic onClick={() => {localStorage.setItem('first_login', 'true');location.reload();}} primary icon labelPosition='left'>
-                            <Icon name='pencil' />
+                        <Button
+                            size="tiny"
+                            basic
+                            onClick={() => {
+                                localStorage.setItem('first_login', 'true')
+                                location.reload()
+                            }}
+                            primary
+                            icon
+                            labelPosition="left"
+                        >
+                            <Icon name="pencil" />
                             Edit your Account
                         </Button>
                     )}

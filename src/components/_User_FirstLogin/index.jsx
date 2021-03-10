@@ -288,7 +288,6 @@ class FirstLogin extends React.Component {
     }
 
     componentDidMount() {
-
         var bannerHeader = new Headers()
         bannerHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
@@ -309,7 +308,7 @@ class FirstLogin extends React.Component {
                         department: res[0].user_department,
                         phone: res[0].user_phone,
                         slogan: res[0].user_slogan,
-                        street: res[0].user_street
+                        street: res[0].user_street,
                     })
                 }
             })
