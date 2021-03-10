@@ -287,6 +287,33 @@ class FirstLogin extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentDidMount() {
+        var bannerHeader = new Headers()
+        bannerHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+        var requestOptions = {
+            method: 'GET',
+            headers: bannerHeader,
+            redirect: 'follow',
+        }
+
+        fetch(process.env.REACT_APP_API_URL + `/api/user/getUserInformation`, requestOptions)
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.length > 0) {
+                    this.setState({
+                        birthday: res[0].user_birthday,
+                        city: res[0].user_city,
+                        country: res[0].user_country,
+                        department: res[0].user_department,
+                        phone: res[0].user_phone,
+                        slogan: res[0].user_slogan,
+                        street: res[0].user_street,
+                    })
+                }
+            })
+    }
+
     bannerInputRef = React.createRef()
     avatarInputRef = React.createRef()
 
@@ -495,7 +522,7 @@ class FirstLogin extends React.Component {
                         </Form.Field>
                         <Form.Field>
                             <label>Your Country</label>
-                            <Dropdown placeholder="Select your Country" fluid search selection options={countryOptions} onChange={this.handleCountryChange} />
+                            <Dropdown placeholder="Select your Country" fluid search selection options={countryOptions} value={this.state.country} onChange={this.handleCountryChange} />
                         </Form.Field>
                         <Form.Field>
                             <label>Your City</label>
