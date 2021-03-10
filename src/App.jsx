@@ -73,7 +73,7 @@ class App extends React.Component {
 
     handleStateChange() {
         this.setState({ first_login: false })
-        location.href = '/?'
+        localStorage.removeItem('first_login')
     }
 
     render() {

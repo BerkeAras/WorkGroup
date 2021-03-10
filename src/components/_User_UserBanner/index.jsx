@@ -32,11 +32,11 @@ class UserBanner extends React.Component {
         fetch(process.env.REACT_APP_API_URL + `/api/user/getBanner?email=${email}`, requestOptions)
             .then((res) => res.json())
             .then((res) => {
-                if (res[0].banner != '') {
-                    this.setState({ background: res[0].banner })
+                if (res[0].banner != '' && res[0].banner != undefined) {
+                    this.setState({ background: process.env.REACT_APP_API_URL + "/" + (res[0].banner).replace("./", "") })
                 }
-                if (res[0].avatar != '') {
-                    this.setState({ avatar: res[0].avatar })
+                if (res[0].avatar != '' && res[0].avatar != undefined) {
+                    this.setState({ avatar: process.env.REACT_APP_API_URL + "/" + (res[0].avatar).replace("./", "") })
                 }
             })
     }
@@ -50,6 +50,14 @@ class UserBanner extends React.Component {
                 <br />
 
                 <div className="banner-content">
+
+                    {localStorage.getItem('user_email') == this.props.email && (
+                        <Button size="tiny" basic onClick={() => {localStorage.setItem('first_login', 'true');location.reload();}} primary icon labelPosition='left'>
+                            <Icon name='pencil' />
+                            Edit your Account
+                        </Button>
+                    )}
+
                     <span className="user-name">{localStorage.getItem('user_name')}</span>
                     <br />
                     <span className="user-email">{localStorage.getItem('user_email')}</span>
