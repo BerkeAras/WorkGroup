@@ -4,28 +4,31 @@ body {
     height: 100%;
     overflow: hidden !important;
 }
+
 .sidebar_left {
     float: left;
     width: 290px;
-
     .card {
         margin-bottom: 40px;
-
         .about-card-content {
             text-align: center;
-
             .about-logo {
                 display: block;
                 width: 100%;
                 text-align: center;
                 color: #9aa1a5;
                 font-size: 14px;
-
                 img {
                     height: 20px;
                     margin-bottom: 5px;
                 }
             }
         }
+    }
+}
+
+@media (max-width: 1130px) {
+    .sidebar_left {
+        display: none;
     }
 }
