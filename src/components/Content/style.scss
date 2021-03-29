@@ -4,8 +4,16 @@ body {
     height: 100%;
     overflow: hidden !important;
 }
+
 .content_container {
     float: left;
     width: calc(100% - 290px - 290px);
     padding: 0 30px 30px 30px;
+}
+
+@media (max-width:1130px) {
+    .content_container {
+        width: 100%;
+        padding: 0 5px 5px 5px;
+    }
 }

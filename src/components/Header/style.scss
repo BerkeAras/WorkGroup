@@ -137,14 +137,14 @@ body {
 }
 
 @media (max-width: 1300px) {
-    .header {
+    .nav-header {
         margin-top: 0;
         border-radius: 0 0 10px 10px;
     }
 }
 
 @media (max-width: 600px) {
-    .header {
+    .nav-header {
         .header__menu-items {
             display: none;
         }
