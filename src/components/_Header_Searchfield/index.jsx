@@ -1,26 +1,48 @@
 import React, { useState, useEffect } from 'react'
-import { Input, Form } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { DebounceInput } from 'react-debounce-input'
+
+// Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import './style.scss'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
+
+import './style.scss'
 
 const SearchField = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [userResult, setUserResult] = useState([])
     const [topicResult, setTopicResult] = useState([])
+    const [popularTopics, setPopularTopics] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
 
-    const searchQueryChangeHandler = (event) => {
-        setSearchQuery(event.target.value)
+    useEffect(() => {
+        var tokenHeaders = new Headers()
+        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        var requestOptions = {
+            method: 'GET',
+            headers: tokenHeaders,
+            redirect: 'follow',
+        }
+        // eslint-disable-next-line no-undef
+        fetch(process.env.REACT_APP_API_URL + '/api/sidebar/popular', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                setPopularTopics(result)
+            })
+            .catch((error) => console.log('error', error))
+    }, [])
+
+    const searchQueryChangeHandler = () => {
+        let inputValue = document.querySelector('.SearchField input').value.trim()
+        setSearchQuery(inputValue)
         const controller = new AbortController()
         const { signal } = controller
 
-        if (event.target.value == '') {
+        if (inputValue == '' || inputValue.length < 3) {
             setUserResult([])
             setTopicResult([])
             setIsLoadingResults(false)
@@ -40,7 +62,7 @@ const SearchField = () => {
             setIsLoadingResults(true)
 
             // eslint-disable-next-line no-undef
-            fetch(process.env.REACT_APP_API_URL + '/api/search?query=' + event.target.value, requestOptions, { signal })
+            fetch(process.env.REACT_APP_API_URL + '/api/search?query=' + encodeURIComponent(inputValue), requestOptions, { signal })
                 .then((response) => response.json())
                 .then((result) => {
                     let userResult = result[0]
@@ -75,8 +97,20 @@ const SearchField = () => {
     return (
         <React.Fragment>
             <div className="SearchField" onBlur={searchFieldFocusOut}>
-                <form>
-                    <input value={searchQuery} onFocus={searchFieldFocus} onChange={searchQueryChangeHandler} placeholder="Search for colleagues, groups, events and more..." />
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        searchQueryChangeHandler()
+                    }}
+                >
+                    <DebounceInput
+                        minLength={3}
+                        debounceTimeout={500}
+                        value={searchQuery}
+                        onFocus={searchFieldFocus}
+                        onChange={searchQueryChangeHandler}
+                        placeholder="Search for colleagues, groups, events and more..."
+                    />
                     {isLoadingResults && <span className="loader"></span>}
                 </form>
 
@@ -89,17 +123,30 @@ const SearchField = () => {
                                     return (
                                         <li key={user.id}>
                                             <Link to={'/app/user/' + user.email}>
-                                                <FontAwesomeIcon icon="user" /> {user.name} <small>Rechtsabteilung</small>
+                                                <FontAwesomeIcon icon="user" /> {user.name} {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
                                             </Link>
                                         </li>
                                     )
                                 })}
                             </React.Fragment>
                         )}
-                        {topicResult.length > 0 && (
+                        {topicResult.length > 0 ? (
                             <React.Fragment>
-                                <span className="divider">Topics</span>
+                                <span className="divider">Popular topics</span>
                                 {topicResult.map((topic) => {
+                                    return (
+                                        <li key={topic.id}>
+                                            <Link to={'/app/topics/' + topic.topic}>
+                                                <FontAwesomeIcon icon="hashtag" /> {topic.topic}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <span className="divider">Popular topics</span>
+                                {popularTopics.map((topic) => {
                                     return (
                                         <li key={topic.id}>
                                             <Link to={'/app/topics/' + topic.topic}>
