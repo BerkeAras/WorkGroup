@@ -170,7 +170,7 @@ const SearchField = () => {
                     </ul>
                 </div>
             </div>
-            <a href="#" onClick={showMobileSearch} className="header__dropdown-button">
+            <a href="#" onClick={showMobileSearch} className="header__dropdown-button header__dropdown-button-search">
                 <Search></Search>
             </a>
             <div className="SearchFieldBackdrop" onClick={(event) => {searchFieldFocusOut(true)}}></div>
