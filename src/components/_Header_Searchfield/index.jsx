@@ -88,7 +88,7 @@ const SearchField = () => {
                                 {userResult.map((user) => {
                                     return (
                                         <li key={user.id}>
-                                            <Link to={"/app/user/" + user.email}>
+                                            <Link to={'/app/user/' + user.email}>
                                                 <FontAwesomeIcon icon="user" /> {user.name} <small>Rechtsabteilung</small>
                                             </Link>
                                         </li>
@@ -102,7 +102,7 @@ const SearchField = () => {
                                 {topicResult.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link to={"/app/topics/" + topic.topic}>
+                                            <Link to={'/app/topics/' + topic.topic}>
                                                 <FontAwesomeIcon icon="hashtag" /> {topic.topic}
                                             </Link>
                                         </li>
