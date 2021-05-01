@@ -6,6 +6,7 @@ import { DebounceInput } from 'react-debounce-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
+import { MoreVertical, Search } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -35,6 +36,12 @@ const SearchField = () => {
             })
             .catch((error) => console.log('error', error))
     }, [])
+
+    const showMobileSearch = (event) => {
+        event.preventDefault();
+        document.querySelector('.SearchField').classList.add('SearchField-mobile-visible')
+        document.querySelector('.SearchField input').focus();
+    }
 
     const searchQueryChangeHandler = () => {
         let inputValue = document.querySelector('.SearchField input').value.trim()
@@ -82,16 +89,19 @@ const SearchField = () => {
         document.querySelector('.SearchField-Results').classList.add('SearchField-Results-visible')
         document.querySelector('.SearchField').classList.add('SearchField-expanded')
     }
-    const searchFieldFocusOut = () => {
-        setTimeout(function () {
-            if (document.querySelector('.SearchField').contains(document.activeElement) == false) {
-                document.querySelector('.SearchFieldBackdrop').classList.remove('SearchFieldBackdrop-visible')
-                document.querySelector('.SearchField-Results').classList.remove('SearchField-Results-visible')
-                document.querySelector('.SearchField').classList.remove('SearchField-expanded')
-            } else {
-                searchFieldFocus()
-            }
-        }, 10)
+    const searchFieldFocusOut = (force = false) => {
+        if (!document.querySelector('.SearchField-mobile-visible') || force == true) {
+            setTimeout(function () {
+                if (document.querySelector('.SearchField').contains(document.activeElement) == false) {
+                    document.querySelector('.SearchFieldBackdrop').classList.remove('SearchFieldBackdrop-visible')
+                    document.querySelector('.SearchField-Results').classList.remove('SearchField-Results-visible')
+                    document.querySelector('.SearchField').classList.remove('SearchField-expanded')
+                    document.querySelector('.SearchField').classList.remove('SearchField-mobile-visible')
+                } else {
+                    searchFieldFocus()
+                }
+            }, 10)
+        }
     }
 
     return (
@@ -160,7 +170,10 @@ const SearchField = () => {
                     </ul>
                 </div>
             </div>
-            <div className="SearchFieldBackdrop" onClick={searchFieldFocusOut}></div>
+            <a href="#" onClick={showMobileSearch} className="header__dropdown-button">
+                <Search></Search>
+            </a>
+            <div className="SearchFieldBackdrop" onClick={(event) => {searchFieldFocusOut(true)}}></div>
         </React.Fragment>
     )
 }
