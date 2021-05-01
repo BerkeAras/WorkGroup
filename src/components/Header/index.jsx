@@ -8,6 +8,7 @@ import { MoreVertical, Menu, X } from 'react-feather'
 
 // Components
 import HeaderDropdown from '../HeaderDropdown'
+import SearchField from '../_Header_Searchfield'
 
 class Header extends React.Component {
     constructor(props) {
@@ -42,6 +43,8 @@ class Header extends React.Component {
                 <NavLink exact to="/" className="header__logo">
                     <img src={logo} alt="Logo" />
                 </NavLink>
+
+                <SearchField />
 
                 <div tabIndex={0} onClick={this.showHeaderDropdown} className="header__dropdown-button">
                     <MoreVertical></MoreVertical>

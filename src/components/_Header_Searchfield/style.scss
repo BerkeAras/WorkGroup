@@ -1,0 +1,190 @@
+@import '../../scss/variables';
+
+@keyframes around {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.SearchField {
+    height: 40px;
+    width: 300px;
+    float: left;
+    margin: 5px 0 5px 25px;
+    transition: all 0.3s;
+    z-index: 11;
+    position: relative;
+
+    form {
+        height: 100%;
+
+        input {
+            height: 100%;
+            background: #f7f7f7;
+            transition: all 0.25s;
+            width: 100%;
+            border-radius: 7px;
+            padding: 1px 10px;
+            outline: 0;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 0 transparent;
+            border: 2px solid white;
+
+            &::placeholder {
+                font-family: 'Inter', sans-serif;
+            }
+            &:focus {
+                background: white;
+                color: black;
+                box-shadow: 0 3px 6px -4px #00182b6b;
+                border: 2px solid $primary-color;
+            }
+        }
+        .loader {
+            height: 25px;
+            width: 25px;
+            display: inline-block;
+            position: absolute;
+            top: 7.5px;
+            right: 7.5px;
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 2px solid $primary-color;
+            animation: around 0.7s linear infinite;
+        }
+    }
+
+    &-expanded {
+        input {
+            padding: 1px 37px 1px 10px !important;
+        }
+    }
+
+    &:focus-within {
+        width: 400px;
+
+        input {
+            background: white;
+            color: black;
+            box-shadow: 0 3px 6px -4px #00182b6b;
+            border: 2px solid $primary-color;
+        }
+    }
+
+    &-Results {
+        outline: 0;
+        display: none;
+        width: calc(400px - 4px);
+        max-height: 350px;
+        overflow: auto;
+        background: white;
+        padding: 10px 5px;
+        margin-top: 5px;
+        margin-left: 2px;
+        border-radius: 5px;
+        box-shadow: 0 3px 8px 0px #00182b40;
+
+        &-visible {
+            display: block;
+        }
+
+        span.divider {
+            font-size: 12px;
+            display: inline-block;
+            margin-left: 13px;
+            padding: 1px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #798288;
+            margin-top: 6px;
+            margin-bottom: 3px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+
+            a {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                line-height: 40px;
+                padding: 0 15px;
+                color: black;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 10px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                transition: all 0.2s;
+
+                &:hover {
+                    background-color: #eeeeee;
+                    transform: scale(0.98);
+
+                    small {
+                        color: $primary-color;
+                    }
+                }
+                &:active {
+                    transform: scale(0.95);
+                    outline: none !important;
+                }
+                &:focus {
+                    outline: 1px dashed black !important;
+                    outline-offset: 2px !important;
+                }
+
+                svg {
+                    color: #a0b0b9;
+                    margin-right: 10px;
+                    width: 25px !important;
+                }
+                small {
+                    font-weight: 100;
+                    color: #868686;
+                    letter-spacing: 0.3px;
+                    margin-left: 5px;
+                    font-size: 12px;
+                    padding: 1px 8px;
+                    background: #efefef;
+                    display: inline-block;
+                    position: absolute;
+                    line-height: 20px;
+                    border-radius: 100px;
+                    text-align: center;
+                    top: calc((100% - 22px) / 2);
+                    right: 10px;
+                }
+            }
+        }
+
+        &-More {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 7px 0px;
+            color: $primary-color;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.SearchFieldBackdrop {
+    &-visible {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 10;
+    }
+}

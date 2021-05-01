@@ -20,43 +20,46 @@ const SignIn = () => {
         setPassword(event.target.value)
     }
 
-    const handleSubmit = useCallback((event) => {
-        setIsLoggingIn(true)
+    const handleSubmit = useCallback(
+        (event) => {
+            setIsLoggingIn(true)
 
-        setTimeout(() => {
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            }
-
-            // eslint-disable-next-line no-undef
-            fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions).then((response) => {
-                if (response.status == 200) {
-                    response.json().then((json) => {
-                        if (json.message == 'Login success') {
-                            localStorage.setItem('token', json.data.token)
-                            setIsLoggedIn(true)
-                            location.href = '/'
-                        } else {
-                            setIsLoggedIn(false)
-                            setIsLoggingIn(false)
-                            setError(true)
-                        }
-                    })
-                } else {
-                    setIsLoggedIn(false)
-                    setIsLoggingIn(false)
-                    setError(true)
+            setTimeout(() => {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                    }),
                 }
-            })
-        }, 300)
 
-        event.preventDefault()
-    }, [email, password])
+                // eslint-disable-next-line no-undef
+                fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions).then((response) => {
+                    if (response.status == 200) {
+                        response.json().then((json) => {
+                            if (json.message == 'Login success') {
+                                localStorage.setItem('token', json.data.token)
+                                setIsLoggedIn(true)
+                                location.href = '/'
+                            } else {
+                                setIsLoggedIn(false)
+                                setIsLoggingIn(false)
+                                setError(true)
+                            }
+                        })
+                    } else {
+                        setIsLoggedIn(false)
+                        setIsLoggingIn(false)
+                        setError(true)
+                    }
+                })
+            }, 300)
+
+            event.preventDefault()
+        },
+        [email, password]
+    )
 
     useEffect(() => {
         setCanLogin(!!email && !!password)
