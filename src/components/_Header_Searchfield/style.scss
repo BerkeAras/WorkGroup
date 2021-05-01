@@ -2,10 +2,10 @@
 
 @keyframes around {
     0% {
-        transform: rotate(0deg)
+        transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
 }
 .SearchField {
@@ -13,13 +13,13 @@
     width: 300px;
     float: left;
     margin: 5px 0 5px 25px;
-    transition: all .3s;
+    transition: all 0.3s;
     z-index: 11;
     position: relative;
-    
+
     form {
         height: 100%;
-        
+
         input {
             height: 100%;
             background: #f7f7f7;
@@ -31,7 +31,7 @@
             font-family: 'Inter', sans-serif;
             box-shadow: 0 0 transparent;
             border: 2px solid white;
-            
+
             &::placeholder {
                 font-family: 'Inter', sans-serif;
             }
@@ -52,28 +52,27 @@
             border: 2px solid #f3f3f3;
             border-radius: 50%;
             border-top: 2px solid $primary-color;
-            animation: around .7s linear infinite;
+            animation: around 0.7s linear infinite;
         }
     }
-    
+
     &-expanded {
         input {
             padding: 1px 37px 1px 10px !important;
         }
     }
-    
+
     &:focus-within {
         width: 400px;
-        
+
         input {
             background: white;
             color: black;
             box-shadow: 0 3px 6px -4px #00182b6b;
             border: 2px solid $primary-color;
         }
-        
     }
-    
+
     &-Results {
         outline: 0;
         display: none;
@@ -122,7 +121,7 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                transition: all .2s;
+                transition: all 0.2s;
 
                 &:hover {
                     background-color: #eeeeee;
