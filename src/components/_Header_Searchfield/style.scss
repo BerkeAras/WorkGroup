@@ -213,3 +213,8 @@
         display:none;
     }
 }
+@media (min-width:911px) {
+    .header__dropdown-button-search {
+        display: none;
+    }
+}
