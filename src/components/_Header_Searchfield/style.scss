@@ -31,9 +31,12 @@
             font-family: 'Inter', sans-serif;
             box-shadow: 0 0 transparent;
             border: 2px solid white;
+            font-size: 16px !important;
 
             &::placeholder {
                 font-family: 'Inter', sans-serif;
+                font-size: 16px !important;
+                color: #8c9aa2;
             }
             &:focus {
                 background: white;
@@ -176,6 +179,22 @@
             }
         }
     }
+
+    &-mobile-visible {
+        display: block;
+        position: fixed;
+        top: 5px;
+        left: 5px;
+        width: calc(100% - 10px);
+        margin: 0;
+
+        &:focus-within {
+            width: calc(100% - 10px);
+        }
+        .SearchField-Results {
+            width: calc(100% - 4px);
+        }
+    }
 }
 .SearchFieldBackdrop {
     &-visible {
@@ -186,5 +205,11 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.4);
         z-index: 10;
+    }
+}
+
+@media (max-width:910px) {
+    .SearchField:not(.SearchField-mobile-visible) {
+        display:none;
     }
 }
