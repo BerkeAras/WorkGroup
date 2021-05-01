@@ -151,12 +151,12 @@ class CommentSection extends React.Component {
                         return (
                             <Comment key={comment.id}>
                                 {comment.avatar == '' ? (
-                                    <Comment.Avatar href={'/user/' + comment.email} src={unknownAvatar} />
+                                    <Comment.Avatar href={'/app/user/' + comment.email} src={unknownAvatar} />
                                 ) : (
-                                    <Comment.Avatar href={'/user/' + comment.email} src={process.env.REACT_APP_API_URL + '/' + comment.avatar.replace('./', '')} />
+                                    <Comment.Avatar href={'/app/user/' + comment.email} src={process.env.REACT_APP_API_URL + '/' + comment.avatar.replace('./', '')} />
                                 )}
                                 <Comment.Content>
-                                    <Comment.Author href={'/user/' + comment.email}>{comment.name}</Comment.Author>
+                                    <Comment.Author href={'/app/user/' + comment.email}>{comment.name}</Comment.Author>
                                     <Comment.Metadata>
                                         <span>{this.getDate(comment.created_at)}</span>
                                     </Comment.Metadata>

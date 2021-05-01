@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Input, Form } from 'semantic-ui-react'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
@@ -87,9 +88,9 @@ const SearchField = () => {
                                 {userResult.map((user) => {
                                     return (
                                         <li key={user.id}>
-                                            <a href="#">
+                                            <Link to={'/app/user/' + user.email}>
                                                 <FontAwesomeIcon icon="user" /> {user.name} <small>Rechtsabteilung</small>
-                                            </a>
+                                            </Link>
                                         </li>
                                     )
                                 })}
@@ -101,9 +102,9 @@ const SearchField = () => {
                                 {topicResult.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <a href="#">
+                                            <Link to={'/app/topics/' + topic.topic}>
                                                 <FontAwesomeIcon icon="hashtag" /> {topic.topic}
-                                            </a>
+                                            </Link>
                                         </li>
                                     )
                                 })}

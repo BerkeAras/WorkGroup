@@ -92,7 +92,7 @@ class App extends React.Component {
                             <Route exact path="/logout">
                                 <LogOut />
                             </Route>
-                            <Route path="/user/:email">
+                            <Route path="/app/user/:email">
                                 <User />
                             </Route>
                         </React.Fragment>

@@ -294,12 +294,12 @@ class PostsList extends React.Component {
                                 {this.state.items.map((item) => (
                                     <React.Fragment key={item.id}>
                                         <Feed.Event>
-                                            <Feed.Label className="user-avatar" href={'/user/' + item.email}>
+                                            <Feed.Label className="user-avatar" href={'/app/user/' + item.email}>
                                                 {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Feed.Summary>
-                                                    <Feed.User href={'/user/' + item.email}>{item.name}</Feed.User>
+                                                    <Feed.User href={'/app/user/' + item.email}>{item.name}</Feed.User>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
                                                 <Feed.Extra text>
