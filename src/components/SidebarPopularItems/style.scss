@@ -17,10 +17,6 @@
             background-color: #eeeeee;
             transform: scale(0.98);
         }
-        &:focus {
-            outline: 1px dashed black !important;
-            outline-offset: 2px !important;
-        }
         &:active {
             transform: scale(0.95);
             outline: none !important;

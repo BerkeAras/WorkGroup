@@ -26,10 +26,6 @@ body {
         &:hover {
             transform: scale(0.98);
         }
-        &:focus {
-            outline: 1px dashed black !important;
-            outline-offset: 2px !important;
-        }
         &:active {
             transform: scale(0.95);
             outline: none !important;
@@ -59,10 +55,6 @@ body {
             &--active {
                 background-color: #f7f7f7;
                 color: $primary-color;
-            }
-            &:focus {
-                outline: 1px dashed black !important;
-                outline-offset: 2px !important;
             }
             &:active {
                 transform: scale(0.93);
@@ -121,10 +113,6 @@ body {
         }
         svg {
             margin: 8px;
-        }
-        &:focus {
-            outline: 1px dashed black !important;
-            outline-offset: 2px !important;
         }
         &:active {
             transform: scale(0.93);

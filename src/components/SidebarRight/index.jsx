@@ -4,6 +4,7 @@ import { Card, Icon } from 'semantic-ui-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUserFriends, faCalendarWeek } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 
 library.add(faUser, faUserFriends, faCalendarWeek)
 
@@ -16,18 +17,18 @@ class SidebarRight extends React.Component {
                 <Card>
                     <Card.Content extra>My Account</Card.Content>
                     <Card.Content>
-                        <a className="card-item" href="/my-account/">
+                        <Link className="card-item" to="/my-account/">
                             <FontAwesomeIcon icon="user" />
                             My Account
-                        </a>
-                        <a className="card-item" href="/my-account/friends">
+                        </Link>
+                        <Link className="card-item" to="/my-account/friends">
                             <FontAwesomeIcon icon="user-friends" />
                             Friends
-                        </a>
-                        <a className="card-item" href="/my-account/events">
+                        </Link>
+                        <Link className="card-item" to="/my-account/events">
                             <FontAwesomeIcon icon="calendar-week" />
                             Events
-                        </a>
+                        </Link>
                     </Card.Content>
                 </Card>
             </div>
