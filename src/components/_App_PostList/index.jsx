@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import './style.scss'
 import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -294,12 +295,16 @@ class PostsList extends React.Component {
                                 {this.state.items.map((item) => (
                                     <React.Fragment key={item.id}>
                                         <Feed.Event>
-                                            <Feed.Label className="user-avatar" href={'/app/user/' + item.email}>
-                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
+                                            <Feed.Label className="user-avatar">
+                                                <Link to={'/app/user/' + item.email}>
+                                                    {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
+                                                </Link>
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Feed.Summary>
-                                                    <Feed.User href={'/app/user/' + item.email}>{item.name}</Feed.User>
+                                                    <Link to={'/app/user/' + item.email}>
+                                                        <Feed.User>{item.name}</Feed.User>
+                                                    </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
                                                 <Feed.Extra text>

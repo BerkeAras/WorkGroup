@@ -8,6 +8,7 @@ import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
 import User from './views/User'
+import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
 
@@ -16,7 +17,7 @@ class App extends React.Component {
         super(props)
 
         this.state = {
-            isLoggedIn: false,
+            isLoggedIn: null,
             first_login: false,
         }
         this.setLoggedInStatus = this.setLoggedInStatus.bind(this)
@@ -60,9 +61,15 @@ class App extends React.Component {
                     } else if (result.message == 'The token has been blacklisted') {
                         localStorage.clear()
                         this.setLoggedInStatus(false)
+                    } else if (result.message == 'Token has expired') {
+                        localStorage.clear()
+                        this.setLoggedInStatus(false)
                     }
                 })
                 .catch((error) => console.log('error', error))
+        } else {
+            localStorage.clear()
+            this.setLoggedInStatus(false)
         }
 
         if (localStorage.getItem('first_login') == 'true') {
@@ -81,7 +88,7 @@ class App extends React.Component {
             <Router>
                 {this.state.first_login && <FirstLogin handleStateChange={this.handleStateChange} />}
                 <Switch>
-                    {this.state.isLoggedIn ? (
+                    {this.state.isLoggedIn === true && (
                         <React.Fragment>
                             <Route exact path="/">
                                 <Redirect to="/app" />
@@ -96,7 +103,8 @@ class App extends React.Component {
                                 <User />
                             </Route>
                         </React.Fragment>
-                    ) : (
+                    )}
+                    {this.state.isLoggedIn === false && (
                         <React.Fragment>
                             <Route exact path="/">
                                 <SignIn />
@@ -112,6 +120,13 @@ class App extends React.Component {
                             </Route>
                             <Route exact path="/logout">
                                 <LogOut />
+                            </Route>
+                        </React.Fragment>
+                    )}
+                    {this.state.isLoggedIn === null && (
+                        <React.Fragment>
+                            <Route path="/*">
+                                <Loader active size="large" content="Initializing WorkGroup..." />
                             </Route>
                         </React.Fragment>
                     )}

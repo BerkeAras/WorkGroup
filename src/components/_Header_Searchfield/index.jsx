@@ -38,9 +38,9 @@ const SearchField = () => {
     }, [])
 
     const showMobileSearch = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         document.querySelector('.SearchField').classList.add('SearchField-mobile-visible')
-        document.querySelector('.SearchField input').focus();
+        document.querySelector('.SearchField input').focus()
     }
 
     const searchQueryChangeHandler = () => {
@@ -173,7 +173,12 @@ const SearchField = () => {
             <a href="#" onClick={showMobileSearch} className="header__dropdown-button header__dropdown-button-search">
                 <Search></Search>
             </a>
-            <div className="SearchFieldBackdrop" onClick={(event) => {searchFieldFocusOut(true)}}></div>
+            <div
+                className="SearchFieldBackdrop"
+                onClick={(event) => {
+                    searchFieldFocusOut(true)
+                }}
+            ></div>
         </React.Fragment>
     )
 }

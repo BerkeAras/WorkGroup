@@ -138,10 +138,6 @@
                     transform: scale(0.95);
                     outline: none !important;
                 }
-                &:focus {
-                    outline: 1px dashed black !important;
-                    outline-offset: 2px !important;
-                }
 
                 svg {
                     color: #a0b0b9;
@@ -208,12 +204,12 @@
     }
 }
 
-@media (max-width:910px) {
+@media (max-width: 910px) {
     .SearchField:not(.SearchField-mobile-visible) {
-        display:none;
+        display: none;
     }
 }
-@media (min-width:911px) {
+@media (min-width: 911px) {
     .header__dropdown-button-search {
         display: none;
     }

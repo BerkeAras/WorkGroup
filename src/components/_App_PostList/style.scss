@@ -36,29 +36,12 @@
     a.like,
     a.comment-button {
         padding: 2px 2px;
-        &:focus {
-            outline: 1px dashed black;
-            outline-offset: 2px;
-        }
-    }
-    a.linkified,
-    a.user {
-        &:focus {
-            outline: 1px dashed black;
-            outline-offset: 2px;
-        }
     }
     a.user-avatar {
         outline: 0;
-        &:focus {
-            img {
-                outline: 1px dashed black;
-                outline-offset: 2px;
-            }
-        }
         img {
             height: 100% !important;
-            object-fit:cover;
+            object-fit: cover;
         }
     }
 }

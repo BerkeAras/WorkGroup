@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.scss'
 import { Placeholder, Icon } from 'semantic-ui-react'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 
 class SidebarPopularItems extends React.Component {
     constructor() {
@@ -57,9 +58,9 @@ class SidebarPopularItems extends React.Component {
                         ) : (
                             this.state.topics.map((topic) => {
                                 return (
-                                    <a key={`topic-${topic.id}`} className="topic-item" href={`/app/topics/` + topic.topic}>
+                                    <Link key={`topic-${topic.id}`} className="topic-item" to={`/app/topics/` + topic.topic}>
                                         <Icon name="hashtag" /> {topic.topic}
-                                    </a>
+                                    </Link>
                                 )
                             })
                         )}
