@@ -302,8 +302,8 @@ class PostsList extends React.Component {
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Feed.Summary>
-                                                    <Link to={'/app/user/' + item.email}>
-                                                        <Feed.User>{item.name}</Feed.User>
+                                                    <Link className="user" to={'/app/user/' + item.email}>
+                                                        {item.name}
                                                     </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>

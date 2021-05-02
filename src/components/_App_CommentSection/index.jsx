@@ -32,7 +32,7 @@ class CommentSection extends React.Component {
         let returnText
         const that = this
 
-        fetch(process.env.REACT_APP_API_URL + '/api/content/getComments?id=' + String(this.props.postId[0]), requestOptions)
+        fetch(process.env.REACT_APP_API_URL + '/api/content/getComments?id=' + String(this.props.postId), requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 // Count

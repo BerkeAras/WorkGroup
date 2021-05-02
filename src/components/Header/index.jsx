@@ -22,7 +22,8 @@ class Header extends React.Component {
         this.hideMobileMenu = this.hideMobileMenu.bind(this)
     }
 
-    showHeaderDropdown = () => {
+    showHeaderDropdown = (e) => {
+        e.preventDefault()
         this.setState({
             dropdownVisible: !this.state.dropdownVisible,
         })
@@ -46,13 +47,13 @@ class Header extends React.Component {
 
                 <SearchField />
 
-                <div tabIndex={0} onClick={this.showHeaderDropdown} className="header__dropdown-button">
+                <a href="#" onClick={this.showHeaderDropdown} className="header__dropdown-button">
                     <MoreVertical></MoreVertical>
-                </div>
+                </a>
 
-                <div onClick={this.showMobileMenu} className="header__menu-mobile-button">
+                <a href="#" onClick={this.showMobileMenu} className="header__menu-mobile-button">
                     <Menu></Menu>
-                </div>
+                </a>
 
                 <div className={`header__menu-items ${this.state.mobileMenuVisible ? 'header__menu-items--mobile-visible' : ''}`}>
                     <div onClick={this.hideMobileMenu} className="header__menu-mobile-close">
