@@ -11,6 +11,7 @@ import User from './views/User'
 import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
+import { AuthProvider } from './store/AuthContext'
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class App extends React.Component {
         this.state = {
             isLoggedIn: null,
             first_login: false,
+            loginData: [],
         }
         this.setLoggedInStatus = this.setLoggedInStatus.bind(this)
         this.handleStateChange = this.handleStateChange.bind(this)
@@ -42,26 +44,22 @@ class App extends React.Component {
                 redirect: 'follow',
             }
 
+            let responseStatus = ''
             // eslint-disable-next-line no-undef
             fetch(process.env.REACT_APP_API_URL + '/api/auth/user', requestOptions)
-                .then((response) => response.json())
+                .then((response) => {
+                    responseStatus = response.status
+                    return response.json()
+                })
                 .then((result) => {
-                    if (result.message == 'Authenticated user') {
+                    if (responseStatus === 200) {
                         localStorage.setItem('user_id', result.data.id)
                         localStorage.setItem('user_name', result.data.name)
                         localStorage.setItem('user_email', result.data.email)
 
                         this.setLoggedInStatus(true)
-                    } else if (result.message == 'Token Signature could not be verified.') {
-                        localStorage.clear()
-                        this.setLoggedInStatus(false)
-                    } else if (result.message == '405 Method Not Allowed') {
-                        localStorage.clear()
-                        this.setLoggedInStatus(false)
-                    } else if (result.message == 'The token has been blacklisted') {
-                        localStorage.clear()
-                        this.setLoggedInStatus(false)
-                    } else if (result.message == 'Token has expired') {
+                        this.setState({ loginData: result.data })
+                    } else {
                         localStorage.clear()
                         this.setLoggedInStatus(false)
                     }
@@ -89,7 +87,7 @@ class App extends React.Component {
                 {this.state.first_login && <FirstLogin handleStateChange={this.handleStateChange} />}
                 <Switch>
                     {this.state.isLoggedIn === true && (
-                        <React.Fragment>
+                        <AuthProvider value={this.state.loginData}>
                             <Route exact path="/">
                                 <Redirect to="/app" />
                             </Route>
@@ -102,7 +100,7 @@ class App extends React.Component {
                             <Route path="/app/user/:email">
                                 <User />
                             </Route>
-                        </React.Fragment>
+                        </AuthProvider>
                     )}
                     {this.state.isLoggedIn === false && (
                         <React.Fragment>
