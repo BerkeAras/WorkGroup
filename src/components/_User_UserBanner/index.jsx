@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
 import { Icon, Button } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { User, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'
@@ -81,25 +82,25 @@ function UserBanner(props) {
                 <div className="user-details-grid">
                     {props.userInformation['user_slogan'] !== '' && props.userInformation['user_slogan'] !== null && props.userInformation['user_slogan'] !== undefined && (
                         <span className="user-slogan">
-                            <Icon name="user" /> {props.userInformation['user_slogan']}
+                            <User size={20} strokeWidth={2.5} /> {props.userInformation['user_slogan']}
                         </span>
                     )}
                     <span className="user-email">
-                        <Icon name="mail" /> {props.userInformation['email']}
+                        <Mail size={20} strokeWidth={2.5} /> {props.userInformation['email']}
                     </span>
                     {props.userInformation['user_department'] !== '' && props.userInformation['user_department'] !== null && props.userInformation['user_department'] !== undefined && (
                         <span className="user-department">
-                            <Icon name="building" /> {props.userInformation['user_department']}
+                            <Briefcase size={20} strokeWidth={2.5} /> {props.userInformation['user_department']}
                         </span>
                     )}
                     {props.userInformation['user_street'] !== '' && props.userInformation['user_street'] !== null && props.userInformation['user_street'] !== undefined && (
                         <span className="user-street">
-                            <Icon name="location arrow" /> {props.userInformation['user_street']}
+                            <MapPin size={20} strokeWidth={2.5} /> {props.userInformation['user_street']}
                         </span>
                     )}
                     {props.userInformation['user_city'] !== '' && props.userInformation['user_city'] !== null && props.userInformation['user_city'] !== undefined && (
                         <span className="user-city">
-                            <Icon name="globe" /> {props.userInformation['user_city']}, {props.userInformation['user_country']}
+                            <Globe size={20} strokeWidth={2.5} /> {props.userInformation['user_city']}, {props.userInformation['user_country']}
                         </span>
                     )}
                 </div>

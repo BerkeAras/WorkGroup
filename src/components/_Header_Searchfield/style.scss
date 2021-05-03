@@ -113,7 +113,8 @@
 
             a {
                 position: relative;
-                display: inline-block;
+                display: flex;
+                align-items: center;
                 width: 100%;
                 line-height: 40px;
                 padding: 0 15px;
