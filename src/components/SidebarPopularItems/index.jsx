@@ -2,7 +2,7 @@ import React from 'react'
 import './style.scss'
 import { Placeholder, Icon } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
-import { Hash } from 'react-feather';
+import { Hash } from 'react-feather'
 
 class SidebarPopularItems extends React.Component {
     constructor() {

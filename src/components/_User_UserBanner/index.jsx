@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
 import { Icon, Button } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import { User, Mail, Briefcase, MapPin, Globe } from 'react-feather';
+import { User, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'

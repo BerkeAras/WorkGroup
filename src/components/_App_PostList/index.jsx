@@ -343,7 +343,7 @@ class PostsList extends React.Component {
                             <Feed.Event>
                                 <Feed.Content>
                                     <div className="empty-feed">
-                                        <Zap size={35} strokeWidth={2}/>
+                                        <Zap size={35} strokeWidth={2} />
                                         <br />
                                         <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
                                     </div>

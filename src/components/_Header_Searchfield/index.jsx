@@ -133,7 +133,8 @@ const SearchField = () => {
                                     return (
                                         <li key={user.id}>
                                             <Link to={'/app/user/' + user.email}>
-                                                <User size={20} strokeWidth={2.7} /> {user.name} {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
+                                                <User size={20} strokeWidth={2.7} /> {user.name}{' '}
+                                                {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
                                             </Link>
                                         </li>
                                     )

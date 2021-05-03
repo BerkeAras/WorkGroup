@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUserFriends, faCalendarWeek } from '@fortawesome/free-solid-svg-icons'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
-import { User, Users, Calendar } from 'react-feather';
+import { User, Users, Calendar } from 'react-feather'
 
 library.add(faUser, faUserFriends, faCalendarWeek)
 
