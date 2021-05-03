@@ -17,7 +17,7 @@ class SidebarRight extends React.Component {
                 <Card>
                     <Card.Content extra>My Account</Card.Content>
                     <Card.Content>
-                        <Link className="card-item" to="/my-account/">
+                        <Link className="card-item" to={'/app/user/' + localStorage.getItem('user_email')}>
                             <FontAwesomeIcon icon="user" />
                             My Account
                         </Link>
