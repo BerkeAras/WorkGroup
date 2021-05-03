@@ -1,3 +1,4 @@
+@import '../../scss/variables';
 .event {
     border-radius: 0.28571429rem 0.28571429rem 0 0 !important;
     box-shadow: 0 1px 3px 0 #d4d4d5;
@@ -16,7 +17,7 @@
         text-align: center;
         width: 100%;
         padding: 20px 0;
-        i {
+        svg {
             color: #cecece;
             margin-bottom: 20px;
         }
@@ -29,13 +30,23 @@
     }
     a.liked,
     a.true {
-        i {
-            color: #ff2733 !important;
+        svg {
+            fill: #c5d0d6;
+        }
+        span {
+            color: $primary-color !important;
         }
     }
     a.like,
     a.comment-button {
         padding: 2px 2px;
+        display: flex;
+        align-items: center;
+        float: left;
+        font-weight: 500;
+        svg {
+            margin-right: 5px;
+        }
     }
     a.user-avatar {
         outline: 0;
