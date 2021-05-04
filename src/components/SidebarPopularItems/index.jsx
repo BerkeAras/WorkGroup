@@ -2,6 +2,7 @@ import React from 'react'
 import './style.scss'
 import { Placeholder, Icon } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
+import { Hash } from 'react-feather'
 
 class SidebarPopularItems extends React.Component {
     constructor() {
@@ -59,7 +60,7 @@ class SidebarPopularItems extends React.Component {
                             this.state.topics.map((topic) => {
                                 return (
                                     <Link key={`topic-${topic.id}`} className="topic-item" to={`/app/topics/` + topic.topic}>
-                                        <Icon name="hashtag" /> {topic.topic}
+                                        <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                     </Link>
                                 )
                             })

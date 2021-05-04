@@ -14,16 +14,33 @@ import UserBanner from '../../components/_User_UserBanner'
 
 function User() {
     let { email } = useParams()
+    const [userInformation, setUserInformation] = useState([])
 
     useEffect(() => {
-        document.title = 'User – WorkGroup'
-    })
+        document.title = 'Loading user... – WorkGroup'
+
+        var userInformationHeader = new Headers()
+        userInformationHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        var requestOptions = {
+            method: 'GET',
+            headers: userInformationHeader,
+            redirect: 'follow',
+        }
+        fetch(process.env.REACT_APP_API_URL + `/api/user/getUserInformation?email=${email}`, requestOptions)
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.length > 0) {
+                    setUserInformation(res[0])
+                    document.title = res[0]['name'] + ' – WorkGroup'
+                }
+            })
+    }, [email])
 
     return (
         <div className="app">
             <Header />
             <div className="main_content">
-                <UserBanner email={email}></UserBanner>
+                <UserBanner userInformation={userInformation}></UserBanner>
             </div>
         </div>
     )

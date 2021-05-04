@@ -6,7 +6,7 @@ import { DebounceInput } from 'react-debounce-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { MoreVertical, Search } from 'react-feather'
+import { User, Search, Hash } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -132,8 +132,9 @@ const SearchField = () => {
                                 {userResult.map((user) => {
                                     return (
                                         <li key={user.id}>
-                                            <Link to={'/app/user/' + user.email}>
-                                                <FontAwesomeIcon icon="user" /> {user.name} {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/user/' + user.email}>
+                                                <User size={20} strokeWidth={2.7} /> {user.name}{' '}
+                                                {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
                                             </Link>
                                         </li>
                                     )
@@ -146,8 +147,8 @@ const SearchField = () => {
                                 {topicResult.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link to={'/app/topics/' + topic.topic}>
-                                                <FontAwesomeIcon icon="hashtag" /> {topic.topic}
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
+                                                <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                             </Link>
                                         </li>
                                     )
@@ -159,8 +160,8 @@ const SearchField = () => {
                                 {popularTopics.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link to={'/app/topics/' + topic.topic}>
-                                                <FontAwesomeIcon icon="hashtag" /> {topic.topic}
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
+                                                <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                             </Link>
                                         </li>
                                     )

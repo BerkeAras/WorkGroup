@@ -1,56 +1,75 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
-import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
+import { Icon, Button, Loader } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { User, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'
 
-class UserBanner extends React.Component {
-    constructor(props) {
-        super(props)
+function UserBanner(props) {
+    const [background, setBackground] = useState(unknownBanner)
+    const [avatar, setAvatar] = useState(unknownAvatar)
+    const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
 
-        this.state = {
-            background: unknownBanner,
-            avatar: unknownAvatar,
-        }
-    }
+    useEffect(() => {
+        let userInformation = props.userInformation
 
-    componentDidMount() {
-        let email = this.props.email
+        setIsLoading(true)
 
-        var bannerHeader = new Headers()
-        bannerHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-
+        var userHeader = new Headers()
+        userHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         var requestOptions = {
             method: 'GET',
-            headers: bannerHeader,
+            headers: userHeader,
             redirect: 'follow',
         }
-
-        this.setState({ isLoading: true, error: undefined })
-        fetch(process.env.REACT_APP_API_URL + `/api/user/getBanner?email=${email}`, requestOptions)
-            .then((res) => res.json())
-            .then((res) => {
-                if (res[0].banner != '' && res[0].banner != undefined) {
-                    this.setState({ background: process.env.REACT_APP_API_URL + '/' + res[0].banner.replace('./', '') })
-                }
-                if (res[0].avatar != '' && res[0].avatar != undefined) {
-                    this.setState({ avatar: process.env.REACT_APP_API_URL + '/' + res[0].avatar.replace('./', '') })
-                }
+        // eslint-disable-next-line no-undef
+        fetch(process.env.REACT_APP_API_URL + '/api/auth/user', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                setLoggedInUserEmail(result.data.email)
+                setIsLoading(false)
             })
-    }
+            .catch((error) => console.log('error', error))
 
-    render() {
-        return (
-            <div className="user-banner">
-                <img className="banner-image" src={this.state.background} alt="Banner" />
+        if (userInformation['banner'] != '' && userInformation['banner'] != undefined) {
+            setBackground(process.env.REACT_APP_API_URL + '/' + userInformation['banner'].replace('./', ''))
+        }
+        if (userInformation['avatar'] != '' && userInformation['avatar'] != undefined) {
+            setAvatar(process.env.REACT_APP_API_URL + '/' + userInformation['avatar'].replace('./', ''))
+        }
+    }, [props])
 
-                <img src={this.state.avatar} alt="Avatar" className="user-avatar" />
-                <br />
+    return (
+        <div className="user-banner">
+            <img
+                onError={(e) => {
+                    e.target.src = unknownBanner
+                }}
+                src={background}
+                alt="Banner"
+                className="banner-image"
+            />
 
+            <img
+                onError={(e) => {
+                    e.target.src = unknownAvatar
+                }}
+                src={avatar}
+                alt="Avatar"
+                className="user-avatar"
+            />
+            <br />
+
+            {isLoading === true ? (
+                <div className="banner-content banner-content-loading">
+                    <Loader active>Loading profile...</Loader>
+                </div>
+            ) : (
                 <div className="banner-content">
-                    {localStorage.getItem('user_email') == this.props.email && (
+                    {loggedInUserEmail == props.userInformation['email'] && (
                         <Button
                             size="tiny"
                             basic
@@ -67,17 +86,40 @@ class UserBanner extends React.Component {
                         </Button>
                     )}
 
-                    <span className="user-name">{localStorage.getItem('user_name')}</span>
+                    <span className="user-name">{props.userInformation['name']}</span>
                     <br />
-                    <span className="user-email">{localStorage.getItem('user_email')}</span>
+                    <div className="user-details-grid">
+                        {props.userInformation['user_slogan'] !== '' && props.userInformation['user_slogan'] !== null && props.userInformation['user_slogan'] !== undefined && (
+                            <span className="user-slogan">
+                                <User size={20} strokeWidth={2.5} /> {props.userInformation['user_slogan']}
+                            </span>
+                        )}
+                        <span className="user-email">
+                            <Mail size={20} strokeWidth={2.5} /> {props.userInformation['email']}
+                        </span>
+                        {props.userInformation['user_department'] !== '' && props.userInformation['user_department'] !== null && props.userInformation['user_department'] !== undefined && (
+                            <span className="user-department">
+                                <Briefcase size={20} strokeWidth={2.5} /> {props.userInformation['user_department']}
+                            </span>
+                        )}
+                        {props.userInformation['user_street'] !== '' && props.userInformation['user_street'] !== null && props.userInformation['user_street'] !== undefined && (
+                            <span className="user-street">
+                                <MapPin size={20} strokeWidth={2.5} /> {props.userInformation['user_street']}
+                            </span>
+                        )}
+                        {props.userInformation['user_city'] !== '' && props.userInformation['user_city'] !== null && props.userInformation['user_city'] !== undefined && (
+                            <span className="user-city">
+                                <Globe size={20} strokeWidth={2.5} /> {props.userInformation['user_city']}, {props.userInformation['user_country']}
+                            </span>
+                        )}
+                    </div>
                 </div>
-            </div>
-        )
-    }
+            )}
+        </div>
+    )
 }
 
 export default UserBanner
-
 UserBanner.propTypes = {
-    email: PropTypes.string,
+    userInformation: PropTypes.any,
 }

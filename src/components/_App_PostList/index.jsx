@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 import './style.scss'
-import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
+import { Feed, Icon, Loader, Button } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { ThumbsUp, MessageCircle, Zap } from 'react-feather'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -312,11 +313,11 @@ class PostsList extends React.Component {
                                                 </Feed.Extra>
                                                 <Feed.Meta>
                                                     <Feed.Like href="#" onClick={this.toggleLike} id={'post_like_id_' + item.id} className={item.hasLiked}>
-                                                        <Icon name="like" />
+                                                        <ThumbsUp size={16} strokeWidth={2.5} />
                                                         <span>{this.getLikes(item.likes)}</span>
                                                     </Feed.Like>
                                                     <a href="#" className="comment-button" onClick={this.toggleComment} id={'post_comment_id_' + item.id}>
-                                                        <Icon name="comment" />
+                                                        <MessageCircle size={16} strokeWidth={2.5} />
                                                         <span>{this.getComments(item.comments)}</span>
                                                     </a>
                                                 </Feed.Meta>
@@ -342,7 +343,7 @@ class PostsList extends React.Component {
                             <Feed.Event>
                                 <Feed.Content>
                                     <div className="empty-feed">
-                                        <Icon name="lightning" size="big" />
+                                        <Zap size={35} strokeWidth={2} />
                                         <br />
                                         <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
                                     </div>
