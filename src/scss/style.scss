@@ -74,7 +74,10 @@ textarea {
 
 // App-Like feeling
 @media (max-width: 768px) {
-    html, body, #root, .app {
+    html,
+    body,
+    #root,
+    .app {
         position: fixed;
         top: 0;
         left: 0;
@@ -88,7 +91,7 @@ textarea {
             display: inline-block;
             padding-top: 70px;
             overflow: auto;
-            width:100%;
+            width: 100%;
         }
     }
 }
