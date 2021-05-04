@@ -1,5 +1,5 @@
 import React from 'react'
-import packageJson from '../../../package.json';
+import packageJson from '../../../package.json'
 import './style.scss'
 import SidebarPopularItems from '../SidebarPopularItems'
 import { Card } from 'semantic-ui-react'
