@@ -34,6 +34,15 @@
             font-weight: bold;
             color: #2c86d0;
         }
+        &-loading {
+            height: 200px;
+
+            .loader {
+                top: 50% !important;
+                left: 50% !important;
+                transform: translateX(-50%) translateY(-50%) !important;
+            }
+        }
     }
     .user-details-grid {
         display: grid;
