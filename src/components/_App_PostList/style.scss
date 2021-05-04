@@ -56,7 +56,10 @@
         }
     }
 }
-
+.feed .comments {
+    width: 100% !important;
+    max-width: 100% !important;
+}
 .ui.feed > .event > .label {
     height: 2.5em !important;
 }

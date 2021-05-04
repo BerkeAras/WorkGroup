@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import './style.scss'
 import { Feed, Icon, Loader, Button } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { BrowserRouter as Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { ThumbsUp, MessageCircle, Zap } from 'react-feather'
 
 import unknownAvatar from '../../static/unknown.png'
