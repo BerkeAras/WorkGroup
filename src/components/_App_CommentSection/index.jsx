@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
@@ -47,7 +48,7 @@ class CommentSection extends React.Component {
                 that.setState({ comments: result })
             })
             .catch((error) => {
-                console.error(error)
+                location.href = '/'
             })
     }
 
@@ -144,27 +145,31 @@ class CommentSection extends React.Component {
                     Comments
                 </Header>
 
-                {this.state.comments.length == 0 ? (
-                    <span className="empty-comments">Sorry. We could not find any comments.</span>
+                {this.state.comments ? (
+                    this.state.comments.length == 0 ? (
+                        <span className="empty-comments">Sorry. We could not find any comments.</span>
+                    ) : (
+                        this.state.comments.map((comment) => {
+                            return (
+                                <Comment key={comment.id}>
+                                    {comment.avatar == '' ? (
+                                        <Comment.Avatar href={'/app/user/' + comment.email} src={unknownAvatar} />
+                                    ) : (
+                                        <Comment.Avatar href={'/app/user/' + comment.email} src={process.env.REACT_APP_API_URL + '/' + comment.avatar.replace('./', '')} />
+                                    )}
+                                    <Comment.Content>
+                                        <Comment.Author href={'/app/user/' + comment.email}>{comment.name}</Comment.Author>
+                                        <Comment.Metadata>
+                                            <span>{this.getDate(comment.created_at)}</span>
+                                        </Comment.Metadata>
+                                        <Comment.Text dangerouslySetInnerHTML={{ __html: this.decodeHTMLEntities(comment.comment_content) }}></Comment.Text>
+                                    </Comment.Content>
+                                </Comment>
+                            )
+                        })
+                    )
                 ) : (
-                    this.state.comments.map((comment) => {
-                        return (
-                            <Comment key={comment.id}>
-                                {comment.avatar == '' ? (
-                                    <Comment.Avatar href={'/app/user/' + comment.email} src={unknownAvatar} />
-                                ) : (
-                                    <Comment.Avatar href={'/app/user/' + comment.email} src={process.env.REACT_APP_API_URL + '/' + comment.avatar.replace('./', '')} />
-                                )}
-                                <Comment.Content>
-                                    <Comment.Author href={'/app/user/' + comment.email}>{comment.name}</Comment.Author>
-                                    <Comment.Metadata>
-                                        <span>{this.getDate(comment.created_at)}</span>
-                                    </Comment.Metadata>
-                                    <Comment.Text dangerouslySetInnerHTML={{ __html: this.decodeHTMLEntities(comment.comment_content) }}></Comment.Text>
-                                </Comment.Content>
-                            </Comment>
-                        )
-                    })
+                    <Redirect to="/" />
                 )}
 
                 <Form onSubmit={this.handleSubmit} reply>
