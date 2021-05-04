@@ -71,3 +71,27 @@ select:focus,
 textarea {
     font-size: 16px !important;
 }
+
+// App-Like feeling
+@media (max-width: 768px) {
+    html,
+    body,
+    #root,
+    .app {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        .nav-header {
+            position: fixed !important;
+            z-index: 10;
+            border-radius: 0 !important;
+        }
+        .main_content {
+            display: inline-block;
+            padding-top: 70px;
+            overflow: auto;
+            width: 100%;
+        }
+    }
+}

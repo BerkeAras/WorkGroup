@@ -9,6 +9,9 @@ body {
     float: left;
     width: calc(100% - 290px - 290px);
     padding: 0 30px 30px 30px;
+    .text.extra * {
+        word-break: break-all;
+    }
 }
 
 @media (max-width: 1130px) {
