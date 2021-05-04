@@ -1,4 +1,5 @@
 import React from 'react'
+import packageJson from '../../../package.json'
 import './style.scss'
 import SidebarPopularItems from '../SidebarPopularItems'
 import { Card } from 'semantic-ui-react'
@@ -17,7 +18,7 @@ class SidebarLeft extends React.Component {
                     </Card.Content>
                 </Card>
                 <Card>
-                    <Card.Content extra>About WorkGroup</Card.Content>
+                    <Card.Content extra>About WorkGroup {packageJson.version}</Card.Content>
                     <Card.Content className="about-card-content">
                         <a className="about-link" target="_blank" rel="noreferrer" href="https://github.com/BerkeAras/WorkGroup">
                             Project
