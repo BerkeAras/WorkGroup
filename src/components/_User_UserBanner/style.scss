@@ -61,3 +61,27 @@
         }
     }
 }
+@media (max-width: 910px) {
+    .user-banner {
+        .user-avatar {
+            margin-left: 10px !important;
+        }
+        .banner-content {
+            padding: 75px 20px 20px 20px !important;
+            .button {
+                right: 10px !important;
+            }
+
+            .user-details-grid {
+                margin-top: 10px !important;
+                grid-template-columns: 1fr !important;
+                grid-template-rows: auto !important;
+                grid-template-areas: none !important;
+
+                span {
+                    padding: 15px 0 !important;
+                }
+            }
+        }
+    }
+}
