@@ -34,7 +34,7 @@ function User() {
                     document.title = res[0]['name'] + ' – WorkGroup'
                 }
             })
-    }, [])
+    }, [email])
 
     return (
         <div className="app">

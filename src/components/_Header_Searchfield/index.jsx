@@ -132,7 +132,7 @@ const SearchField = () => {
                                 {userResult.map((user) => {
                                     return (
                                         <li key={user.id}>
-                                            <Link to={'/app/user/' + user.email}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/user/' + user.email}>
                                                 <User size={20} strokeWidth={2.7} /> {user.name}{' '}
                                                 {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
                                             </Link>
@@ -147,7 +147,7 @@ const SearchField = () => {
                                 {topicResult.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link to={'/app/topics/' + topic.topic}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
                                                 <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                             </Link>
                                         </li>
@@ -160,7 +160,7 @@ const SearchField = () => {
                                 {popularTopics.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link to={'/app/topics/' + topic.topic}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
                                                 <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                             </Link>
                                         </li>
