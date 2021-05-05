@@ -93,9 +93,12 @@ This is an example of how to list things you need to use the software and how to
     ```sh
     npm install
     ```
-3. Enter your API URL in `.env` (Clone the API from [WorkGroup-API](https://github.com/BerkeAras/WorkGroup-API))
+3. Enter your configuration in `.env` (Clone the API from [WorkGroup-API](https://github.com/BerkeAras/WorkGroup-API))
     ```JS
-    REACT_APP_API_URL=YourApiUrl
+    REACT_APP_API_URL=http://your-api-url.com
+    REACT_APP_LOCALE="en-US"
+    REACT_APP_USE_GOOGLE_ANALYTICS=true
+    REACT_APP_GOOGLE_ANALYTICS="UA-XXXXXXXXX-X"
     ```
 
 <!-- ROADMAP -->
