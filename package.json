@@ -19,6 +19,7 @@
         "react-debounce-input": "^3.2.3",
         "react-dom": "^17.0.1",
         "react-feather": "^2.0.9",
+        "react-ga": "^3.3.0",
         "react-infinite-scroll-component": "^6.0.0",
         "react-ionicons": "^4.0.5",
         "react-router-dom": "^5.2.0",

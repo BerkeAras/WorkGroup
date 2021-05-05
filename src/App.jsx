@@ -11,6 +11,7 @@ import User from './views/User'
 import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
+import CookieBanner from './components/_App_CookieBanner'
 import { AuthProvider } from './store/AuthContext'
 
 class App extends React.Component {
@@ -129,6 +130,9 @@ class App extends React.Component {
                         </React.Fragment>
                     )}
                 </Switch>
+                {process.env.REACT_APP_USE_GOOGLE_ANALYTICS == "true" && (
+                    <CookieBanner />
+                )}
             </Router>
         )
     }

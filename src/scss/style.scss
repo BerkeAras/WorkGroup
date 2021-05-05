@@ -95,3 +95,8 @@ textarea {
         }
     }
 }
+
+// Font overwriting
+.ui.button, .ui.modal>.header {
+    font-family: "Inter", sans-serif !important;
+}
