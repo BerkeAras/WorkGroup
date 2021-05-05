@@ -28,16 +28,18 @@
     }
 }
 .cookie-modal {
-    .ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before {
-        background-color: #2c85d0!important;
+    .ui.toggle.checkbox input:checked ~ .box:before,
+    .ui.toggle.checkbox input:checked ~ label:before {
+        background-color: #2c85d0 !important;
     }
-    .ui.toggle.checkbox input:checked~.box:after, .ui.toggle.checkbox input:checked~label:after {
+    .ui.toggle.checkbox input:checked ~ .box:after,
+    .ui.toggle.checkbox input:checked ~ label:after {
         box-shadow: 0 0 15px 0px #0000005c !important;
     }
 
     .content {
         font-size: 15px !important;
-        
+
         .cookie-explenation {
             .checkbox {
                 label {
@@ -54,12 +56,12 @@
         }
     }
 }
-@media (max-width:1130px) {
+@media (max-width: 1130px) {
     .cookie-banner {
         padding: 20px 10px;
     }
 }
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .cookie-banner {
         padding: 10px;
         max-height: 50%;
@@ -69,9 +71,9 @@
         p {
             margin-bottom: 15px;
             line-height: 24px;
-            font-size: 15px; 
+            font-size: 15px;
             opacity: 1;
-            overflow:auto;
+            overflow: auto;
             height: 120px;
             padding: 10px 0;
             display: block;
