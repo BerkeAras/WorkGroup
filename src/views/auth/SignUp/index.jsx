@@ -118,7 +118,7 @@ class SignUp extends React.Component {
                             {this.state.error === 'already_registered' ? (
                                 <Message negative>
                                     <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                    <p> This E - Mail is already registered! </p>
+                                    <p> This E-Mail is already registered! </p>
                                 </Message>
                             ) : (
                                 <div />

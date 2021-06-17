@@ -80,7 +80,7 @@ const SignIn = () => {
                         {error ? (
                             <Message negative>
                                 <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                <p> E - Mail or password incorrect! </p>
+                                <p> E-Mail or password incorrect! </p>
                             </Message>
                         ) : (
                             <div />
