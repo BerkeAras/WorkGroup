@@ -11,7 +11,9 @@ body {
     .card {
         margin-bottom: 40px;
         .about-card-content {
-            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             .about-logo {
                 display: block;
                 width: 100%;
