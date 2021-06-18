@@ -115,29 +115,29 @@ class SignUp extends React.Component {
                         <h3>Sign Up to use WorkGroup</h3>
 
                         {this.state.error === 'already_registered' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> This E-Mail is already registered! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'password_does_not_match' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> The Passwords does not match! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'inputs_empty' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> Please fill out everything! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> This E-Mail is already registered! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        {this.state.error === 'password_does_not_match' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> The Passwords does not match! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        {this.state.error === 'inputs_empty' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> Please fill out everything! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
                         <form className="" onSubmit={this.handleSubmit}>
                             <Input autoFocus fluid onChange={this.nameChangeHandler} type="text" placeholder="Name" id="userName" />
                             <br />
@@ -156,7 +156,9 @@ class SignUp extends React.Component {
                                     Sign Up
                                 </Button>
                             )}
-                            <Button as={Link} to="/">Already registered?</Button>
+                            <Button as={Link} to="/">
+                                Already registered?
+                            </Button>
                         </form>
                     </div>
                 </div>

@@ -97,7 +97,7 @@ textarea {
 
 // Font overwriting
 .ui.button,
-.ui.modal>.header,
+.ui.modal > .header,
 h1,
 h2,
 h3,
@@ -115,15 +115,15 @@ textarea {
 
 // Button overwriting
 .ui.button {
-    box-shadow: 0 0 0px 0px rgba(224, 225, 226, .6) !important;
+    box-shadow: 0 0 0px 0px rgba(224, 225, 226, 0.6) !important;
     &:focus {
-        box-shadow: 0 0 0px 3px rgba(224, 225, 226, .6) !important;
+        box-shadow: 0 0 0px 3px rgba(224, 225, 226, 0.6) !important;
     }
 }
 
 .ui.button.primary {
-    box-shadow: 0 0 0px 0px rgba(33, 133, 208, .4) !important;
+    box-shadow: 0 0 0px 0px rgba(33, 133, 208, 0.4) !important;
     &:focus {
-        box-shadow: 0 0 0px 3px rgba(33, 133, 208, .4) !important;
+        box-shadow: 0 0 0px 3px rgba(33, 133, 208, 0.4) !important;
     }
 }
