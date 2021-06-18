@@ -1,5 +1,4 @@
 @import '../../scss/variables';
-
 @keyframes around {
     0% {
         transform: rotate(0deg);
@@ -8,6 +7,7 @@
         transform: rotate(360deg);
     }
 }
+
 .SearchField {
     height: 40px;
     width: 300px;
@@ -16,10 +16,8 @@
     transition: all 0.3s;
     z-index: 11;
     position: relative;
-
     form {
         height: 100%;
-
         input {
             height: 100%;
             background: #f7f7f7;
@@ -28,13 +26,12 @@
             border-radius: 7px;
             padding: 1px 10px;
             outline: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'PT Sans', sans-serif;
             box-shadow: 0 0 transparent;
             border: 2px solid white;
             font-size: 16px !important;
-
             &::placeholder {
-                font-family: 'Inter', sans-serif;
+                font-family: 'PT Sans', sans-serif;
                 font-size: 16px !important;
                 color: #8c9aa2;
             }
@@ -58,16 +55,13 @@
             animation: around 0.7s linear infinite;
         }
     }
-
     &-expanded {
         input {
             padding: 1px 37px 1px 10px !important;
         }
     }
-
     &:focus-within {
         width: 400px;
-
         input {
             background: white;
             color: black;
@@ -75,7 +69,6 @@
             border: 2px solid $primary-color;
         }
     }
-
     &-Results {
         outline: 0;
         display: none;
@@ -88,11 +81,9 @@
         margin-left: 2px;
         border-radius: 5px;
         box-shadow: 0 3px 8px 0px #00182b40;
-
         &-visible {
             display: block;
         }
-
         span.divider {
             font-size: 12px;
             display: inline-block;
@@ -105,12 +96,10 @@
             margin-top: 6px;
             margin-bottom: 3px;
         }
-
         ul {
             margin: 0;
             padding: 0;
             list-style-type: none;
-
             a {
                 position: relative;
                 display: flex;
@@ -126,11 +115,9 @@
                 overflow: hidden;
                 white-space: nowrap;
                 transition: all 0.2s;
-
                 &:hover {
                     background-color: #eeeeee;
                     transform: scale(0.98);
-
                     small {
                         color: $primary-color;
                     }
@@ -139,7 +126,6 @@
                     transform: scale(0.95);
                     outline: none !important;
                 }
-
                 svg {
                     color: #a0b0b9;
                     margin-right: 10px;
@@ -163,20 +149,17 @@
                 }
             }
         }
-
         &-More {
             display: inline-block;
             width: 100%;
             text-align: center;
             padding: 7px 0px;
             color: $primary-color;
-
             &:hover {
                 text-decoration: underline;
             }
         }
     }
-
     &-mobile-visible {
         display: block;
         position: fixed;
@@ -184,7 +167,6 @@
         left: 5px;
         width: calc(100% - 10px);
         margin: 0;
-
         &:focus-within {
             width: calc(100% - 10px);
         }
@@ -193,6 +175,7 @@
         }
     }
 }
+
 .SearchFieldBackdrop {
     &-visible {
         position: fixed;
@@ -210,6 +193,7 @@
         display: none;
     }
 }
+
 @media (min-width: 911px) {
     .header__dropdown-button-search {
         display: none;

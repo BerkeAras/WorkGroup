@@ -70,45 +70,44 @@ const SignIn = () => {
     }, [])
 
     return (
-        <div className="loginContainer">
-            <img className="logo" alt="Logo" src={logo} />
-            <Card className="login-card">
-                <Card.Content>
-                    <div className="formContainer">
-                        <h3>Sign In into WorkGroup</h3>
+        <>
+            <div className="loginContainer">
+                <img className="logo" alt="Logo" src={logo} />
+                <div className="formContainer">
+                    <h3>Sign In into WorkGroup</h3>
 
-                        {error ? (
-                            <Message negative>
-                                <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                <p> E-Mail or password incorrect! </p>
-                            </Message>
+                    {error ? (
+                        <Message negative>
+                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                            <p> E-Mail or password incorrect! </p>
+                        </Message>
+                    ) : (
+                        <div />
+                    )}
+                    <form className="" onSubmit={handleSubmit}>
+                        <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                        <br />
+                        <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                        <br />
+                        {isLoggingIn ? (
+                            <Button loading primary disabled={!canLogin} type="submit">
+                                Sign In
+                            </Button>
                         ) : (
-                            <div />
+                            <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
+                                Sign In
+                            </Button>
                         )}
-                        <form className="" onSubmit={handleSubmit}>
-                            <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                            <br />
-                            <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
-                            <br />
-                            {isLoggingIn ? (
-                                <Button loading primary disabled={!canLogin} type="submit">
-                                    Sign In
-                                </Button>
-                            ) : (
-                                <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
-                                    Sign In
-                                </Button>
-                            )}
-                            <Button href="/signUp">No account ? Sign Up!</Button>
-                        </form>
-                        <p className="text-center my-3">
-                            <br />
-                            <Link to="/password-reset">Forgot Password ?</Link>
-                        </p>
-                    </div>
-                </Card.Content>
-            </Card>
-        </div>
+                        <Button as={Link} to="/signUp">No account ? Sign Up!</Button>
+                    </form>
+                    <p className="text-center my-3">
+                        <br />
+                        <Link to="/password-reset">Forgot Password?</Link>
+                    </p>
+                </div>
+            </div>
+            <div className="loginBackground"></div>
+        </>
     )
 }
 

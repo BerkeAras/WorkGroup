@@ -3,9 +3,16 @@ body {
 }
 
 .loginContainer {
-    margin: 50px auto;
-    width: 350px;
-    text-align: center;
+    margin: 0;
+    width: 500px;
+    height: 100%;
+    background: white;
+    float: left;
+    text-align: left;
+    padding: 50px 35px;
+    .ui.message {
+        text-align: center;
+    }
     img.logo {
         height: 40px;
     }
@@ -16,7 +23,9 @@ body {
         color: #2c86d0;
     }
     .formContainer {
-        margin-top: 0 !important;
+        border-top: 1px solid #dededf;
+        padding-top: 25px;
+        margin-top: 25px;
         .ui.button {
             margin: 5px;
         }
@@ -25,7 +34,21 @@ body {
             font-size: 16px;
             margin: 15px 0;
         }
+        .ui.button:first-of-type {
+            margin-left: 0 !important;
+        }
     }
+}
+
+.loginBackground {
+    width: calc(100% - 500px);
+    float: left;
+    height: 100%;
+    background-image: url('../../../static/login-background.jpeg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: inset 49px 0px 30px -40px #0000003b;
 }
 
 .login-card {
@@ -33,4 +56,13 @@ body {
     width: 100% !important;
     margin-top: 50px !important;
     background: #fdfdfd !important;
+}
+
+@media (max-width:600px) {
+    .loginContainer {
+        width: 100% !important;
+    }
+    .loginBackground {
+        width: 0;
+    }
 }
