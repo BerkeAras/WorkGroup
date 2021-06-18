@@ -108,62 +108,62 @@ class SignUp extends React.Component {
 
     render() {
         return (
-            <div className="loginContainer">
-                <img className="logo" alt="Logo" src={logo} />
-                <Card className="login-card">
-                    <Card.Content>
-                        <div className="formContainer">
-                            <h3>Sign Up to use WorkGroup</h3>
+            <>
+                <div className="loginContainer">
+                    <img className="logo" alt="Logo" src={logo} />
+                    <div className="formContainer">
+                        <h3>Sign Up to use WorkGroup</h3>
 
-                            {this.state.error === 'already_registered' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                    <p> This E-Mail is already registered! </p>
-                                </Message>
+                        {this.state.error === 'already_registered' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> This E-Mail is already registered! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        {this.state.error === 'password_does_not_match' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> The Passwords does not match! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        {this.state.error === 'inputs_empty' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> Please fill out everything! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        <form className="" onSubmit={this.handleSubmit}>
+                            <Input autoFocus fluid onChange={this.nameChangeHandler} type="text" placeholder="Name" id="userName" />
+                            <br />
+                            <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                            <br />
+                            <Input fluid onChange={this.passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                            <br />
+                            <Input fluid onChange={this.passwordRepeatChangeHandler} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
+                            <br />
+                            {this.state.isSigningUp ? (
+                                <Button loading primary type="submit">
+                                    Sign Up
+                                </Button>
                             ) : (
-                                <div />
+                                <Button primary type="submit" onClick={this.handleSubmit}>
+                                    Sign Up
+                                </Button>
                             )}
-                            {this.state.error === 'password_does_not_match' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                    <p> The Passwords does not match! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'inputs_empty' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                    <p> Please fill out everything! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-
-                            <form className="" onSubmit={this.handleSubmit}>
-                                <Input autoFocus fluid onChange={this.nameChangeHandler} type="text" placeholder="Name" id="userName" />
-                                <br />
-                                <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                                <br />
-                                <Input fluid onChange={this.passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
-                                <br />
-                                <Input fluid onChange={this.passwordRepeatChangeHandler} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
-                                <br />
-                                {this.state.isSigningUp ? (
-                                    <Button loading primary type="submit">
-                                        Sign Up
-                                    </Button>
-                                ) : (
-                                    <Button primary type="submit" onClick={this.handleSubmit}>
-                                        Sign Up
-                                    </Button>
-                                )}
-                                <Button href="/">Already registered?</Button>
-                            </form>
-                        </div>
-                    </Card.Content>
-                </Card>
-            </div>
+                            <Button as={Link} to="/">
+                                Already registered?
+                            </Button>
+                        </form>
+                    </div>
+                </div>
+                <div className="loginBackground"></div>
+            </>
         )
     }
 }

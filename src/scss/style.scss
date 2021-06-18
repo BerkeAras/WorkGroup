@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import 'variables.scss';
 * {
     box-sizing: border-box;
@@ -8,7 +8,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'PT Sans', sans-serif !important;
 }
 
 #root,
@@ -81,7 +81,6 @@ textarea {
         position: fixed;
         top: 0;
         left: 0;
-
         .nav-header {
             position: fixed !important;
             z-index: 10;
@@ -98,6 +97,33 @@ textarea {
 
 // Font overwriting
 .ui.button,
-.ui.modal > .header {
-    font-family: 'Inter', sans-serif !important;
+.ui.modal > .header,
+h1,
+h2,
+h3,
+h4,
+h5,
+input::placeholder,
+.ui.message .header,
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: 'PT Sans', sans-serif !important;
+}
+
+// Button overwriting
+.ui.button {
+    box-shadow: 0 0 0px 0px rgba(224, 225, 226, 0.6) !important;
+    &:focus {
+        box-shadow: 0 0 0px 3px rgba(224, 225, 226, 0.6) !important;
+    }
+}
+
+.ui.button.primary {
+    box-shadow: 0 0 0px 0px rgba(33, 133, 208, 0.4) !important;
+    &:focus {
+        box-shadow: 0 0 0px 3px rgba(33, 133, 208, 0.4) !important;
+    }
 }
