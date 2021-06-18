@@ -61,13 +61,35 @@ class App extends React.Component {
                         this.setLoggedInStatus(true)
                         this.setState({ loginData: result.data })
                     } else {
+                        let cookiesAcceptedDecision = ''
+
+                        if (localStorage.getItem('cookies_accepted') !== null) {
+                            cookiesAcceptedDecision = localStorage.getItem('cookies_accepted')
+                        }
+
                         localStorage.clear()
+
+                        if (cookiesAcceptedDecision !== '') {
+                            localStorage.setItem('cookies_accepted', cookiesAcceptedDecision)
+                        }
+
                         this.setLoggedInStatus(false)
                     }
                 })
                 .catch((error) => console.log('error', error))
         } else {
+            let cookiesAcceptedDecision = ''
+
+            if (localStorage.getItem('cookies_accepted') !== null) {
+                cookiesAcceptedDecision = localStorage.getItem('cookies_accepted')
+            }
+
             localStorage.clear()
+
+            if (cookiesAcceptedDecision !== '') {
+                localStorage.setItem('cookies_accepted', cookiesAcceptedDecision)
+            }
+
             this.setLoggedInStatus(false)
         }
 
