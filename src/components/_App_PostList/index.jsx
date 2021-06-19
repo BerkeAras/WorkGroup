@@ -237,8 +237,6 @@ class PostsList extends React.Component {
 
         // Update counter
 
-        console.log(element)
-
         currentLikeCount = element.querySelector('span').innerHTML.substr(0, element.querySelector('span').innerHTML.indexOf(' '))
         currentLikeCount = parseInt(currentLikeCount)
 
