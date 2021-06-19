@@ -46,6 +46,10 @@
         font-weight: 500;
         svg {
             margin-right: 5px;
+            pointer-events: none;
+            * {
+                pointer-events: none;
+            }
         }
     }
     a.user-avatar {
@@ -56,10 +60,12 @@
         }
     }
 }
+
 .feed .comments {
     width: 100% !important;
     max-width: 100% !important;
 }
+
 .ui.feed > .event > .label {
     height: 2.5em !important;
 }
