@@ -31,7 +31,7 @@ class MainApp extends React.Component {
                     <SidebarLeft />
                     <Content>
                         <CreatePostForm />
-                        <PostList />
+                        <PostList user="*" />
                     </Content>
                     <SidebarRight />
                 </div>

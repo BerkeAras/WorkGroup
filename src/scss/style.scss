@@ -98,6 +98,12 @@ textarea {
 
 // Font overwriting
 .ui.button,
-.ui.modal > .header {
+.ui.modal > .header,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Inter', sans-serif !important;
 }
