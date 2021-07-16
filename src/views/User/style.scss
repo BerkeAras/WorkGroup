@@ -11,7 +11,7 @@ body {
     width: 400px;
     float: left;
     margin-top: 20px;
-    border-radius: 0.28571429rem !important;
+    border-radius: 10px !important;
     box-shadow: 0 1px 3px 0 #d4d4d5;
     background: white !important;
     padding: 15px !important;
@@ -42,7 +42,7 @@ body {
     padding-left: 20px;
 
     .event {
-        border-radius: 0.28571429rem !important;
+        border-radius: 10px !important;
     }
 
     @media (max-width: 1180px) {
