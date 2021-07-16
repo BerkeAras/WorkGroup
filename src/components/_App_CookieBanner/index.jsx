@@ -21,9 +21,32 @@ function CookieBanner() {
         }
     })
 
+    const storeCookieChoice = () => {
+
+        var header = new Headers()
+        header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        header.append('Content-Type', 'application/json')
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header,
+            body: JSON.stringify({
+                cookie_choice: localStorage.getItem('cookies_accepted')
+            }),
+        }
+        // eslint-disable-next-line no-undef
+        fetch(process.env.REACT_APP_API_URL + '/api/user/storeCookieChoice', requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+
+    }
+
     const acceptCookies = (e) => {
         setCookiesAccepted(true)
         localStorage.setItem('cookies_accepted', 'true')
+        storeCookieChoice()
     }
 
     const initializeTracking = (location) => {
@@ -40,6 +63,7 @@ function CookieBanner() {
             // Analytics cookies are checked
             initializeTracking(location)
             localStorage.setItem('cookies_accepted', 'true')
+            storeCookieChoice()
         } else {
             // Remove cookies
             document.cookie = '_ga=; Path=/; Domain=.example.com; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
@@ -53,6 +77,7 @@ function CookieBanner() {
 
             localStorage.removeItem('cookies_accepted')
             localStorage.setItem('cookies_accepted', 'technical')
+            storeCookieChoice()
         }
 
         setCookiesAccepted(true)
