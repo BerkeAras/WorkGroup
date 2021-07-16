@@ -57,17 +57,40 @@ class App extends React.Component {
                         localStorage.setItem('user_id', result.data.id)
                         localStorage.setItem('user_name', result.data.name)
                         localStorage.setItem('user_email', result.data.email)
+                        localStorage.setItem('cookies_accepted', result.data.cookie_choice)
 
                         this.setLoggedInStatus(true)
                         this.setState({ loginData: result.data })
                     } else {
+                        let cookiesAcceptedDecision = ''
+
+                        if (localStorage.getItem('cookies_accepted') !== null) {
+                            cookiesAcceptedDecision = localStorage.getItem('cookies_accepted')
+                        }
+
                         localStorage.clear()
+
+                        if (cookiesAcceptedDecision !== '') {
+                            localStorage.setItem('cookies_accepted', cookiesAcceptedDecision)
+                        }
+
                         this.setLoggedInStatus(false)
                     }
                 })
                 .catch((error) => console.log('error', error))
         } else {
+            let cookiesAcceptedDecision = ''
+
+            if (localStorage.getItem('cookies_accepted') !== null) {
+                cookiesAcceptedDecision = localStorage.getItem('cookies_accepted')
+            }
+
             localStorage.clear()
+
+            if (cookiesAcceptedDecision !== '') {
+                localStorage.setItem('cookies_accepted', cookiesAcceptedDecision)
+            }
+
             this.setLoggedInStatus(false)
         }
 

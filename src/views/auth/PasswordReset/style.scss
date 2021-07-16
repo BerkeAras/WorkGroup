@@ -12,9 +12,13 @@ body {
 }
 
 .loginContainer {
-    margin: 50px auto;
-    width: 350px;
-    text-align: center;
+    margin: 0;
+    width: 500px;
+    height: 100%;
+    background: white;
+    float: left;
+    text-align: left;
+    padding: 50px 35px;
     img.logo {
         height: 40px;
     }
@@ -25,7 +29,9 @@ body {
         color: #2c86d0;
     }
     .formContainer {
-        margin-top: 0 !important;
+        border-top: 1px solid #dededf;
+        padding-top: 25px;
+        margin-top: 25px;
         .ui.button {
             margin: 5px;
         }

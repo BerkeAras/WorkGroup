@@ -1,36 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef } from 'react'
 import './style.scss'
-import { Feed, Icon, Loader, Button } from 'semantic-ui-react'
+import { Feed, Modal, Loader, Button } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { ThumbsUp, MessageCircle, Zap } from 'react-feather'
-import PropTypes from 'prop-types'
+import { ThumbsUp, MessageCircle, Zap, FileText } from 'react-feather'
 
 import unknownAvatar from '../../static/unknown.png'
 
 import CommentSection from '../_App_CommentSection/'
 
-function PostList(props) {
-    const user = props.user
-    const [items, setItems] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [cursor, setCursor] = useState(1)
-    const [loaded, setLoaded] = useState(false)
-    const [isLoadingMore, setIsLoadingMore] = useState(false)
-    const [visibleCommentSections, setVisibleCommentSections] = useState([])
-    const [emptyStates, setEmptyStates] = useState(["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'])
-
-    useEffect(() => {
-        setCursor(1)
-
-        console.log(props.user)
-
-        if (props.user !== undefined) {
-            loadMore(props.user)
+class PostsList extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            items: [],
+            isLoading: true,
+            cursor: 1,
+            loaded: false,
+            isLoadingMore: false,
+            visibleCommentSections: [],
+            emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
+            imageModalVisible: false,
+            imageModalUrl: '',
         }
-    }, [props.user])
 
-    const convertDate = (date) => {
+        this.toggleComment = this.toggleComment.bind(this)
+    }
+
+    componentDidMount() {
+        this.loadMore()
+    }
+
+    convertDate = (date) => {
         var t,
             result = null
 
@@ -41,40 +42,44 @@ function PostList(props) {
             result = new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0)
         }
 
+        console.log(result)
+
         return result
     }
 
-    const getFriendlyDate = (date) => {
-        var unfriendlyDate = Math.round((+new Date() - date) / 1000)
+    getFriendlyDate = (date) => {
+        var delta = Math.round((+new Date() - date) / 1000)
+
+        console.log(date, delta)
 
         var minute = 60,
             hour = minute * 60,
             day = hour * 24,
             week = day * 7
 
-        var friendlyDate
+        var fuzzy
 
-        if (unfriendlyDate < 30) {
-            friendlyDate = 'just then.'
-        } else if (unfriendlyDate < minute) {
-            friendlyDate = unfriendlyDate + ' seconds ago.'
-        } else if (unfriendlyDate < 2 * minute) {
-            friendlyDate = 'a minute ago.'
-        } else if (unfriendlyDate < hour) {
-            friendlyDate = Math.floor(unfriendlyDate / minute) + ' minutes ago.'
-        } else if (Math.floor(unfriendlyDate / hour) == 1) {
-            friendlyDate = '1 hour ago.'
-        } else if (unfriendlyDate < day) {
-            friendlyDate = Math.floor(unfriendlyDate / hour) + ' hours ago.'
-        } else if (unfriendlyDate < day * 2) {
-            friendlyDate = 'yesterday'
+        if (delta < 30) {
+            fuzzy = 'just then.'
+        } else if (delta < minute) {
+            fuzzy = delta + ' seconds ago.'
+        } else if (delta < 2 * minute) {
+            fuzzy = 'a minute ago.'
+        } else if (delta < hour) {
+            fuzzy = Math.floor(delta / minute) + ' minutes ago.'
+        } else if (Math.floor(delta / hour) == 1) {
+            fuzzy = '1 hour ago.'
+        } else if (delta < day) {
+            fuzzy = Math.floor(delta / hour) + ' hours ago.'
+        } else if (delta < day * 2) {
+            fuzzy = 'yesterday'
         }
 
-        return friendlyDate
+        return fuzzy
     }
 
-    const loadMore = (userFeed) => {
-        setIsLoadingMore(true)
+    loadMore = () => {
+        this.setState({ isLoadingMore: true })
 
         var loadingHeader = new Headers()
         loadingHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -85,41 +90,38 @@ function PostList(props) {
             redirect: 'follow',
         }
 
-        if (userFeed == '*') {
-            userFeed = ''
-        } else {
-            userFeed = `&user=${userFeed}`
-        }
-
-        setIsLoading(true)
-        fetch(process.env.REACT_APP_API_URL + `/api/content/getPosts?from=${cursor}` + userFeed, requestOptions)
+        this.setState({ isLoading: true, error: undefined })
+        fetch(process.env.REACT_APP_API_URL + `/api/content/getPosts?from=${this.state.cursor}`, requestOptions)
             .then((res) => res.json())
             .then(
                 (res) => {
-                    setIsLoadingMore(false)
+                    this.setState({ isLoadingMore: false })
                     if (res['status_code'] !== undefined) {
                         if (res['message'] === 'Token has expired') {
                             location.href = '/logout'
                             localStorage.clear()
                         }
+                        console.error('ERROR: ' + res['message'])
                     } else {
-                        if (items.length > 60) {
-                            setItems([])
+                        if (this.state.items.length > 60) {
+                            this.setState({ items: [] })
                         }
 
-                        setItems([...items, ...res])
-                        setCursor(cursor + 1)
-                        setIsLoading(false)
-                        setLoaded(true)
+                        this.setState((state) => ({
+                            items: [...state.items, ...res],
+                            cursor: this.state.cursor + 1,
+                            isLoading: false,
+                            loaded: true,
+                        }))
                     }
                 },
                 (error) => {
-                    setIsLoading(false)
+                    this.setState({ isLoading: false, error })
                 }
             )
     }
 
-    const getDate = (date) => {
+    getDate(date) {
         var newDate = new Date(date)
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
@@ -142,7 +144,7 @@ function PostList(props) {
         return dateString
     }
 
-    const getLikes = (likes) => {
+    getLikes(likes) {
         let returnStr = '0 Likes'
 
         if (likes == 1) {
@@ -154,7 +156,7 @@ function PostList(props) {
         return returnStr
     }
 
-    const getComments = (comments) => {
+    getComments(comments) {
         let returnStr = '0 Comments'
 
         if (comments == 1) {
@@ -166,9 +168,7 @@ function PostList(props) {
         return returnStr
     }
 
-    const toggleComment = (e) => {
-        setIsLoadingMore(true)
-
+    toggleComment(e) {
         Array.prototype.remove = function () {
             var what,
                 a = arguments,
@@ -194,33 +194,31 @@ function PostList(props) {
         let val = element.id.replace('post_comment_id_', '')
         val = parseInt(val)
 
-        let isVisible = visibleCommentSections.includes(val)
+        let isVisible = this.state.visibleCommentSections.includes(val)
 
         let newStatus
 
-        setTimeout(() => {
-            if (!isVisible) {
-                newStatus = true
+        if (!isVisible) {
+            newStatus = true
 
-                // Add item to it
-                let updatedVisibleCommentSections = visibleCommentSections
-                updatedVisibleCommentSections.push(val)
+            let visibleCommentSections = [...this.state.visibleCommentSections]
 
-                // Set state
-                setVisibleCommentSections(updatedVisibleCommentSections)
-            } else {
-                newStatus = false
+            // Add item to it
+            visibleCommentSections.push(val)
 
-                let updatedVisibleCommentSections = visibleCommentSections
-                updatedVisibleCommentSections.remove(val)
+            // Set state
+            this.setState({ visibleCommentSections })
+        } else {
+            newStatus = false
 
-                setVisibleCommentSections(updatedVisibleCommentSections)
-            }
-            setIsLoadingMore(false)
-        }, 1)
+            let visibleCommentSections = [...this.state.visibleCommentSections]
+            visibleCommentSections.remove(val)
+
+            this.setState({ visibleCommentSections })
+        }
     }
 
-    const toggleLike = (e) => {
+    toggleLike(e) {
         e.preventDefault()
 
         let element
@@ -240,6 +238,7 @@ function PostList(props) {
         hasLiked = element.classList.contains('liked')
 
         // Update counter
+
         currentLikeCount = element.querySelector('span').innerHTML.substr(0, element.querySelector('span').innerHTML.indexOf(' '))
         currentLikeCount = parseInt(currentLikeCount)
 
@@ -290,79 +289,130 @@ function PostList(props) {
             })
     }
 
-    return (
-        <div>
-            {loaded === true && user !== undefined && (
-                <Feed>
-                    {visibleCommentSections}
-                    {items.length > 0 ? (
-                        <React.Fragment>
-                            {items.map((item) => (
-                                <React.Fragment key={item.id}>
-                                    <Feed.Event>
-                                        <Feed.Label className="user-avatar">
-                                            <Link to={'/app/user/' + item.email}>
-                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
-                                            </Link>
-                                        </Feed.Label>
-                                        <Feed.Content>
-                                            <Feed.Summary>
-                                                <Link className="user" to={'/app/user/' + item.email}>
-                                                    {item.name}
+    render() {
+        return (
+            <div>
+                {this.state.loaded === true && (
+                    <Feed>
+                        {this.state.items.length > 0 ? (
+                            <React.Fragment>
+                                {this.state.items.map((item) => (
+                                    <React.Fragment key={item.id}>
+                                        <Feed.Event className={this.state.visibleCommentSections.includes(item.id) == 0 && 'event--no-comments-visible'}>
+                                            <Feed.Label className="user-avatar">
+                                                <Link to={'/app/user/' + item.email}>
+                                                    {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
                                                 </Link>
-                                                <Feed.Date>{getDate(item.created_at)}</Feed.Date>
-                                            </Feed.Summary>
-                                            <Feed.Extra text>
-                                                <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
-                                            </Feed.Extra>
-                                            <Feed.Meta>
-                                                <Feed.Like href="#" onClick={toggleLike} id={'post_like_id_' + item.id} className={item.hasLiked}>
-                                                    <ThumbsUp size={16} strokeWidth={2.5} />
-                                                    <span>{getLikes(item.likes)}</span>
-                                                </Feed.Like>
-                                                <a href="#" className="comment-button" onClick={(e) => toggleComment(e)} id={'post_comment_id_' + item.id}>
-                                                    <MessageCircle size={16} strokeWidth={2.5} />
-                                                    <span>{getComments(item.comments)}</span>
-                                                </a>
-                                            </Feed.Meta>
-                                        </Feed.Content>
-                                    </Feed.Event>
-                                    {visibleCommentSections.includes(item.id) > 0 && <CommentSection postId={item.id.toString()} />}
-                                </React.Fragment>
-                            ))}
+                                            </Feed.Label>
+                                            <Feed.Content>
+                                                <Feed.Summary>
+                                                    <Link className="user" to={'/app/user/' + item.email}>
+                                                        {item.name}
+                                                    </Link>
+                                                    <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
+                                                </Feed.Summary>
+                                                <Feed.Extra text>
+                                                    <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
+                                                    {item.images.length > 0 && (
+                                                        <div className="post-images">
+                                                            {item.images.map((postImage, index) => {
+                                                                return (
+                                                                    <div key={index} className={`post-image ${item.images.length == 1 && 'post-image--single'}`}>
+                                                                        <a
+                                                                            href="#"
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault()
+                                                                                this.setState({
+                                                                                    imageModalUrl: process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url,
+                                                                                    imageModalVisible: true,
+                                                                                })
+                                                                            }}
+                                                                        >
+                                                                            <img src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
+                                                                        </a>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                    {item.files.length > 0 && (
+                                                        <div className="post-files">
+                                                            {item.files.map((postFile, index) => {
+                                                                return (
+                                                                    <a
+                                                                        href={process.env.REACT_APP_API_URL + '/static/files/' + postFile.post_file_url}
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        download
+                                                                        key={index}
+                                                                        className="post-file"
+                                                                    >
+                                                                        <div className="post-file-icon">
+                                                                            <FileText size={20} strokeWidth={2} />
+                                                                        </div>
+                                                                        <span className="post-file-text">{postFile.post_file_original}</span>
+                                                                    </a>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                </Feed.Extra>
+                                                <Feed.Meta>
+                                                    <Feed.Like href="#" onClick={this.toggleLike} id={'post_like_id_' + item.id} className={item.hasLiked}>
+                                                        <ThumbsUp size={16} strokeWidth={2.5} />
+                                                        <span>{this.getLikes(item.likes)}</span>
+                                                    </Feed.Like>
+                                                    <a href="#" className="comment-button" onClick={this.toggleComment} id={'post_comment_id_' + item.id}>
+                                                        <MessageCircle size={16} strokeWidth={2.5} />
+                                                        <span>{this.getComments(item.comments)}</span>
+                                                    </a>
+                                                </Feed.Meta>
+                                            </Feed.Content>
+                                        </Feed.Event>
+                                        {this.state.visibleCommentSections.includes(item.id) > 0 && <CommentSection postId={item.id.toString()} />}
+                                    </React.Fragment>
+                                ))}
 
-                            <div className="load-more-container">
-                                {isLoadingMore === true ? (
-                                    <Button loading primary>
-                                        Load more
-                                    </Button>
-                                ) : (
-                                    <Button primary onClick={loadMore}>
-                                        Load more
-                                    </Button>
-                                )}
-                            </div>
-                        </React.Fragment>
-                    ) : (
-                        <Feed.Event>
-                            <Feed.Content>
-                                <div className="empty-feed">
-                                    <Zap size={35} strokeWidth={2} />
-                                    <br />
-                                    <span>{emptyStates[Math.floor(Math.random() * emptyStates.length)]}</span>
+                                <div className="load-more-container">
+                                    {this.state.isLoadingMore === true ? (
+                                        <Button loading primary>
+                                            Load more
+                                        </Button>
+                                    ) : (
+                                        <Button primary onClick={this.loadMore}>
+                                            Load more
+                                        </Button>
+                                    )}
                                 </div>
-                            </Feed.Content>
-                        </Feed.Event>
-                    )}
-                </Feed>
-            )}
-            {isLoading && <Loader active>Loading Feed</Loader>}
-        </div>
-    )
+                            </React.Fragment>
+                        ) : (
+                            <Feed.Event>
+                                <Feed.Content>
+                                    <div className="empty-feed">
+                                        <Zap size={35} strokeWidth={2} />
+                                        <br />
+                                        <span>{this.state.emptyStates[Math.floor(Math.random() * this.state.emptyStates.length)]}</span>
+                                    </div>
+                                </Feed.Content>
+                            </Feed.Event>
+                        )}
+                    </Feed>
+                )}
+                {this.state.isLoading && <Loader active>Loading Feed</Loader>}
+                <Modal
+                    onClose={() => this.setState({ imageModalVisible: false })}
+                    onClick={() => this.setState({ imageModalVisible: false })}
+                    onOpen={() => this.setState({ imageModalVisible: true })}
+                    open={this.state.imageModalVisible}
+                    className="image-modal-content"
+                >
+                    <Modal.Content>
+                        <img src={this.state.imageModalUrl} />
+                    </Modal.Content>
+                </Modal>
+            </div>
+        )
+    }
 }
 
-export default PostList
-
-PostList.propTypes = {
-    user: PropTypes.any,
-}
+export default PostsList

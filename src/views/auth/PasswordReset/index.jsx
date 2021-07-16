@@ -182,206 +182,209 @@ class PasswordReset extends React.Component {
 
     render() {
         return (
-            <div className="loginContainer">
-                <img className="logo" alt="Logo" src={logo} />
-                <Card className="login-card">
-                    {this.state.showPinCard == '0' && (
-                        <Card.Content>
-                            <div className="formContainer">
-                                <h3>Reset your WorkGroup Password</h3>
+            <>
+                <div className="loginContainer">
+                    <img className="logo" alt="Logo" src={logo} />
+                    <>
+                        {this.state.showPinCard == '0' && (
+                            <>
+                                <div className="formContainer">
+                                    <h3>Reset your WorkGroup Password</h3>
 
-                                {this.state.error === 'user_not_found' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> This E-Mail could not be found! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
+                                    {this.state.error === 'user_not_found' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> This E-Mail could not be found! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
 
-                                {this.state.error === 'reset_error' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Please try again in a few minutes! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
+                                    {this.state.error === 'reset_error' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Please try again in a few minutes! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
 
-                                {this.state.error === 'inputs_empty' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Please fill out everything! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-                                {this.state.success ? (
+                                    {this.state.error === 'inputs_empty' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Please fill out everything! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+                                    {this.state.success ? (
+                                        <Message positive>
+                                            <Message.Header>Please check your email inbox to reset your password.</Message.Header>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    <form className="" onSubmit={this.handleSubmit}>
+                                        <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                        <br />
+                                        {this.state.isResetting ? (
+                                            <Button loading primary type="submit">
+                                                Reset Password
+                                            </Button>
+                                        ) : (
+                                            <Button primary type="submit" onClick={this.handleSubmit}>
+                                                Reset Password
+                                            </Button>
+                                        )}
+                                    </form>
+                                </div>
+                            </>
+                        )}
+
+                        {this.state.showPinCard == '1' && (
+                            <>
+                                <div className="formContainer">
+                                    <h3>Reset your WorkGroup Password</h3>
+
+                                    {this.state.error === 'pin_incorrect' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Your PIN is incorrect. Please try again! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    {this.state.error === 'already_registered' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> This E-Mail could not be found! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+                                    {this.state.error === 'inputs_empty' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Please fill out everything! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+                                    {this.state.error === false ? (
+                                        <Message positive>
+                                            <Message.Header>Please check your email inbox and type in the PIN.</Message.Header>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    <form className="" onSubmit={this.handlePinSubmit}>
+                                        <Input fluid onChange={this.pinChangeHandler} type="text" maxLength="6" placeholder="PIN" id="userPIN" />
+                                        <br />
+                                        {this.state.isResetting ? (
+                                            <Button loading primary type="submit">
+                                                Reset Password
+                                            </Button>
+                                        ) : (
+                                            <Button primary type="submit" onClick={this.handlePinSubmit}>
+                                                Reset Password
+                                            </Button>
+                                        )}
+                                    </form>
+                                </div>
+                            </>
+                        )}
+
+                        {this.state.showPinCard == '2' && (
+                            <>
+                                <div className="formContainer">
+                                    <h3>Reset your WorkGroup Password</h3>
+
+                                    {this.state.error === 'pin_incorrect' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Your PIN is incorrect. Please try again! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    {this.state.error === 'password_insecure' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> The Passwords are not secure. Please use a stronger password! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    {this.state.error === 'password_does_not_match' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> The Passwords does not match! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    {this.state.error === 'already_registered' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> This E-Mail could not be found! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+                                    {this.state.error === 'inputs_empty' ? (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Please fill out everything! </p>
+                                        </Message>
+                                    ) : (
+                                        <div />
+                                    )}
+
+                                    <form className="" onSubmit={this.handlePasswordSubmit}>
+                                        <Input fluid onChange={this.password1ChangeHandler} type="password" placeholder="New Password" id="userPassword1" />
+                                        <br />
+                                        <Input fluid onChange={this.password2ChangeHandler} type="password" placeholder="Repeat your Password" id="userPassword2" />
+                                        <br />
+                                        {this.state.isResetting ? (
+                                            <Button loading primary type="submit">
+                                                Reset Password
+                                            </Button>
+                                        ) : (
+                                            <Button primary type="submit" onClick={this.handlePasswordSubmit}>
+                                                Reset Password
+                                            </Button>
+                                        )}
+                                    </form>
+                                </div>
+                            </>
+                        )}
+
+                        {this.state.showPinCard == '3' && (
+                            <>
+                                <div className="formContainer">
+                                    <h3>Reset your WorkGroup Password</h3>
+
                                     <Message positive>
-                                        <Message.Header>Please check your email inbox to reset your password.</Message.Header>
+                                        <Message.Header>Your Password has been changed!</Message.Header>
+                                        <p> You can now Sign In with your new password! </p>
                                     </Message>
-                                ) : (
-                                    <div />
-                                )}
 
-                                <form className="" onSubmit={this.handleSubmit}>
-                                    <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                                    <br />
-                                    {this.state.isResetting ? (
-                                        <Button loading primary type="submit">
-                                            Reset Password
-                                        </Button>
-                                    ) : (
-                                        <Button primary type="submit" onClick={this.handleSubmit}>
-                                            Reset Password
-                                        </Button>
-                                    )}
-                                </form>
-                            </div>
-                        </Card.Content>
-                    )}
-
-                    {this.state.showPinCard == '1' && (
-                        <Card.Content>
-                            <div className="formContainer">
-                                <h3>Reset your WorkGroup Password</h3>
-
-                                {this.state.error === 'pin_incorrect' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Your PIN is incorrect. Please try again! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                {this.state.error === 'already_registered' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> This E-Mail could not be found! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-                                {this.state.error === 'inputs_empty' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Please fill out everything! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-                                {this.state.error === false ? (
-                                    <Message positive>
-                                        <Message.Header>Please check your email inbox and type in the PIN.</Message.Header>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                <form className="" onSubmit={this.handlePinSubmit}>
-                                    <Input fluid onChange={this.pinChangeHandler} type="text" maxLength="6" placeholder="PIN" id="userPIN" />
-                                    <br />
-                                    {this.state.isResetting ? (
-                                        <Button loading primary type="submit">
-                                            Reset Password
-                                        </Button>
-                                    ) : (
-                                        <Button primary type="submit" onClick={this.handlePinSubmit}>
-                                            Reset Password
-                                        </Button>
-                                    )}
-                                </form>
-                            </div>
-                        </Card.Content>
-                    )}
-
-                    {this.state.showPinCard == '2' && (
-                        <Card.Content>
-                            <div className="formContainer">
-                                <h3>Reset your WorkGroup Password</h3>
-
-                                {this.state.error === 'pin_incorrect' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Your PIN is incorrect. Please try again! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                {this.state.error === 'password_insecure' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> The Passwords are not secure. Please use a stronger password! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                {this.state.error === 'password_does_not_match' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> The Passwords does not match! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                {this.state.error === 'already_registered' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> This E-Mail could not be found! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-                                {this.state.error === 'inputs_empty' ? (
-                                    <Message negative>
-                                        <Message.Header>Oh no! An error occurred😢.</Message.Header>
-                                        <p> Please fill out everything! </p>
-                                    </Message>
-                                ) : (
-                                    <div />
-                                )}
-
-                                <form className="" onSubmit={this.handlePasswordSubmit}>
-                                    <Input fluid onChange={this.password1ChangeHandler} type="password" placeholder="New Password" id="userPassword1" />
-                                    <br />
-                                    <Input fluid onChange={this.password2ChangeHandler} type="password" placeholder="Repeat your Password" id="userPassword2" />
-                                    <br />
-                                    {this.state.isResetting ? (
-                                        <Button loading primary type="submit">
-                                            Reset Password
-                                        </Button>
-                                    ) : (
-                                        <Button primary type="submit" onClick={this.handlePasswordSubmit}>
-                                            Reset Password
-                                        </Button>
-                                    )}
-                                </form>
-                            </div>
-                        </Card.Content>
-                    )}
-
-                    {this.state.showPinCard == '3' && (
-                        <Card.Content>
-                            <div className="formContainer">
-                                <h3>Reset your WorkGroup Password</h3>
-
-                                <Message positive>
-                                    <Message.Header>Your Password has been changed!</Message.Header>
-                                    <p> You can now Sign In with your new password! </p>
-                                </Message>
-
-                                <Button primary href="/">
-                                    Sign In
-                                </Button>
-                            </div>
-                        </Card.Content>
-                    )}
-                </Card>
-            </div>
+                                    <Button primary href="/">
+                                        Sign In
+                                    </Button>
+                                </div>
+                            </>
+                        )}
+                    </>
+                </div>
+                <div className="loginBackground"></div>
+            </>
         )
     }
 }
