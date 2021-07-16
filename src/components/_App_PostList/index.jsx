@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
 import './style.scss'
-import { Feed, Icon, Loader, Button } from 'semantic-ui-react'
+import { Feed, Modal, Loader, Button } from 'semantic-ui-react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { ThumbsUp, MessageCircle, Zap } from 'react-feather'
+import { ThumbsUp, MessageCircle, Zap, FileText } from 'react-feather'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -20,6 +20,8 @@ class PostsList extends React.Component {
             isLoadingMore: false,
             visibleCommentSections: [],
             emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
+            imageModalVisible: false,
+            imageModalUrl: '',
         }
 
         this.toggleComment = this.toggleComment.bind(this)
@@ -311,6 +313,49 @@ class PostsList extends React.Component {
                                                 </Feed.Summary>
                                                 <Feed.Extra text>
                                                     <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
+                                                    {item.images.length > 0 && (
+                                                        <div className="post-images">
+                                                            {item.images.map((postImage, index) => {
+                                                                return (
+                                                                    <div key={index} className={`post-image ${item.images.length == 1 && 'post-image--single'}`}>
+                                                                        <a
+                                                                            href="#"
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault()
+                                                                                this.setState({
+                                                                                    imageModalUrl: process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url,
+                                                                                    imageModalVisible: true,
+                                                                                })
+                                                                            }}
+                                                                        >
+                                                                            <img src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
+                                                                        </a>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                    {item.files.length > 0 && (
+                                                        <div className="post-files">
+                                                            {item.files.map((postFile, index) => {
+                                                                return (
+                                                                    <a
+                                                                        href={process.env.REACT_APP_API_URL + '/static/files/' + postFile.post_file_url}
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        download
+                                                                        key={index}
+                                                                        className="post-file"
+                                                                    >
+                                                                        <div className="post-file-icon">
+                                                                            <FileText size={20} strokeWidth={2} />
+                                                                        </div>
+                                                                        <span className="post-file-text">{postFile.post_file_original}</span>
+                                                                    </a>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    )}
                                                 </Feed.Extra>
                                                 <Feed.Meta>
                                                     <Feed.Like href="#" onClick={this.toggleLike} id={'post_like_id_' + item.id} className={item.hasLiked}>
@@ -354,6 +399,17 @@ class PostsList extends React.Component {
                     </Feed>
                 )}
                 {this.state.isLoading && <Loader active>Loading Feed</Loader>}
+                <Modal
+                    onClose={() => this.setState({ imageModalVisible: false })}
+                    onClick={() => this.setState({ imageModalVisible: false })}
+                    onOpen={() => this.setState({ imageModalVisible: true })}
+                    open={this.state.imageModalVisible}
+                    className="image-modal-content"
+                >
+                    <Modal.Content>
+                        <img src={this.state.imageModalUrl} />
+                    </Modal.Content>
+                </Modal>
             </div>
         )
     }
