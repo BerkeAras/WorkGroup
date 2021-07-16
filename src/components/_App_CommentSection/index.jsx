@@ -70,7 +70,7 @@ class CommentSection extends React.Component {
         let postContent = element.querySelector('textarea').value
         postContent = postContent.replace(/(?:\r\n|\r|\n)/g, '<br>')
 
-        if (postContent !== null && postContent.trim() !== '') {
+        if (postContent !== null && postContent.trim() !== '' && postContent.replaceAll('<br>','').trim() !== '') {
             this.setState({ isPosting: true })
 
             var myHeaders = new Headers()
