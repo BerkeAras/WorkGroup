@@ -13,7 +13,8 @@
             margin-top: 15px !important;
         }
     }
-    .post-images, .post-files {
+    .post-images,
+    .post-files {
         width: 100%;
         display: inline-block;
         padding-bottom: 10px;
@@ -169,6 +170,6 @@
         }
     }
 }
-.ui.feed>.event>.content .extra.text {
+.ui.feed > .event > .content .extra.text {
     max-width: 100% !important;
 }

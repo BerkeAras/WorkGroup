@@ -33,7 +33,7 @@ class CreatePostForm extends React.Component {
             uploadImageLoading: false,
             uploadFile: [],
             uploadedFiles: [],
-            uploadFileLoading: false
+            uploadFileLoading: false,
         }
         this.publishPost = this.publishPost.bind(this)
         this.inputFocus = utilizeFocus()
@@ -47,15 +47,15 @@ class CreatePostForm extends React.Component {
     imageChange = (event) => {
         this.setState({
             uploadImageLoading: true,
-            uploadImage:event.target.files[0]
-        });
-        
+            uploadImage: event.target.files[0],
+        })
+
         var fileUploadHeader = new Headers()
         fileUploadHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         const formData = new FormData()
         formData.append('image', event.target.files[0])
-        
+
         var requestOptions = {
             method: 'POST',
             headers: fileUploadHeader,
@@ -65,36 +65,37 @@ class CreatePostForm extends React.Component {
 
         fetch(process.env.REACT_APP_API_URL + '/api/content/uploadImage', requestOptions)
             .then(
-                response => response.json() // if the response is a JSON object
-            ).then((success) => {
+                (response) => response.json() // if the response is a JSON object
+            )
+            .then((success) => {
                 if (success.error == false) {
-                    let uploadedImages = this.state.uploadedImages;
-                    uploadedImages.push(success);
+                    let uploadedImages = this.state.uploadedImages
+                    uploadedImages.push(success)
                     this.setState({
                         uploadImageLoading: false,
                         uploadImage: [],
-                        uploadedImages: uploadedImages
+                        uploadedImages: uploadedImages,
                     })
-                    this.imageInputRef.current.value = '';
+                    this.imageInputRef.current.value = ''
                 }
-            }).catch(
-                error => console.log(error) // Handle the error response object
-            );
-
+            })
+            .catch(
+                (error) => console.log(error) // Handle the error response object
+            )
     }
-    
+
     fileChange = (event) => {
         this.setState({
             uploadFileLoading: true,
-            uploadFile:event.target.files[0]
-        });
-        
+            uploadFile: event.target.files[0],
+        })
+
         var fileUploadHeader = new Headers()
         fileUploadHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         const formData = new FormData()
         formData.append('file', event.target.files[0])
-        
+
         var requestOptions = {
             method: 'POST',
             headers: fileUploadHeader,
@@ -104,22 +105,23 @@ class CreatePostForm extends React.Component {
 
         fetch(process.env.REACT_APP_API_URL + '/api/content/uploadFile', requestOptions)
             .then(
-                response => response.json() // if the response is a JSON object
-            ).then((success) => {
+                (response) => response.json() // if the response is a JSON object
+            )
+            .then((success) => {
                 if (success.error == false) {
-                    let uploadedFiles = this.state.uploadedFiles;
-                    uploadedFiles.push(success);
+                    let uploadedFiles = this.state.uploadedFiles
+                    uploadedFiles.push(success)
                     this.setState({
                         uploadFileLoading: false,
                         uploadFiles: [],
-                        uploadedFiles: uploadedFiles
+                        uploadedFiles: uploadedFiles,
                     })
-                    this.fileInputRef.current.value = '';
+                    this.fileInputRef.current.value = ''
                 }
-            }).catch(
-                error => console.log(error) // Handle the error response object
-            );
-
+            })
+            .catch(
+                (error) => console.log(error) // Handle the error response object
+            )
     }
 
     publishPost = () => {
@@ -140,18 +142,18 @@ class CreatePostForm extends React.Component {
             urlencoded.append('content', postContent)
 
             if (this.state.uploadedImages.length > 0) {
-                let imagesArray = [];
-                this.state.uploadedImages.forEach(uploadedImage => {
-                    imagesArray.push(uploadedImage.url.replace('./static/',''));
-                });
+                let imagesArray = []
+                this.state.uploadedImages.forEach((uploadedImage) => {
+                    imagesArray.push(uploadedImage.url.replace('./static/', ''))
+                })
                 urlencoded.append('images', JSON.stringify(imagesArray))
             }
-            
+
             if (this.state.uploadedFiles.length > 0) {
-                let filesArray = [];
-                this.state.uploadedFiles.forEach(uploadedFile => {
-                    filesArray.push([uploadedFile.original_url.replace('./static/files/',''), uploadedFile.url.replace('./static/files/','')]);
-                });
+                let filesArray = []
+                this.state.uploadedFiles.forEach((uploadedFile) => {
+                    filesArray.push([uploadedFile.original_url.replace('./static/files/', ''), uploadedFile.url.replace('./static/files/', '')])
+                })
                 urlencoded.append('files', JSON.stringify(filesArray))
             }
 
@@ -183,14 +185,14 @@ class CreatePostForm extends React.Component {
     fileInputRef = React.createRef()
 
     removeUploadedImage = (index) => {
-        let uploadedImagesState = this.state.uploadedImages;
-        uploadedImagesState.splice(index, 1);
+        let uploadedImagesState = this.state.uploadedImages
+        uploadedImagesState.splice(index, 1)
         this.setState({ uploadedImages: uploadedImagesState })
     }
 
     removeUploadedFile = (index) => {
-        let uploadedFileState = this.state.uploadedFiles;
-        uploadedFileState.splice(index, 1);
+        let uploadedFileState = this.state.uploadedFiles
+        uploadedFileState.splice(index, 1)
         this.setState({ uploadedFiles: uploadedFileState })
     }
 
@@ -204,7 +206,7 @@ class CreatePostForm extends React.Component {
                 </Card>
 
                 <Modal
-                    onClose={() => this.setState({ uploadedImages:[], modalOpen: false })}
+                    onClose={() => this.setState({ uploadedImages: [], modalOpen: false })}
                     onOpen={() => {
                         this.setState({ modalOpen: true })
                         this.inputFocus.setFocus
@@ -228,14 +230,21 @@ class CreatePostForm extends React.Component {
                         ></div>
                         {this.state.uploadedImages.length !== 0 && (
                             <div className="uploaded-images">
-                                {this.state.uploadedImages.map((uploadedImage,index) => {
+                                {this.state.uploadedImages.map((uploadedImage, index) => {
                                     return (
                                         <div key={index} className="uploaded-images-item">
                                             <div className="uploaded-images-item-icon">
                                                 <Image size={20} />
                                             </div>
-                                            <span className="uploaded-images-item-title">{uploadedImage.original_url.replace('./static/','')}</span>
-                                            <a href="#removeItem" onClick={(e) => {e.preventDefault();this.removeUploadedImage(index)}} className="uploaded-images-item-remove">
+                                            <span className="uploaded-images-item-title">{uploadedImage.original_url.replace('./static/', '')}</span>
+                                            <a
+                                                href="#removeItem"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    this.removeUploadedImage(index)
+                                                }}
+                                                className="uploaded-images-item-remove"
+                                            >
                                                 <X size={20}></X>
                                             </a>
                                         </div>
@@ -245,14 +254,21 @@ class CreatePostForm extends React.Component {
                         )}
                         {this.state.uploadedFiles.length !== 0 && (
                             <div className="uploaded-files">
-                                {this.state.uploadedFiles.map((uploadedFile,index) => {
+                                {this.state.uploadedFiles.map((uploadedFile, index) => {
                                     return (
                                         <div key={index} className="uploaded-files-item">
                                             <div className="uploaded-files-item-icon">
                                                 <FileText size={20} />
                                             </div>
-                                            <span className="uploaded-files-item-title">{uploadedFile.original_url.replace('./static/','')}</span>
-                                            <a href="#removeItem" onClick={(e) => {e.preventDefault();this.removeUploadedFile(index)}} className="uploaded-files-item-remove">
+                                            <span className="uploaded-files-item-title">{uploadedFile.original_url.replace('./static/', '')}</span>
+                                            <a
+                                                href="#removeItem"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    this.removeUploadedFile(index)
+                                                }}
+                                                className="uploaded-files-item-remove"
+                                            >
                                                 <X size={20}></X>
                                             </a>
                                         </div>
@@ -263,11 +279,19 @@ class CreatePostForm extends React.Component {
                     </Modal.Content>
                     <Modal.Actions>
                         <div className="left-actions">
-                            <Popup trigger={<Button loading={this.state.uploadImageLoading} onClick={() => this.imageInputRef.current.click()} icon="picture" basic></Button>} content="Upload images" position="bottom left" />
-                            <Popup trigger={<Button loading={this.state.uploadFileLoading} onClick={() => this.fileInputRef.current.click()} icon="file pdf" basic></Button>} content="Upload PDF" position="bottom left" />
+                            <Popup
+                                trigger={<Button loading={this.state.uploadImageLoading} onClick={() => this.imageInputRef.current.click()} icon="picture" basic></Button>}
+                                content="Upload images"
+                                position="bottom left"
+                            />
+                            <Popup
+                                trigger={<Button loading={this.state.uploadFileLoading} onClick={() => this.fileInputRef.current.click()} icon="file pdf" basic></Button>}
+                                content="Upload PDF"
+                                position="bottom left"
+                            />
                         </div>
 
-                        <Button color="black" onClick={() => this.setState({ uploadedImages:[], modalOpen: false })}>
+                        <Button color="black" onClick={() => this.setState({ uploadedImages: [], modalOpen: false })}>
                             Cancel
                         </Button>
                         {this.state.isPosting ? (

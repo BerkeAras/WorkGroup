@@ -22,7 +22,6 @@ function CookieBanner() {
     })
 
     const storeCookieChoice = () => {
-
         var header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         header.append('Content-Type', 'application/json')
@@ -31,16 +30,15 @@ function CookieBanner() {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                cookie_choice: localStorage.getItem('cookies_accepted')
+                cookie_choice: localStorage.getItem('cookies_accepted'),
             }),
         }
         // eslint-disable-next-line no-undef
         fetch(process.env.REACT_APP_API_URL + '/api/user/storeCookieChoice', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                console.log(data)
             })
-
     }
 
     const acceptCookies = (e) => {

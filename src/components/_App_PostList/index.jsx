@@ -21,7 +21,7 @@ class PostsList extends React.Component {
             visibleCommentSections: [],
             emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
             imageModalVisible: false,
-            imageModalUrl: ''
+            imageModalUrl: '',
         }
 
         this.toggleComment = this.toggleComment.bind(this)
@@ -315,11 +315,20 @@ class PostsList extends React.Component {
                                                     <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
                                                     {item.images.length > 0 && (
                                                         <div className="post-images">
-                                                            {item.images.map((postImage,index) => {
+                                                            {item.images.map((postImage, index) => {
                                                                 return (
-                                                                    <div key={index} className={`post-image ${(item.images.length == 1 && 'post-image--single')}`}>
-                                                                        <a href="#" onClick={(e) => {e.preventDefault();this.setState({imageModalUrl:process.env.REACT_APP_API_URL + "/static/" + postImage.post_image_url,imageModalVisible:true})}}>
-                                                                            <img src={process.env.REACT_APP_API_URL + "/static/" + postImage.post_image_url} />
+                                                                    <div key={index} className={`post-image ${item.images.length == 1 && 'post-image--single'}`}>
+                                                                        <a
+                                                                            href="#"
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault()
+                                                                                this.setState({
+                                                                                    imageModalUrl: process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url,
+                                                                                    imageModalVisible: true,
+                                                                                })
+                                                                            }}
+                                                                        >
+                                                                            <img src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
                                                                         </a>
                                                                     </div>
                                                                 )
@@ -328,15 +337,20 @@ class PostsList extends React.Component {
                                                     )}
                                                     {item.files.length > 0 && (
                                                         <div className="post-files">
-                                                            {item.files.map((postFile,index) => {
+                                                            {item.files.map((postFile, index) => {
                                                                 return (
-                                                                    <a href={process.env.REACT_APP_API_URL + "/static/files/" + postFile.post_file_url} target="_blank" rel="noreferrer" download key={index} className="post-file">
+                                                                    <a
+                                                                        href={process.env.REACT_APP_API_URL + '/static/files/' + postFile.post_file_url}
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        download
+                                                                        key={index}
+                                                                        className="post-file"
+                                                                    >
                                                                         <div className="post-file-icon">
-                                                                            <FileText size={20} strokeWidth={2}/>
+                                                                            <FileText size={20} strokeWidth={2} />
                                                                         </div>
-                                                                        <span className="post-file-text">
-                                                                            {postFile.post_file_original}
-                                                                        </span>
+                                                                        <span className="post-file-text">{postFile.post_file_original}</span>
                                                                     </a>
                                                                 )
                                                             })}
@@ -386,9 +400,9 @@ class PostsList extends React.Component {
                 )}
                 {this.state.isLoading && <Loader active>Loading Feed</Loader>}
                 <Modal
-                    onClose={() => this.setState({imageModalVisible:false})}
-                    onClick={() => this.setState({imageModalVisible:false})}
-                    onOpen={() => this.setState({imageModalVisible:true})}
+                    onClose={() => this.setState({ imageModalVisible: false })}
+                    onClick={() => this.setState({ imageModalVisible: false })}
+                    onOpen={() => this.setState({ imageModalVisible: true })}
                     open={this.state.imageModalVisible}
                     className="image-modal-content"
                 >

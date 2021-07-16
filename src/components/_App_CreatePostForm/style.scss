@@ -49,7 +49,8 @@
             font-size: 17px;
         }
 
-        .uploaded-images, .uploaded-files {
+        .uploaded-images,
+        .uploaded-files {
             width: 100%;
             margin-top: 20px;
 
@@ -94,8 +95,8 @@
                     color: #7e8d98;
                     margin: 4px;
                     border-radius: 10px;
-                    transition: all .2s;
-                    
+                    transition: all 0.2s;
+
                     &:hover {
                         color: black;
                         background: white;
@@ -111,7 +112,6 @@
                 }
             }
         }
-
     }
 }
 .dimmer {
