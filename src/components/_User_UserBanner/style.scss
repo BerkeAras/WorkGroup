@@ -24,15 +24,69 @@
         width: 100%;
         margin-top: -58px;
         padding: 75px 58px 20px 58px;
-        button {
+        .banner-content-dropdown {
             position: absolute !important;
             top: 20px;
             right: 20px;
+
+            &-button {
+                display: flex;
+                width: 29px;
+                height: 29px;
+                align-items: center;
+                justify-content: center;
+                background: #f7f7f7;
+                border-radius: 100%;
+            }
+            &-container {
+                position: absolute;
+                top: 32px;
+                right: 0;
+                background: white;
+                padding: 5px;
+                box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+                border-radius: 10px;
+                width: 260px;
+                z-index: 10000;
+
+                a {
+                    display: inline-block;
+                    width: 100%;
+                    padding: 7px 10px;
+                    background: white;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: black;
+                    transition: all 0.1s;
+                    margin-bottom: 4px;
+                    &:hover {
+                        background: #f7f7f7;
+                    }
+                    &:last-of-type {
+                        margin-bottom: 0 !important;
+                    }
+                }
+            }
         }
         .user-name {
             font-size: 22px;
             font-weight: bold;
             color: #2c86d0;
+            display: flex;
+            align-items: center;
+
+            .user-online-status {
+                height: 14px;
+                width: 14px;
+                background: #d4d4d4;
+                border-radius: 100%;
+                margin-right: 10px;
+
+                &--online {
+                    background: #8bc34a;
+                }
+            }
         }
         &-loading {
             height: 200px;

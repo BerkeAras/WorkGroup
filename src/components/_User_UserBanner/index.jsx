@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './style.scss'
-import { Icon, Button, Loader } from 'semantic-ui-react'
+import { Icon, Button, Loader, Dropdown } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { MoreVertical } from 'react-feather'
 
 import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'
@@ -11,9 +12,12 @@ function UserBanner(props) {
     const [avatar, setAvatar] = useState(unknownAvatar)
     const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
     const [isLoadingUser, setIsLoadingUser] = useState(true)
+    const [showUserDropdown, setShowUserDropdown] = useState(false)
 
     useEffect(() => {
         let userInformation = props.userInformation
+
+        console.log(props.userInformation)
 
         setIsLoadingUser(true)
 
@@ -40,6 +44,24 @@ function UserBanner(props) {
             setAvatar(process.env.REACT_APP_API_URL + '/' + userInformation['avatar'].replace('./', ''))
         }
     }, [props.userInformation])
+
+    const handleDropdownBlur = (e) => {
+        const currentTarget = e.currentTarget
+
+        // Check the newly focused element in the next tick of the event loop
+        setTimeout(() => {
+            // Check if the new activeElement is a child of the original container
+            if (!currentTarget.contains(document.activeElement)) {
+                // You can invoke a callback or add custom logic here
+                setShowUserDropdown(false)
+            }
+        }, 0)
+    }
+
+    const handleDropdownClick = (e) => {
+        e.preventDefault()
+        setShowUserDropdown(!showUserDropdown)
+    }
 
     return (
         <div className="user-banner">
@@ -68,24 +90,34 @@ function UserBanner(props) {
                 </div>
             ) : (
                 <div className="banner-content">
-                    {loggedInUserEmail == props.userInformation['email'] && (
-                        <Button
-                            size="tiny"
-                            basic
-                            onClick={() => {
-                                localStorage.setItem('first_login', 'true')
-                                location.reload()
-                            }}
-                            primary
-                            icon
-                            labelPosition="left"
-                        >
-                            <Icon name="pencil" />
-                            Edit your Account
-                        </Button>
-                    )}
+                    <div className="banner-content-dropdown" onBlur={handleDropdownBlur}>
+                        <a href="#" onClick={handleDropdownClick} className="banner-content-dropdown-button">
+                            <MoreVertical size={24}></MoreVertical>
+                        </a>
+                        {showUserDropdown && (
+                            <div className="banner-content-dropdown-container">
+                                {loggedInUserEmail == props.userInformation['email'] ? (
+                                    <a
+                                        onClick={() => {
+                                            localStorage.setItem('first_login', 'true')
+                                            location.reload()
+                                        }}
+                                        href="#"
+                                    >
+                                        Edit your Account
+                                    </a>
+                                ) : (
+                                    <a target="_blank" rel="noreferrer" href={'mailto:' + props.userInformation['email'] + '?subject=Hello!&body=%0D%0A%0D%0AFound%20you%20on%20WorkGroup.'}>
+                                        Send an E-Mail
+                                    </a>
+                                )}
+                            </div>
+                        )}
+                    </div>
 
-                    <span className="user-name">{props.userInformation['name']}</span>
+                    <span className="user-name">
+                        <div className={`user-online-status ${props.userInformation['user_online'] == 1 && 'user-online-status--online'}`}></div> {props.userInformation['name']}
+                    </span>
                 </div>
             )}
         </div>
