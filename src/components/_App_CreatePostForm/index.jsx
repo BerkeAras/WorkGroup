@@ -34,6 +34,8 @@ class CreatePostForm extends React.Component {
             uploadFile: [],
             uploadedFiles: [],
             uploadFileLoading: false,
+            uploadFileSizeError: false,
+            uploadFileError: false,
         }
         this.publishPost = this.publishPost.bind(this)
         this.inputFocus = utilizeFocus()
@@ -77,6 +79,23 @@ class CreatePostForm extends React.Component {
                         uploadedImages: uploadedImages,
                     })
                     this.imageInputRef.current.value = ''
+                } else {
+                    if (success.message == 'File too big!') {
+                        this.setState({
+                            uploadImageLoading: false,
+                            uploadImage: [],
+                            uploadFileSizeError: true,
+                        })
+                        this.imageInputRef.current.value = ''
+                    } else {
+                        this.setState({
+                            uploadImageLoading: false,
+                            uploadImage: [],
+                            uploadFileSizeError: false,
+                            uploadFileError: true,
+                        })
+                        this.imageInputRef.current.value = ''
+                    }
                 }
             })
             .catch(
@@ -117,6 +136,23 @@ class CreatePostForm extends React.Component {
                         uploadedFiles: uploadedFiles,
                     })
                     this.fileInputRef.current.value = ''
+                } else {
+                    if (success.message == 'File too big!') {
+                        this.setState({
+                            uploadFileLoading: false,
+                            uploadFiles: [],
+                            uploadFileSizeError: true,
+                        })
+                        this.imageInputRef.current.value = ''
+                    } else {
+                        this.setState({
+                            uploadFileLoading: false,
+                            uploadFiles: [],
+                            uploadFileSizeError: false,
+                            uploadFileError: true,
+                        })
+                        this.imageInputRef.current.value = ''
+                    }
                 }
             })
             .catch(
@@ -331,6 +367,24 @@ class CreatePostForm extends React.Component {
                     <Modal.Content>Your post could not be published due to a server error! We are working to fix this bug.</Modal.Content>
                     <Modal.Actions>
                         <Button color="black" onClick={() => this.setState({ errorModalOpen: false })}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+                <Modal onClose={() => this.setState({ uploadFileSizeError: false })} onOpen={() => this.setState({ uploadFileSizeError: true })} open={this.state.uploadFileSizeError} size="mini">
+                    <Modal.Header>Your file could not be uploaded!</Modal.Header>
+                    <Modal.Content>Unfortunately, your file is too big to be uploaded.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => this.setState({ uploadFileSizeError: false })}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+                <Modal onClose={() => this.setState({ uploadFileError: false })} onOpen={() => this.setState({ uploadFileError: true })} open={this.state.uploadFileError} size="mini">
+                    <Modal.Header>Your file could not be uploaded!</Modal.Header>
+                    <Modal.Content>Unfortunately, your file could not be uploaded. Please try again later.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => this.setState({ uploadFileError: false })}>
                             Dismiss
                         </Button>
                     </Modal.Actions>
