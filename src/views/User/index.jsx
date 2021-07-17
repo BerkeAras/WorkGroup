@@ -5,10 +5,12 @@ import './style.scss'
 import { Button, Input } from 'semantic-ui-react'
 import logo from '../../static/logo.svg'
 import PropTypes from 'prop-types'
+import { User as UserIcon, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 // Components
 import Header from '../../components/Header'
 import Content from '../../components/Content'
+import PostList from '../../components/_App_PostList'
 
 import UserBanner from '../../components/_User_UserBanner'
 
@@ -31,6 +33,7 @@ function User() {
             .then((res) => {
                 if (res.length > 0) {
                     setUserInformation(res[0])
+                    console.log(userInformation)
                     document.title = res[0]['name'] + ' – WorkGroup'
                 }
             })
@@ -41,6 +44,36 @@ function User() {
             <Header />
             <div className="main_content">
                 <UserBanner userInformation={userInformation}></UserBanner>
+                <div className="user-account-content">
+                    <div className="user-account-information">
+                        {userInformation['user_slogan'] !== '' && userInformation['user_slogan'] !== null && userInformation['user_slogan'] !== undefined && (
+                            <span className="user-account-information-item user-slogan">
+                                <UserIcon size={20} strokeWidth={2.5} /> {userInformation['user_slogan']}
+                            </span>
+                        )}
+                        <span className="user-account-information-item user-email">
+                            <Mail size={20} strokeWidth={2.5} /> {email}
+                        </span>
+                        {userInformation['user_department'] !== '' && userInformation['user_department'] !== null && userInformation['user_department'] !== undefined && (
+                            <span className="user-account-information-item user-department">
+                                <Briefcase size={20} strokeWidth={2.5} /> {userInformation['user_department']}
+                            </span>
+                        )}
+                        {userInformation['user_street'] !== '' && userInformation['user_street'] !== null && userInformation['user_street'] !== undefined && (
+                            <span className="user-account-information-item user-street">
+                                <MapPin size={20} strokeWidth={2.5} /> {userInformation['user_street']}
+                            </span>
+                        )}
+                        {userInformation['user_city'] !== '' && userInformation['user_city'] !== null && userInformation['user_city'] !== undefined && (
+                            <span className="user-account-information-item user-city">
+                                <Globe size={20} strokeWidth={2.5} /> {userInformation['user_city']}, {userInformation['user_country']}
+                            </span>
+                        )}
+                    </div>
+                    <div className="user-account-feed">
+                        <PostList user={email} />
+                    </div>
+                </div>
             </div>
         </div>
     )

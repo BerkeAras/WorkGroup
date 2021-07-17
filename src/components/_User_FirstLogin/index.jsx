@@ -310,6 +310,16 @@ class FirstLogin extends React.Component {
                         slogan: res[0].user_slogan,
                         street: res[0].user_street,
                     })
+                    if (res[0].banner !== '') {
+                        this.setState({
+                            bannerPreviewUrl: process.env.REACT_APP_API_URL + res[0].banner.replace('./static/', '/static/'),
+                        })
+                    }
+                    if (res[0].avatar !== '') {
+                        this.setState({
+                            avatarPreviewUrl: process.env.REACT_APP_API_URL + res[0].avatar.replace('./static/', '/static/'),
+                        })
+                    }
                 }
             })
     }

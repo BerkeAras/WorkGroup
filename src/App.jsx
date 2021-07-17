@@ -38,6 +38,7 @@ class App extends React.Component {
         if (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
             var tokenHeaders = new Headers()
             tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+            tokenHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
             var requestOptions = {
                 method: 'GET',
@@ -98,6 +99,26 @@ class App extends React.Component {
             this.setState({ first_login: true })
             localStorage.removeItem('first_login')
         }
+
+        setInterval(() => {
+            if (this.state.isLoggedIn) {
+                // Send Active-State
+
+                var activityTokenHeaders = new Headers()
+                activityTokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+                const activityRequestOptions = {
+                    method: 'POST',
+                    headers: activityTokenHeaders,
+                    body: JSON.stringify({
+                        active: true,
+                    }),
+                }
+
+                // eslint-disable-next-line no-undef
+                fetch(process.env.REACT_APP_API_URL + '/api/auth/activity', activityRequestOptions)
+            }
+        }, 60 * 1000)
     }
 
     handleStateChange() {
