@@ -3,6 +3,7 @@ import './style.scss'
 import { Feed, Modal, Loader, Button } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { ThumbsUp, MessageCircle, Zap, FileText, Flag } from 'react-feather'
+import PropTypes from 'prop-types'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -28,12 +29,34 @@ class PostsList extends React.Component {
             reportErrorVisible: false,
         }
 
+        this.componentDidMount = this.componentDidMount.bind(this)
+        this.componentDidUpdate = this.componentDidUpdate.bind(this)
+        this.convertDate = this.convertDate.bind(this)
+        this.getFriendlyDate = this.getFriendlyDate.bind(this)
+        this.loadMore = this.loadMore.bind(this)
+        this.getDate = this.getDate.bind(this)
+        this.getLikes = this.getLikes.bind(this)
+        this.getComments = this.getComments.bind(this)
         this.toggleComment = this.toggleComment.bind(this)
+        this.toggleLike = this.toggleLike.bind(this)
         this.reportPost = this.reportPost.bind(this)
+
     }
 
     componentDidMount() {
         this.loadMore()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.user !== this.props.user) {
+            this.setState({
+                cursor: 1,
+                items: []
+            });
+            setTimeout(() => {
+                this.loadMore()
+            },1)
+        }
     }
 
     convertDate = (date) => {
@@ -95,8 +118,14 @@ class PostsList extends React.Component {
             redirect: 'follow',
         }
 
+        let filterByUser = "";
+
+        if (this.props.user !== "*") {
+            filterByUser = "&user=" + this.props.user
+        }
+
         this.setState({ isLoading: true, error: undefined })
-        fetch(process.env.REACT_APP_API_URL + `/api/content/getPosts?from=${this.state.cursor}`, requestOptions)
+        fetch(process.env.REACT_APP_API_URL + `/api/content/getPosts?from=${this.state.cursor + filterByUser}`, requestOptions)
             .then((res) => res.json())
             .then(
                 (res) => {
@@ -483,3 +512,7 @@ class PostsList extends React.Component {
 }
 
 export default PostsList
+
+PostsList.propTypes = {
+    user: PropTypes.string,
+}

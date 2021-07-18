@@ -3,7 +3,7 @@
     display: inline-block;
     position: absolute;
     top: 47px;
-    right: 20px;
+    right: calc((100% - 1200px) / 2);
     background: white;
     padding: 10px;
     box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
@@ -27,5 +27,9 @@
         &:last-of-type {
             margin-bottom: 0 !important;
         }
+    }
+
+    @media (max-width:1300px) {
+        right: 10px;
     }
 }

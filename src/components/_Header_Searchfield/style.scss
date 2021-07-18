@@ -10,7 +10,7 @@
 
 .SearchField {
     height: 40px;
-    width: 30%;
+    width: 450px;
     float: left;
     transition: all 0.3s;
     z-index: 11;
@@ -64,7 +64,7 @@
         }
     }
     &:focus-within {
-        width: 40%;
+        width: 560px;
         input {
             background: white;
             color: black;

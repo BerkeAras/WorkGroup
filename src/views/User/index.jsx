@@ -10,7 +10,7 @@ import { User as UserIcon, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 // Components
 import Header from '../../components/Header'
 import Content from '../../components/Content'
-import PostList from '../../components/_App_PostList'
+import PostsList from '../../components/_App_PostsList'
 
 import UserBanner from '../../components/_User_UserBanner'
 
@@ -71,7 +71,7 @@ function User() {
                         )}
                     </div>
                     <div className="user-account-feed">
-                        <PostList user={email} />
+                        <PostsList user={email} />
                     </div>
                 </div>
             </div>

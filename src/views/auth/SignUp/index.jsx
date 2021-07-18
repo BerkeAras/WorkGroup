@@ -49,51 +49,58 @@ class SignUp extends React.Component {
         this.setState({ error: false })
 
         if (this.state.password === this.state.passwordRepeat) {
+
+            
             if (this.state.name.trim() !== '' && this.state.email.trim() !== '' && this.state.password.trim() !== '' && this.state.passwordRepeat.trim() !== '') {
-                setTimeout(() => {
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            name: this.state.name,
-                            email: this.state.email,
-                            password: this.state.password,
-                            password_confirmation: this.state.passwordRepeat,
-                        }),
-                    }
-                    // eslint-disable-next-line no-undef
-                    fetch(process.env.REACT_APP_API_URL + '/api/auth/register', requestOptions)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            if (data.message == 'Register success') {
-                                const requestOptions = {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        email: this.state.email,
-                                        password: this.state.password,
-                                    }),
+                if (this.state.password.length < 8) {
+                    this.setState({ error: 'password_too_short' })
+                    this.setState({ isSigningUp: false })
+                } else {
+                    setTimeout(() => {
+                        const requestOptions = {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: this.state.name,
+                                email: this.state.email,
+                                password: this.state.password,
+                                password_confirmation: this.state.passwordRepeat,
+                            }),
+                        }
+                        // eslint-disable-next-line no-undef
+                        fetch(process.env.REACT_APP_API_URL + '/api/auth/register', requestOptions)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.message == 'Register success') {
+                                    const requestOptions = {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            email: this.state.email,
+                                            password: this.state.password,
+                                        }),
+                                    }
+                                    // eslint-disable-next-line no-undef
+                                    fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            console.log(data)
+                                            if (data.message == 'Login success') {
+                                                localStorage.setItem('token', data.data.token)
+                                                this.setState({ isLoggedIn: true })
+                                                localStorage.setItem('first_login', true)
+                                                location.href = '/'
+                                            }
+                                        })
+                                } else if (data.message == 'User existing') {
+                                    this.setState({ error: 'already_registered' })
+                                    this.setState({ isSigningUp: false })
                                 }
-                                // eslint-disable-next-line no-undef
-                                fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions)
-                                    .then((response) => response.json())
-                                    .then((data) => {
-                                        console.log(data)
-                                        if (data.message == 'Login success') {
-                                            localStorage.setItem('token', data.data.token)
-                                            this.setState({ isLoggedIn: true })
-                                            localStorage.setItem('first_login', true)
-                                            location.href = '/'
-                                        }
-                                    })
-                            } else if (data.message == 'User existing') {
-                                this.setState({ error: 'already_registered' })
-                                this.setState({ isSigningUp: false })
-                            }
-                        })
-                }, 300)
+                            })
+                    }, 300)
+                }
             } else {
                 this.setState({ error: 'inputs_empty' })
                 this.setState({ isSigningUp: false })
@@ -134,6 +141,14 @@ class SignUp extends React.Component {
                             <Message negative>
                                 <Message.Header>Oh no! An error occurred 😢.</Message.Header>
                                 <p> Please fill out everything! </p>
+                            </Message>
+                        ) : (
+                            <div />
+                        )}
+                        {this.state.error === 'password_too_short' ? (
+                            <Message negative>
+                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                <p> Your password is too short! Please enter at least 8 characters. </p>
                             </Message>
                         ) : (
                             <div />
