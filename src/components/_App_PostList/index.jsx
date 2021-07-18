@@ -25,7 +25,7 @@ class PostsList extends React.Component {
             reportModalVisible: false,
             reportModalPostId: 0,
             reportSuccessVisible: false,
-            reportErrorVisible: false
+            reportErrorVisible: false,
         }
 
         this.toggleComment = this.toggleComment.bind(this)
@@ -299,7 +299,7 @@ class PostsList extends React.Component {
 
         this.setState({
             reportModalVisible: true,
-            reportModalPostId: postId
+            reportModalPostId: postId,
         })
     }
 
@@ -380,7 +380,14 @@ class PostsList extends React.Component {
                                                         <MessageCircle size={16} strokeWidth={2.5} />
                                                         <span>{this.getComments(item.comments)}</span>
                                                     </a>
-                                                    <a href="#" className="report-button" onClick={(e) => {this.reportPost(e, item.id)}} id={'post_comment_id_' + item.id}>
+                                                    <a
+                                                        href="#"
+                                                        className="report-button"
+                                                        onClick={(e) => {
+                                                            this.reportPost(e, item.id)
+                                                        }}
+                                                        id={'post_comment_id_' + item.id}
+                                                    >
                                                         <span>Report</span>
                                                         <Flag size={16} strokeWidth={2.5} />
                                                     </a>
@@ -470,7 +477,6 @@ class PostsList extends React.Component {
                         </Button>
                     </Modal.Actions>
                 </Modal>
-
             </div>
         )
     }
