@@ -124,7 +124,7 @@ const SearchField = () => {
                     {isLoadingResults && <span className="loader"></span>}
                 </form>
 
-                <div className="SearchField-Results" tabIndex="0">
+                <div className="SearchField-Results" tabIndex="-1">
                     <ul>
                         {userResult.length > 0 && (
                             <React.Fragment>
