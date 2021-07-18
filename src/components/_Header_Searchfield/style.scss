@@ -10,12 +10,15 @@
 
 .SearchField {
     height: 40px;
-    width: 300px;
+    width: 30%;
     float: left;
-    margin: 5px 0 5px 25px;
     transition: all 0.3s;
     z-index: 11;
-    position: relative;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 5px 0;
+
     form {
         height: 100%;
         input {
@@ -61,7 +64,7 @@
         }
     }
     &:focus-within {
-        width: 400px;
+        width: 40%;
         input {
             background: white;
             color: black;
@@ -72,7 +75,7 @@
     &-Results {
         outline: 0;
         display: none;
-        width: calc(400px - 4px);
+        width: calc(100% - 4px);
         max-height: 350px;
         overflow: auto;
         background: white;
@@ -161,12 +164,12 @@
         }
     }
     &-mobile-visible {
-        display: block;
-        position: fixed;
-        top: 5px;
-        left: 5px;
-        width: calc(100% - 10px);
-        margin: 0;
+        display: block !important;
+        position: fixed !important;
+        top: 5px !important;
+        left: 5px !important;
+        width: calc(100% - 10px) !important;
+        margin: 0 !important;
         &:focus-within {
             width: calc(100% - 10px);
         }
@@ -188,6 +191,15 @@
     }
 }
 
+@media (max-width: 1300px) {
+    .SearchField {
+        position: relative;
+        left: 0;
+        transform: none;
+        margin-left: 25px;
+        width: 300px;
+    }
+}
 @media (max-width: 910px) {
     .SearchField:not(.SearchField-mobile-visible) {
         display: none;

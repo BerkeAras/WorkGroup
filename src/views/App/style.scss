@@ -4,14 +4,17 @@ body {
 }
 
 .app {
-    padding: 0 calc((100% - 1200px) / 2);
+    padding: 0;
     background: #e5eaec;
     overflow: auto !important;
 }
+.main_content {
+    padding: 0 calc((100% - 1200px) / 2);
+}
 
 @media (max-width: 1300px) {
-    .app {
-        padding: 0 !important;
+    .main_content {
+        padding: 0;
     }
 }
 
