@@ -133,3 +133,17 @@ textarea {
         box-shadow: 0 0 0px 3px rgba(33, 133, 208, 0.4) !important;
     }
 }
+
+.ui.button.positive {
+    box-shadow: 0 0 0px 0px rgba(16, 164, 5, 0.4) !important;
+    &:focus {
+        box-shadow: 0 0 0px 3px rgba(16, 164, 50, 0.4) !important;
+    }
+}
+
+.ui.button.black {
+    box-shadow: 0 0 0px 0px rgba(47, 48, 50, 0.3) !important;
+    &:focus {
+        box-shadow: 0 0 0px 3px rgba(47, 48, 50, 0.3) !important;
+    }
+}

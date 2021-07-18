@@ -11,6 +11,7 @@
         margin-bottom: 0 !important;
         .meta {
             margin-top: 15px !important;
+            width: 100%;
         }
     }
     .post-images,
@@ -34,6 +35,7 @@
         }
 
         &--single {
+            padding: 5px 0 !important;
             width: 100% !important;
             height: 250px !important;
         }
@@ -101,7 +103,8 @@
         }
     }
     a.like,
-    a.comment-button {
+    a.comment-button,
+    a.report-button {
         padding: 2px 2px;
         display: flex;
         align-items: center;
@@ -112,6 +115,23 @@
             pointer-events: none;
             * {
                 pointer-events: none;
+            }
+        }
+    }
+    a.report-button {
+        float: right;
+
+        svg {
+            margin-right: 0;
+            margin-left: 5px;
+        }
+        span {
+            opacity: 0;
+        }
+        &:hover,
+        &:focus {
+            span {
+                opacity: 1;
             }
         }
     }

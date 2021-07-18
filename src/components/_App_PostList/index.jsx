@@ -1,13 +1,13 @@
 import React, { useRef } from 'react'
 import './style.scss'
 import { Feed, Modal, Loader, Button } from 'semantic-ui-react'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { ThumbsUp, MessageCircle, Zap, FileText } from 'react-feather'
+import { ThumbsUp, MessageCircle, Zap, FileText, Flag } from 'react-feather'
 
 import unknownAvatar from '../../static/unknown.png'
 
 import CommentSection from '../_App_CommentSection/'
+import ReportPost from '../_App_ReportPost/'
 
 class PostsList extends React.Component {
     constructor(props) {
@@ -22,9 +22,14 @@ class PostsList extends React.Component {
             emptyStates: ["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'],
             imageModalVisible: false,
             imageModalUrl: '',
+            reportModalVisible: false,
+            reportModalPostId: 0,
+            reportSuccessVisible: false,
+            reportErrorVisible: false,
         }
 
         this.toggleComment = this.toggleComment.bind(this)
+        this.reportPost = this.reportPost.bind(this)
     }
 
     componentDidMount() {
@@ -289,6 +294,15 @@ class PostsList extends React.Component {
             })
     }
 
+    reportPost(e, postId) {
+        e.preventDefault()
+
+        this.setState({
+            reportModalVisible: true,
+            reportModalPostId: postId,
+        })
+    }
+
     render() {
         return (
             <div>
@@ -366,6 +380,17 @@ class PostsList extends React.Component {
                                                         <MessageCircle size={16} strokeWidth={2.5} />
                                                         <span>{this.getComments(item.comments)}</span>
                                                     </a>
+                                                    <a
+                                                        href="#"
+                                                        className="report-button"
+                                                        onClick={(e) => {
+                                                            this.reportPost(e, item.id)
+                                                        }}
+                                                        id={'post_comment_id_' + item.id}
+                                                    >
+                                                        <span>Report</span>
+                                                        <Flag size={16} strokeWidth={2.5} />
+                                                    </a>
                                                 </Feed.Meta>
                                             </Feed.Content>
                                         </Feed.Event>
@@ -409,6 +434,48 @@ class PostsList extends React.Component {
                     <Modal.Content>
                         <img src={this.state.imageModalUrl} />
                     </Modal.Content>
+                </Modal>
+
+                {this.state.reportModalVisible && (
+                    <ReportPost
+                        handleClose={() => this.setState({ reportModalVisible: false })}
+                        handleOpen={() => this.setState({ reportModalVisible: true })}
+                        handleSuccessMessage={() => this.setState({ reportSuccessVisible: true })}
+                        handleErrorMessage={() => this.setState({ reportErrorVisible: true })}
+                        open={this.state.reportModalVisible}
+                        postId={this.state.reportModalPostId}
+                    />
+                )}
+
+                <Modal
+                    onClose={() => {
+                        this.setState({ reportSuccessVisible: false })
+                    }}
+                    onOpen={() => this.setState({ reportSuccessVisible: true })}
+                    open={this.state.reportSuccessVisible}
+                    size="mini"
+                >
+                    <Modal.Header>Post reported!</Modal.Header>
+                    <Modal.Content>Thank you for your feedback about this post. We will review it immediately.</Modal.Content>
+                    <Modal.Actions>
+                        <Button
+                            color="black"
+                            onClick={() => {
+                                this.setState({ reportSuccessVisible: false })
+                            }}
+                        >
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+                <Modal onClose={() => this.setState({ reportErrorVisible: false })} onOpen={() => this.setState({ reportErrorVisible: true })} open={this.state.reportErrorVisible} size="mini">
+                    <Modal.Header>Post could not be reported!</Modal.Header>
+                    <Modal.Content>Unfortunately, this post could not be reported. Please try again later.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => this.setState({ reportErrorVisible: false })}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
                 </Modal>
             </div>
         )
