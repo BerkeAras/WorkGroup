@@ -98,7 +98,7 @@ const SignIn = () => {
                                 Sign In
                             </Button>
                         )}
-                        <Button as={Link} to="/signUp">
+                        <Button as={Link} to="/signup">
                             No account ? Sign Up!
                         </Button>
                     </form>

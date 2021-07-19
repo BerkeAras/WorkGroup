@@ -40,7 +40,6 @@ class PostsList extends React.Component {
         this.toggleComment = this.toggleComment.bind(this)
         this.toggleLike = this.toggleLike.bind(this)
         this.reportPost = this.reportPost.bind(this)
-
     }
 
     componentDidMount() {
@@ -51,11 +50,11 @@ class PostsList extends React.Component {
         if (prevProps.user !== this.props.user) {
             this.setState({
                 cursor: 1,
-                items: []
-            });
+                items: [],
+            })
             setTimeout(() => {
                 this.loadMore()
-            },1)
+            }, 1)
         }
     }
 
@@ -118,10 +117,10 @@ class PostsList extends React.Component {
             redirect: 'follow',
         }
 
-        let filterByUser = "";
+        let filterByUser = ''
 
-        if (this.props.user !== "*") {
-            filterByUser = "&user=" + this.props.user
+        if (this.props.user !== '*') {
+            filterByUser = '&user=' + this.props.user
         }
 
         this.setState({ isLoading: true, error: undefined })

@@ -3,7 +3,7 @@ import './scss/style.scss'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import SignIn from './views/auth/SignIn'
 import SignUp from './views/auth/SignUp'
-import ProfilePage from './views/auth/ProfilePage'
+import ActivateAccount from './views/auth/ActivateAccount'
 import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
@@ -158,6 +158,9 @@ class App extends React.Component {
                             <Route exact path="/signup">
                                 <SignUp />
                             </Route>
+                            <Route path="/signup/activate/:token">
+                                <ActivateAccount />
+                            </Route>
                             <Route exact path="/password-reset">
                                 <PasswordReset />
                             </Route>
@@ -169,7 +172,7 @@ class App extends React.Component {
                     {this.state.isLoggedIn === null && (
                         <React.Fragment>
                             <Route path="/*">
-                                <Loader active size="large" content="Initializing WorkGroup..." />
+                                <Loader className="app-loader" active size="large" content="Initializing WorkGroup..." />
                             </Route>
                         </React.Fragment>
                     )}
