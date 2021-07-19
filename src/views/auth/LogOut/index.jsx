@@ -26,7 +26,6 @@ function LogOut() {
                 localStorage.clear()
                 location.href = '/'
             })
-            .catch((error) => console.log('error', error))
     }, [])
     return (
         <div className="loginContainer">

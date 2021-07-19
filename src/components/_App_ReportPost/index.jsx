@@ -32,7 +32,6 @@ function ReportPost(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/content/reportPost', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 if (data.error == false) {
                     setReportIsLoading(false)
                     props.handleSuccessMessage()

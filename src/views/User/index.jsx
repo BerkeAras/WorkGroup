@@ -33,7 +33,6 @@ function User() {
             .then((res) => {
                 if (res.length > 0) {
                     setUserInformation(res[0])
-                    console.log(userInformation)
                     document.title = res[0]['name'] + ' – WorkGroup'
                 }
             })

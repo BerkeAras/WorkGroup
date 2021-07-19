@@ -30,7 +30,6 @@ const SidebarPopularItems = () => {
                 setTopics(result)
                 setIsLoading(false)
             })
-            .catch((error) => console.log('error', error))
     }, [])
 
     return (

@@ -28,8 +28,6 @@ const Header = () => {
     }
 
     const handleDropdownBlur = (e) => {
-        console.log('handleDropdownBlur')
-
         // Check the newly focused element in the next tick of the event loop
         setTimeout(() => {
             // Check if the new activeElement is a child of the original container

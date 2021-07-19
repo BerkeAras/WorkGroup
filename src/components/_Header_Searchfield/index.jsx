@@ -34,7 +34,6 @@ const SearchField = () => {
             .then((result) => {
                 setPopularTopics(result)
             })
-            .catch((error) => console.log('error', error))
     }, [])
 
     const showMobileSearch = (event) => {
@@ -80,7 +79,6 @@ const SearchField = () => {
 
                     setIsLoadingResults(false)
                 })
-                .catch((error) => console.log('error', error))
         }
     }
 

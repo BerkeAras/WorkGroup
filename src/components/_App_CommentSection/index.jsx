@@ -103,7 +103,6 @@ class CommentSection extends React.Component {
                     element.querySelector('textarea').value = ''
                     this.loadComments()
                 })
-                .catch((error) => console.log('error', error))
         }
     }
 
