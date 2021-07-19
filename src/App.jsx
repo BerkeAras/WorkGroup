@@ -177,7 +177,7 @@ class App extends React.Component {
                         </React.Fragment>
                     )}
                 </Switch>
-                {process.env.REACT_APP_USE_GOOGLE_ANALYTICS == 'true' && <CookieBanner />}
+                {process.env.REACT_APP_USE_GOOGLE_ANALYTICS == 'true' && <CookieBanner isLoggedIn={this.state.isLoggedIn} />}
             </Router>
         )
     }

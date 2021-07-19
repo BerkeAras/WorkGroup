@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import ReactGA from 'react-ga'
 import { Button, Modal, Checkbox } from 'semantic-ui-react'
 import { Info } from 'react-feather'
 import './style.scss'
 
-function CookieBanner() {
+function CookieBanner(props) {
     const location = useLocation()
 
     const [cookiesAccepted, setCookiesAccepted] = useState(false)
@@ -22,23 +23,25 @@ function CookieBanner() {
     })
 
     const storeCookieChoice = () => {
-        var header = new Headers()
-        header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        header.append('Content-Type', 'application/json')
+        if (props.isLoggedIn) {
+            var header = new Headers()
+            header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+            header.append('Content-Type', 'application/json')
 
-        const requestOptions = {
-            method: 'POST',
-            headers: header,
-            body: JSON.stringify({
-                cookie_choice: localStorage.getItem('cookies_accepted'),
-            }),
+            const requestOptions = {
+                method: 'POST',
+                headers: header,
+                body: JSON.stringify({
+                    cookie_choice: localStorage.getItem('cookies_accepted'),
+                }),
+            }
+            // eslint-disable-next-line no-undef
+            fetch(process.env.REACT_APP_API_URL + '/api/user/storeCookieChoice', requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data)
+                })
         }
-        // eslint-disable-next-line no-undef
-        fetch(process.env.REACT_APP_API_URL + '/api/user/storeCookieChoice', requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-            })
     }
 
     const acceptCookies = (e) => {
@@ -150,3 +153,7 @@ function CookieBanner() {
 }
 
 export default CookieBanner
+
+CookieBanner.propTypes = {
+    isLoggedIn: PropTypes.boolean,
+}
