@@ -374,7 +374,7 @@ class FirstLogin extends React.Component {
             //mode: 'no-cors',
             headers: myHeaders,
             body: formData,
-        });
+        })
     }
 
     avatarUpload = () => {
