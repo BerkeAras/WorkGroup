@@ -18,7 +18,7 @@
   <h4 align="center">⚠️ Warning: WorkGroup is currently in development. Most of the features are not working properly.<br><b>I am very happy about every contributor 😁</b> ⚠️</h4><br>
 
   <p align="center">
-    Self-Hosted Social Media for Companies
+    Self-Hosted private Social Media for Companies
     <br />
     <a href="https://workgroup.berkearas.de/" target="_blank"><strong><i>(comming soon)</i> Learn more »</strong></a>
     <br />
@@ -62,7 +62,7 @@
 <img src=".github/screenshot_1.png" style="width:100%;background:lightgrey;height:250px;object-fit:contain;">
 <img src=".github/screenshot_2.png" style="width:100%;background:lightgrey;height:250px;object-fit:contain;">
 
-WorkGroup is an open source, selfhosted social-media platform for companies.
+WorkGroup is an open source, selfhosted private social-media platform for companies.
 
 Here's why:
 
