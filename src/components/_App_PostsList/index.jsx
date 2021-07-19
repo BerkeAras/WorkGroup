@@ -341,7 +341,7 @@ class PostsList extends React.Component {
                             <React.Fragment>
                                 {this.state.items.map((item) => (
                                     <React.Fragment key={item.id}>
-                                        <Feed.Event className={this.state.visibleCommentSections.includes(item.id) == 0 && 'event--no-comments-visible'}>
+                                        <Feed.Event className={this.state.visibleCommentSections.includes(item.id) == 0 ? 'event--no-comments-visible' : ''}>
                                             <Feed.Label className="user-avatar">
                                                 <Link to={'/app/user/' + item.email}>
                                                     {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
