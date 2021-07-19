@@ -31,7 +31,6 @@ class SidebarPopularItems extends React.Component {
             .then((result) => {
                 this.setState({ topics: result, isLoading: false })
             })
-            .catch((error) => console.log('error', error))
     }
 
     render() {

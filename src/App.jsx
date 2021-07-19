@@ -78,7 +78,6 @@ class App extends React.Component {
                         this.setLoggedInStatus(false)
                     }
                 })
-                .catch((error) => console.log('error', error))
         } else {
             let cookiesAcceptedDecision = ''
 

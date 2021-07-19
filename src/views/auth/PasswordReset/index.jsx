@@ -113,7 +113,6 @@ class PasswordReset extends React.Component {
                 fetch(process.env.REACT_APP_API_URL + '/api/auth/reset/2', requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data)
                         if (data.message == 'PIN correct') {
                             this.setState({ isResetting: false })
                             this.setState({ error: false })
@@ -154,7 +153,6 @@ class PasswordReset extends React.Component {
                             password_confirmation: this.state.password2,
                         }),
                     }
-                    console.log(requestOptions)
                     // eslint-disable-next-line no-undef
                     fetch(process.env.REACT_APP_API_URL + '/api/auth/reset/3', requestOptions)
                         .then((response) => response.json())

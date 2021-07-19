@@ -98,9 +98,6 @@ class CreatePostForm extends React.Component {
                     }
                 }
             })
-            .catch(
-                (error) => console.log(error) // Handle the error response object
-            )
     }
 
     fileChange = (event) => {
@@ -155,9 +152,6 @@ class CreatePostForm extends React.Component {
                     }
                 }
             })
-            .catch(
-                (error) => console.log(error) // Handle the error response object
-            )
     }
 
     publishPost = () => {
@@ -213,7 +207,6 @@ class CreatePostForm extends React.Component {
                         this.setState({ errorModalOpen: true })
                     }
                 })
-                .catch((error) => console.log('error', error))
         }
     }
 

@@ -17,8 +17,6 @@ function UserBanner(props) {
     useEffect(() => {
         let userInformation = props.userInformation
 
-        console.log(props.userInformation)
-
         setIsLoadingUser(true)
 
         var userHeader = new Headers()
@@ -35,7 +33,6 @@ function UserBanner(props) {
                 setLoggedInUserEmail(result.data.email)
                 setIsLoadingUser(false)
             })
-            .catch((error) => console.log('error', error))
 
         if (userInformation['banner'] != '' && userInformation['banner'] != undefined) {
             setBackground(process.env.REACT_APP_API_URL + '/' + userInformation['banner'].replace('./', ''))

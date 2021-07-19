@@ -374,16 +374,7 @@ class FirstLogin extends React.Component {
             //mode: 'no-cors',
             headers: myHeaders,
             body: formData,
-        })
-            .then(
-                (response) => response.json() // if the response is a JSON object
-            )
-            .then(
-                (success) => console.log(success) // Handle the success response object
-            )
-            .catch(
-                (error) => console.log(error) // Handle the error response object
-            )
+        });
     }
 
     avatarUpload = () => {
@@ -404,15 +395,6 @@ class FirstLogin extends React.Component {
             headers: myHeaders,
             body: formData,
         })
-            .then(
-                (response) => response.json() // if the response is a JSON object
-            )
-            .then(
-                (success) => console.log(success) // Handle the success response object
-            )
-            .catch(
-                (error) => console.log(error) // Handle the error response object
-            )
     }
 
     handleSloganChange(event) {
@@ -505,7 +487,6 @@ class FirstLogin extends React.Component {
 
                 this.setState({ isLoading: false })
             })
-            .catch((error) => console.log('error', error))
     }
 
     render() {

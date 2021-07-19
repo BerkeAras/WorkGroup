@@ -37,10 +37,6 @@ function CookieBanner(props) {
             }
             // eslint-disable-next-line no-undef
             fetch(process.env.REACT_APP_API_URL + '/api/user/storeCookieChoice', requestOptions)
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data)
-                })
         }
     }
 
@@ -155,5 +151,5 @@ function CookieBanner(props) {
 export default CookieBanner
 
 CookieBanner.propTypes = {
-    isLoggedIn: PropTypes.boolean,
+    isLoggedIn: PropTypes.any,
 }

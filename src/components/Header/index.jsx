@@ -40,8 +40,6 @@ class Header extends React.Component {
     }
 
     handleDropdownBlur = (e) => {
-        console.log('handleDropdownBlur')
-
         const currentTarget = e.currentTarget
 
         // Check the newly focused element in the next tick of the event loop
