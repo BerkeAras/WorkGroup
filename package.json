@@ -12,6 +12,7 @@
         "@testing-library/user-event": "^12.6.0",
         "autolinker": "^3.14.2",
         "axios": "^0.21.1",
+        "dotenv": "^10.0.0",
         "firebase": "^8.2.0",
         "focus-trap-react": "^8.5.0",
         "linkifyjs": "^2.1.9",

@@ -1,17 +1,13 @@
 /* eslint-disable no-useless-constructor */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 
-class LogOut extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    componentDidMount() {
-        document.title = 'Logout – WorkGroup'
+function LogOut () {
+    useEffect(() => {
+        document.title = 'Logout – WorkGroup';
 
         var logoutHeader = new Headers()
         logoutHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -31,14 +27,12 @@ class LogOut extends React.Component {
                 location.href = '/'
             })
             .catch((error) => console.log('error', error))
-    }
-
-    render() {
-        return (
-            <div className="loginContainer">
-                <span>Logging out...</span>
-            </div>
-        )
-    }
+    }, []);
+    return (
+        <div className="loginContainer">
+            <span>Logging out...</span>
+        </div>
+    )
 }
+
 export default LogOut
