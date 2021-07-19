@@ -71,12 +71,12 @@ Here's why:
 
 Features:
 
-- Communicate through your company!
+-   Communicate through your company!
     -   Videocalls
     -   Voicecalls
     -   Textchat
     -   Groupchats
-- Socialize with your coworkers!
+-   Socialize with your coworkers!
     -   Use the company-wide feed to share informations across the whole company
     -   Create group-feeds for different departments
     -   Create polls, upload photos, videos and other files
@@ -87,8 +87,8 @@ Features:
 -   [React](https://reactjs.org/)
 -   [Semantic UI](https://semantic-ui.com/)
 
-
 <!-- Try the Demo -->
+
 ## Try the Demo
 
 Sign Up at [demo1.workgroup.berkearas.de](https://demo1.workgroup.berkearas.de/)
