@@ -13,7 +13,9 @@
     <img src="https://raw.githubusercontent.com/BerkeAras/WorkGroup/main/src/static/logo.svg" alt="Logo" height="50">
   </a>
 
-  <h3 align="center">WorkGroup App</h3>
+  <h3 align="center">WorkGroup</h3>
+
+  <h4 align="center">⚠️ Warning: WorkGroup is currently in development. Most of the features are not working properly.<br><b>I am very happy about every contributor 😁</b> ⚠️</h4><br>
 
   <p align="center">
     Self-Hosted Social Media for Companies
@@ -44,6 +46,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#try-the-demo">Try the Demo!</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -56,6 +59,9 @@
 
 ## About The Project
 
+<img src=".github/screenshot_1.png" style="width:100%;background:lightgrey;height:250px;object-fit:contain;">
+<img src=".github/screenshot_2.png" style="width:100%;background:lightgrey;height:250px;object-fit:contain;">
+
 WorkGroup is an open source, selfhosted social-media platform for companies.
 
 Here's why:
@@ -63,10 +69,29 @@ Here's why:
 -   Good networking is very important in companies.
 -   Self hosted platforms are very important for companies with critical information.
 
+Features:
+
+- Communicate through your company!
+    -   Videocalls
+    -   Voicecalls
+    -   Textchat
+    -   Groupchats
+- Socialize with your coworkers!
+    -   Use the company-wide feed to share informations across the whole company
+    -   Create group-feeds for different departments
+    -   Create polls, upload photos, videos and other files
+    -   Create events and notify users
+
 ### Built With
 
 -   [React](https://reactjs.org/)
 -   [Semantic UI](https://semantic-ui.com/)
+
+
+<!-- Try the Demo -->
+## Try the Demo
+
+Sign Up at [demo1.workgroup.berkearas.de](https://demo1.workgroup.berkearas.de/)
 
 <!-- GETTING STARTED -->
 
