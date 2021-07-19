@@ -16,8 +16,8 @@ import PostsList from '../../components/_App_PostsList'
 
 const MainApp = () => {
     useEffect(() => {
-        document.title = 'Feed - WorkGroup';
-    }, []);
+        document.title = 'Feed - WorkGroup'
+    }, [])
 
     return (
         <div className="app">

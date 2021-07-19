@@ -11,20 +11,20 @@ import HeaderDropdown from '../HeaderDropdown'
 import SearchField from '../_Header_Searchfield'
 
 const Header = () => {
-    const [dropdownVisible, setDropDownVisible] = useState(false);
-    const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+    const [dropdownVisible, setDropDownVisible] = useState(false)
+    const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
 
-    const showHeaderDropdown = e => {
-        e.preventDefault();
-        setDropDownVisible(!dropdownVisible);
+    const showHeaderDropdown = (e) => {
+        e.preventDefault()
+        setDropDownVisible(!dropdownVisible)
     }
 
     const showMobileMenu = () => {
-        setMobileMenuVisible(true);
+        setMobileMenuVisible(true)
     }
-    
+
     const hideMobileMenu = () => {
-        setMobileMenuVisible(false);
+        setMobileMenuVisible(false)
     }
 
     const handleDropdownBlur = (e) => {
@@ -35,9 +35,9 @@ const Header = () => {
             // Check if the new activeElement is a child of the original container
             if (!e.currentTarget.contains(document.activeElement)) {
                 // You can invoke a callback or add custom logic here
-                setDropDownVisible(false);
+                setDropDownVisible(false)
             }
-        }, 0);
+        }, 0)
     }
 
     return (
@@ -46,7 +46,7 @@ const Header = () => {
                 <img src={logo} alt="Logo" />
             </NavLink>
             <SearchField />
-            <a href="#" onClick={e => showHeaderDropdown(e)} className="header__dropdown-button">
+            <a href="#" onClick={(e) => showHeaderDropdown(e)} className="header__dropdown-button">
                 <MoreVertical></MoreVertical>
             </a>
             <a href="#" onClick={showMobileMenu} className="header__menu-mobile-button">
@@ -69,9 +69,7 @@ const Header = () => {
                 </NavLink>
             </div>
 
-            {
-                dropdownVisible ? <HeaderDropdown setDropDownVisible={setDropDownVisible} onBlurHandler={e => handleDropdownBlur(e)}></HeaderDropdown> : null
-            }
+            {dropdownVisible ? <HeaderDropdown setDropDownVisible={setDropDownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderDropdown> : null}
         </div>
     )
 }

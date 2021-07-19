@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } fro
 import { Hash } from 'react-feather'
 
 const SidebarPopularItems = () => {
-    const [topics, setTopics] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [topics, setTopics] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         var tokenHeaders = new Headers()
@@ -27,11 +27,11 @@ const SidebarPopularItems = () => {
         )
             .then((response) => response.json())
             .then((result) => {
-                setTopics(result);
-                setIsLoading(false);
+                setTopics(result)
+                setIsLoading(false)
             })
             .catch((error) => console.log('error', error))
-    }, []);
+    }, [])
 
     return (
         <div className="topic-container">

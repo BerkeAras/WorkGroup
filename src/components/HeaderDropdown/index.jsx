@@ -6,18 +6,18 @@ import PropTypes from 'prop-types'
 import { MoreVertical } from 'react-feather'
 import logo from '../../static/logo.svg'
 
-const HeaderDropdown = props => {
+const HeaderDropdown = (props) => {
     useEffect(() => {
         document.addEventListener('mouseup', (e) => {
             if (document.querySelector('.header__dropdown')) {
                 const container = document.querySelector('.header__dropdown')
                 if (!container.contains(e.target)) {
                     container.style.display = 'none'
-                    props.setDropDownVisible(false);
+                    props.setDropDownVisible(false)
                 }
             }
         })
-    }, []);
+    }, [])
 
     return (
         <div className="header__dropdown">
@@ -38,7 +38,7 @@ const HeaderDropdown = props => {
 }
 
 HeaderDropdown.propTypes = {
-    setDropDownVisible: PropTypes.func
-  };
+    setDropDownVisible: PropTypes.func,
+}
 
 export default HeaderDropdown
