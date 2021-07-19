@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { Placeholder, Icon } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import { Hash } from 'react-feather'
 
-class SidebarPopularItems extends React.Component {
-    constructor() {
-        super()
-        this.state = { topics: [], isLoading: true }
-    }
+const SidebarPopularItems = () => {
+    const [topics, setTopics] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
-    componentDidMount() {
+    useEffect(() => {
         var tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
@@ -29,46 +27,45 @@ class SidebarPopularItems extends React.Component {
         )
             .then((response) => response.json())
             .then((result) => {
-                this.setState({ topics: result, isLoading: false })
+                setTopics(result)
+                setIsLoading(false)
             })
-    }
+    }, [])
 
-    render() {
-        return (
-            <div className="topic-container">
-                {this.state.isLoading ? (
-                    <div>
-                        <Placeholder>
-                            <Placeholder.Line />
-                        </Placeholder>
-                        <Placeholder>
-                            <Placeholder.Line />
-                        </Placeholder>
-                        <Placeholder>
-                            <Placeholder.Line />
-                        </Placeholder>
-                        <Placeholder>
-                            <Placeholder.Line />
-                        </Placeholder>
-                    </div>
-                ) : (
-                    <React.Fragment>
-                        {this.state.topics.length == 0 ? (
-                            <span className="empty-topics">Sorry. We could not find any topics.</span>
-                        ) : (
-                            this.state.topics.map((topic) => {
-                                return (
-                                    <Link key={`topic-${topic.id}`} className="topic-item" to={`/app/topics/` + topic.topic}>
-                                        <Hash size={18} strokeWidth={2.7} /> {topic.topic}
-                                    </Link>
-                                )
-                            })
-                        )}
-                    </React.Fragment>
-                )}
-            </div>
-        )
-    }
+    return (
+        <div className="topic-container">
+            {isLoading ? (
+                <div>
+                    <Placeholder>
+                        <Placeholder.Line />
+                    </Placeholder>
+                    <Placeholder>
+                        <Placeholder.Line />
+                    </Placeholder>
+                    <Placeholder>
+                        <Placeholder.Line />
+                    </Placeholder>
+                    <Placeholder>
+                        <Placeholder.Line />
+                    </Placeholder>
+                </div>
+            ) : (
+                <>
+                    {topics.length == 0 ? (
+                        <span className="empty-topics">Sorry. We could not find any topics.</span>
+                    ) : (
+                        topics.map((topic) => {
+                            return (
+                                <Link key={`topic-${topic.id}`} className="topic-item" to={`/app/topics/` + topic.topic}>
+                                    <Hash size={18} strokeWidth={2.7} /> {topic.topic}
+                                </Link>
+                            )
+                        })
+                    )}
+                </>
+            )}
+        </div>
+    )
 }
 
 export default SidebarPopularItems
