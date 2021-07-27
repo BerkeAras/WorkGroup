@@ -1,69 +1,70 @@
 /* eslint-disable no-useless-constructor */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message, Loader } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
+import PropTypes from 'prop-types'
 
-class SignUp extends React.Component {
-    constructor(props) {
-        super(props)
+const SignUpWrapper = () => {
+    const [isWaitingForActivation, setIsWaitingForActivation] = useState(false);
 
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            passwordRepeat: '',
-            error: false,
-            isSigningUp: false,
-            isWaitingForActivation: false,
-        }
-        this.nameChangeHandler = this.nameChangeHandler.bind(this)
-        this.emailChangeHandler = this.emailChangeHandler.bind(this)
-        this.passwordChangeHandler = this.passwordChangeHandler.bind(this)
-        this.passwordRepeatChangeHandler = this.passwordRepeatChangeHandler.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
+    return(
+        <>
+        <div className="loginContainer">
+            <img className="logo" alt="Logo" src={logo} />
+            {
+                !isWaitingForActivation ? 
+                <SignUp isWaitingForActivation={isWaitingForActivation} setIsWaitingForActivation={setIsWaitingForActivation} /> : 
+                <WaitActivation />
+            }
+        </div>
+        <div className="loginBackground"></div>
+        </>
+    )
+}
 
-    componentDidMount() {
+const WaitActivation = () => {
+    return(
+        <div className="formContainer">
+            <h3>Please confirm your account.</h3>
+            <p className="activate-account-text">To confirm your account, click the link in the email you just received.</p>
+            <Loader active size="large" content="Waiting for confirmation... You will be redirected after clicking the link." />
+        </div>
+    )
+}
+
+const SignUp = props => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordRepeat, setPasswordRepeat] = useState("");
+    const [error, setError] = useState(false);
+    const [isSigningUp, setIsSigningUp] = useState(false);
+
+    useEffect(() => {
         document.title = 'Sign Up – WorkGroup'
-    }
+    }, []);
 
-    nameChangeHandler(event) {
-        this.setState({ name: event.target.value })
-    }
+    const handleSubmit = (event) => {
+        setIsSigningUp(true);
+        setError(false);
 
-    emailChangeHandler(event) {
-        this.setState({ email: event.target.value })
-    }
-
-    passwordChangeHandler(event) {
-        this.setState({ password: event.target.value })
-    }
-
-    passwordRepeatChangeHandler(event) {
-        this.setState({ passwordRepeat: event.target.value })
-    }
-
-    handleSubmit(event) {
-        this.setState({ isSigningUp: true })
-        this.setState({ error: false })
-
-        if (this.state.password === this.state.passwordRepeat) {
-            if (this.state.name.trim() !== '' && this.state.email.trim() !== '' && this.state.password.trim() !== '' && this.state.passwordRepeat.trim() !== '') {
-                if (this.state.password.length < 8) {
-                    this.setState({ error: 'password_too_short' })
-                    this.setState({ isSigningUp: false })
+        if (password === passwordRepeat) {
+            if (name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && passwordRepeat.trim() !== '') {
+                if (password.length < 8) {
+                    setError('password_too_short');
+                    setIsSigningUp(false);
                 } else {
                     setTimeout(() => {
                         const requestOptions = {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                name: this.state.name,
-                                email: this.state.email,
-                                password: this.state.password,
-                                password_confirmation: this.state.passwordRepeat,
+                                name: name,
+                                email: email,
+                                password: password,
+                                password_confirmation: passwordRepeat,
                             }),
                         }
                         // eslint-disable-next-line no-undef
@@ -71,144 +72,123 @@ class SignUp extends React.Component {
                             .then((response) => response.json())
                             .then((data) => {
                                 if (data.message == 'Register success') {
-                                    this.setState({ isSigningUp: false, isWaitingForActivation: true })
-                                    this.waitForActivation()
+                                    setIsSigningUp(false);
+                                    props.setIsWaitingForActivation(true)
+                                    waitForActivation();
                                 } else if (data.message == 'User existing') {
-                                    this.setState({ error: 'already_registered' })
-                                    this.setState({ isSigningUp: false })
+                                    setError('already_registered');
+                                    setIsSigningUp(false);
                                 }
                             })
                     }, 300)
                 }
             } else {
-                this.setState({ error: 'inputs_empty' })
-                this.setState({ isSigningUp: false })
+                setError('inputs_empty');
+                setIsSigningUp(false);
             }
         } else {
-            this.setState({ error: 'password_does_not_match' })
-            this.setState({ isSigningUp: false })
+            setError('password_does_not_match');
+            setIsSigningUp(false);
         }
 
         event.preventDefault()
     }
 
-    waitForActivation() {
+    const waitForActivation = () => {
         const requestOptionsCheckActivation = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         }
         let checkInterval = setInterval(() => {
             // eslint-disable-next-line no-undef
-            fetch(process.env.REACT_APP_API_URL + '/api/auth/checkActivation?email=' + this.state.email, requestOptionsCheckActivation)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.message == 'User activated') {
-                        clearInterval(checkInterval)
+            fetch(process.env.REACT_APP_API_URL + '/api/auth/checkActivation?email=' + email, requestOptionsCheckActivation)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message == 'User activated') {
+                    clearInterval(checkInterval)
 
-                        const requestOptionsLogin = {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                email: this.state.email,
-                                password: this.state.password,
-                            }),
-                        }
-                        // eslint-disable-next-line no-undef
-                        fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptionsLogin)
-                            .then((response) => response.json())
-                            .then((data) => {
-                                if (data.message == 'Login success') {
-                                    localStorage.setItem('token', data.data.token)
-                                    this.setState({ isLoggedIn: true })
-                                    localStorage.setItem('first_login', true)
-                                    location.href = '/'
-                                }
-                            })
+                    const requestOptionsLogin = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password,
+                        }),
                     }
-                })
+                    // eslint-disable-next-line no-undef
+                    fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptionsLogin)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.message == 'Login success') {
+                            localStorage.setItem('token', data.data.token)
+                            // this.setState({ isLoggedIn: true })
+                            localStorage.setItem('first_login', true)
+                            location.href = '/'
+                        }
+                    })
+                }
+            })
         }, 3000)
     }
+    
 
-    render() {
-        return (
-            <>
-                <div className="loginContainer">
-                    <img className="logo" alt="Logo" src={logo} />
-
-                    {this.state.isWaitingForActivation === false ? (
-                        <div className="formContainer">
-                            <h3>Sign Up to use WorkGroup</h3>
-
-                            {this.state.error === 'already_registered' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> This E-Mail is already registered! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'password_does_not_match' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> The Passwords does not match! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'inputs_empty' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> Please fill out everything! </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            {this.state.error === 'password_too_short' ? (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> Your password is too short! Please enter at least 8 characters. </p>
-                                </Message>
-                            ) : (
-                                <div />
-                            )}
-                            <form className="" onSubmit={this.handleSubmit}>
-                                <Input autoFocus fluid onChange={this.nameChangeHandler} type="text" placeholder="Name" id="userName" />
-                                <br />
-                                <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                                <br />
-                                <Input fluid onChange={this.passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
-                                <br />
-                                <Input fluid onChange={this.passwordRepeatChangeHandler} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
-                                <br />
-                                {this.state.isSigningUp ? (
-                                    <Button loading primary type="submit">
-                                        Sign Up
-                                    </Button>
-                                ) : (
-                                    <Button primary type="submit" onClick={this.handleSubmit}>
-                                        Sign Up
-                                    </Button>
-                                )}
-                                <Button as={Link} to="/">
-                                    Already registered?
-                                </Button>
-                            </form>
-                        </div>
-                    ) : (
-                        <div className="formContainer">
-                            <h3>Please confirm your account.</h3>
-
-                            <p className="activate-account-text">To confirm your account, click the link in the email you just received.</p>
-
-                            <Loader active size="large" content="Waiting for confirmation... You will be redirected after clicking the link." />
-                        </div>
-                    )}
-                </div>
-                <div className="loginBackground"></div>
-            </>
-        )
-    }
+    return (
+        <>
+        <div className="formContainer">
+            <h3>Sign Up to use WorkGroup</h3>
+            {error ? <ErrorMsg errorCode={error} /> : null}
+            <form className="" onSubmit={e => handleSubmit(e)}>
+                <Input autoFocus fluid onChange={e => setName(e.target.value)} type="text" placeholder="Name" id="userName" />
+                <br />
+                <Input fluid onChange={e => setEmail(e.target.value)} type="email" placeholder="E-Mail" id="userEmail" />
+                <br />
+                <Input fluid onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" id="userPassword" />
+                <br />
+                <Input fluid onChange={e => setPasswordRepeat(e.target.value)} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
+                <br />
+                {isSigningUp ? (
+                    <Button loading primary type="submit">
+                        Sign Up
+                    </Button>
+                ) : (
+                    <Button primary type="submit">
+                        Sign Up
+                    </Button>
+                )}
+                <Button as={Link} to="/">
+                    Already registered?
+                </Button>
+            </form>
+        </div>
+        </>
+    )
 }
-export default SignUp
+
+SignUp.propTypes = {
+    isWaitingForActivation: PropTypes.bool,
+    setIsWaitingForActivation: PropTypes.func
+}
+
+const ErrorMsg = props => {
+    const errors = {
+        already_registered: 'This E-Mail is already registered!',
+        password_does_not_match: 'The Passwords dont match',
+        inputs_empty: 'Please fill out everything!',
+        password_too_short: 'Your password is too short! Please enter at least 8 characters.'
+    }
+
+    return(
+        <Message negative>
+            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+            <p>{errors[props.errorCode]}</p>
+        </Message>
+    )
+}
+
+ErrorMsg.propTypes = {
+    errorCode: PropTypes.string,
+}
+
+export default SignUpWrapper

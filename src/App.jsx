@@ -13,6 +13,7 @@ import { Loader } from 'semantic-ui-react'
 import FirstLogin from './components/_User_FirstLogin'
 import CookieBanner from './components/_App_CookieBanner'
 import { AuthProvider } from './store/AuthContext'
+import SignUpWrapper from './views/auth/SignUp'
 
 class App extends React.Component {
     constructor(props) {
@@ -156,7 +157,7 @@ class App extends React.Component {
                                 <Redirect to="/" />
                             </Route>
                             <Route exact path="/signup">
-                                <SignUp />
+                                <SignUpWrapper />
                             </Route>
                             <Route path="/signup/activate/:token">
                                 <ActivateAccount />
