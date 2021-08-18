@@ -14,6 +14,7 @@ import FirstLogin from './components/_User_FirstLogin'
 import CookieBanner from './components/_App_CookieBanner'
 import { AuthProvider } from './store/AuthContext'
 import SignUpWrapper from './views/auth/SignUp'
+import SettingsPage from './views/Settings'
 
 class App extends React.Component {
     constructor(props) {
@@ -145,6 +146,9 @@ class App extends React.Component {
                             </Route>
                             <Route path="/app/user/:email">
                                 <User />
+                            </Route>
+                            <Route path="/app/settings">
+                                <SettingsPage />
                             </Route>
                         </AuthProvider>
                     )}

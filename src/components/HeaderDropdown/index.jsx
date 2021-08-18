@@ -24,7 +24,7 @@ const HeaderDropdown = (props) => {
             <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to={'/app/user/' + localStorage.getItem('user_email')}>
                 My Account
             </NavLink>
-            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/today">
+            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
                 App Settings
             </NavLink>
             <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/groups">

@@ -1,0 +1,55 @@
+@import '../../scss/_variables';
+h1,
+h2 {
+    color: $primary-color;
+}
+.settings-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px 0 #d4d4d5;
+    width: 300px;
+    padding: 15px;
+}
+.settings-list button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px $primary-color solid;
+}
+.settings-list button:hover {
+    cursor: pointer;
+    background-color: #eeeeee;
+    transition: 0.25s;
+}
+.settings-list button::after {
+    content: '🡢';
+    position: absolute;
+    right: 3px;
+    color: #363636;
+    transform: scale(1.3);
+}
+.settings-list button:last-child {
+    border-bottom: none;
+}
+.settings-list button svg {
+    margin-right: 10px;
+    stroke: #b8b8b8;
+}
+
+.settingsCont {
+    box-shadow: 0 1px 3px 0 #d4d4d5;
+    width: calc(100% - 320px);
+    margin: 15px;
+    padding: 15px;
+}
+input {
+    width: 50%;
+}
