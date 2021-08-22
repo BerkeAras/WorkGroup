@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a937cf4714ed4a2090118bc0805d9503)](https://app.codacy.com/gh/BerkeAras/WorkGroup?utm_source=github.com&utm_medium=referral&utm_content=BerkeAras/WorkGroup&utm_campaign=Badge_Grade_Settings)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/BerkeAras/WorkGroup/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/BerkeAras/WorkGroup/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://github.com/BerkeAras/WorkGroup/releases/)
