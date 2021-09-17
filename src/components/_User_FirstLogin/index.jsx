@@ -384,17 +384,22 @@ class FirstLogin extends React.Component {
 
         const formData = new FormData()
         formData.append('avatar', element)
+        formData.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var myHeaders = new Headers()
-        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        let headers = new Headers()
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         fetch(process.env.REACT_APP_API_URL + `/api/user/uploadAvatar`, {
             // Your POST endpoint
             method: 'POST',
-            //mode: 'no-cors',
-            headers: myHeaders,
+            headers: headers,
             body: formData,
+            redirect: 'follow'
         })
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+            })
     }
 
     handleSloganChange(event) {
