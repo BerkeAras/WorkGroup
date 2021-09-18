@@ -4,6 +4,28 @@ body {
     overflow: hidden;
 }
 
+.create-group-modal-hint {
+    font-size: 13px;
+    margin-top: 5px;
+    display: inline-block;
+    color: #5f768f;
+}
+.create-group-modal-banner {
+    width: calc(100% + 3rem);
+    height: 150px;
+    object-fit: cover;
+    margin: -1.5rem -1.5rem 50px -1.5rem;
+}
+.create-group-modal-avatar {
+    width: 75px;
+    height: 75px;
+    top: calc(150px - (75px / 2));
+    left: 20px;
+    position: absolute;
+    box-shadow: 0 0 0 4px white;
+    border-radius: 1000px;
+    background: white;
+}
 .groups-content {
     width: 100%;
     display: inline-block;
