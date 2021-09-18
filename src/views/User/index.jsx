@@ -2,14 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import './style.scss'
-import { Button, Input } from 'semantic-ui-react'
-import logo from '../../static/logo.svg'
-import PropTypes from 'prop-types'
 import { User as UserIcon, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 // Components
 import Header from '../../components/Header'
-import Content from '../../components/Content'
 import PostsList from '../../components/_App_PostsList'
 
 import UserBanner from '../../components/_User_UserBanner'

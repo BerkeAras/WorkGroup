@@ -147,6 +147,11 @@
             object-fit: cover;
         }
     }
+    .user {
+        &--group-member {
+            color: #a3aebb;
+        }
+    }
 }
 
 .feed .comments {

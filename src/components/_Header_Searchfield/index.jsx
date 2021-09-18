@@ -6,7 +6,7 @@ import { DebounceInput } from 'react-debounce-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { User, Search, Hash } from 'react-feather'
+import { User, Search, Hash, Users } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -16,6 +16,7 @@ import './style.scss'
 const SearchField = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [userResult, setUserResult] = useState([])
+    const [groupResult, setGroupResult] = useState([])
     const [topicResult, setTopicResult] = useState([])
     const [popularTopics, setPopularTopics] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
@@ -50,6 +51,7 @@ const SearchField = () => {
 
         if (inputValue == '' || inputValue.length < 3) {
             setUserResult([])
+            setGroupResult([])
             setTopicResult([])
             setIsLoadingResults(false)
         } else {
@@ -72,9 +74,11 @@ const SearchField = () => {
                 .then((response) => response.json())
                 .then((result) => {
                     let userResult = result[0]
-                    let topicResult = result[1]
+                    let groupResult = result[1]
+                    let topicResult = result[2]
 
                     setUserResult(userResult)
+                    setGroupResult(groupResult)
                     setTopicResult(topicResult)
 
                     setIsLoadingResults(false)
@@ -133,6 +137,20 @@ const SearchField = () => {
                                             <Link onClick={() => document.activeElement.blur()} to={'/app/user/' + user.email}>
                                                 <User size={20} strokeWidth={2.7} /> {user.name}{' '}
                                                 {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </React.Fragment>
+                        )}
+                        {groupResult.length > 0 && (
+                            <React.Fragment>
+                                <span className="divider">Groups</span>
+                                {groupResult.map((group) => {
+                                    return (
+                                        <li key={group.id}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/group/' + group.id}>
+                                                <Users size={20} strokeWidth={2.7} /> {group.group_title}
                                             </Link>
                                         </li>
                                     )

@@ -8,6 +8,7 @@ import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
 import User from './views/User'
+import Group from './views/Group'
 import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
@@ -145,6 +146,9 @@ class App extends React.Component {
                             <Route path="/app/user/:email">
                                 <User />
                             </Route>
+                            <Route path="/app/group/:id">
+                                <Group />
+                            </Route>
                         </AuthProvider>
                     )}
                     {this.state.isLoggedIn === false && (
@@ -166,6 +170,9 @@ class App extends React.Component {
                             </Route>
                             <Route exact path="/logout">
                                 <LogOut />
+                            </Route>
+                            <Route path="/*">
+                                <SignIn />
                             </Route>
                         </React.Fragment>
                     )}

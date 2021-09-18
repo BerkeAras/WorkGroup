@@ -1,0 +1,57 @@
+@import '../../scss/variables';
+
+body {
+    overflow: hidden;
+}
+
+.group-content {
+    width: 100%;
+}
+.group-information {
+    width: 400px;
+    float: left;
+    margin-top: 20px;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 3px 0 #d4d4d5;
+    background: white !important;
+    padding: 15px !important;
+
+    &-item {
+        width: 100%;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        color: #000000c9;
+        letter-spacing: 0.3px;
+
+        svg {
+            margin-left: 5px;
+            margin-right: 15px;
+            opacity: 0.7;
+            flex: none;
+        }
+    }
+
+    @media (max-width: 1180px) {
+        width: 100%;
+    }
+}
+.group-feed {
+    width: calc(100% - 400px);
+    float: left;
+    padding-left: 20px;
+
+    .new_post {
+        margin-top: 20px;
+    }
+
+    .event {
+        border-radius: 10px !important;
+    }
+
+    @media (max-width: 1180px) {
+        width: 100%;
+        padding-left: 0;
+    }
+}
