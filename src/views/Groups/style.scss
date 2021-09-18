@@ -1,0 +1,103 @@
+@import '../../scss/variables';
+
+body {
+    overflow: hidden;
+}
+
+.groups-content {
+    width: 100%;
+    display: inline-block;
+}
+.group-topics {
+    width: 290px;
+    float: left;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 3px 0 #d4d4d5;
+    background: white !important;
+    padding: 15px !important;
+
+    &-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: black;
+        margin-bottom: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.2s !important;
+        &:hover {
+            background-color: #eeeeee;
+            transform: scale(0.98);
+        }
+        svg {
+            margin-left: 5px;
+            margin-right: 15px;
+            opacity: 0.7;
+        }
+        &:active {
+            transform: scale(0.95);
+            outline: none !important;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    @media (max-width: 1180px) {
+        width: 100%;
+    }
+}
+.group-list {
+    width: calc(100% - 290px - 20px);
+    float: left;
+    margin-left: 20px;
+
+    &-item {
+        position: relative;
+        width: 100%;
+        border-radius: 10px !important;
+        box-shadow: 0 1px 3px 0 #d4d4d5;
+        background: white !important;
+        margin-bottom: 20px;
+
+        &-banner {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        &-avatar {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            top: calc(200px - (75px) / 2);
+            left: 20px;
+        }
+
+        &-content {
+            width: 100%;
+            padding: 50px 20px 20px 20px;
+        }
+        &-title {
+            font-size: 19px;
+            font-weight: 600;
+        }
+        &-description {
+            font-size: 15px;
+            width: 100%;
+            margin: 10px 0;
+        }
+        &-members {
+            font-size: 13px;
+            font-weight: 400;
+            color: #687787;
+            margin-left: 5px;
+        }
+    }
+}

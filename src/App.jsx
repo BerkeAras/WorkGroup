@@ -9,6 +9,9 @@ import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
 import User from './views/User'
 import Group from './views/Group'
+import Groups from './views/Groups'
+import GroupRequestApproved from './views/GroupRequestApproved'
+import GroupRequestPending from './views/GroupRequestPending'
 import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
@@ -148,6 +151,15 @@ class App extends React.Component {
                             </Route>
                             <Route path="/app/group/:id">
                                 <Group />
+                            </Route>
+                            <Route path="/app/groups">
+                                <Groups />
+                            </Route>
+                            <Route path="/app/group-request-approved">
+                                <GroupRequestApproved />
+                            </Route>
+                            <Route path="/app/group-request-pending">
+                                <GroupRequestPending />
                             </Route>
                         </AuthProvider>
                     )}
