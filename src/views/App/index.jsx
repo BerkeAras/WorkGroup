@@ -22,7 +22,7 @@ const MainApp = () => {
     return (
         <div className="app">
             <Header />
-            <div className="main_content">
+            <div id="main_content" className="main_content">
                 <SidebarLeft />
                 <Content>
                     <CreatePostForm />

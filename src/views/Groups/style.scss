@@ -29,6 +29,23 @@ body {
 .groups-content {
     width: 100%;
     display: inline-block;
+
+    center {
+        padding-top: 50px;
+        svg {
+            color: #cecece;
+            margin-bottom: 20px;
+        }
+        span {
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.87);
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+    }
 }
 .group-topics {
     width: 290px;
@@ -71,7 +88,7 @@ body {
         }
     }
 
-    @media (max-width: 1180px) {
+    @media (max-width: 1000px) {
         width: 100%;
     }
 }
@@ -79,6 +96,11 @@ body {
     width: calc(100% - 290px - 20px);
     float: left;
     margin-left: 20px;
+
+    @media (max-width: 1000px) {
+        width: 100%;
+        margin: 20px 0 0 0;
+    }
 
     &-item {
         position: relative;
@@ -100,6 +122,9 @@ body {
             height: 75px;
             top: calc(200px - (75px) / 2);
             left: 20px;
+            border-radius: 100%;
+            background: white;
+            box-shadow: 0 0 0 4px white;
         }
 
         &-content {

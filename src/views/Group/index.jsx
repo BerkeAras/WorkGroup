@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import './style.scss'
-import { User as UserIcon } from 'react-feather'
+import { User as UserIcon, Info } from 'react-feather'
 
 // Components
 import Header from '../../components/Header'
@@ -38,24 +38,27 @@ function Group() {
     return (
         <div className="app">
             <Header />
-            <div className="main_content">
+            <div id="main_content" className="main_content">
                 <GroupBanner groupInformation={groupInformation}></GroupBanner>
                 <div className="group-content">
                     <div className="group-information">
                         <span className="group-information-item">
                             <UserIcon size={20} strokeWidth={2.5} /> Members: {groupInformation['member_count']}
                         </span>
+                        {groupInformation['group_description'] !== '' && (
+                            <span className="group-information-item">
+                                <Info size={20} strokeWidth={2.5} /> {groupInformation['group_description']}
+                            </span>
+                        )}
                     </div>
                     <div className="group-feed">
-                        {groupInformation["is_group_member"] == true && (
-                            <CreatePostForm group={id} />
-                        )}
+                        {groupInformation['is_group_member'] == true && <CreatePostForm group={id} />}
                         <PostsList group={id} />
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Group;
+export default Group

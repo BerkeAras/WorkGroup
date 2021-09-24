@@ -7,11 +7,9 @@ import { Card } from 'semantic-ui-react'
 import logo from '../../static/logo.svg'
 
 const SidebarLeft = () => {
-
-    const [groupMemberships, setGroupMemberships] = useState([]);
+    const [groupMemberships, setGroupMemberships] = useState([])
 
     useEffect(() => {
-
         var userInformationHeader = new Headers()
         userInformationHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
@@ -25,10 +23,9 @@ const SidebarLeft = () => {
             .then((res) => res.json())
             .then((res) => {
                 if (res.status === 1) {
-                    setGroupMemberships(res["groups"])
+                    setGroupMemberships(res['groups'])
                 }
             })
-
     }, [])
 
     return (
@@ -39,7 +36,7 @@ const SidebarLeft = () => {
                     <SidebarPopularItems />
                 </Card.Content>
             </Card>
-            {(groupMemberships.length > 0) && (
+            {groupMemberships.length > 0 && (
                 <Card>
                     <Card.Content extra>My Groups</Card.Content>
                     <Card.Content>

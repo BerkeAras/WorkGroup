@@ -37,7 +37,7 @@ function User() {
     return (
         <div className="app">
             <Header />
-            <div className="main_content">
+            <div id="main_content" className="main_content">
                 <UserBanner userInformation={userInformation}></UserBanner>
                 <div className="user-account-content">
                     <div className="user-account-information">

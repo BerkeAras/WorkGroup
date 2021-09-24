@@ -180,6 +180,7 @@
 }
 
 .SearchFieldBackdrop {
+    transition: all 0.3s;
     &-visible {
         position: fixed;
         top: 0;

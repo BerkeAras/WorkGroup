@@ -14,7 +14,7 @@ const SidebarGroupMemberships = (props) => {
                 ) : (
                     props.memberships.map((group) => {
                         return (
-                            <Link key={`group-${group.id}`} className="group-item" to={`/app/group/` + group.id}>
+                            <Link key={`group-${group.group_id}`} className="group-item" to={`/app/group/` + group.group_id}>
                                 <Users size={18} strokeWidth={2.7} /> {group.group_title}
                             </Link>
                         )

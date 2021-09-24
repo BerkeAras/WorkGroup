@@ -23,6 +23,7 @@ function LogOut() {
                 response.text()
             })
             .then((result) => {
+                console.log(result)
                 localStorage.clear()
                 location.href = '/'
             })

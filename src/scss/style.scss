@@ -134,6 +134,13 @@ textarea {
     }
 }
 
+.ui.button.negative {
+    box-shadow: 0 0 0px 0px rgb(245 176 176 / 60%) !important;
+    &:focus {
+        box-shadow: 0 0 0px 3px rgb(245 176 176 / 60%) !important;
+    }
+}
+
 .ui.button.positive {
     box-shadow: 0 0 0px 0px rgba(16, 164, 5, 0.4) !important;
     &:focus {

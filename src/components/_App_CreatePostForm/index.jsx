@@ -155,7 +155,6 @@ class CreatePostForm extends React.Component {
     }
 
     publishPost = () => {
-
         let postContent = convertToMarkup(document.querySelector('.fake-textarea').innerHTML)
         postContent = postContent.trim()
         postContent = linkifyHtml(postContent)

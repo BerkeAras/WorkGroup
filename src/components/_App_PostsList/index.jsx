@@ -102,7 +102,6 @@ class PostsList extends React.Component {
     }
 
     loadMore = () => {
-
         this.setState({ isLoadingMore: true })
 
         var loadingHeader = new Headers()
@@ -124,7 +123,6 @@ class PostsList extends React.Component {
             filterByUser = '&group=' + this.props.group
         }
 
-
         this.setState({ isLoading: true, error: undefined })
         fetch(process.env.REACT_APP_API_URL + `/api/content/getPosts?from=${this.state.cursor + filterByUser}`, requestOptions)
             .then((res) => res.json())
@@ -138,20 +136,19 @@ class PostsList extends React.Component {
                         }
                         console.error('ERROR: ' + res['message'])
                     } else {
-
-                        if (res.status == "not_member") {
+                        if (res.status == 'not_member') {
                             this.setState(() => ({
                                 items: [],
                                 cursor: this.state.cursor + 1,
                                 isLoading: false,
                                 loaded: true,
-                                emptyStates: ["This group is private. You have to be a member of this group to be able to read posts."]
+                                emptyStates: ['This group is private. You have to be a member of this group to be able to read posts.'],
                             }))
                         } else {
                             if (this.state.items.length > 60) {
                                 this.setState({ items: [] })
                             }
-    
+
                             this.setState((state) => ({
                                 items: [...state.items, ...res],
                                 cursor: this.state.cursor + 1,
@@ -159,7 +156,6 @@ class PostsList extends React.Component {
                                 loaded: true,
                             }))
                         }
-
                     }
                 },
                 (error) => {
@@ -370,8 +366,8 @@ class PostsList extends React.Component {
                                                             <br />
                                                         </>
                                                     )}
-                                                    <Link className={`${(item.group_id !== 0 && (`user--group-member `))}user`} to={'/app/user/' + item.email}>
-                                                        {item.group_id !== 0 && (<CornerDownRight size={12} strokeWidth={2.5} />)} {item.name}
+                                                    <Link className={`${item.group_id !== 0 && `user--group-member `}user`} to={'/app/user/' + item.email}>
+                                                        {item.group_id !== 0 && <CornerDownRight size={12} strokeWidth={2.5} />} {item.name}
                                                     </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
