@@ -317,10 +317,24 @@ function Groups() {
             >
                 <Modal.Header>Create a new group</Modal.Header>
                 <Modal.Content style={{ position: 'relative', overflowX: 'hidden' }}>
-                    <img src={groupBannerPreview} onClick={() => bannerInputRef.current.click()} className="create-group-modal-banner" />
-                    <img src={groupAvatarPreview} onClick={() => avatarInputRef.current.click()} className="create-group-modal-avatar" />
-                    <input ref={bannerInputRef} accept="image/*" type="file" hidden onChange={bannerChange} className="bannerUpload" />
-                    <input ref={avatarInputRef} accept="image/*" type="file" hidden onChange={avatarChange} className="avatarUpload" />
+                    <img
+                        src={groupBannerPreview}
+                        onClick={() => {
+                            bannerInputRef.current.click()
+                            console.log(bannerInputRef.current.click())
+                        }}
+                        className="create-group-modal-banner"
+                    />
+                    <img
+                        src={groupAvatarPreview}
+                        onClick={() => {
+                            avatarInputRef.current.click()
+                            console.log(avatarInputRef.current.click())
+                        }}
+                        className="create-group-modal-avatar"
+                    />
+                    <input ref={bannerInputRef} type="file" />
+                    <input ref={avatarInputRef} type="file" />
                     <Input
                         error={groupTitleInputError}
                         fluid
