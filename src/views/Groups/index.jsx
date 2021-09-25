@@ -294,9 +294,9 @@ function Groups() {
                                                 </Button>
                                             )}
                                             &nbsp;
-                                            <Link component={Button} to={`/app/group/${group.id}`} size="small">
+                                            <Button component={Link} to={`/app/group/${group.id}`} size="small">
                                                 Visit group
-                                            </Link>
+                                            </Button>
                                         </div>
                                     </div>
                                 )

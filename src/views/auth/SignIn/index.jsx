@@ -12,6 +12,7 @@ const SignIn = () => {
     const [isLoggingIn, setIsLoggingIn] = useState(false)
     const [canLogin, setCanLogin] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [authenticationMethod, setAuthenticationMethod] = useState('mysql')
 
     const emailChangeHandler = (event) => {
         setEmail(event.target.value)
@@ -74,6 +75,21 @@ const SignIn = () => {
                     setConnectionError(true)
                 }
             })
+        
+        fetch(process.env.REACT_APP_API_URL + `/api/getSettingValue?key=authentication_method`)
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                if (res.status == 1) {
+                    if (res.setting_value !== null && res.setting_value !== undefined) {
+                        if(res.setting_value == "ldap") {
+                            setAuthenticationMethod('ldap');
+                        } else {
+                            setAuthenticationMethod('mysql');
+                        }
+                    }
+                }
+            })
     }, [email, password])
 
     useEffect(() => {
@@ -94,34 +110,72 @@ const SignIn = () => {
                         <>
                             <h3>Sign In into WorkGroup</h3>
 
-                            {error && (
-                                <Message negative>
-                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> E-Mail or password incorrect! </p>
-                                </Message>
+                            {authenticationMethod == "mysql" && (
+                                <>
+                                    {error && (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> E-Mail or password incorrect! </p>
+                                        </Message>
+                                    )}
+                                    <form className="" onSubmit={handleSubmit}>
+                                        <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                        <br />
+                                        <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                                        <br />
+                                        {isLoggingIn ? (
+                                            <Button loading primary disabled={!canLogin} type="submit">
+                                                Sign In
+                                            </Button>
+                                        ) : (
+                                            <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
+                                                Sign In
+                                            </Button>
+                                        )}
+                                        <Button as={Link} to="/signup">
+                                            No account ? Sign Up!
+                                        </Button>
+                                    </form>
+                                    <p className="text-center my-3">
+                                        <br />
+                                        <Link to="/password-reset">Forgot Password?</Link>
+                                    </p>
+                                </>
                             )}
-                            <form className="" onSubmit={handleSubmit}>
-                                <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                                <br />
-                                <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
-                                <br />
-                                {isLoggingIn ? (
-                                    <Button loading primary disabled={!canLogin} type="submit">
-                                        Sign In
-                                    </Button>
-                                ) : (
-                                    <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
-                                        Sign In
-                                    </Button>
-                                )}
-                                <Button as={Link} to="/signup">
-                                    No account ? Sign Up!
-                                </Button>
-                            </form>
-                            <p className="text-center my-3">
-                                <br />
-                                <Link to="/password-reset">Forgot Password?</Link>
-                            </p>
+
+                            {authenticationMethod == "ldap" && (
+                                <>
+                                    {error && (
+                                        <Message negative>
+                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                            <p> Username or password incorrect! </p>
+                                        </Message>
+                                    )}
+                                    <form className="" onSubmit={handleSubmit}>
+                                        <Input fluid onChange={emailChangeHandler} type="text" placeholder="Username" id="userEmail" />
+                                        <br />
+                                        <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                                        <br />
+                                        {isLoggingIn ? (
+                                            <Button loading primary disabled={!canLogin} type="submit">
+                                                Sign In
+                                            </Button>
+                                        ) : (
+                                            <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
+                                                Sign In
+                                            </Button>
+                                        )}
+                                        <Button as={Link} to="/signup">
+                                            No account ? Sign Up!
+                                        </Button>
+                                    </form>
+                                    <p className="text-center my-3">
+                                        <br />
+                                        <Link to="/password-reset">Forgot Password?</Link>
+                                    </p>
+                                </>
+                            )}
+
                         </>
                     )}
                 </div>
