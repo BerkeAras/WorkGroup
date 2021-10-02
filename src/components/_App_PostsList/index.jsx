@@ -40,6 +40,7 @@ class PostsList extends React.Component {
         this.toggleComment = this.toggleComment.bind(this)
         this.toggleLike = this.toggleLike.bind(this)
         this.reportPost = this.reportPost.bind(this)
+        this.toggleLongText = this.toggleLongText.bind(this)
     }
 
     componentDidMount() {
@@ -327,6 +328,17 @@ class PostsList extends React.Component {
         })
     }
 
+    toggleLongText(postId) {
+        document.querySelector('#post_' + postId + ' div.text').classList.toggle('collapsed')
+        if (document.querySelector('#post_' + postId + ' .toggle-long-text-button')) {
+            if (document.querySelector('#post_' + postId + ' .toggle-long-text-button').innerText == 'show more') {
+                document.querySelector('#post_' + postId + ' .toggle-long-text-button').innerText = 'show less'
+            } else {
+                document.querySelector('#post_' + postId + ' .toggle-long-text-button').innerText = 'show more'
+            }
+        }
+    }
+
     render() {
         return (
             <div>
@@ -336,7 +348,7 @@ class PostsList extends React.Component {
                             <React.Fragment>
                                 {this.state.items.map((item) => (
                                     <React.Fragment key={item.id}>
-                                        <Feed.Event className={this.state.visibleCommentSections.includes(item.id) == 0 ? 'event--no-comments-visible' : ''}>
+                                        <Feed.Event id={'post_' + item.id} className={this.state.visibleCommentSections.includes(item.id) == 0 ? 'event--no-comments-visible' : ''}>
                                             <Feed.Label className="user-avatar">
                                                 <Link to={'/app/user/' + item.email}>
                                                     {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
@@ -349,8 +361,19 @@ class PostsList extends React.Component {
                                                     </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
-                                                <Feed.Extra text>
+                                                <Feed.Extra className={item.post_content.length > 465 && 'collapsed'} text>
                                                     <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
+                                                    {item.post_content.length > 465 && (
+                                                        <a
+                                                            href="#"
+                                                            className="toggle-long-text-button"
+                                                            onClick={() => {
+                                                                this.toggleLongText(item.id)
+                                                            }}
+                                                        >
+                                                            <span>show more</span>
+                                                        </a>
+                                                    )}
                                                     {item.images.length > 0 && (
                                                         <div className="post-images">
                                                             {item.images.map((postImage, index) => {
