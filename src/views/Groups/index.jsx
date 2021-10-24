@@ -333,8 +333,8 @@ function Groups() {
                         }}
                         className="create-group-modal-avatar"
                     />
-                    <input ref={bannerInputRef} type="file" />
-                    <input ref={avatarInputRef} type="file" />
+                    <input ref={bannerInputRef} type="file" hidden />
+                    <input ref={avatarInputRef} type="file" hidden />
                     <Input
                         error={groupTitleInputError}
                         fluid
