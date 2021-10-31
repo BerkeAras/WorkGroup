@@ -75,6 +75,10 @@
             height: 200px;
         }
     }
+    .post-user-avatar {
+        height: 40px !important;
+        margin: 5px 0 !important;
+    }
     .post-file {
         width: 100%;
         height: 45px;
@@ -175,6 +179,11 @@
         img {
             height: 100% !important;
             object-fit: cover;
+        }
+    }
+    .user {
+        &--group-member {
+            color: #a3aebb;
         }
     }
 }

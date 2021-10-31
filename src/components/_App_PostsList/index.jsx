@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import './style.scss'
 import { Feed, Modal, Loader, Button } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { ThumbsUp, MessageCircle, Zap, FileText, Flag } from 'react-feather'
+import { ThumbsUp, MessageCircle, Zap, FileText, Flag, CornerDownRight } from 'react-feather'
 import PropTypes from 'prop-types'
 
 import unknownAvatar from '../../static/unknown.png'
@@ -116,8 +116,12 @@ class PostsList extends React.Component {
 
         let filterByUser = ''
 
-        if (this.props.user !== '*') {
-            filterByUser = '&user=' + this.props.user
+        if (this.props.user !== undefined) {
+            if (this.props.user !== '*') {
+                filterByUser = '&user=' + this.props.user
+            }
+        } else {
+            filterByUser = '&group=' + this.props.group
         }
 
         this.setState({ isLoading: true, error: undefined })
@@ -133,16 +137,26 @@ class PostsList extends React.Component {
                         }
                         console.error('ERROR: ' + res['message'])
                     } else {
-                        if (this.state.items.length > 60) {
-                            this.setState({ items: [] })
-                        }
+                        if (res.status == 'not_member') {
+                            this.setState(() => ({
+                                items: [],
+                                cursor: this.state.cursor + 1,
+                                isLoading: false,
+                                loaded: true,
+                                emptyStates: ['This group is private. You have to be a member of this group to be able to read posts.'],
+                            }))
+                        } else {
+                            if (this.state.items.length > 60) {
+                                this.setState({ items: [] })
+                            }
 
-                        this.setState((state) => ({
-                            items: [...state.items, ...res],
-                            cursor: this.state.cursor + 1,
-                            isLoading: false,
-                            loaded: true,
-                        }))
+                            this.setState((state) => ({
+                                items: [...state.items, ...res],
+                                cursor: this.state.cursor + 1,
+                                isLoading: false,
+                                loaded: true,
+                            }))
+                        }
                     }
                 },
                 (error) => {
@@ -356,8 +370,16 @@ class PostsList extends React.Component {
                                             </Feed.Label>
                                             <Feed.Content>
                                                 <Feed.Summary>
-                                                    <Link className="user" to={'/app/user/' + item.email}>
-                                                        {item.name}
+                                                    {item.group_id !== 0 && (
+                                                        <>
+                                                            <Link className="group" to={'/app/group/' + item.group_id}>
+                                                                {item.group.group_title}
+                                                            </Link>
+                                                            <br />
+                                                        </>
+                                                    )}
+                                                    <Link className={`${item.group_id !== 0 && `user--group-member `}user`} to={'/app/user/' + item.email}>
+                                                        {item.group_id !== 0 && <CornerDownRight size={12} strokeWidth={2.5} />} {item.name}
                                                     </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
@@ -533,4 +555,5 @@ export default PostsList
 
 PostsList.propTypes = {
     user: PropTypes.string,
+    group: PropTypes.any,
 }

@@ -6,7 +6,7 @@ import { DebounceInput } from 'react-debounce-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { User, Search, Hash } from 'react-feather'
+import { User, Search, Hash, Users, Zap, AlertTriangle } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -16,6 +16,7 @@ import './style.scss'
 const SearchField = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [userResult, setUserResult] = useState([])
+    const [groupResult, setGroupResult] = useState([])
     const [topicResult, setTopicResult] = useState([])
     const [popularTopics, setPopularTopics] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
@@ -50,6 +51,7 @@ const SearchField = () => {
 
         if (inputValue == '' || inputValue.length < 3) {
             setUserResult([])
+            setGroupResult([])
             setTopicResult([])
             setIsLoadingResults(false)
         } else {
@@ -72,9 +74,11 @@ const SearchField = () => {
                 .then((response) => response.json())
                 .then((result) => {
                     let userResult = result[0]
-                    let topicResult = result[1]
+                    let groupResult = result[1]
+                    let topicResult = result[2]
 
                     setUserResult(userResult)
+                    setGroupResult(groupResult)
                     setTopicResult(topicResult)
 
                     setIsLoadingResults(false)
@@ -103,7 +107,7 @@ const SearchField = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <div className="SearchField" onBlur={searchFieldFocusOut}>
                 <form
                     onSubmit={(e) => {
@@ -125,7 +129,7 @@ const SearchField = () => {
                 <div className="SearchField-Results" tabIndex="-1">
                     <ul>
                         {userResult.length > 0 && (
-                            <React.Fragment>
+                            <>
                                 <span className="divider">Users</span>
                                 {userResult.map((user) => {
                                     return (
@@ -137,10 +141,24 @@ const SearchField = () => {
                                         </li>
                                     )
                                 })}
-                            </React.Fragment>
+                            </>
                         )}
-                        {topicResult.length > 0 ? (
-                            <React.Fragment>
+                        {groupResult.length > 0 && (
+                            <>
+                                <span className="divider">Groups</span>
+                                {groupResult.map((group) => {
+                                    return (
+                                        <li key={group.id}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/group/' + group.id}>
+                                                <Users size={20} strokeWidth={2.7} /> {group.group_title}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </>
+                        )}
+                        {topicResult.length > 0 && (
+                            <>
                                 <span className="divider">Popular topics</span>
                                 {topicResult.map((topic) => {
                                     return (
@@ -151,20 +169,22 @@ const SearchField = () => {
                                         </li>
                                     )
                                 })}
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <span className="divider">Popular topics</span>
-                                {popularTopics.map((topic) => {
-                                    return (
-                                        <li key={topic.id}>
-                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
-                                                <Hash size={18} strokeWidth={2.7} /> {topic.topic}
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </React.Fragment>
+                            </>
+                        )}
+
+                        {userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length >= 3 && (
+                            <center className="search-error">
+                                <AlertTriangle size={35} strokeWidth={2} />
+                                <br />
+                                <span>No Search Results found!</span>
+                            </center>
+                        )}
+                        {userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length < 3 && (
+                            <center className="search-error">
+                                <Zap size={35} strokeWidth={2} />
+                                <br />
+                                <span>Search for colleagues, groups, events and more...</span>
+                            </center>
                         )}
                     </ul>
                 </div>
@@ -178,7 +198,7 @@ const SearchField = () => {
                     searchFieldFocusOut(true)
                 }}
             ></div>
-        </React.Fragment>
+        </>
     )
 }
 

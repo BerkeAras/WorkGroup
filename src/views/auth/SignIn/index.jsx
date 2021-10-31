@@ -8,6 +8,7 @@ const SignIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
+    const [connectionError, setConnectionError] = useState(false)
     const [isLoggingIn, setIsLoggingIn] = useState(false)
     const [canLogin, setCanLogin] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -63,6 +64,16 @@ const SignIn = () => {
 
     useEffect(() => {
         setCanLogin(!!email && !!password)
+
+        fetch(process.env.REACT_APP_API_URL + `/api/check`)
+            .then((res) => res.text())
+            .then((res) => {
+                if (res == 'OK') {
+                    setConnectionError(false)
+                } else {
+                    setConnectionError(true)
+                }
+            })
     }, [email, password])
 
     useEffect(() => {
@@ -74,38 +85,45 @@ const SignIn = () => {
             <div className="loginContainer">
                 <img className="logo" alt="Logo" src={logo} />
                 <div className="formContainer">
-                    <h3>Sign In into WorkGroup</h3>
-
-                    {error ? (
+                    {connectionError ? (
                         <Message negative>
-                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                            <p> E-Mail or password incorrect! </p>
+                            <Message.Header>We are currently having server issues 😢.</Message.Header>
+                            <p>No database connection could be established! Please contact your administrator.</p>
                         </Message>
                     ) : (
-                        <div />
+                        <>
+                            <h3>Sign In into WorkGroup</h3>
+
+                            {error && (
+                                <Message negative>
+                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                    <p> E-Mail or password incorrect! </p>
+                                </Message>
+                            )}
+                            <form className="" onSubmit={handleSubmit}>
+                                <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                <br />
+                                <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                                <br />
+                                {isLoggingIn ? (
+                                    <Button loading primary disabled={!canLogin} type="submit">
+                                        Sign In
+                                    </Button>
+                                ) : (
+                                    <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
+                                        Sign In
+                                    </Button>
+                                )}
+                                <Button as={Link} to="/signup">
+                                    No account ? Sign Up!
+                                </Button>
+                            </form>
+                            <p className="text-center my-3">
+                                <br />
+                                <Link to="/password-reset">Forgot Password?</Link>
+                            </p>
+                        </>
                     )}
-                    <form className="" onSubmit={handleSubmit}>
-                        <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                        <br />
-                        <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
-                        <br />
-                        {isLoggingIn ? (
-                            <Button loading primary disabled={!canLogin} type="submit">
-                                Sign In
-                            </Button>
-                        ) : (
-                            <Button primary disabled={!canLogin} type="submit" onClick={handleSubmit}>
-                                Sign In
-                            </Button>
-                        )}
-                        <Button as={Link} to="/signup">
-                            No account ? Sign Up!
-                        </Button>
-                    </form>
-                    <p className="text-center my-3">
-                        <br />
-                        <Link to="/password-reset">Forgot Password?</Link>
-                    </p>
                 </div>
             </div>
             <div className="loginBackground"></div>

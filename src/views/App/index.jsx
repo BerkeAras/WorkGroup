@@ -22,7 +22,7 @@ const MainApp = () => {
     return (
         <div className="app">
             <Header />
-            <div className="main_content">
+            <div id="main_content" className="main_content">
                 <SidebarLeft />
                 <Content>
                     <CreatePostForm />
@@ -33,30 +33,5 @@ const MainApp = () => {
         </div>
     )
 }
-/*
-class MainApp extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
-    componentDidMount() {
-        document.title = 'Feed – WorkGroup'
-    }
-
-    render() {
-        return (
-            <div className="app">
-                <Header />
-                <div className="main_content">
-                    <SidebarLeft />
-                    <Content>
-                        <CreatePostForm />
-                        <PostsList user="*" />
-                    </Content>
-                    <SidebarRight />
-                </div>
-            </div>
-        )
-    }
-}*/
 export default MainApp

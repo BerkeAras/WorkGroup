@@ -8,6 +8,11 @@ import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
 import MainApp from './views/App'
 import User from './views/User'
+import Group from './views/Group'
+import Groups from './views/Groups'
+import GroupRequestApproved from './views/GroupRequestApproved'
+import GroupRequestPending from './views/GroupRequestPending'
+import GroupRequestUpdate from './views/GroupRequestUpdate'
 import { Loader } from 'semantic-ui-react'
 
 import FirstLogin from './components/_User_FirstLogin'
@@ -117,8 +122,16 @@ class App extends React.Component {
 
                 // eslint-disable-next-line no-undef
                 fetch(process.env.REACT_APP_API_URL + '/api/auth/activity', activityRequestOptions)
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((response) => {
+                        if (response.token) {
+                            localStorage.setItem('token', response.token)
+                        }
+                    })
             }
-        }, 60 * 1000)
+        }, 180000) // Every 3 minutes
     }
 
     handleStateChange() {
@@ -145,6 +158,21 @@ class App extends React.Component {
                             <Route path="/app/user/:email">
                                 <User />
                             </Route>
+                            <Route path="/app/group/:id" exact>
+                                <Group />
+                            </Route>
+                            <Route path="/app/groups">
+                                <Groups />
+                            </Route>
+                            <Route path="/app/group-request-approved">
+                                <GroupRequestApproved />
+                            </Route>
+                            <Route path="/app/group-request-pending">
+                                <GroupRequestPending />
+                            </Route>
+                            <Route exact path="/app/group/:id/request/:request_id/:request_status">
+                                <GroupRequestUpdate />
+                            </Route>
                         </AuthProvider>
                     )}
                     {this.state.isLoggedIn === false && (
@@ -166,6 +194,9 @@ class App extends React.Component {
                             </Route>
                             <Route exact path="/logout">
                                 <LogOut />
+                            </Route>
+                            <Route path="/*">
+                                <SignIn />
                             </Route>
                         </React.Fragment>
                     )}

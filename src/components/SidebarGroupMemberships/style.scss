@@ -1,5 +1,5 @@
-.topic-container {
-    .topic-item {
+.groups-container {
+    .group-item {
         display: inline-block;
         line-height: 20px;
         width: 100%;
@@ -33,20 +33,7 @@
             margin-bottom: 0 !important;
         }
     }
-    .placeholder {
-        height: 41px;
-        border-radius: 10px;
-        opacity: 0.7;
-        margin-top: 0 !important;
-        margin-bottom: 4px;
-        .line {
-            opacity: 0;
-        }
-        &:last-of-type {
-            margin-bottom: 0 !important;
-        }
-    }
-    .empty-topics {
+    .empty-groups {
         display: inline-block;
         text-align: center;
         width: 100%;

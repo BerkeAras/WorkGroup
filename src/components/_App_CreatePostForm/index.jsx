@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import './style.scss'
 import { Card, Input, Modal, Button, TextArea, Form, Popup } from 'semantic-ui-react'
-import Autolinker from 'autolinker'
+import PropTypes from 'prop-types'
 var linkify = require('linkifyjs')
 require('linkifyjs/plugins/hashtag')(linkify) // optional
 var linkifyHtml = require('linkifyjs/html')
@@ -170,6 +170,9 @@ class CreatePostForm extends React.Component {
 
             var urlencoded = new URLSearchParams()
             urlencoded.append('content', postContent)
+            if (this.props.group !== undefined) {
+                urlencoded.append('groupId', this.props.group)
+            }
 
             if (this.state.uploadedImages.length > 0) {
                 let imagesArray = []
@@ -388,3 +391,6 @@ class CreatePostForm extends React.Component {
 }
 
 export default CreatePostForm
+CreatePostForm.propTypes = {
+    group: PropTypes.any,
+}

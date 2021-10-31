@@ -39,36 +39,41 @@ const Header = () => {
     }
 
     return (
-        <div className="nav-header">
-            <NavLink exact to="/" className="header__logo">
-                <img src={logo} alt="Logo" />
-            </NavLink>
-            <SearchField />
-            <a href="#" onClick={(e) => showHeaderDropdown(e)} className="header__dropdown-button">
-                <MoreVertical></MoreVertical>
+        <>
+            <a tabIndex="1" href="#main_content" className="skip-to-content">
+                Skip to content
             </a>
-            <a href="#" onClick={showMobileMenu} className="header__menu-mobile-button">
-                <Menu></Menu>
-            </a>
+            <div className="nav-header">
+                <NavLink exact to="/" className="header__logo">
+                    <img src={logo} alt="Logo" />
+                </NavLink>
+                <SearchField />
+                <a href="#" onClick={(e) => showHeaderDropdown(e)} className="header__dropdown-button">
+                    <MoreVertical></MoreVertical>
+                </a>
+                <a href="#" onClick={showMobileMenu} className="header__menu-mobile-button">
+                    <Menu></Menu>
+                </a>
 
-            <div className={`header__menu-items ${mobileMenuVisible ? 'header__menu-items--mobile-visible' : ''}`}>
-                <div onClick={hideMobileMenu} className="header__menu-mobile-close">
-                    <X></X>
+                <div className={`header__menu-items ${mobileMenuVisible ? 'header__menu-items--mobile-visible' : ''}`}>
+                    <div onClick={hideMobileMenu} className="header__menu-mobile-close">
+                        <X></X>
+                    </div>
+
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app">
+                        Home
+                    </NavLink>
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/today">
+                        Today
+                    </NavLink>
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
+                        Groups
+                    </NavLink>
                 </div>
 
-                <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app">
-                    Home
-                </NavLink>
-                <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/today">
-                    Today
-                </NavLink>
-                <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
-                    Groups
-                </NavLink>
+                {dropdownVisible ? <HeaderDropdown setDropDownVisible={setDropDownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderDropdown> : null}
             </div>
-
-            {dropdownVisible ? <HeaderDropdown setDropDownVisible={setDropDownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderDropdown> : null}
-        </div>
+        </>
     )
 }
 

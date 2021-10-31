@@ -1,0 +1,22 @@
+@import '../../scss/variables';
+
+body {
+    overflow: hidden;
+}
+
+.main_content--group-request {
+    padding-top: 50px;
+    svg {
+        color: #cecece;
+        margin-bottom: 20px;
+    }
+    span {
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.87);
+        font-style: italic;
+        letter-spacing: 0.5px;
+    }
+    h1 {
+        margin-top: 0;
+    }
+}

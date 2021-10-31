@@ -6,6 +6,36 @@ body {
     overflow: hidden !important;
 }
 
+.skip-to-content {
+    font-size: 18px;
+    background: black;
+    color: white;
+    padding: 10px 19px;
+    display: inline-block;
+    outline: 2px solid #2c85d0;
+    outline-offset: -6px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 500;
+    position: absolute;
+    top: -100%;
+    left: 0;
+
+    &:focus {
+        position: inherit;
+        visibility: visible;
+    }
+    &:focus,
+    &:hover,
+    &:active {
+        color: white;
+        text-decoration: underline;
+    }
+}
+
 .nav-header {
     position: relative;
     width: 100%;

@@ -99,6 +99,20 @@
             margin-top: 6px;
             margin-bottom: 3px;
         }
+
+        center {
+            padding: 10px 0;
+
+            svg {
+                color: #cecece;
+                margin-bottom: 20px;
+            }
+            span {
+                font-size: 18px;
+                font-style: italic;
+            }
+        }
+
         ul {
             margin: 0;
             padding: 0;
@@ -180,6 +194,7 @@
 }
 
 .SearchFieldBackdrop {
+    transition: all 0.3s;
     &-visible {
         position: fixed;
         top: 0;
