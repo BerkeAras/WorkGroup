@@ -207,7 +207,6 @@ function GroupBanner(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/group/getAllRequests?group_id=' + props.groupInformation['id'], requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setGroupRequests(result['requests'])
 
                 setIsLoadingRequests(false)
@@ -229,7 +228,6 @@ function GroupBanner(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/group/getAllMembers?group_id=' + props.groupInformation['id'], requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setGroupMembers(result['users'])
 
                 setIsLoadingRequests(false)

@@ -21,9 +21,11 @@ const HeaderDropdown = (props) => {
 
     return (
         <div className="header__dropdown">
-            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
-                App Settings
-            </NavLink>
+            {localStorage.getItem('user_admin') !== undefined && localStorage.getItem('user_admin') == '1' && (
+                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
+                    App Settings
+                </NavLink>
+            )}
             <a className="header__dropdown-item" href="https://github.com/BerkeAras/WorkGroup#contact" target="_blank" rel="noreferrer">
                 Get help
             </a>

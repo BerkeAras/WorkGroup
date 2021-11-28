@@ -27,6 +27,10 @@
         &:last-of-type {
             margin-bottom: 0 !important;
         }
+        &--active {
+            background-color: #f7f7f7;
+            color: $primary-color;
+        }
     }
 
     @media (max-width: 1300px) {

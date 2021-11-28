@@ -1,0 +1,11 @@
+.settings_content {
+    .settings_image_upload {
+        border: 1px solid rgba(34, 36, 38, 0.15);
+        border-radius: 10px;
+        width: 100%;
+        height: 70px;
+        padding: 5px;
+        object-fit: contain;
+        cursor: pointer;
+    }
+}

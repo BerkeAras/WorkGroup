@@ -1,0 +1,258 @@
+/* eslint-disable no-useless-constructor */
+import React, { useState, useEffect, useRef } from 'react'
+import { Button, Form, Input, Dropdown, Checkbox, Modal, Loader } from 'semantic-ui-react'
+import './style.scss'
+import locales from './locales.json'
+
+import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
+
+function SettingsFrontend() {
+    const [appName, setAppName] = useState('')
+    const [appLogo, setAppLogo] = useState(process.env.REACT_APP_API_URL + '/static/' + 'default_logo.svg')
+    const [appLogoPreview, setAppLogoPreview] = useState(appLogo)
+    const [appLocale, setAppLocale] = useState('')
+    const [appUrl, setAppUrl] = useState('')
+    const [appRegistrationEnabled, setAppRegistrationEnabled] = useState('')
+    const [appPasswordResetEnabled, setAppPasswordResetEnabled] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const [showErrorModal, setShowErrorModal] = useState(false)
+    const appLogoImage = useRef(null)
+
+    const stringToBoolean = (string) => {
+        switch (string.toLowerCase().trim()) {
+            case 'true':
+            case 'yes':
+            case '1':
+                return true
+            case 'false':
+            case 'no':
+            case '0':
+            case null:
+                return false
+            default:
+                return Boolean(string)
+        }
+    }
+
+    useEffect(() => {
+        document.title = 'Frontend Settings – WorkGroup'
+
+        var tokenHeaders = new Headers()
+        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+        var requestOptions = {
+            method: 'GET',
+            headers: tokenHeaders,
+            redirect: 'follow',
+        }
+
+        fetch(process.env.REACT_APP_API_URL + '/api/settings', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                setIsLoading(false)
+                result.forEach((settingsItem) => {
+                    if (settingsItem.config_key == 'app.name') {
+                        setAppName(settingsItem.config_value)
+                    }
+                    if (settingsItem.config_key == 'app.logo') {
+                        setAppLogo(process.env.REACT_APP_API_URL + '/static/' + settingsItem.config_value)
+                        setAppLogoPreview(process.env.REACT_APP_API_URL + '/static/' + settingsItem.config_value)
+                    }
+                    if (settingsItem.config_key == 'app.locale') {
+                        setAppLocale(settingsItem.config_value)
+                    }
+                    if (settingsItem.config_key == 'app.url') {
+                        setAppUrl(settingsItem.config_value)
+                    }
+                    if (settingsItem.config_key == 'app.registration_enabled') {
+                        setAppRegistrationEnabled(stringToBoolean(settingsItem.config_value))
+                    }
+                    if (settingsItem.config_key == 'app.password_reset_enabled') {
+                        setAppPasswordResetEnabled(stringToBoolean(settingsItem.config_value))
+                    }
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [])
+
+    const logoChange = (e) => {
+        setAppLogo(e.target.files[0])
+
+        let reader = new FileReader()
+        let file = e.target.files[0]
+
+        reader.onloadend = () => {
+            setAppLogoPreview(reader.result)
+        }
+
+        reader.readAsDataURL(file)
+    }
+
+    const logoUpload = () => {
+        let element = document.querySelector('.settings_content .logoUpload').files[0]
+
+        if (element == undefined) {
+            // No new logo selected
+            setIsLoading(false)
+            setShowSuccessModal(true)
+            return true
+        }
+
+        const formData = new FormData()
+        formData.append('logoFile', element)
+
+        var headers = new Headers()
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+        fetch(process.env.REACT_APP_API_URL + `/api/settings/uploadLogo`, {
+            // Your POST endpoint
+            method: 'POST',
+            //mode: 'no-cors',
+            headers: headers,
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.status == '1') {
+                    setIsLoading(false)
+                    setShowSuccessModal(true)
+                } else {
+                    setShowErrorModal(true)
+                }
+            })
+    }
+
+    const saveFrontendSettings = () => {
+        setIsLoading(true)
+
+        var headers = new Headers()
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        headers.append('Content-Type', 'application/json')
+
+        var requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+                'app.name': appName,
+                'app.locale': appLocale,
+                'app.url': appUrl,
+                'app.registration_enabled': appRegistrationEnabled.toString(),
+                'app.password_reset_enabled': appPasswordResetEnabled.toString(),
+            }),
+            redirect: 'follow',
+        }
+
+        fetch(process.env.REACT_APP_API_URL + '/api/settings', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.status == '1') {
+                    logoUpload()
+                } else {
+                    setShowErrorModal(true)
+                }
+            })
+    }
+
+    return (
+        <>
+            <div className="settings_content">
+                <input
+                    ref={appLogoImage}
+                    accept="image/*"
+                    type="file"
+                    hidden
+                    onChange={(e) => {
+                        logoChange(e)
+                    }}
+                    className="logoUpload"
+                />
+                {isLoading ? (
+                    <center className="settings_content_loader">
+                        <Loader active>Loading Frontend Settings...</Loader>
+                    </center>
+                ) : (
+                    <Form className="settings_content_form_frontend">
+                        <Form.Field>
+                            <label>App Logo</label>
+                            <img src={appLogoPreview} className="settings_image_upload" onClick={() => appLogoImage.current.click()} />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>App Name</label>
+                            <Input disabled={isLoading} value={appName} onChange={(e) => setAppName(e.target.value)} placeholder="Enter the name of this WorkGroup App" />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>App Locale</label>
+                            <Dropdown
+                                disabled={isLoading}
+                                placeholder="Select your country"
+                                fluid
+                                selection
+                                options={locales}
+                                value={appLocale}
+                                onChange={(e) => {
+                                    setAppLocale(e.target.getAttribute('code'))
+                                }}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Frontend URL</label>
+                            <Input disabled={isLoading} type="url" value={appUrl} onChange={(e) => setAppUrl(e.target.value)} placeholder="Enter the URL of this WorkGroup App" />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Registration enabled</label>
+                            <Checkbox
+                                disabled={isLoading}
+                                onChange={(e) => {
+                                    setAppRegistrationEnabled(!appRegistrationEnabled)
+                                }}
+                                checked={stringToBoolean(appRegistrationEnabled.toString())}
+                                toggle
+                                label="Can users sign up?"
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Password reset enabled</label>
+                            <Checkbox
+                                disabled={isLoading}
+                                onChange={(e) => {
+                                    setAppPasswordResetEnabled(!appPasswordResetEnabled)
+                                }}
+                                checked={stringToBoolean(appPasswordResetEnabled.toString())}
+                                toggle
+                                label="Can users reset their passwords?"
+                            />
+                        </Form.Field>
+                        <br />
+                        <Button loading={isLoading} type="button" onClick={saveFrontendSettings} primary>
+                            Save settings
+                        </Button>
+                    </Form>
+                )}
+            </div>
+
+            <Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
+                <Modal.Header>Your settings have been saved successfully!</Modal.Header>
+                <Modal.Content>To apply all settings, please reload this page.</Modal.Content>
+                <Modal.Actions>
+                    <Button color="black" onClick={() => setShowSuccessModal(false)}>
+                        Dismiss
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+            <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                <Modal.Header>Your settings could not be saved!</Modal.Header>
+                <Modal.Content>An error has occurred. Please contact your administrator.</Modal.Content>
+                <Modal.Actions>
+                    <Button color="black" onClick={() => setShowErrorModal(false)}>
+                        Dismiss
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        </>
+    )
+}
+
+export default SettingsFrontend

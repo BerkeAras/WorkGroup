@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './style.scss'
 import logo from '../../static/logo.svg'
 import { Link, NavLink } from 'react-router-dom'
+import ConfigContext from '../../store/ConfigContext'
 
 // Icons
 import { MoreVertical, Menu, X } from 'react-feather'
@@ -11,8 +12,10 @@ import HeaderDropdown from '../HeaderDropdown'
 import SearchField from '../_Header_Searchfield'
 
 const Header = () => {
+    const contextValue = useContext(ConfigContext)
     const [dropdownVisible, setDropDownVisible] = useState(false)
     const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
+    const [headerLogo, setHeaderLogo] = useState(logo)
 
     const showHeaderDropdown = (e) => {
         e.preventDefault()
@@ -38,6 +41,12 @@ const Header = () => {
         }, 0)
     }
 
+    useEffect(() => {
+        if (contextValue != undefined) {
+            setHeaderLogo(process.env.REACT_APP_API_URL + '/static/' + contextValue.app.logo)
+        }
+    }, [contextValue])
+
     return (
         <>
             <a tabIndex="1" href="#main_content" className="skip-to-content">
@@ -45,7 +54,7 @@ const Header = () => {
             </a>
             <div className="nav-header">
                 <NavLink exact to="/" className="header__logo">
-                    <img src={logo} alt="Logo" />
+                    <img src={headerLogo} alt="Logo" />
                 </NavLink>
                 <SearchField />
                 <a href="#" onClick={(e) => showHeaderDropdown(e)} className="header__dropdown-button">
