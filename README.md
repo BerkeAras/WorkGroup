@@ -125,6 +125,8 @@ This is an example of how to list things you need to use the software and how to
     REACT_APP_LOCALE="en-US"
     REACT_APP_USE_GOOGLE_ANALYTICS=true
     REACT_APP_GOOGLE_ANALYTICS="UA-XXXXXXXXX-X"
+    REACT_APP_USE_SENTRY=true
+    REACT_APP_SENTRY_DSN="https://XXXXXXXXX.XXXXXXXXX.sentry.io/XXXXXXXXX"
     ```
 
 <!-- ROADMAP -->
