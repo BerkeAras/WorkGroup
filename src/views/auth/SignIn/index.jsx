@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message, Card } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
+import ConfigContext from '../../../store/ConfigContext'
 
 const SignIn = () => {
+    const contextValue = useContext(ConfigContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
@@ -74,7 +76,7 @@ const SignIn = () => {
                     setConnectionError(true)
                 }
             })
-    }, [email, password])
+    }, [email, password, contextValue])
 
     useEffect(() => {
         document.title = 'Sign In – WorkGroup'
@@ -114,13 +116,16 @@ const SignIn = () => {
                                         Sign In
                                     </Button>
                                 )}
-                                <Button as={Link} to="/signup">
-                                    No account ? Sign Up!
-                                </Button>
+
+                                {contextValue != undefined && contextValue.app.registration_enabled == 'true' && (
+                                    <Button as={Link} to="/signup">
+                                        No account ? Sign Up!
+                                    </Button>
+                                )}
                             </form>
                             <p className="text-center my-3">
                                 <br />
-                                <Link to="/password-reset">Forgot Password?</Link>
+                                {contextValue != undefined && contextValue.app.password_reset_enabled == 'true' && <Link to="/password-reset">Forgot Password?</Link>}
                             </p>
                         </>
                     )}

@@ -321,7 +321,6 @@ function Groups() {
                         src={groupBannerPreview}
                         onClick={() => {
                             bannerInputRef.current.click()
-                            console.log(bannerInputRef.current.click())
                         }}
                         className="create-group-modal-banner"
                     />
@@ -329,7 +328,6 @@ function Groups() {
                         src={groupAvatarPreview}
                         onClick={() => {
                             avatarInputRef.current.click()
-                            console.log(avatarInputRef.current.click())
                         }}
                         className="create-group-modal-avatar"
                     />

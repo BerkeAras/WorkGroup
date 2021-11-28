@@ -1,10 +1,11 @@
 /* eslint-disable no-useless-constructor */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message, Loader } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 import PropTypes from 'prop-types'
+import ConfigContext from '../../../store/ConfigContext'
 
 const SignUpWrapper = () => {
     const [isWaitingForActivation, setIsWaitingForActivation] = useState(false)
@@ -31,6 +32,7 @@ const WaitActivation = () => {
 }
 
 const SignUp = (props) => {
+    const contextValue = useContext(ConfigContext)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -134,28 +136,33 @@ const SignUp = (props) => {
             <div className="formContainer">
                 <h3>Sign Up to use WorkGroup</h3>
                 {error ? <ErrorMsg errorCode={error} /> : null}
-                <form className="" onSubmit={(e) => handleSubmit(e)}>
-                    <Input autoFocus fluid onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" id="userName" />
-                    <br />
-                    <Input fluid onChange={(e) => setEmail(e.target.value)} type="email" placeholder="E-Mail" id="userEmail" />
-                    <br />
-                    <Input fluid onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="userPassword" />
-                    <br />
-                    <Input fluid onChange={(e) => setPasswordRepeat(e.target.value)} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
-                    <br />
-                    {isSigningUp ? (
-                        <Button loading primary type="submit">
-                            Sign Up
-                        </Button>
+                {contextValue != undefined &&
+                    (contextValue.app.registration_enabled == 'false' ? (
+                        <ErrorMsg errorCode={'no_permission'} />
                     ) : (
-                        <Button primary type="submit">
-                            Sign Up
-                        </Button>
-                    )}
-                    <Button as={Link} to="/">
-                        Already registered?
-                    </Button>
-                </form>
+                        <form className="" onSubmit={(e) => handleSubmit(e)}>
+                            <Input autoFocus fluid onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" id="userName" />
+                            <br />
+                            <Input fluid onChange={(e) => setEmail(e.target.value)} type="email" placeholder="E-Mail" id="userEmail" />
+                            <br />
+                            <Input fluid onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="userPassword" />
+                            <br />
+                            <Input fluid onChange={(e) => setPasswordRepeat(e.target.value)} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
+                            <br />
+                            {isSigningUp ? (
+                                <Button loading primary type="submit">
+                                    Sign Up
+                                </Button>
+                            ) : (
+                                <Button primary type="submit">
+                                    Sign Up
+                                </Button>
+                            )}
+                            <Button as={Link} to="/">
+                                Already registered?
+                            </Button>
+                        </form>
+                    ))}
             </div>
         </>
     )
@@ -172,6 +179,7 @@ const ErrorMsg = (props) => {
         password_does_not_match: 'The Passwords dont match',
         inputs_empty: 'Please fill out everything!',
         password_too_short: 'Your password is too short! Please enter at least 8 characters.',
+        no_permission: 'You do not have permission to sign up.',
     }
 
     return (

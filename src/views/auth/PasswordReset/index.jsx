@@ -1,11 +1,14 @@
 /* eslint-disable no-useless-constructor */
-import React, { useState } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
 import { Button, Input, Message, Card } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
+import ConfigContext from '../../../store/ConfigContext'
 
 class PasswordReset extends React.Component {
+    static contextType = ConfigContext
+
     constructor(props) {
         super(props)
 
@@ -189,53 +192,63 @@ class PasswordReset extends React.Component {
                                 <div className="formContainer">
                                     <h3>Reset your WorkGroup Password</h3>
 
-                                    {this.state.error === 'user_not_found' ? (
-                                        <Message negative>
-                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                            <p> This E-Mail could not be found! </p>
-                                        </Message>
-                                    ) : (
-                                        <div />
-                                    )}
-
-                                    {this.state.error === 'reset_error' ? (
-                                        <Message negative>
-                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                            <p> Please try again in a few minutes! </p>
-                                        </Message>
-                                    ) : (
-                                        <div />
-                                    )}
-
-                                    {this.state.error === 'inputs_empty' ? (
-                                        <Message negative>
-                                            <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                            <p> Please fill out everything! </p>
-                                        </Message>
-                                    ) : (
-                                        <div />
-                                    )}
-                                    {this.state.success ? (
-                                        <Message positive>
-                                            <Message.Header>Please check your email inbox to reset your password.</Message.Header>
-                                        </Message>
-                                    ) : (
-                                        <div />
-                                    )}
-
-                                    <form className="" onSubmit={this.handleSubmit}>
-                                        <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
-                                        <br />
-                                        {this.state.isResetting ? (
-                                            <Button loading primary type="submit">
-                                                Reset Password
-                                            </Button>
+                                    {this.context !== null &&
+                                        (this.context.app.password_reset_enabled == 'false' ? (
+                                            <Message negative>
+                                                <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                                <p> You do not have permission to reset your password. </p>
+                                            </Message>
                                         ) : (
-                                            <Button primary type="submit" onClick={this.handleSubmit}>
-                                                Reset Password
-                                            </Button>
-                                        )}
-                                    </form>
+                                            <>
+                                                {this.state.error === 'user_not_found' ? (
+                                                    <Message negative>
+                                                        <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                                        <p> This E-Mail could not be found! </p>
+                                                    </Message>
+                                                ) : (
+                                                    <div />
+                                                )}
+
+                                                {this.state.error === 'reset_error' ? (
+                                                    <Message negative>
+                                                        <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                                        <p> Please try again in a few minutes! </p>
+                                                    </Message>
+                                                ) : (
+                                                    <div />
+                                                )}
+
+                                                {this.state.error === 'inputs_empty' ? (
+                                                    <Message negative>
+                                                        <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                                        <p> Please fill out everything! </p>
+                                                    </Message>
+                                                ) : (
+                                                    <div />
+                                                )}
+                                                {this.state.success ? (
+                                                    <Message positive>
+                                                        <Message.Header>Please check your email inbox to reset your password.</Message.Header>
+                                                    </Message>
+                                                ) : (
+                                                    <div />
+                                                )}
+
+                                                <form className="" onSubmit={this.handleSubmit}>
+                                                    <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                                    <br />
+                                                    {this.state.isResetting ? (
+                                                        <Button loading primary type="submit">
+                                                            Reset Password
+                                                        </Button>
+                                                    ) : (
+                                                        <Button primary type="submit" onClick={this.handleSubmit}>
+                                                            Reset Password
+                                                        </Button>
+                                                    )}
+                                                </form>
+                                            </>
+                                        ))}
                                 </div>
                             </>
                         )}

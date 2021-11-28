@@ -37,15 +37,20 @@ body {
 
 .input input,
 input.search,
-textarea {
+textarea,
+.ui.dropdown {
     box-shadow: 0 0 0px 0px rgb(33 133 208 / 40%) !important;
     border-radius: 10px !important;
-    transition: all 0.2s !important;
+    transition: all 0.2s, border-radius 0.1s !important;
+}
+.ui.dropdown {
+    line-height: 1.21428571em;
 }
 
 .input input:focus,
 input.search:focus,
-textarea:focus {
+textarea:focus,
+.ui.dropdown:focus {
     box-shadow: 0 0 0px 3px rgb(33 133 208 / 40%) !important;
 }
 

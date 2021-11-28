@@ -122,11 +122,6 @@ This is an example of how to list things you need to use the software and how to
 3. Enter your configuration in `.env` (Clone the API from [WorkGroup-API](https://github.com/BerkeAras/WorkGroup-API))
     ```JS
     REACT_APP_API_URL=http://your-api-url.com
-    REACT_APP_LOCALE="en-US"
-    REACT_APP_USE_GOOGLE_ANALYTICS=true
-    REACT_APP_GOOGLE_ANALYTICS="UA-XXXXXXXXX-X"
-    REACT_APP_USE_SENTRY=true
-    REACT_APP_SENTRY_DSN="https://XXXXXXXXX.XXXXXXXXX.sentry.io/XXXXXXXXX"
     ```
 
 <!-- ROADMAP -->

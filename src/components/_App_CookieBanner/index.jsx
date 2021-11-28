@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import ReactGA from 'react-ga'
 import { Button, Modal, Checkbox } from 'semantic-ui-react'
 import { Info } from 'react-feather'
 import './style.scss'
+import ConfigContext from '../../store/ConfigContext'
 
 function CookieBanner(props) {
     const location = useLocation()
+    const contextValue = useContext(ConfigContext)
 
     const [cookiesAccepted, setCookiesAccepted] = useState(false)
     const [showCookieSettingsModal, setShowCookieSettingsModal] = useState(false)
@@ -47,11 +49,13 @@ function CookieBanner(props) {
     }
 
     const initializeTracking = (location) => {
-        if (process.env.REACT_APP_USE_GOOGLE_ANALYTICS == 'true') {
-            ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS, {
-                debug: false,
-            })
-            ReactGA.pageview(window.location.pathname)
+        if (contextValue != undefined) {
+            if (contextValue.analytics.google_analytics_enabled == 'true') {
+                ReactGA.initialize(contextValue.analytics.google_analytics_key, {
+                    debug: false,
+                })
+                ReactGA.pageview(window.location.pathname)
+            }
         }
     }
 
@@ -83,22 +87,28 @@ function CookieBanner(props) {
 
     return (
         <>
-            {cookiesAccepted == false && (
-                <div className="cookie-banner">
-                    <p>
-                        <Info />
-                        We use cookies to improve our products, personalise your feed and advertising and to analyse how our products are used.
-                        <br />
-                        Select &quot;Accept cookies&quot; to consent to this use or set your cookie selection under &quot;Manage settings&quot;. You can change your cookie settings at any time and
-                        revoke your consent in your app-settings.
-                    </p>
+            {contextValue != undefined &&
+                contextValue.analytics != undefined &&
+                (contextValue.analytics.google_analytics_enabled == 'true' || contextValue.analytics.google_analytics_enabled == true) && (
+                    <>
+                        {cookiesAccepted == false && (
+                            <div className="cookie-banner">
+                                <p>
+                                    <Info />
+                                    We use cookies to improve our products, personalise your feed and advertising and to analyse how our products are used.
+                                    <br />
+                                    Select &quot;Accept cookies&quot; to consent to this use or set your cookie selection under &quot;Manage settings&quot;. You can change your cookie settings at any
+                                    time and revoke your consent in your app-settings.
+                                </p>
 
-                    <Button onClick={acceptCookies} primary>
-                        Accept cookies
-                    </Button>
-                    <Button onClick={() => setShowCookieSettingsModal(true)}>Manage settings</Button>
-                </div>
-            )}
+                                <Button onClick={acceptCookies} primary>
+                                    Accept cookies
+                                </Button>
+                                <Button onClick={() => setShowCookieSettingsModal(true)}>Manage settings</Button>
+                            </div>
+                        )}
+                    </>
+                )}
             <Modal
                 className="cookie-modal"
                 onClose={() => {
