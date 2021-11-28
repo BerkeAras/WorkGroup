@@ -8,24 +8,6 @@ body {
 .sidebar_left {
     float: left;
     width: 290px;
-    .card {
-        .about-card-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            .about-logo {
-                display: block;
-                width: 100%;
-                text-align: center;
-                color: #9aa1a5;
-                font-size: 14px;
-                img {
-                    height: 20px;
-                    margin-bottom: 5px;
-                }
-            }
-        }
-    }
 }
 
 @media (max-width: 1130px) {

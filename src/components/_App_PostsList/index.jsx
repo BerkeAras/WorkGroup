@@ -383,7 +383,7 @@ class PostsList extends React.Component {
                                                     </Link>
                                                     <Feed.Date>{this.getDate(item.created_at)}</Feed.Date>
                                                 </Feed.Summary>
-                                                <Feed.Extra className={item.post_content.length > 465 && 'collapsed'} text>
+                                                <Feed.Extra className={item.post_content.length > 465 ? 'collapsed' : ''} text>
                                                     <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
                                                     {item.post_content.length > 465 && (
                                                         <a

@@ -24,7 +24,7 @@ const HeaderDropdown = (props) => {
             <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
                 App Settings
             </NavLink>
-            <a exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" href="https://github.com/BerkeAras/WorkGroup#contact" target="_blank" rel="noreferrer">
+            <a className="header__dropdown-item" href="https://github.com/BerkeAras/WorkGroup#contact" target="_blank" rel="noreferrer">
                 Get help
             </a>
             <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/logout">
