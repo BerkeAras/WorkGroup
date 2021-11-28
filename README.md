@@ -60,8 +60,8 @@
 
 ## About The Project
 
-<img src=".github/screenshot_1.png" style="object-fit:contain;background:lightgrey;height:250px;object-fit:contain;">
-<img src=".github/screenshot_2.png" style="object-fit:contain;background:lightgrey;height:250px;object-fit:contain;">
+<img src=".github/screenshot_1.png" style="width:calc(50% - 10px);padding:5px;float:left;object-fit:contain;height:350px;object-fit:contain;">
+<img src=".github/screenshot_2.png" style="width:calc(50% - 10px);padding:5px;float:left;object-fit:contain;height:350px;object-fit:contain;">
 
 WorkGroup is an open source, selfhosted private social-media platform for companies.
 
