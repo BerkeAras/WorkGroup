@@ -63,11 +63,11 @@ const Header = () => {
                     <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app">
                         Home
                     </NavLink>
-                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/today">
-                        Today
-                    </NavLink>
                     <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
                         Groups
+                    </NavLink>
+                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to={'/app/user/' + localStorage.getItem('user_email')}>
+                        My Account
                     </NavLink>
                 </div>
 
