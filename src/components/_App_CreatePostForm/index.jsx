@@ -11,15 +11,6 @@ import convertToText from './convertToText'
 import convertOnPaste from './convertOnPaste'
 import { Image, X, FileText } from 'react-feather'
 
-const utilizeFocus = () => {
-    const ref = React.createRef()
-    const setFocus = () => {
-        ref.current && ref.current.focus()
-    }
-
-    return { setFocus, ref }
-}
-
 class CreatePostForm extends React.Component {
     constructor(props) {
         super(props)
@@ -38,7 +29,7 @@ class CreatePostForm extends React.Component {
             uploadFileError: false,
         }
         this.publishPost = this.publishPost.bind(this)
-        this.inputFocus = utilizeFocus()
+        this.textareaRef = React.createRef(null)
     }
 
     reloadPage = () => {
@@ -233,7 +224,17 @@ class CreatePostForm extends React.Component {
             <div className="new_post">
                 <Card>
                     <Card.Content>
-                        <Input size="huge" readOnly onClick={() => this.setState({ modalOpen: true })} placeholder="Share something about your thoughts…" />
+                        <Input
+                            size="huge"
+                            readOnly
+                            onClick={() => {
+                                this.setState({ modalOpen: true })
+                                setTimeout(() => {
+                                    this.textareaRef.current.focus()
+                                }, 1)
+                            }}
+                            placeholder="Share something about your thoughts…"
+                        />
                     </Card.Content>
                 </Card>
 
@@ -241,7 +242,6 @@ class CreatePostForm extends React.Component {
                     onClose={() => this.setState({ uploadedImages: [], modalOpen: false })}
                     onOpen={() => {
                         this.setState({ modalOpen: true })
-                        this.inputFocus.setFocus
                     }}
                     open={this.state.modalOpen}
                     size="tiny"
@@ -255,10 +255,11 @@ class CreatePostForm extends React.Component {
                                     document.querySelector('.fake-textarea').innerHTML = convertToMarkup(document.querySelector('.fake-textarea').innerHTML)
                                 }, 100)
                             }}
+                            autoFocus
                             role="textarea"
                             placeholder="Share something about your thoughts…"
                             contentEditable="true"
-                            ref={this.inputFocus.ref}
+                            ref={this.textareaRef}
                         ></div>
                         {this.state.uploadedImages.length !== 0 && (
                             <div className="uploaded-images">
