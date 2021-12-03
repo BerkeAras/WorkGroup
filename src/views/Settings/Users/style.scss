@@ -1,0 +1,37 @@
+.settings_content {
+    .settings_image_upload {
+        border: 1px solid rgba(34, 36, 38, 0.15);
+        border-radius: 10px;
+        width: 100%;
+        height: 70px;
+        padding: 5px;
+        object-fit: contain;
+        cursor: pointer;
+    }
+    .item[role='listitem'] {
+        padding: 10px !important;
+        background: transparent;
+        transition: all 0.15s;
+
+        div.settings_user-avatar {
+            width: 32px;
+            height: 32px;
+            float: left;
+            border-radius: 100px;
+            background: #ebebeb;
+            margin-right: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 100px;
+                object-fit: cover;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            background: #f2f4f5;
+        }
+    }
+}

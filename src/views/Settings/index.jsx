@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams } from 'react-router-dom'
 import './style.scss'
 
-import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
+import { Monitor, Server, AtSign, BarChart2, Home, Users } from 'react-feather'
 
 // Components
 import Header from '../../components/Header'
 import SettingsHome from './Home'
+import SettingsUsers from './Users'
 import SettingsFrontend from './Frontend'
 import SettingsServer from './Server'
 import SettingsMail from './Mail'
@@ -23,6 +24,9 @@ function Settings() {
                 <div className="settings_sidebar">
                     <NavLink key="settings-home" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/overview">
                         <Home size={18} strokeWidth={2.7} /> Home
+                    </NavLink>
+                    <NavLink key="settings-users" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/users">
+                        <Users size={18} strokeWidth={2.7} /> Users
                     </NavLink>
                     <NavLink key="settings-app" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/app">
                         <Monitor size={18} strokeWidth={2.7} /> Frontend
@@ -41,6 +45,8 @@ function Settings() {
                     <SettingsHome />
                 ) : category == 'overview' ? (
                     <SettingsHome />
+                ) : category == 'users' ? (
+                    <SettingsUsers />
                 ) : category == 'app' ? (
                     <SettingsFrontend />
                 ) : category == 'server' ? (

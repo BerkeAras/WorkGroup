@@ -144,6 +144,8 @@ const SignUp = (props) => {
                             <Input autoFocus fluid onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" id="userName" />
                             <br />
                             <Input fluid onChange={(e) => setEmail(e.target.value)} type="email" placeholder="E-Mail" id="userEmail" />
+                            <small>Please enter your real e-mail address. You will need to confirm it in the next step.</small>
+                            <br />
                             <br />
                             <Input fluid onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="userPassword" />
                             <br />
