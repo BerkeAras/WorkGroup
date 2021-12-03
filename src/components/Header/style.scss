@@ -8,25 +8,29 @@ body {
 
 .skip-to-content {
     font-size: 18px;
-    background: black;
+    background: #2c85d0;
     color: white;
     padding: 10px 19px;
     display: inline-block;
-    outline: 2px solid #2c85d0;
-    outline-offset: -6px;
     cursor: pointer;
     border: none;
-    width: 100%;
     text-align: center;
     text-decoration: underline;
     font-weight: 500;
     position: absolute;
-    top: -100%;
-    left: 0;
+    border-radius: 7px;
+    top: 5px;
+    left: calc((100% - 1200px) / 2);
+    z-index: 10;
+    line-height: 20px;
+    box-shadow: 0 1px 3px 0 #d4d4d5;
+    opacity: 1;
+    outline: 0;
 
-    &:focus {
-        position: inherit;
-        visibility: visible;
+    &:not(:focus) {
+        top: -1000px;
+        left: -1000px;
+        opacity: 0;
     }
     &:focus,
     &:hover,

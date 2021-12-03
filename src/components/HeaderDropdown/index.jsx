@@ -23,7 +23,7 @@ const HeaderDropdown = (props) => {
         <div className="header__dropdown">
             {localStorage.getItem('user_admin') !== undefined && localStorage.getItem('user_admin') == '1' && (
                 <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
-                    App Settings
+                    Manage WorkGroup
                 </NavLink>
             )}
             <a className="header__dropdown-item" href="https://github.com/BerkeAras/WorkGroup#contact" target="_blank" rel="noreferrer">
