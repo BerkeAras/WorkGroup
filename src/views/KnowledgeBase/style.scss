@@ -1,0 +1,70 @@
+@import '../../scss/variables';
+
+body {
+    overflow: hidden;
+}
+
+.main_content--knowledge-base {
+    padding: 20px;
+	position: absolute;
+	top: 51px;
+	right: 0;
+	width: calc(100% - 300px);
+	height: calc(100% - 51px);
+	overflow: auto;
+
+    .KnowledgeBase {
+        &-Folder,
+        &-File {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            font-size: 17px;
+            border: 1px solid #dbdbdb;
+            transition: all .1s;
+            color: black;
+
+            &:not(:last-of-type) {
+                border-bottom: 0;
+            }
+
+            svg {
+                margin: 0;
+                margin-right: 15px;
+                stroke: #b5b7b9;
+                fill: white;
+                transition: all .1s;
+            }
+
+            &:hover, &:focus-visible {
+                background: #f7f7f7;
+                color: $primary-color;
+
+                svg {
+                    stroke: $primary-color;
+                    fill: $primary-color;
+                }
+            }
+        }
+    }
+
+    center {
+        margin-top: 50px;
+        
+        svg {
+            color: #cecece;
+            margin-bottom: 20px;
+        }
+        span {
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.87);
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+    }
+}

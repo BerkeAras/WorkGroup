@@ -1,0 +1,16 @@
+@import '../../scss/variables';
+
+.KnowledgeBaseHeader {
+    position: relative;
+	width: 100%;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: white;
+	margin: 0 0 20px 0;
+	box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+
+	.checkbox {
+		float: right;
+		padding-top: 5px;
+	}
+}

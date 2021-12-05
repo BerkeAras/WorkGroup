@@ -21,6 +21,9 @@ const HeaderDropdown = (props) => {
 
     return (
         <div className="header__dropdown">
+            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to={'/app/user/' + localStorage.getItem('user_email')}>
+                My Account
+            </NavLink>
             {localStorage.getItem('user_admin') !== undefined && localStorage.getItem('user_admin') == '1' && (
                 <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
                     Manage WorkGroup

@@ -36,7 +36,6 @@ function SettingsUsers() {
                 setIsLoading(false)
                 setTotalPagionationPages(result.total_pages)
                 setUsers(result.users)
-                console.log('res', result)
             })
             .catch((error) => {
                 console.error(error)
