@@ -1,13 +1,13 @@
 .KnowledgeBaseFileHistory {
     .loader {
         height: 100px;
-        
+
         .ui.loader {
             color: rgb(0 0 0 / 90%) !important;
         }
         .ui.loader::before {
-            border-color: rgba(0,0,0,.1) !important;
-        }       
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
         .ui.loader::after {
             border-color: #767676 transparent transparent !important;
         }

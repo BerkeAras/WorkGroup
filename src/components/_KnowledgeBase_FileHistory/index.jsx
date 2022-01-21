@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams, useHi
 import './style.scss'
 import PropTypes from 'prop-types'
 import { Modal, Button, Loader, List } from 'semantic-ui-react'
-import { Zap } from 'react-feather';
+import { Zap } from 'react-feather'
 
 function KnowledgeBaseFileHistory(props) {
-
     const { folderId, fileId } = useParams()
     const [isLoading, setIsLoading] = useState(false)
     const [fileHistoryItems, setFileHistoryItems] = useState([])
@@ -14,9 +13,8 @@ function KnowledgeBaseFileHistory(props) {
     const [restoreFileId, setRestoreFileId] = useState(null)
 
     useEffect(() => {
+        setIsLoading(true)
 
-        setIsLoading(true);
-        
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + window.localStorage.getItem('token'))
 
@@ -30,14 +28,13 @@ function KnowledgeBaseFileHistory(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFileHistory?file_id=' + fileId, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
+                console.log(result)
                 setFileHistoryItems(result.file_history)
                 setIsLoading(false)
             })
             .catch((error) => {
                 console.error(error)
             })
-
     }, [fileId])
 
     const getDate = (date) => {
@@ -64,7 +61,7 @@ function KnowledgeBaseFileHistory(props) {
     }
 
     const restoreFromHistory = () => {
-        setIsLoading(true);
+        setIsLoading(true)
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + window.localStorage.getItem('token'))
@@ -75,7 +72,7 @@ function KnowledgeBaseFileHistory(props) {
         const requestOptions = {
             method: 'POST',
             headers: tokenHeaders,
-            body: formData
+            body: formData,
         }
 
         // eslint-disable-next-line no-undef
@@ -84,14 +81,14 @@ function KnowledgeBaseFileHistory(props) {
                 return response.json()
             })
             .then((response) => {
-                location.reload();
+                location.reload()
             })
     }
 
     const previewHistory = () => {
-        setShowRestoreModal(false);
+        setShowRestoreModal(false)
         props.onClose()
-        location.href = '/app/knowledgebase/' + folderId + '/' + fileId + '/' + restoreFileId;
+        location.href = '/app/knowledgebase/' + folderId + '/' + fileId + '/' + restoreFileId
     }
 
     return (
@@ -111,12 +108,17 @@ function KnowledgeBaseFileHistory(props) {
                                         key={index}
                                         divided
                                         relaxed
-                                        onClick={() => {setShowRestoreModal(true);setRestoreFileId(fileHistoryItem.id)}}
+                                        onClick={() => {
+                                            setShowRestoreModal(true)
+                                            setRestoreFileId(fileHistoryItem.id)
+                                        }}
                                     >
                                         <List.Item>
                                             <List.Content>
                                                 <List.Header as="a">{getDate(fileHistoryItem.created_at)}</List.Header>
-                                                <List.Description as="a">File overwritten by <b>{fileHistoryItem.user_name}</b>.</List.Description>
+                                                <List.Description as="a">
+                                                    File overwritten by <b>{fileHistoryItem.user_name}</b>.
+                                                </List.Description>
                                             </List.Content>
                                         </List.Item>
                                     </List>
@@ -129,16 +131,30 @@ function KnowledgeBaseFileHistory(props) {
                                 <span>This File has no history.</span>
                             </center>
                         )}
-                    
                     </>
                 )}
 
                 {showRestoreModal && (
-                    <Modal onClose={() => {setShowRestoreModal(false);setRestoreFileId(null)}} onOpen={() => setShowRestoreModal(true)} open={showRestoreModal} size="mini">
+                    <Modal
+                        onClose={() => {
+                            setShowRestoreModal(false)
+                            setRestoreFileId(null)
+                        }}
+                        onOpen={() => setShowRestoreModal(true)}
+                        open={showRestoreModal}
+                        size="mini"
+                    >
                         <Modal.Header>Are you sure you want to restore this version?</Modal.Header>
                         <Modal.Content>The current version is archived and can be restored at any time.</Modal.Content>
                         <Modal.Actions>
-                            <Button disabled={isLoading} loading={isLoading} onClick={() => {setShowRestoreModal(false);setRestoreFileId(null)}}>
+                            <Button
+                                disabled={isLoading}
+                                loading={isLoading}
+                                onClick={() => {
+                                    setShowRestoreModal(false)
+                                    setRestoreFileId(null)
+                                }}
+                            >
                                 Cancel
                             </Button>
                             <Button disabled={isLoading} loading={isLoading} onClick={previewHistory}>
@@ -150,12 +166,9 @@ function KnowledgeBaseFileHistory(props) {
                         </Modal.Actions>
                     </Modal>
                 )}
-
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={props.onClose}>
-                    Close
-                </Button>
+                <Button onClick={props.onClose}>Close</Button>
             </Modal.Actions>
         </Modal>
     )

@@ -64,5 +64,5 @@ function KnowledgeBaseSidebar(props) {
 export default KnowledgeBaseSidebar
 
 KnowledgeBaseSidebar.propTypes = {
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
 }
