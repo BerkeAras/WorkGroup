@@ -75,8 +75,8 @@ const Header = () => {
                     <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
                         Groups
                     </NavLink>
-                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to={'/app/user/' + localStorage.getItem('user_email')}>
-                        My Account
+                    <NavLink className="header__menu-item" activeClassName="header__menu-item--active" to="/app/knowledgebase">
+                        Knowledge Base
                     </NavLink>
                 </div>
 

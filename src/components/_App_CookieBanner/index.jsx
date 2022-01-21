@@ -26,7 +26,7 @@ function CookieBanner(props) {
 
     const storeCookieChoice = () => {
         if (props.isLoggedIn) {
-            var header = new Headers()
+            let header = new Headers()
             header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
             header.append('Content-Type', 'application/json')
 

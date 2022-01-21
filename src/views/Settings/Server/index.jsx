@@ -36,10 +36,10 @@ function SettingsServer() {
     useEffect(() => {
         document.title = 'Server Settings – WorkGroup'
 
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -75,11 +75,11 @@ function SettingsServer() {
     const saveServerSettings = () => {
         setIsLoading(true)
 
-        var headers = new Headers()
+        let headers = new Headers()
         headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         headers.append('Content-Type', 'application/json')
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({

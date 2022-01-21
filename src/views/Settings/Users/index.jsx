@@ -21,10 +21,10 @@ function SettingsUsers() {
     const loadUsers = (page) => {
         setPaginationPage(page)
         setIsLoading(true)
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -36,7 +36,6 @@ function SettingsUsers() {
                 setIsLoading(false)
                 setTotalPagionationPages(result.total_pages)
                 setUsers(result.users)
-                console.log('res', result)
             })
             .catch((error) => {
                 console.error(error)
@@ -48,11 +47,11 @@ function SettingsUsers() {
     }
 
     const getDate = (date) => {
-        var newDate = new Date(date)
+        let newDate = new Date(date)
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-        var todaysDate = new Date()
+        let todaysDate = new Date()
 
         let dateString = ''
 

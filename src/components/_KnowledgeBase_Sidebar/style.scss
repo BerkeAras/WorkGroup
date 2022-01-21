@@ -1,0 +1,58 @@
+@import '../../scss/variables';
+
+.KnowledgeBaseSidebar {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    padding: 65px 10px 10px;
+    overflow: auto;
+
+    hr {
+        height: 1px;
+        background-color: #d4d4d5;
+        border: none;
+        margin: 0 0 4px 0;
+    }
+
+    &-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: black;
+        margin-bottom: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.2s !important;
+        &:hover {
+            background-color: #eeeeee;
+            transform: scale(0.98);
+        }
+        svg {
+            margin-left: 5px;
+            margin-right: 15px;
+            opacity: 0.7;
+        }
+        &:active {
+            transform: scale(0.95);
+            outline: none !important;
+        }
+        &--active {
+            background-color: #f7f7f7;
+            color: $primary-color;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+    }
+}

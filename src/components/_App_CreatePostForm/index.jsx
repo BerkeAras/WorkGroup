@@ -2,9 +2,9 @@ import React, { useRef } from 'react'
 import './style.scss'
 import { Card, Input, Modal, Button, TextArea, Form, Popup } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-var linkify = require('linkifyjs')
+let linkify = require('linkifyjs')
 require('linkifyjs/plugins/hashtag')(linkify) // optional
-var linkifyHtml = require('linkifyjs/html')
+let linkifyHtml = require('linkifyjs/html')
 
 import convertToMarkup from './convertToMarkup'
 import convertToText from './convertToText'
@@ -43,13 +43,13 @@ class CreatePostForm extends React.Component {
             uploadImage: event.target.files[0],
         })
 
-        var fileUploadHeader = new Headers()
+        let fileUploadHeader = new Headers()
         fileUploadHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         const formData = new FormData()
         formData.append('image', event.target.files[0])
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
             headers: fileUploadHeader,
             body: formData,
@@ -97,13 +97,13 @@ class CreatePostForm extends React.Component {
             uploadFile: event.target.files[0],
         })
 
-        var fileUploadHeader = new Headers()
+        let fileUploadHeader = new Headers()
         fileUploadHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         const formData = new FormData()
         formData.append('file', event.target.files[0])
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
             headers: fileUploadHeader,
             body: formData,
@@ -155,11 +155,11 @@ class CreatePostForm extends React.Component {
 
             this.setState({ isPosting: true })
 
-            var myHeaders = new Headers()
+            let myHeaders = new Headers()
             myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
             myHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
-            var urlencoded = new URLSearchParams()
+            let urlencoded = new URLSearchParams()
             urlencoded.append('content', postContent)
             if (this.props.group !== undefined) {
                 urlencoded.append('groupId', this.props.group)
@@ -181,7 +181,7 @@ class CreatePostForm extends React.Component {
                 urlencoded.append('files', JSON.stringify(filesArray))
             }
 
-            var requestOptions = {
+            let requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
                 body: urlencoded,

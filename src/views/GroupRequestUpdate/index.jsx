@@ -23,10 +23,10 @@ function GroupRequestUpdate() {
             setIsLoading(true)
             setHasError(false)
 
-            var tokenHeader = new Headers()
+            let tokenHeader = new Headers()
             tokenHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-            var formdata = new FormData()
+            let formdata = new FormData()
             formdata.append('request_id', request_id)
             formdata.append('new_status', request_status)
 

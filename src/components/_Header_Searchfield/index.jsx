@@ -22,9 +22,9 @@ const SearchField = () => {
     const [isLoadingResults, setIsLoadingResults] = useState(false)
 
     useEffect(() => {
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -56,10 +56,10 @@ const SearchField = () => {
             setIsLoadingResults(false)
         } else {
             controller.abort()
-            var tokenHeaders = new Headers()
+            let tokenHeaders = new Headers()
             tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-            var requestOptions = {
+            let requestOptions = {
                 method: 'GET',
                 headers: tokenHeaders,
                 redirect: 'follow',

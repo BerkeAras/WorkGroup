@@ -19,9 +19,9 @@ function UserBanner(props) {
 
         setIsLoadingUser(true)
 
-        var userHeader = new Headers()
+        let userHeader = new Headers()
         userHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: userHeader,
             redirect: 'follow',
