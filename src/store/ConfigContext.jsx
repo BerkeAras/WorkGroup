@@ -8,6 +8,7 @@ const ConfigContext = React.createContext({
         appRegistrationEnabled: false,
         appPasswordResetEnabled: false,
         appMinimumSearchLength: 3,
+        appMaximumPostsPerPage: 10,
         serverApiUrl: process.env.REACT_APP_API_URL,
         analyticsGoogleAnalyticsEnabled: false,
         analyticsGoogleAnalyticsKey: '',
