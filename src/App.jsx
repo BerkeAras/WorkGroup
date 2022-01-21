@@ -92,6 +92,12 @@ class App extends React.Component {
                     if (configItems.config_key === 'app.password_reset_enabled') {
                         resultData.app.password_reset_enabled = configItems.config_value
                     }
+                    if (configItems.config_key === 'app.minimum_search_length') {
+                        resultData.app.minimum_search_length = configItems.config_value
+                    }
+                    if (configItems.config_key === 'app.maximum_posts_per_page') {
+                        resultData.app.maximum_posts_per_page = configItems.config_value
+                    }
                     if (configItems.config_key === 'server.api_url') {
                         resultData.server.api_url = configItems.config_value
                     }

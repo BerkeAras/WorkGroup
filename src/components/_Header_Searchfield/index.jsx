@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { DebounceInput } from 'react-debounce-input'
+import ConfigContext from '../../store/ConfigContext'
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,6 +15,7 @@ library.add(faHashtag)
 import './style.scss'
 
 const SearchField = () => {
+    const contextValue = useContext(ConfigContext)
     const [searchQuery, setSearchQuery] = useState('')
     const [userResult, setUserResult] = useState([])
     const [groupResult, setGroupResult] = useState([])
@@ -49,7 +51,13 @@ const SearchField = () => {
         const controller = new AbortController()
         const { signal } = controller
 
-        if (inputValue == '' || inputValue.length < 3) {
+        let minimumLength = 3
+
+        if (contextValue != undefined) {
+            minimumLength = contextValue.app.minimum_search_length
+        }
+
+        if (inputValue == '' || inputValue.length < minimumLength) {
             setUserResult([])
             setGroupResult([])
             setTopicResult([])

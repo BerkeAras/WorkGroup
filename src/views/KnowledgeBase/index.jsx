@@ -20,8 +20,8 @@ function KnowledgeBase() {
     const [isLoading, setIsLoading] = useState(true)
     const [editorMode, setEditorMode] = useState(false)
     const [editFileContent, setEditFileContent] = useState(false)
-    const [fileExtension, setFileExtension] = useState("")
-    const [modifiedFileContent, setModifiedFileContentState] = useState("")
+    const [fileExtension, setFileExtension] = useState('')
+    const [modifiedFileContent, setModifiedFileContentState] = useState('')
     const [showFileHistoryModal, setShowFileHistoryModal] = useState(false)
 
     useEffect(() => {
@@ -98,7 +98,7 @@ function KnowledgeBase() {
         const requestOptions = {
             method: 'POST',
             headers: tokenHeaders,
-            body: formData
+            body: formData,
         }
 
         // eslint-disable-next-line no-undef
@@ -107,7 +107,7 @@ function KnowledgeBase() {
                 return response.json()
             })
             .then((response) => {
-                console.log(response);
+                console.log(response)
                 setIsLoading(false)
             })
     }
@@ -124,12 +124,7 @@ function KnowledgeBase() {
         <div className="app">
             <Header />
 
-            {showFileHistoryModal && (
-                <KnowledgeBaseFileHistory
-                    isLoading={isLoading}
-                    onClose={() => setShowFileHistoryModal(false)}
-                />
-            )}
+            {showFileHistoryModal && <KnowledgeBaseFileHistory isLoading={isLoading} onClose={() => setShowFileHistoryModal(false)} />}
 
             <KnowledgeBaseSidebar isLoading={isLoading} folderId={folderId} />
             <div id="main_content" className="main_content main_content--knowledge-base">
@@ -191,25 +186,20 @@ function KnowledgeBase() {
                                                             to={`/app/knowledgebase/${folderId == undefined || folderId == null ? 0 : folderId}/${file.id}`}
                                                             className="KnowledgeBase-File"
                                                         >
-                                                            <File size={25} strokeWidth={2} /> {file.knowledge_base_file_name} <i>{file.knowledge_base_file_slug}.{file.knowledge_base_file_extension}</i>
+                                                            <File size={25} strokeWidth={2} /> {file.knowledge_base_file_name}{' '}
+                                                            <i>
+                                                                {file.knowledge_base_file_slug}.{file.knowledge_base_file_extension}
+                                                            </i>
                                                         </NavLink>
                                                     )
                                                 })}
                                             </>
                                         ) : (
-                                            <KnowledgeBaseFileReader
-                                                onFileExtensionChange={handleFileExtensionChange}
-                                                editorMode={editorMode}
-                                                setModifiedFileContentProp={setModifiedFileContent}
-                                            />
+                                            <KnowledgeBaseFileReader onFileExtensionChange={handleFileExtensionChange} editorMode={editorMode} setModifiedFileContentProp={setModifiedFileContent} />
                                         )}
                                     </>
                                 ) : (
-                                    <KnowledgeBaseFileReader
-                                        onFileExtensionChange={handleFileExtensionChange}
-                                        editorMode={editorMode}
-                                        setModifiedFileContentProp={setModifiedFileContent}
-                                    />
+                                    <KnowledgeBaseFileReader onFileExtensionChange={handleFileExtensionChange} editorMode={editorMode} setModifiedFileContentProp={setModifiedFileContent} />
                                 )}
                             </>
                         )}

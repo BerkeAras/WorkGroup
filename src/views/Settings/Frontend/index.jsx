@@ -12,6 +12,8 @@ function SettingsFrontend() {
     const [appLogoPreview, setAppLogoPreview] = useState(appLogo)
     const [appLocale, setAppLocale] = useState('')
     const [appUrl, setAppUrl] = useState('')
+    const [searchLength, setSearchLength] = useState(3)
+    const [postsPerPage, setPostsPerPage] = useState(10)
     const [appRegistrationEnabled, setAppRegistrationEnabled] = useState('')
     const [appPasswordResetEnabled, setAppPasswordResetEnabled] = useState('')
     const [isLoading, setIsLoading] = useState(true)
@@ -70,6 +72,12 @@ function SettingsFrontend() {
                     }
                     if (settingsItem.config_key == 'app.password_reset_enabled') {
                         setAppPasswordResetEnabled(stringToBoolean(settingsItem.config_value))
+                    }
+                    if (settingsItem.config_key == 'app.minimum_search_length') {
+                        setSearchLength(settingsItem.config_value)
+                    }
+                    if (settingsItem.config_key == 'app.maximum_posts_per_page') {
+                        setPostsPerPage(settingsItem.config_value)
                     }
                 })
             })
@@ -141,6 +149,8 @@ function SettingsFrontend() {
                 'app.url': appUrl,
                 'app.registration_enabled': appRegistrationEnabled.toString(),
                 'app.password_reset_enabled': appPasswordResetEnabled.toString(),
+                'app.minimum_search_length': searchLength,
+                'app.maximum_posts_per_page': postsPerPage,
             }),
             redirect: 'follow',
         }
@@ -200,6 +210,14 @@ function SettingsFrontend() {
                         <Form.Field>
                             <label>Frontend URL</label>
                             <Input disabled={isLoading} type="url" value={appUrl} onChange={(e) => setAppUrl(e.target.value)} placeholder="Enter the URL of this WorkGroup App" />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Minimum Search Length</label>
+                            <Input min={0} disabled={isLoading} type="number" value={searchLength} onChange={(e) => setSearchLength(e.target.value)} placeholder="Minimum length to search" />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Maximum Posts per Page</label>
+                            <Input min={10} disabled={isLoading} type="number" value={postsPerPage} onChange={(e) => setPostsPerPage(e.target.value)} placeholder="Maximum Posts to show per Page" />
                         </Form.Field>
                         <Form.Field>
                             <label>Registration enabled</label>

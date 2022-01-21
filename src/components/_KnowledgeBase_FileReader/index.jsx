@@ -25,9 +25,9 @@ function KnowledgeBaseFileReader(props) {
             redirect: 'follow',
         }
 
-        let file_id = fileId;
+        let file_id = fileId
         if (historyId != undefined && historyId != null) {
-            file_id = "history_" + historyId;
+            file_id = 'history_' + historyId
         }
 
         fetch(
@@ -37,7 +37,7 @@ function KnowledgeBaseFileReader(props) {
             .then((response) => response.json())
             .then((result) => {
                 setFile(result)
-                props.onFileExtensionChange(result.knowledge_base_file_extension);
+                props.onFileExtensionChange(result.knowledge_base_file_extension)
 
                 if (!result.file_readable) {
                     fetch(
@@ -102,7 +102,7 @@ function KnowledgeBaseFileReader(props) {
                                             className="KnowledgeBaseFileReader_textarea"
                                             value={fileContent}
                                             onChange={(e) => {
-                                                setFileContent(e.target.value);
+                                                setFileContent(e.target.value)
                                                 props.setModifiedFileContentProp(e.target.value)
                                             }}
                                         ></textarea>

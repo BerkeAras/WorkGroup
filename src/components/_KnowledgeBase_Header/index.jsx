@@ -13,11 +13,11 @@ function KnowledgeBaseHeader(props) {
 
     const [showNewFolderModal, setShowNewFolderModal] = useState(false)
     const [newFolderName, setNewFolderName] = useState('')
-    
+
     const [openUploadFileModal, setOpenUploadFileModal] = useState(false)
-    const [uploadFile, setUploadFile] = useState(null);
-    const [newFileName, setNewFileName] = useState("");
-    
+    const [uploadFile, setUploadFile] = useState(null)
+    const [newFileName, setNewFileName] = useState('')
+
     const [showModifyFolderModal, setShowModifyFolderModal] = useState(false)
     const [modifyFolderName, setModifyFolderName] = useState('')
     const [modifyFolderDescription, setModifyFolderDescription] = useState('')
@@ -131,7 +131,7 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/modifyFolder', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    location.reload();
+                    location.reload()
                 })
                 .catch((error) => {
                     console.error(error)
@@ -140,12 +140,12 @@ function KnowledgeBaseHeader(props) {
     }
 
     const fileChange = (e) => {
-        setUploadFile(e.target.files[0]);
-        console.log(e.target.files[0]);
+        setUploadFile(e.target.files[0])
+        console.log(e.target.files[0])
     }
 
     const uploadNewFile = () => {
-        setIsLoading(true);
+        setIsLoading(true)
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -164,13 +164,12 @@ function KnowledgeBaseHeader(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/uploadFile', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
-                setIsLoading(false);
+                console.log(result)
+                setIsLoading(false)
             })
             .catch((error) => {
                 console.error(error)
             })
-
     }
 
     return (
@@ -179,8 +178,9 @@ function KnowledgeBaseHeader(props) {
                 <>
                     {(folderId !== undefined || (folderId == undefined && folderPermissions['write'] == true)) && (
                         <div className="KnowledgeBaseHeader">
-                            {folderId != undefined && folderId != null && (
-                                props.isLoading ? (
+                            {folderId != undefined &&
+                                folderId != null &&
+                                (props.isLoading ? (
                                     <Button loading={props.isLoading} disabled={props.isLoading} labelPosition="left" icon size="tiny">
                                         Back <Icon name="left arrow" />
                                     </Button>
@@ -190,44 +190,50 @@ function KnowledgeBaseHeader(props) {
                                             Back <Icon name="left arrow" />
                                         </Button>
                                     </Link>
-                                )
-                            )}
+                                ))}
                             &nbsp;
                             {folderPermissions != undefined && folderPermissions != null && (
                                 <>
-                                    {(folderPermissions['write'] == true && fileId == undefined && props.editorMode) && (
+                                    {folderPermissions['write'] == true && fileId == undefined && props.editorMode && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={openNewFolderModal} primary size="tiny">
                                             New Folder
                                         </Button>
                                     )}
                                     &nbsp;
-                                    {(folderPermissions['write'] == true && fileId == undefined && props.editorMode) && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={() => {setOpenUploadFileModal(true)}} primary size="tiny">
+                                    {folderPermissions['write'] == true && fileId == undefined && props.editorMode && (
+                                        <Button
+                                            loading={props.isLoading}
+                                            disabled={props.isLoading}
+                                            onClick={() => {
+                                                setOpenUploadFileModal(true)
+                                            }}
+                                            primary
+                                            size="tiny"
+                                        >
                                             Upload File
                                         </Button>
                                     )}
                                     &nbsp;
-                                    {(folderPermissions['modify'] == true && fileId == undefined && props.editorMode && folderId != undefined) && (
+                                    {folderPermissions['modify'] == true && fileId == undefined && props.editorMode && folderId != undefined && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={openModifyFolderModal} primary size="tiny">
                                             Modify Folder
                                         </Button>
                                     )}
                                     &nbsp;
-                                    {(folderPermissions["modify"] == true && props.editorMode && props.fileExtension == "md") && (
+                                    {folderPermissions['modify'] == true && props.editorMode && props.fileExtension == 'md' && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.onFileContentSave} primary size="tiny">
                                             Save File
                                         </Button>
                                     )}
-
                                     {fileId !== undefined && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.showFileHistory} basic size="tiny">
                                             <Icon name="history" />
-
                                             History
                                         </Button>
                                     )}
-
-                                    {folderPermissions['write'] == true && <Checkbox toggle disabled={props.isLoading} label="Use edit-mode" checked={props.editorMode} onChange={props.onEditorModeChange} />}
+                                    {folderPermissions['write'] == true && (
+                                        <Checkbox toggle disabled={props.isLoading} label="Use edit-mode" checked={props.editorMode} onChange={props.onEditorModeChange} />
+                                    )}
                                 </>
                             )}
                         </div>
@@ -290,7 +296,9 @@ function KnowledgeBaseHeader(props) {
                                 type="file"
                                 fluid
                                 size="small"
-                                onChange={(e) => {fileChange(e)}}
+                                onChange={(e) => {
+                                    fileChange(e)
+                                }}
                             />
                         </Form.Field>
                     </Modal.Content>
@@ -365,5 +373,5 @@ KnowledgeBaseHeader.propTypes = {
     onEditorModeChange: PropTypes.any,
     onFileContentSave: PropTypes.any,
     showFileHistory: PropTypes.any,
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
 }

@@ -27,4 +27,6 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 package-lock.json
+yarn.lock
+*.log
 .vercel
