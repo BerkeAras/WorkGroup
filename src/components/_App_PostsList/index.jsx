@@ -156,9 +156,10 @@ class PostsList extends React.Component {
                                 this.setState({ items: [] })
                             }
 
-                            console.log('G', res);
+                            console.log('G', [...this.state.items, ...res ]);
+
+                            this.setState({ items: [...this.state.items, ...res ] })
                             this.setState({
-                                items: res,
                                 cursor: this.state.cursor + 1,
                                 isLoading: false,
                                 loaded: true,
