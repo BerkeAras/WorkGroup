@@ -129,15 +129,19 @@ class PostsList extends React.Component {
             .then((res) => res.json())
             .then(
                 (res) => {
+                    console.log('A');
                     this.setState({ isLoadingMore: false })
                     if (res['status_code'] !== undefined) {
+                        console.log('B');
                         if (res['message'] === 'Token has expired') {
                             location.href = '/logout'
                             localStorage.clear()
                         }
                         console.error('ERROR: ' + res['message'])
                     } else {
+                        console.log('C');
                         if (res.status == 'not_member') {
+                            console.log('D');
                             this.setState(() => ({
                                 items: [],
                                 cursor: this.state.cursor + 1,
@@ -146,10 +150,13 @@ class PostsList extends React.Component {
                                 emptyStates: ['This group is private. You have to be a member of this group to be able to read posts.'],
                             }))
                         } else {
+                            console.log('E');
                             if (this.state.items.length > 60) {
+                                console.log('F');
                                 this.setState({ items: [] })
                             }
 
+                            console.log('G');
                             this.setState((state) => ({
                                 items: res,
                                 cursor: this.state.cursor + 1,
