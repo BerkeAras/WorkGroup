@@ -1,8 +1,20 @@
-.KnowledgeBaseFileReader_html {
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+.KnowledgeBaseFileReader {
     width: 100%;
-	background: white;
-	padding: 20px;
-	border: 1px solid #d4d4d5;
-	overflow-y: hidden;
-	overflow-x: auto;
+    background: white;
+    padding: 20px;
+    border: 1px solid #d4d4d5;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    &_textarea {
+        width: 100%;
+        height: calc(100vh - 51px - 20px - 50px - 20px - 75px);
+        border-radius: 0 !important;
+        border: 0;
+        outline: 0;
+        padding: 10px;
+        font-family: 'Fira Code', monospace !important;
+        font-feature-settings: "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "zero", "onum", "cv26" !important;
+    }
 }

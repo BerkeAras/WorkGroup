@@ -1,0 +1,39 @@
+.KnowledgeBaseFileHistory {
+    .loader {
+        height: 100px;
+        
+        .ui.loader {
+            color: rgb(0 0 0 / 90%) !important;
+        }
+        .ui.loader::before {
+            border-color: rgba(0,0,0,.1) !important;
+        }       
+        .ui.loader::after {
+            border-color: #767676 transparent transparent !important;
+        }
+    }
+
+    .item[role='listitem'] {
+        padding: 10px !important;
+        background: transparent;
+        transition: all 0.15s;
+
+        &:hover,
+        &:focus {
+            background: #f2f4f5;
+        }
+    }
+
+    center {
+        padding: 10px 0;
+
+        svg {
+            color: #cecece;
+            margin-bottom: 20px;
+        }
+        span {
+            font-size: 18px;
+            font-style: italic;
+        }
+    }
+}

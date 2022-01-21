@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams } from 'react-router-dom'
 import './style.scss'
 
 function KnowledgeBaseReadFile() {
-
-    const [folders, setFolders] = useState([]);
+    const [folders, setFolders] = useState([])
 
     useEffect(() => {
         /*
@@ -32,7 +31,7 @@ function KnowledgeBaseReadFile() {
         <div className="KnowledgeBaseFileReader">
             <h1>ReadFile</h1>
         </div>
-    );
+    )
 }
 
-export default KnowledgeBaseReadFile;
+export default KnowledgeBaseReadFile

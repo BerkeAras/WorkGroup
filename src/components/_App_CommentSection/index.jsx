@@ -21,10 +21,10 @@ class CommentSection extends React.Component {
     }
 
     loadComments() {
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -73,17 +73,17 @@ class CommentSection extends React.Component {
         if (postContent !== null && postContent.trim() !== '' && postContent.replaceAll('<br>', '').trim() !== '') {
             this.setState({ isPosting: true })
 
-            var myHeaders = new Headers()
+            let myHeaders = new Headers()
             myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
             myHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
-            var urlencoded = new URLSearchParams()
+            let urlencoded = new URLSearchParams()
             urlencoded.append('content', postContent)
             urlencoded.append('post_id', element.querySelector('textarea').id.replace('comment_textarea_', ''))
 
             element.querySelector('textarea').disabled = true
 
-            var requestOptions = {
+            let requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
                 body: urlencoded,
@@ -107,11 +107,11 @@ class CommentSection extends React.Component {
     }
 
     getDate(date) {
-        var newDate = new Date(date)
+        let newDate = new Date(date)
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-        var todaysDate = new Date()
+        let todaysDate = new Date()
 
         let dateString = ''
 
@@ -130,7 +130,7 @@ class CommentSection extends React.Component {
     }
 
     decodeHTMLEntities(text) {
-        var textArea = document.createElement('textarea')
+        let textArea = document.createElement('textarea')
         textArea.innerHTML = text
         let value = textArea.value
         value.replace('&lt;br&gt;', '<br />')

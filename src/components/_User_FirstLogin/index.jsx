@@ -288,10 +288,10 @@ class FirstLogin extends React.Component {
     }
 
     componentDidMount() {
-        var bannerHeader = new Headers()
+        let bannerHeader = new Headers()
         bannerHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: bannerHeader,
             redirect: 'follow',
@@ -365,7 +365,7 @@ class FirstLogin extends React.Component {
         const formData = new FormData()
         formData.append('banner', element)
 
-        var myHeaders = new Headers()
+        let myHeaders = new Headers()
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         fetch(process.env.REACT_APP_API_URL + `/api/user/uploadBanner`, {
@@ -385,7 +385,7 @@ class FirstLogin extends React.Component {
         const formData = new FormData()
         formData.append('avatar', element)
 
-        var myHeaders = new Headers()
+        let myHeaders = new Headers()
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         fetch(process.env.REACT_APP_API_URL + `/api/user/uploadAvatar`, {
@@ -430,9 +430,9 @@ class FirstLogin extends React.Component {
 
         this.setState({ isLoading: true })
 
-        var inputs = document.querySelectorAll('.setupForm input')
+        let inputs = document.querySelectorAll('.setupForm input')
 
-        for (var i = 0; i < inputs.length; i++) {
+        for (let i = 0; i < inputs.length; i++) {
             if (inputs[i].type == 'submit') {
                 inputs[i].disabled = 'disabled'
             }
@@ -460,11 +460,11 @@ class FirstLogin extends React.Component {
 
         let formContent = [slogan, country, city, street, department, birthday, phone]
 
-        var myHeaders = new Headers()
+        let myHeaders = new Headers()
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         myHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
-        var urlencoded = new URLSearchParams()
+        let urlencoded = new URLSearchParams()
         urlencoded.append('slogan', slogan)
         urlencoded.append('country', country)
         urlencoded.append('city', city)
@@ -473,7 +473,7 @@ class FirstLogin extends React.Component {
         urlencoded.append('birthday', birthday)
         urlencoded.append('phone', phone)
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
             headers: myHeaders,
             body: urlencoded,

@@ -79,11 +79,11 @@ function GroupBanner(props) {
     }
 
     const getDate = (date) => {
-        var newDate = new Date(date)
+        let newDate = new Date(date)
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-        var todaysDate = new Date()
+        let todaysDate = new Date()
 
         let dateString = ''
 
@@ -193,10 +193,10 @@ function GroupBanner(props) {
     }
 
     const loadRequests = (props) => {
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -207,17 +207,21 @@ function GroupBanner(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/group/getAllRequests?group_id=' + props.groupInformation['id'], requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setGroupRequests(result['requests'])
+                if (result.status == 1) {
+                    setGroupRequests(result['requests'])
+                } else {
+                    setGroupRequests([])
+                }
 
                 setIsLoadingRequests(false)
             })
     }
 
     const loadMembers = (props) => {
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -228,6 +232,7 @@ function GroupBanner(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/group/getAllMembers?group_id=' + props.groupInformation['id'], requestOptions)
             .then((response) => response.json())
             .then((result) => {
+                console.log(result['users']);
                 setGroupMembers(result['users'])
 
                 setIsLoadingRequests(false)
@@ -510,23 +515,25 @@ function GroupBanner(props) {
                         {groupMembers ? (
                             groupMembers.map((member, index) => {
                                 return (
-                                    <List key={index} divided relaxed>
-                                        <List.Item href={`/app/user/${member.user.email}`}>
-                                            <List.Content>
-                                                <div className="group-member-item-avatar">
-                                                    <img
-                                                        src={member.user.avatar}
-                                                        alt=""
-                                                        onError={(e) => {
-                                                            e.target.src = unknownAvatar
-                                                        }}
-                                                    />
-                                                </div>
-                                                <List.Header as="a">{member.user.name}</List.Header>
-                                                <List.Description as="a">{getDate(member.created_at)}</List.Description>
-                                            </List.Content>
-                                        </List.Item>
-                                    </List>
+                                    member.user && (
+                                        <List key={index} divided relaxed>
+                                            <List.Item href={`/app/user/${member.user.email}`}>
+                                                <List.Content>
+                                                    <div className="group-member-item-avatar">
+                                                        <img
+                                                            src={member.user.avatar}
+                                                            alt=""
+                                                            onError={(e) => {
+                                                                e.target.src = unknownAvatar
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <List.Header as="a">{member.user.name}</List.Header>
+                                                    <List.Description as="a">Joined {getDate(member.created_at)}</List.Description>
+                                                </List.Content>
+                                            </List.Item>
+                                        </List>
+                                    )
                                 )
                             })
                         ) : (

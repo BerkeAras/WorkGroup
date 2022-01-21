@@ -9,10 +9,10 @@ const SidebarPopularItems = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',

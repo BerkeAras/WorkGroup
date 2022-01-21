@@ -9,10 +9,10 @@ function LogOut() {
     useEffect(() => {
         document.title = 'Logout – WorkGroup'
 
-        var logoutHeader = new Headers()
+        let logoutHeader = new Headers()
         logoutHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'DELETE',
             headers: logoutHeader,
             redirect: 'follow',

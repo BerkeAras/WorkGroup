@@ -119,11 +119,11 @@ class App extends React.Component {
         this.loadConfig()
 
         if (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
-            var tokenHeaders = new Headers()
+            let tokenHeaders = new Headers()
             tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
             tokenHeaders.append('Content-Type', 'application/x-www-form-urlencoded')
 
-            var requestOptions = {
+            let requestOptions = {
                 method: 'GET',
                 headers: tokenHeaders,
                 redirect: 'follow',
@@ -194,7 +194,7 @@ class App extends React.Component {
             if (this.state.isLoggedIn) {
                 // Send Active-State
 
-                var activityTokenHeaders = new Headers()
+                let activityTokenHeaders = new Headers()
                 activityTokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
                 const activityRequestOptions = {
@@ -266,6 +266,9 @@ class App extends React.Component {
                                     <KnowledgeBase />
                                 </Route>
                                 <Route exact path="/app/knowledgebase/:folderId/:fileId">
+                                    <KnowledgeBase />
+                                </Route>
+                                <Route exact path="/app/knowledgebase/:folderId/:fileId/:historyId">
                                     <KnowledgeBase />
                                 </Route>
                                 {this.state.loggedInUserIsAdmin && (

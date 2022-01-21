@@ -60,7 +60,7 @@ class PostsList extends React.Component {
     }
 
     convertDate = (date) => {
-        var t,
+        let t,
             result = null
 
         if (typeof mysql_string === 'string') {
@@ -74,14 +74,14 @@ class PostsList extends React.Component {
     }
 
     getFriendlyDate = (date) => {
-        var delta = Math.round((+new Date() - date) / 1000)
+        let delta = Math.round((+new Date() - date) / 1000)
 
-        var minute = 60,
+        let minute = 60,
             hour = minute * 60,
             day = hour * 24,
             week = day * 7
 
-        var fuzzy
+        let fuzzy
 
         if (delta < 30) {
             fuzzy = 'just then.'
@@ -105,10 +105,10 @@ class PostsList extends React.Component {
     loadMore = () => {
         this.setState({ isLoadingMore: true })
 
-        var loadingHeader = new Headers()
+        let loadingHeader = new Headers()
         loadingHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: loadingHeader,
             redirect: 'follow',
@@ -166,11 +166,11 @@ class PostsList extends React.Component {
     }
 
     getDate(date) {
-        var newDate = new Date(date)
+        let newDate = new Date(date)
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-        var todaysDate = new Date()
+        let todaysDate = new Date()
 
         let dateString = ''
 
@@ -214,7 +214,7 @@ class PostsList extends React.Component {
 
     toggleComment(e) {
         Array.prototype.remove = function () {
-            var what,
+            let what,
                 a = arguments,
                 L = a.length,
                 ax
@@ -314,7 +314,7 @@ class PostsList extends React.Component {
         }
 
         // Request
-        var header = new Headers()
+        let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         header.append('Content-Type', 'application/json')
 

@@ -38,10 +38,10 @@ function SettingsFrontend() {
     useEffect(() => {
         document.title = 'Frontend Settings – WorkGroup'
 
-        var tokenHeaders = new Headers()
+        let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: tokenHeaders,
             redirect: 'follow',
@@ -104,7 +104,7 @@ function SettingsFrontend() {
         const formData = new FormData()
         formData.append('logoFile', element)
 
-        var headers = new Headers()
+        let headers = new Headers()
         headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
         fetch(process.env.REACT_APP_API_URL + `/api/settings/uploadLogo`, {
@@ -128,11 +128,11 @@ function SettingsFrontend() {
     const saveFrontendSettings = () => {
         setIsLoading(true)
 
-        var headers = new Headers()
+        let headers = new Headers()
         headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         headers.append('Content-Type', 'application/json')
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({

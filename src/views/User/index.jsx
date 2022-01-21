@@ -17,9 +17,9 @@ function User() {
     useEffect(() => {
         document.title = 'Loading user... – WorkGroup'
 
-        var userInformationHeader = new Headers()
+        let userInformationHeader = new Headers()
         userInformationHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: userInformationHeader,
             redirect: 'follow',

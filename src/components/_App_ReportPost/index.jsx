@@ -15,7 +15,7 @@ function ReportPost(props) {
     const handleReport = () => {
         setReportIsLoading(true)
 
-        var header = new Headers()
+        let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
         header.append('Content-Type', 'application/json')
 

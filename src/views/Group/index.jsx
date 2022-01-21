@@ -18,9 +18,9 @@ function Group() {
     useEffect(() => {
         document.title = 'Loading group... – WorkGroup'
 
-        var userInformationHeader = new Headers()
+        let userInformationHeader = new Headers()
         userInformationHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        var requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: userInformationHeader,
             redirect: 'follow',

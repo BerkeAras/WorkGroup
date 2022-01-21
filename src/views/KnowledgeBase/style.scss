@@ -6,12 +6,12 @@ body {
 
 .main_content--knowledge-base {
     padding: 20px;
-	position: absolute;
-	top: 51px;
-	right: 0;
-	width: calc(100% - 300px);
-	height: calc(100% - 51px);
-	overflow: auto;
+    position: absolute;
+    top: 51px;
+    right: 0;
+    width: calc(100% - 300px);
+    height: calc(100% - 51px);
+    overflow: auto;
 
     .KnowledgeBase {
         &-Folder,
@@ -23,8 +23,13 @@ body {
             padding: 15px;
             font-size: 17px;
             border: 1px solid #dbdbdb;
-            transition: all .1s;
+            transition: all 0.1s;
             color: black;
+
+            i {
+                margin-left: 10px;
+                color: #bdc2ca;
+            }
 
             &:not(:last-of-type) {
                 border-bottom: 0;
@@ -35,10 +40,11 @@ body {
                 margin-right: 15px;
                 stroke: #b5b7b9;
                 fill: white;
-                transition: all .1s;
+                transition: all 0.1s;
             }
 
-            &:hover, &:focus-visible {
+            &:hover,
+            &:focus-visible {
                 background: #f7f7f7;
                 color: $primary-color;
 
@@ -46,13 +52,16 @@ body {
                     stroke: $primary-color;
                     fill: $primary-color;
                 }
+                i {
+                    color: #9096a0;
+                }
             }
         }
     }
 
     center {
         margin-top: 50px;
-        
+
         svg {
             color: #cecece;
             margin-bottom: 20px;
