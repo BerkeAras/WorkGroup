@@ -157,12 +157,12 @@ class PostsList extends React.Component {
                             }
 
                             console.log('G');
-                            this.setState((state) => ({
+                            this.setState({
                                 items: res,
                                 cursor: this.state.cursor + 1,
                                 isLoading: false,
                                 loaded: true,
-                            }))
+                            })
                         }
                     }
                 },
