@@ -151,7 +151,7 @@ class PostsList extends React.Component {
                             }
 
                             this.setState((state) => ({
-                                items: [...state.items, ...res],
+                                items: [...this.state.items, ...res],
                                 cursor: this.state.cursor + 1,
                                 isLoading: false,
                                 loaded: true,
