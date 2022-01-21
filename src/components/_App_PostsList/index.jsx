@@ -15,7 +15,7 @@ import unknownAvatar from '../../static/unknown.png'
 import CommentSection from '../_App_CommentSection/'
 import ReportPost from '../_App_ReportPost/'
 
-export default function PostsList() {
+export default function PostsList(props) {
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,12 +33,27 @@ export default function PostsList() {
 
     useEffect(() => {
         loadMore();
+        console.log(props.group, props.user);
     }, [])
 
     const loadMore = (page = 1) => {
         setIsLoading(true);
         document.querySelector('.app').scrollTo(0, 0)
-        let postLoader = loadPosts({page: page});
+
+        let postLoader;
+
+        if (props.group !== undefined) {
+            postLoader = loadPosts({page: page, filterBy: 'group', filter: props.group});
+        } else {
+
+            if (props.user !== "*") {
+                postLoader = loadPosts({page: page, filterBy: 'user', filter: props.user});
+            } else {
+                postLoader = loadPosts({page: page});
+            }
+
+        }
+
         setPaginationPage(page);
 
         postLoader.then(res => {
