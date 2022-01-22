@@ -19,7 +19,7 @@ const MainApp = () => {
     const contextValue = useContext(ConfigContext)
 
     useEffect(() => {
-        document.title = 'Feed - WorkGroup'
+        document.title = 'Feed – WorkGroup'
     }, [])
 
     return (
