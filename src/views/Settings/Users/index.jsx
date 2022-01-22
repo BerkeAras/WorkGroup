@@ -101,7 +101,7 @@ function SettingsUsers() {
                                         </List>
                                     )
                                 })}
-                                <Pagination onPageChange={(event) => handlePaginationChange(event)} defaultActivePage={1} activePage={paginationPage} totalPages={totalPaginationPages} />
+                                <Pagination onPageChange={(event) => handlePaginationChange(event)} activePage={paginationPage} totalPages={totalPaginationPages} />
                             </>
                         ) : (
                             <center>

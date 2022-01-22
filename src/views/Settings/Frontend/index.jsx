@@ -213,7 +213,7 @@ function SettingsFrontend() {
                         </Form.Field>
                         <Form.Field>
                             <label>Minimum Search Length</label>
-                            <Input min={0} disabled={isLoading} type="number" value={searchLength} onChange={(e) => setSearchLength(e.target.value)} placeholder="Minimum length to search" />
+                            <Input min={1} disabled={isLoading} type="number" value={searchLength} onChange={(e) => setSearchLength(e.target.value)} placeholder="Minimum length to search" />
                         </Form.Field>
                         <Form.Field>
                             <label>Maximum Posts per Page</label>

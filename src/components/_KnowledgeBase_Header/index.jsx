@@ -289,7 +289,7 @@ function KnowledgeBaseHeader(props) {
                                 size="small"
                                 placeholder="File Name"
                             />
-                        </Form.Field>
+                        </Form.Field><br />
                         <Form.Field>
                             <Input
                                 disabled={isLoading}

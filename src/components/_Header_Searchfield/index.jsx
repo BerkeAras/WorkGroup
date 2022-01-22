@@ -22,6 +22,7 @@ const SearchField = () => {
     const [topicResult, setTopicResult] = useState([])
     const [popularTopics, setPopularTopics] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
+    const [minimumSearchLength, setMinimumSearchLength] = useState(3);
 
     useEffect(() => {
         let tokenHeaders = new Headers()
@@ -37,6 +38,15 @@ const SearchField = () => {
             .then((result) => {
                 setPopularTopics(result)
             })
+
+        if (contextValue != undefined) {
+
+            let minimumSearchLengthContext = contextValue.app.minimum_search_length;
+            minimumSearchLengthContext = Number.parseInt(minimumSearchLengthContext)
+
+            setMinimumSearchLength(minimumSearchLengthContext)
+        }
+
     }, [])
 
     const showMobileSearch = (event) => {
@@ -51,13 +61,7 @@ const SearchField = () => {
         const controller = new AbortController()
         const { signal } = controller
 
-        let minimumLength = 3
-
-        if (contextValue != undefined) {
-            minimumLength = contextValue.app.minimum_search_length
-        }
-
-        if (inputValue == '' || inputValue.length < minimumLength) {
+        if (inputValue == '' || inputValue.length < minimumSearchLength) {
             setUserResult([])
             setGroupResult([])
             setTopicResult([])
@@ -124,7 +128,7 @@ const SearchField = () => {
                     }}
                 >
                     <DebounceInput
-                        minLength={3}
+                        minLength={minimumSearchLength}
                         debounceTimeout={500}
                         value={searchQuery}
                         onFocus={searchFieldFocus}
@@ -136,64 +140,74 @@ const SearchField = () => {
 
                 <div className="SearchField-Results" tabIndex="-1">
                     <ul>
-                        {userResult.length > 0 && (
-                            <>
-                                <span className="divider">Users</span>
-                                {userResult.map((user) => {
-                                    return (
-                                        <li key={user.id}>
-                                            <Link onClick={() => document.activeElement.blur()} to={'/app/user/' + user.email}>
-                                                <User size={20} strokeWidth={2.7} /> {user.name}{' '}
-                                                {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </>
+                        {userResult && (
+                            userResult.length > 0 && (
+                                <>
+                                    <span className="divider">Users</span>
+                                    {userResult.map((user) => {
+                                        return (
+                                            <li key={user.id}>
+                                                <Link onClick={() => document.activeElement.blur()} to={'/app/user/' + user.email}>
+                                                    <User size={20} strokeWidth={2.7} /> {user.name}{' '}
+                                                    {(user.user_department !== null || user.user_department !== '') && <small>{user.user_department}</small>}
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                </>
+                            )
                         )}
-                        {groupResult.length > 0 && (
-                            <>
-                                <span className="divider">Groups</span>
-                                {groupResult.map((group) => {
-                                    return (
-                                        <li key={group.id}>
-                                            <Link onClick={() => document.activeElement.blur()} to={'/app/group/' + group.id}>
-                                                <Users size={20} strokeWidth={2.7} /> {group.group_title}
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </>
+                        {groupResult && (
+                            groupResult.length > 0 && (
+                                <>
+                                    <span className="divider">Groups</span>
+                                    {groupResult.map((group) => {
+                                        return (
+                                            <li key={group.id}>
+                                                <Link onClick={() => document.activeElement.blur()} to={'/app/group/' + group.id}>
+                                                    <Users size={20} strokeWidth={2.7} /> {group.group_title}
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                </>
+                            )
                         )}
-                        {topicResult.length > 0 && (
-                            <>
-                                <span className="divider">Popular topics</span>
-                                {topicResult.map((topic) => {
-                                    return (
-                                        <li key={topic.id}>
-                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
-                                                <Hash size={18} strokeWidth={2.7} /> {topic.topic}
-                                            </Link>
-                                        </li>
-                                    )
-                                })}
-                            </>
+                        {topicResult && (
+                            topicResult.length > 0 && (
+                                <>
+                                    <span className="divider">Popular topics</span>
+                                    {topicResult.map((topic) => {
+                                        return (
+                                            <li key={topic.id}>
+                                                <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
+                                                    <Hash size={18} strokeWidth={2.7} /> {topic.topic}
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                </>
+                            )
                         )}
 
-                        {userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length >= 3 && (
-                            <center className="search-error">
-                                <AlertTriangle size={35} strokeWidth={2} />
-                                <br />
-                                <span>No Search Results found!</span>
-                            </center>
+                        {(userResult && groupResult && topicResult && searchQuery) && (
+                            userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length >= minimumSearchLength && (
+                                <center className="search-error">
+                                    <AlertTriangle size={35} strokeWidth={2} />
+                                    <br />
+                                    <span>No Search Results found!</span>
+                                </center>
+                            )
                         )}
-                        {userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length < 3 && (
+
+                        {(userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length < minimumSearchLength || searchQuery.length == 0) && (
                             <center className="search-error">
                                 <Zap size={35} strokeWidth={2} />
                                 <br />
                                 <span>Search for colleagues, groups, events and more...</span>
                             </center>
                         )}
+
                     </ul>
                 </div>
             </div>

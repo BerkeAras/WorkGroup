@@ -176,6 +176,11 @@
     }
     .user-avatar {
         outline: 0;
+        a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+        }
         img {
             height: 100% !important;
             object-fit: cover;

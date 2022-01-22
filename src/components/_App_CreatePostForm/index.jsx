@@ -319,7 +319,7 @@ class CreatePostForm extends React.Component {
                             />
                             <Popup
                                 trigger={<Button loading={this.state.uploadFileLoading} onClick={() => this.fileInputRef.current.click()} icon="file pdf" basic></Button>}
-                                content="Upload PDF"
+                                content="Upload Files"
                                 position="bottom left"
                             />
                         </div>

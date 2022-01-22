@@ -169,7 +169,7 @@ export default function PostsList(props) {
                                                                         onClick={(e) => {
                                                                             e.preventDefault()
                                                                             setImageModalUrl(process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url)
-                                                                            setReportModalVisible(true)
+                                                                            setImageModalVisible(true)
                                                                         }}
                                                                     >
                                                                         <img src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
@@ -229,7 +229,7 @@ export default function PostsList(props) {
                             ))}
 
                             <div style={{textAlign:'center',width:'100%'}}>
-                                <Pagination style={{marginTop:'20px'}} activePage={paginationPage} onPageChange={(event) => handlePaginationChange(event)} defaultActivePage={1} totalPages={totalPaginationPages} />
+                                <Pagination style={{marginTop:'20px'}} activePage={paginationPage} onPageChange={(event) => handlePaginationChange(event)} totalPages={totalPaginationPages} />
                             </div>
 
                         </React.Fragment>
@@ -250,9 +250,9 @@ export default function PostsList(props) {
             {isLoading && <Loader active>Loading Feed</Loader>}
 
             <Modal
-                onClose={() => imageModalVisible(false)}
-                onClick={() => imageModalVisible(false)}
-                onOpen={() => imageModalVisible(true)}
+                onClose={() => setImageModalVisible(false)}
+                onClick={() => setImageModalVisible(false)}
+                onOpen={() => setImageModalVisible(true)}
                 open={imageModalVisible}
                 className="image-modal-content"
             >
