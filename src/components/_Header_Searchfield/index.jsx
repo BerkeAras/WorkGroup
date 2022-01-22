@@ -86,7 +86,7 @@ const SearchField = () => {
                 .then((response) => response.json())
                 .then((result) => {
                     let userResult = result[0]
-                    let groupResult = result[1]
+                    let groupResult = Object.values(result[1])
                     let topicResult = result[2]
 
                     setUserResult(userResult)
