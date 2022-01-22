@@ -107,7 +107,6 @@ function KnowledgeBase() {
                 return response.json()
             })
             .then((response) => {
-                console.log(response)
                 setIsLoading(false)
             })
     }

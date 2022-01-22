@@ -37,13 +37,13 @@ export default function toggleComment(event, visibleCommentSectionsState) {
         visibleCommentSections.push(val)
 
         // Set state
-        return visibleCommentSections;
+        return visibleCommentSections
     } else {
         newStatus = false
 
         let visibleCommentSections = [...visibleCommentSectionsState]
         visibleCommentSections.remove(val)
 
-        return visibleCommentSections;
+        return visibleCommentSections
     }
 }

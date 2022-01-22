@@ -64,6 +64,6 @@ export default function likePost(event) {
         .then((response) => response.text())
         .then((result) => {
             element.parentNode.style.pointerEvents = 'all'
-            return 1;
+            return 1
         })
 }

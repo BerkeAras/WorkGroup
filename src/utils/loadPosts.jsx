@@ -1,18 +1,17 @@
-export default function loadPosts(config = {
-    filterBy: null, // NULL, 'user', 'group'
-    filter: null, // NULL, 'userId', 'groupId'
-    page: 1
-}) {
-
+export default function loadPosts(
+    config = {
+        filterBy: null, // NULL, 'user', 'group'
+        filter: null, // NULL, 'userId', 'groupId'
+        page: 1,
+    }
+) {
     config = {
         filterBy: config.filterBy,
         filter: config.filter,
-        page: config.page || 1
+        page: config.page || 1,
     }
 
-
-    return new Promise(function(resolve, reject) {
-
+    return new Promise(function (resolve, reject) {
         let postsHeader = new Headers()
         postsHeader.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
@@ -45,21 +44,20 @@ export default function loadPosts(config = {
                         }
                     } else {
                         if (res.status == 'not_member') {
-                            reject('This group is private. You have to be a member of this group to be able to read posts.');
+                            reject('This group is private. You have to be a member of this group to be able to read posts.')
                         } else {
                             resolve({
                                 posts: res.posts,
                                 totalPages: res.total_pages,
-                                currentPage: res.current_page
+                                currentPage: res.current_page,
                             })
                         }
                     }
                 },
                 (error) => {
-                    console.error(error);
-                    reject("An unknown error occurred. Please try again later.");
+                    console.error(error)
+                    reject('An unknown error occurred. Please try again later.')
                 }
             )
-
-    });
+    })
 }
