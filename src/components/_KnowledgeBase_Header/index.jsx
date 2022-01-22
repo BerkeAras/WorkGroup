@@ -141,7 +141,6 @@ function KnowledgeBaseHeader(props) {
 
     const fileChange = (e) => {
         setUploadFile(e.target.files[0])
-        console.log(e.target.files[0])
     }
 
     const uploadNewFile = () => {
@@ -164,7 +163,6 @@ function KnowledgeBaseHeader(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/uploadFile', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setIsLoading(false)
             })
             .catch((error) => {
@@ -289,7 +287,8 @@ function KnowledgeBaseHeader(props) {
                                 size="small"
                                 placeholder="File Name"
                             />
-                        </Form.Field><br />
+                        </Form.Field>
+                        <br />
                         <Form.Field>
                             <Input
                                 disabled={isLoading}

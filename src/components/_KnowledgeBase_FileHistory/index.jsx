@@ -28,7 +28,6 @@ function KnowledgeBaseFileHistory(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFileHistory?file_id=' + fileId, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setFileHistoryItems(result.file_history)
                 setIsLoading(false)
             })

@@ -8,7 +8,7 @@ import getFriendlyDate from '../../utils/getFriendlyDate'
 import loadPosts from '../../utils/loadPosts'
 import likePost from '../../utils/likePost'
 import toggleComment from '../../utils/toggleComment'
-import VirtualScroll from "react-dynamic-virtual-scroll";
+import VirtualScroll from 'react-dynamic-virtual-scroll'
 
 import unknownAvatar from '../../static/unknown.png'
 
@@ -16,55 +16,53 @@ import CommentSection from '../_App_CommentSection/'
 import ReportPost from '../_App_ReportPost/'
 
 export default function PostsList(props) {
-
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [items, setItems] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const [paginationPage, setPaginationPage] = useState(1)
     const [totalPaginationPages, setTotalPagionationPages] = useState(1)
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const [visibleCommentSections, setVisibleCommentSections] = useState([]);
-    const [emptyStates, setEmptyStates] = useState(["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.']);
-    const [imageModalVisible, setImageModalVisible] = useState(false);
-    const [imageModalUrl, setImageModalUrl] = useState('');
-    const [reportModalVisible, setReportModalVisible] = useState(false);
-    const [reportModalPostId, setReportModalPostId] = useState(0);
-    const [reportSuccessVisible, setReportSuccessVisible] = useState(false);
-    const [reportErrorVisible, setReportErrorVisible] = useState(false);
+    const [isLoadingMore, setIsLoadingMore] = useState(false)
+    const [visibleCommentSections, setVisibleCommentSections] = useState([])
+    const [emptyStates, setEmptyStates] = useState(["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'])
+    const [imageModalVisible, setImageModalVisible] = useState(false)
+    const [imageModalUrl, setImageModalUrl] = useState('')
+    const [reportModalVisible, setReportModalVisible] = useState(false)
+    const [reportModalPostId, setReportModalPostId] = useState(0)
+    const [reportSuccessVisible, setReportSuccessVisible] = useState(false)
+    const [reportErrorVisible, setReportErrorVisible] = useState(false)
 
     useEffect(() => {
-        loadMore();
-        console.log(props.group, props.user);
+        loadMore()
     }, [])
 
     const loadMore = (page = 1) => {
-        setIsLoading(true);
+        setIsLoading(true)
         document.querySelector('.app').scrollTo(0, 0)
 
-        let postLoader;
+        let postLoader
 
         if (props.group !== undefined) {
-            postLoader = loadPosts({page: page, filterBy: 'group', filter: props.group});
+            postLoader = loadPosts({ page: page, filterBy: 'group', filter: props.group })
         } else {
-
-            if (props.user !== "*") {
-                postLoader = loadPosts({page: page, filterBy: 'user', filter: props.user});
+            if (props.user !== '*') {
+                postLoader = loadPosts({ page: page, filterBy: 'user', filter: props.user })
             } else {
-                postLoader = loadPosts({page: page});
+                postLoader = loadPosts({ page: page })
             }
-
         }
 
-        setPaginationPage(page);
+        setPaginationPage(page)
 
-        postLoader.then(res => {
-            setIsLoading(false);
-            setItems(Object.values(res.posts));
-            setTotalPagionationPages(res.totalPages);
-        }).catch(err => {
-            console.error(err);
-            setIsLoading(false);
-            setItems([]);
-        })
+        postLoader
+            .then((res) => {
+                setIsLoading(false)
+                setItems(Object.values(res.posts))
+                setTotalPagionationPages(res.totalPages)
+            })
+            .catch((err) => {
+                console.error(err)
+                setIsLoading(false)
+                setItems([])
+            })
     }
 
     const handlePaginationChange = (event) => {
@@ -109,12 +107,12 @@ export default function PostsList(props) {
     const reportPost = (e, postId) => {
         e.preventDefault()
 
-        setReportModalVisible(true);
-        setReportModalPostId(postId);
+        setReportModalVisible(true)
+        setReportModalPostId(postId)
     }
 
     const commentOpener = (e) => {
-        setVisibleCommentSections(toggleComment(e, visibleCommentSections));
+        setVisibleCommentSections(toggleComment(e, visibleCommentSections))
     }
 
     return (
@@ -202,11 +200,25 @@ export default function PostsList(props) {
                                                 )}
                                             </Feed.Extra>
                                             <Feed.Meta>
-                                                <Feed.Like href="#" onClick={(e) => {likePost(e)}} id={'post_like_id_' + item.id} className={item.hasLiked}>
+                                                <Feed.Like
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        likePost(e)
+                                                    }}
+                                                    id={'post_like_id_' + item.id}
+                                                    className={item.hasLiked}
+                                                >
                                                     <ThumbsUp size={16} strokeWidth={2.5} />
                                                     <span>{getLikes(item.likes)}</span>
                                                 </Feed.Like>
-                                                <a href="#" className="comment-button" onClick={(e) => {commentOpener(e)}} id={'post_comment_id_' + item.id}>
+                                                <a
+                                                    href="#"
+                                                    className="comment-button"
+                                                    onClick={(e) => {
+                                                        commentOpener(e)
+                                                    }}
+                                                    id={'post_comment_id_' + item.id}
+                                                >
                                                     <MessageCircle size={16} strokeWidth={2.5} />
                                                     <span>{getComments(item.comments)}</span>
                                                 </a>
@@ -228,10 +240,9 @@ export default function PostsList(props) {
                                 </React.Fragment>
                             ))}
 
-                            <div style={{textAlign:'center',width:'100%'}}>
-                                <Pagination style={{marginTop:'20px'}} activePage={paginationPage} onPageChange={(event) => handlePaginationChange(event)} totalPages={totalPaginationPages} />
+                            <div style={{ textAlign: 'center', width: '100%' }}>
+                                <Pagination style={{ marginTop: '20px' }} activePage={paginationPage} onPageChange={(event) => handlePaginationChange(event)} totalPages={totalPaginationPages} />
                             </div>
-
                         </React.Fragment>
                     ) : (
                         <Feed.Event>
@@ -272,19 +283,11 @@ export default function PostsList(props) {
                 />
             )}
 
-            <Modal
-                onClose={() => setReportSuccessVisible(false)}
-                onOpen={() => setReportSuccessVisible(true)}
-                open={reportSuccessVisible}
-                size="mini"
-            >
+            <Modal onClose={() => setReportSuccessVisible(false)} onOpen={() => setReportSuccessVisible(true)} open={reportSuccessVisible} size="mini">
                 <Modal.Header>Post reported!</Modal.Header>
                 <Modal.Content>Thank you for your feedback about this post. We will review it immediately.</Modal.Content>
                 <Modal.Actions>
-                    <Button
-                        color="black"
-                        onClick={() => setReportSuccessVisible(false)}
-                    >
+                    <Button color="black" onClick={() => setReportSuccessVisible(false)}>
                         Dismiss
                     </Button>
                 </Modal.Actions>
@@ -300,7 +303,6 @@ export default function PostsList(props) {
             </Modal>
         </div>
     )
-
 }
 
 PostsList.propTypes = {

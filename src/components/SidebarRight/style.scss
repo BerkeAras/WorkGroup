@@ -60,6 +60,20 @@ body {
             }
         }
     }
+
+    .about-card-content {
+        a.about-link {
+            padding: 0px 1px;
+            margin: 2px 5px;
+            opacity: 0.8;
+
+            &:hover,
+            &:focus-visible,
+            &:active {
+                opacity: 1;
+            }
+        }
+    }
 }
 
 @media (max-width: 1130px) {
