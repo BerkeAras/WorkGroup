@@ -62,7 +62,6 @@ function SettingsUsers() {
     }
 
     const handleDropdownChange = (value) => {
-        console.log(value);
         setPaginationPage(1);
         setUserOrder(value);
         loadUsers(1, value);

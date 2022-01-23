@@ -8,12 +8,6 @@ import { CheckCircle } from 'react-feather'
 export default function UserInformation(props) {
     const contextValue = useContext(AuthContext)
 
-    useEffect(() => {
-        if (props.isOpenState) {
-            console.log(props)
-        }
-    }, [props])
-
     const getDateTime = (date) => {
         let dateObject = new Date(date)
         let dd = String(dateObject.getDate()).padStart(2, '0')
