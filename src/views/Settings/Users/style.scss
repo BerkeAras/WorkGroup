@@ -8,6 +8,11 @@
         object-fit: contain;
         cursor: pointer;
     }
+
+    .dropdown {
+        border-radius: 3px !important;
+    }
+
     .item[role='listitem'] {
         padding: 10px !important;
         background: transparent;

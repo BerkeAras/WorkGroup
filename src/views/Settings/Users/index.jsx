@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState, useEffect, useRef } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { List, Loader, Pagination, Button, Icon } from 'semantic-ui-react'
+import { List, Loader, Pagination, Dropdown, Icon } from 'semantic-ui-react'
 import './style.scss'
 import unknownAvatar from '../../../static/unknown.png'
 
@@ -9,17 +9,23 @@ import { Eye, Zap, Settings, Info } from 'react-feather'
 import UserInformation from '../../../components/_Settings_UserInformation'
 import UserSettings from '../../../components/_Settings_UserSettings'
 
+const sortByOptions = [
+    { key: 'created-at-desc', text: 'Registration (latest)', value: 'created-at-desc' },
+    { key: 'created-at-asc', text: 'Registration (oldest first)', value: 'created-at-asc' },
+    { key: 'online-desc', text: 'Online status (online first)', value: 'online-desc' },
+    { key: 'online-asc', text: 'Online status (offline first)', value: 'online-asc' },
+    { key: 'admin-desc', text: 'Administrator status (admins first)', value: 'admin-desc' },
+    { key: 'admin-asc', text: 'Administrator status (non-admins first)', value: 'admin-asc' },
+]
 function SettingsUsers() {
     const [isLoading, setIsLoading] = useState(false)
-
     const [paginationPage, setPaginationPage] = useState(1)
     const [totalPaginationPages, setTotalPagionationPages] = useState(1)
-
     const [users, setUsers] = useState([])
     const [selectedMember, setSelectedMember] = useState(null)
-
     const [showInformationModal, setShowInformationModal] = useState(false)
     const [showSettingsModal, setShowSettingsModal] = useState(false)
+    const [userOrder, setUserOrder] = useState('created-at-desc');
 
     useEffect(() => {
         document.title = 'Users – Settings – WorkGroup'
@@ -27,7 +33,7 @@ function SettingsUsers() {
         loadUsers(1)
     }, [])
 
-    const loadUsers = (page) => {
+    const loadUsers = (page, order = "created-at-desc") => {
         setPaginationPage(page)
         setIsLoading(true)
         let tokenHeaders = new Headers()
@@ -39,7 +45,7 @@ function SettingsUsers() {
             redirect: 'follow',
         }
 
-        fetch(process.env.REACT_APP_API_URL + '/api/settings/users?page=' + page, requestOptions)
+        fetch(process.env.REACT_APP_API_URL + '/api/settings/users?orderBy=' + order + '&page=' + page, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setIsLoading(false)
@@ -53,6 +59,13 @@ function SettingsUsers() {
 
     const handlePaginationChange = (event) => {
         loadUsers(Number.parseInt(event.target.getAttribute('value')))
+    }
+
+    const handleDropdownChange = (value) => {
+        console.log(value);
+        setPaginationPage(1);
+        setUserOrder(value);
+        loadUsers(1, value);
     }
 
     const getDate = (date) => {
@@ -99,6 +112,7 @@ function SettingsUsers() {
                     <>
                         {users ? (
                             <>
+                                <Dropdown options={sortByOptions} value={userOrder} onChange={(e, {value}) => {handleDropdownChange(value)}} placeholder='Sort by' />
                                 {users.map((member, index) => {
                                     return (
                                         <List key={index} divided relaxed>
