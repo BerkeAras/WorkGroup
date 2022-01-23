@@ -61,6 +61,8 @@ export default function UserInformation(props) {
                         <br />
                         <b>Last Online:</b> {getDateTime(props.member.user_last_online)}
                         <br />
+                        <b>Last IP:</b> {props.member.user_last_ip}
+                        <br />
                     </p>
                 </Modal.Content>
                 <Modal.Actions>
