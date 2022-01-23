@@ -3,7 +3,7 @@ import './style.scss'
 import { Icon, Button, Loader, Dropdown } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import { MoreVertical } from 'react-feather'
-import ChangePassword from '../_User_ChangePassword';
+import ChangePassword from '../_User_ChangePassword'
 
 import unknownBanner from '../../static/banner.jpg'
 import unknownAvatar from '../../static/unknown.png'
@@ -14,7 +14,7 @@ function UserBanner(props) {
     const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
     const [isLoadingUser, setIsLoadingUser] = useState(true)
     const [showUserDropdown, setShowUserDropdown] = useState(false)
-    const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+    const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
     useEffect(() => {
         let userInformation = props.userInformation
@@ -109,7 +109,8 @@ function UserBanner(props) {
                                             </a>
                                             <a
                                                 onClick={(e) => {
-                                                    e.preventDefault();
+                                                    e.preventDefault()
+                                                    setShowUserDropdown(false)
                                                     setShowPasswordResetModal(true)
                                                 }}
                                                 href="#"

@@ -38,7 +38,7 @@ function SettingsFrontend() {
     }
 
     useEffect(() => {
-        document.title = 'Frontend Settings – WorkGroup'
+        document.title = 'Frontend – Settings – WorkGroup'
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))

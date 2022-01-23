@@ -1,19 +1,28 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState, useEffect, useRef } from 'react'
-import { List, Loader, Pagination } from 'semantic-ui-react'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { List, Loader, Pagination, Button, Icon } from 'semantic-ui-react'
 import './style.scss'
 import unknownAvatar from '../../../static/unknown.png'
 
-import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
+import { Eye, Zap, Settings, Info } from 'react-feather'
+import UserInformation from '../../../components/_Settings_UserInformation'
+import UserSettings from '../../../components/_Settings_UserSettings'
 
 function SettingsUsers() {
     const [isLoading, setIsLoading] = useState(false)
+
     const [paginationPage, setPaginationPage] = useState(1)
     const [totalPaginationPages, setTotalPagionationPages] = useState(1)
+
     const [users, setUsers] = useState([])
+    const [selectedMember, setSelectedMember] = useState(null)
+
+    const [showInformationModal, setShowInformationModal] = useState(false)
+    const [showSettingsModal, setShowSettingsModal] = useState(false)
 
     useEffect(() => {
-        document.title = 'Users – WorkGroup'
+        document.title = 'Users – Settings – WorkGroup'
 
         loadUsers(1)
     }, [])
@@ -69,6 +78,16 @@ function SettingsUsers() {
         return dateString
     }
 
+    const showUserInformation = (member) => {
+        setShowInformationModal(true)
+        setSelectedMember(member)
+    }
+
+    const showUserSettings = (member) => {
+        setShowSettingsModal(true)
+        setSelectedMember(member)
+    }
+
     return (
         <>
             <div className="settings_content">
@@ -83,7 +102,30 @@ function SettingsUsers() {
                                 {users.map((member, index) => {
                                     return (
                                         <List key={index} divided relaxed>
-                                            <List.Item href={`/app/user/${member.email}`}>
+                                            <List.Item>
+                                                <List.Content floated="right">
+                                                    <Link to={`/app/user/${member.email}`}>
+                                                        <button className="settings_user-button">
+                                                            <Eye size={24} />
+                                                        </button>
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => {
+                                                            showUserSettings(member)
+                                                        }}
+                                                        className="settings_user-button"
+                                                    >
+                                                        <Settings size={24} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            showUserInformation(member)
+                                                        }}
+                                                        className="settings_user-button"
+                                                    >
+                                                        <Info size={24} />
+                                                    </button>
+                                                </List.Content>
                                                 <List.Content>
                                                     <div className="settings_user-avatar">
                                                         <img
@@ -93,9 +135,13 @@ function SettingsUsers() {
                                                                 e.target.src = unknownAvatar
                                                             }}
                                                         />
+                                                        {member.is_admin ? <Icon className="settings_user-admin" name="shield" size="large" /> : null}
+                                                        {member.user_online ? <div className="settings_user-online"></div> : null}
                                                     </div>
-                                                    <List.Header as="a">{member.name}</List.Header>
-                                                    <List.Description as="a">{getDate(member.created_at)}</List.Description>
+                                                    <List.Header>
+                                                        {member.name} <i>#{member.id}</i>
+                                                    </List.Header>
+                                                    <List.Description>{getDate(member.created_at)}</List.Description>
                                                 </List.Content>
                                             </List.Item>
                                         </List>
@@ -114,6 +160,9 @@ function SettingsUsers() {
                     </>
                 )}
             </div>
+
+            <UserInformation member={selectedMember} isOpenState={showInformationModal} isOpenStateController={setShowInformationModal} />
+            <UserSettings member={selectedMember} isOpenState={showSettingsModal} isOpenStateController={setShowSettingsModal} />
         </>
     )
 }
