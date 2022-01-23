@@ -54,7 +54,7 @@ function SettingsMail() {
     }
 
     useEffect(() => {
-        document.title = 'Mail Settings – WorkGroup'
+        document.title = 'Mail – Settings – WorkGroup'
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))

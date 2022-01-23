@@ -8,12 +8,25 @@
         object-fit: contain;
         cursor: pointer;
     }
+
+    .dropdown {
+        border-radius: 3px !important;
+    }
+
     .item[role='listitem'] {
         padding: 10px !important;
         background: transparent;
         transition: all 0.15s;
 
+        .header {
+            i {
+                font-weight: 200;
+                color: #a6b3ba;
+            }
+        }
+
         div.settings_user-avatar {
+            position: relative;
             width: 32px;
             height: 32px;
             float: left;
@@ -28,10 +41,65 @@
                 object-fit: cover;
             }
         }
+        .settings_user-admin {
+            position: absolute;
+            background: #ffffff;
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 100px;
+            bottom: -5px;
+            left: -5px;
+            font-size: 14px;
+            line-height: 23px;
+            color: #2c85d0 !important;
+        }
+        .settings_user-online {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #8bc34a;
+            border-radius: 100px;
+            border: 2px solid white;
+        }
+        button.settings_user-button {
+            display: flex;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            border: 0;
+            float: right;
+            margin-left: 10px;
+            opacity: 0;
+            cursor: pointer;
+            outline: 0;
+            transition: all 0.15s;
+            background: white;
+
+            svg {
+                stroke: #2185d0;
+            }
+        }
 
         &:hover,
-        &:focus {
+        &:focus,
+        &:focus-within {
             background: #f2f4f5;
+
+            button.settings_user-button {
+                opacity: 1;
+            }
+
+            .settings_user-admin {
+                background: #f2f4f5;
+            }
+            .settings_user-online {
+                border: 2px solid #f2f4f5;
+            }
         }
     }
 }

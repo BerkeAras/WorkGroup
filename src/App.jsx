@@ -123,6 +123,9 @@ class App extends React.Component {
         const that = this
 
         this.loadConfig()
+        setTimeout(() => {
+            this.activityLogger()
+        }, 5000)
 
         if (localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
             let tokenHeaders = new Headers()
@@ -197,37 +200,41 @@ class App extends React.Component {
         }
 
         setInterval(() => {
-            if (this.state.isLoggedIn) {
-                // Send Active-State
-
-                let activityTokenHeaders = new Headers()
-                activityTokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-
-                const activityRequestOptions = {
-                    method: 'POST',
-                    headers: activityTokenHeaders,
-                    body: JSON.stringify({
-                        active: true,
-                    }),
-                }
-
-                // eslint-disable-next-line no-undef
-                fetch(process.env.REACT_APP_API_URL + '/api/auth/activity', activityRequestOptions)
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((response) => {
-                        if (response.token) {
-                            localStorage.setItem('token', response.token)
-                        }
-                    })
-            }
+            this.activityLogger()
         }, 180000) // Every 3 minutes
     }
 
     handleStateChange() {
         this.setState({ first_login: false })
         localStorage.removeItem('first_login')
+    }
+
+    activityLogger() {
+        if (this.state.isLoggedIn) {
+            // Send Active-State
+
+            let activityTokenHeaders = new Headers()
+            activityTokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+            const activityRequestOptions = {
+                method: 'POST',
+                headers: activityTokenHeaders,
+                body: JSON.stringify({
+                    active: true,
+                }),
+            }
+
+            // eslint-disable-next-line no-undef
+            fetch(process.env.REACT_APP_API_URL + '/api/auth/activity', activityRequestOptions)
+                .then((response) => {
+                    return response.json()
+                })
+                .then((response) => {
+                    if (response.token) {
+                        localStorage.setItem('token', response.token)
+                    }
+                })
+        }
     }
 
     render() {

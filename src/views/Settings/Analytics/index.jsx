@@ -33,7 +33,7 @@ function SettingsAnalytics() {
     }
 
     useEffect(() => {
-        document.title = 'Analytics Settings – WorkGroup'
+        document.title = 'Analytics – Settings – WorkGroup'
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))

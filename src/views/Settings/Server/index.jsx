@@ -34,7 +34,7 @@ function SettingsServer() {
     }
 
     useEffect(() => {
-        document.title = 'Server Settings – WorkGroup'
+        document.title = 'Server – Settings – WorkGroup'
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
