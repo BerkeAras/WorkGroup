@@ -68,7 +68,7 @@ function SettingsUsers() {
     }
 
     const getDate = (date) => {
-        let newDate = new Date(date)
+        let newDate = new Date(date.replace(/-/g, "/"))
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 

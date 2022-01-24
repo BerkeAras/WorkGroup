@@ -142,7 +142,7 @@ export default function PostsList(props) {
                                                 <Link className={`${item.group_id !== 0 && `user--group-member `}user`} to={'/app/user/' + item.email}>
                                                     {item.group_id !== 0 && <CornerDownRight size={12} strokeWidth={2.5} />} {item.name}
                                                 </Link>
-                                                <Feed.Date>{getFriendlyDate(new Date(item.created_at))}</Feed.Date>
+                                                <Feed.Date>{getFriendlyDate(new Date(item.created_at.replace(/-/g, "/")))}</Feed.Date>
                                             </Feed.Summary>
                                             <Feed.Extra className={item.post_content.length > 465 ? 'collapsed' : ''} text>
                                                 <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>
