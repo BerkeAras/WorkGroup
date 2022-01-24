@@ -126,7 +126,7 @@ export default function PostsList(props) {
                                     <Feed.Event id={'post_' + item.id} className={visibleCommentSections.includes(item.id) == 0 ? 'event--no-comments-visible' : ''}>
                                         <Feed.Label className="user-avatar">
                                             <Link to={'/app/user/' + item.email}>
-                                                {item.avatar == '' ? <img src={unknownAvatar} /> : <img src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
+                                                {item.avatar == '' ? <img loading="lazy" src={unknownAvatar} /> : <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
                                             </Link>
                                         </Feed.Label>
                                         <Feed.Content>
@@ -170,7 +170,7 @@ export default function PostsList(props) {
                                                                             setImageModalVisible(true)
                                                                         }}
                                                                     >
-                                                                        <img src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
+                                                                        <img loading="lazy" src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
                                                                     </a>
                                                                 </div>
                                                             )
