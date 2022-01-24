@@ -37,6 +37,7 @@ export default function UserSettings(props) {
         if (props.isOpenState) {
             setUserName(props.member.name)
             setUserEmail(props.member.email)
+            setUserResetPassword(false);
 
             setUserBirthday(props.member.user_information.user_birthday)
             setUserCity(props.member.user_information.user_city)
@@ -130,6 +131,18 @@ export default function UserSettings(props) {
                     <Modal.Content>
                         <Form>
                             <small className="user-settings-modal_small">User Profile Settings</small>
+                            <Form.Field>
+                                <label htmlFor="email">E-Mail</label>
+                                <Input
+                                    autoComplete="off"
+                                    id="email"
+                                    placeholder="Enter the E-Mail"
+                                    value={userEmail}
+                                    onChange={(e) => {
+                                        setUserEmail(e.target.value)
+                                    }}
+                                />
+                            </Form.Field>
                             <Form.Field>
                                 <label htmlFor="name">Name</label>
                                 <Input
