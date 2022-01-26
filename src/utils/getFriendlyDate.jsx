@@ -1,5 +1,4 @@
 export default function getFriendlyDate(date) {
-    console.log('D', date);
     let time = Math.round((+new Date() - date) / 1000)
 
     let minute = 60,
