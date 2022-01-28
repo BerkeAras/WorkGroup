@@ -107,7 +107,7 @@ class CommentSection extends React.Component {
     }
 
     getDate(date) {
-        let newDate = new Date(date.replace(/-/g, "/"))
+        let newDate = new Date(date.replace(/-/g, '/'))
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -117,7 +117,7 @@ class CommentSection extends React.Component {
 
         if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
             todaysDate = new Date()
-            newDate = new Date(date.replace(/-/g, "/"))
+            newDate = new Date(date.replace(/-/g, '/'))
             let currentHours = newDate.getHours()
             currentHours = ('0' + currentHours).slice(-2)
 

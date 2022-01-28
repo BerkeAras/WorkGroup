@@ -25,7 +25,7 @@ function SettingsUsers() {
     const [selectedMember, setSelectedMember] = useState(null)
     const [showInformationModal, setShowInformationModal] = useState(false)
     const [showSettingsModal, setShowSettingsModal] = useState(false)
-    const [userOrder, setUserOrder] = useState('created-at-desc');
+    const [userOrder, setUserOrder] = useState('created-at-desc')
 
     useEffect(() => {
         document.title = 'Users – Settings – WorkGroup'
@@ -33,7 +33,7 @@ function SettingsUsers() {
         loadUsers(1)
     }, [])
 
-    const loadUsers = (page, order = "created-at-desc") => {
+    const loadUsers = (page, order = 'created-at-desc') => {
         setPaginationPage(page)
         setIsLoading(true)
         let tokenHeaders = new Headers()
@@ -62,13 +62,13 @@ function SettingsUsers() {
     }
 
     const handleDropdownChange = (value) => {
-        setPaginationPage(1);
-        setUserOrder(value);
-        loadUsers(1, value);
+        setPaginationPage(1)
+        setUserOrder(value)
+        loadUsers(1, value)
     }
 
     const getDate = (date) => {
-        let newDate = new Date(date.replace(/-/g, "/"))
+        let newDate = new Date(date.replace(/-/g, '/'))
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -111,7 +111,14 @@ function SettingsUsers() {
                     <>
                         {users ? (
                             <>
-                                <Dropdown options={sortByOptions} value={userOrder} onChange={(e, {value}) => {handleDropdownChange(value)}} placeholder='Sort by' />
+                                <Dropdown
+                                    options={sortByOptions}
+                                    value={userOrder}
+                                    onChange={(e, { value }) => {
+                                        handleDropdownChange(value)
+                                    }}
+                                    placeholder="Sort by"
+                                />
                                 {users.map((member, index) => {
                                     return (
                                         <List key={index} divided relaxed>

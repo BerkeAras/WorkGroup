@@ -8,9 +8,9 @@ import countryOptions from '../../utils/countries'
 export default function UserSettings(props) {
     const contextValue = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const [showErrorModal, setShowErrorModal] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const [showErrorModal, setShowErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     // User
     const [userName, setUserName] = useState('')
@@ -37,7 +37,7 @@ export default function UserSettings(props) {
         if (props.isOpenState) {
             setUserName(props.member.name)
             setUserEmail(props.member.email)
-            setUserResetPassword(false);
+            setUserResetPassword(false)
 
             setUserBirthday(props.member.user_information.user_birthday)
             setUserCity(props.member.user_information.user_city)
@@ -53,7 +53,7 @@ export default function UserSettings(props) {
     }, [props])
 
     const getDateTime = (date) => {
-        let dateObject = new Date(date.replace(/-/g, "/"))
+        let dateObject = new Date(date.replace(/-/g, '/'))
         let dd = String(dateObject.getDate()).padStart(2, '0')
         let mm = String(dateObject.getMonth() + 1).padStart(2, '0') //January is 0!
         let yyyy = dateObject.getFullYear()
@@ -103,11 +103,11 @@ export default function UserSettings(props) {
             .then((result) => {
                 props.isOpenStateController(false)
                 if (result.error == false) {
-                    setErrorMessage("");
-                    setShowSuccessModal(true);
+                    setErrorMessage('')
+                    setShowSuccessModal(true)
                 } else {
-                    setErrorMessage(result.message);
-                    setShowErrorModal(true);
+                    setErrorMessage(result.message)
+                    setShowErrorModal(true)
                 }
                 setIsLoading(false)
             })
