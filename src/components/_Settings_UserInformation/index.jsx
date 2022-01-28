@@ -9,7 +9,7 @@ export default function UserInformation(props) {
     const contextValue = useContext(AuthContext)
 
     const getDateTime = (date) => {
-        let dateObject = new Date(date.replace(/-/g, "/"))
+        let dateObject = new Date(date.replace(/-/g, '/'))
         let dd = String(dateObject.getDate()).padStart(2, '0')
         let mm = String(dateObject.getMonth() + 1).padStart(2, '0') //January is 0!
         let yyyy = dateObject.getFullYear()

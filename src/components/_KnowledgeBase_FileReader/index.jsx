@@ -8,10 +8,13 @@ import remarkGfm from 'remark-gfm'
 import PropTypes from 'prop-types'
 import './style.scss'
 
+const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'tiff']
+
 function KnowledgeBaseFileReader(props) {
     const { fileId, folderId, historyId } = useParams()
     const [file, setFile] = useState(null)
     const [fileContent, setFileContent] = useState('')
+    const [imageUrl, setImageUrl] = useState(null)
     const [blobDownload, setBlobDownload] = useState('')
     const [modifiedFileTextAreaContent, setModifiedFileTextAreaContent] = useState('')
 
@@ -67,6 +70,10 @@ function KnowledgeBaseFileReader(props) {
                         .then((previewResult) => {
                             props.setModifiedFileContentProp(previewResult)
                             setFileContent(previewResult)
+
+                            if (imageExtensions.includes(result.knowledge_base_file_extension)) {
+                                setImageUrl(previewResult)
+                            }
                         })
                         .catch((error) => {
                             console.error(error)
@@ -112,8 +119,21 @@ function KnowledgeBaseFileReader(props) {
                                 </>
                             ) : file.knowledge_base_file_extension == 'txt' ? (
                                 <p>{nl2br(fileContent)}</p>
+                            ) : file.knowledge_base_file_extension == 'html' ? (
+                                <div className="KnowledgeBaseFileReader_html" dangerouslySetInnerHTML={{ __html: fileContent }}></div>
+                            ) : imageExtensions.includes(file.knowledge_base_file_extension) ? (
+                                <img className="KnowledgeBaseFileReader_image" src={imageUrl} alt={file.knowledge_base_file_name} />
                             ) : (
-                                file.knowledge_base_file_extension == 'html' && <div className="KnowledgeBaseFileReader_html" dangerouslySetInnerHTML={{ __html: fileContent }}></div>
+                                <center>
+                                    <Zap size={35} strokeWidth={2} />
+                                    <h1>The file &quot;{file.knowledge_base_file_name}&quot; is being downloaded...</h1>
+                                    <span>
+                                        Download did not start?{' '}
+                                        <a href={blobDownload} rel="noreferrer" target="_blank" download={file.knowledge_base_file_path}>
+                                            Try again.
+                                        </a>
+                                    </span>
+                                </center>
                             )}
                         </>
                     )}

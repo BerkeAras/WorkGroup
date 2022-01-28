@@ -114,7 +114,7 @@ function KnowledgeBaseFileHistory(props) {
                                     >
                                         <List.Item>
                                             <List.Content>
-                                                <List.Header as="a">{getDate(fileHistoryItem.created_at.replace(/-/g, "/"))}</List.Header>
+                                                <List.Header as="a">{getDate(fileHistoryItem.created_at.replace(/-/g, '/'))}</List.Header>
                                                 <List.Description as="a">
                                                     File overwritten by <b>{fileHistoryItem.user_name}</b>.
                                                 </List.Description>

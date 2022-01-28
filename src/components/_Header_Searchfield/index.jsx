@@ -7,7 +7,7 @@ import ConfigContext from '../../store/ConfigContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { User, Search, Hash, Users, Zap, AlertTriangle } from 'react-feather'
+import { User, Search, Hash, Users, Zap, AlertTriangle, Folder, FileText } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -20,25 +20,12 @@ const SearchField = () => {
     const [userResult, setUserResult] = useState([])
     const [groupResult, setGroupResult] = useState([])
     const [topicResult, setTopicResult] = useState([])
-    const [popularTopics, setPopularTopics] = useState([])
+    const [knowledgeBaseFoldersResult, setKnowledgeBaseFoldersResult] = useState([])
+    const [knowledgeBaseFilesResult, setKnowledgeBaseFilesResult] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
     const [minimumSearchLength, setMinimumSearchLength] = useState(3)
 
     useEffect(() => {
-        let tokenHeaders = new Headers()
-        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-        let requestOptions = {
-            method: 'GET',
-            headers: tokenHeaders,
-            redirect: 'follow',
-        }
-        // eslint-disable-next-line no-undef
-        fetch(process.env.REACT_APP_API_URL + '/api/sidebar/popular', requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                setPopularTopics(result)
-            })
-
         if (contextValue != undefined) {
             let minimumSearchLengthContext = contextValue.app.minimum_search_length
             minimumSearchLengthContext = Number.parseInt(minimumSearchLengthContext)
@@ -63,6 +50,8 @@ const SearchField = () => {
             setUserResult([])
             setGroupResult([])
             setTopicResult([])
+            setKnowledgeBaseFoldersResult([])
+            setKnowledgeBaseFilesResult([])
             setIsLoadingResults(false)
         } else {
             controller.abort()
@@ -86,10 +75,14 @@ const SearchField = () => {
                     let userResult = result[0]
                     let groupResult = Object.values(result[1])
                     let topicResult = result[2]
+                    let knowledgeBaseFolders = result[3]
+                    let knowledgeBaseFiles = result[4]
 
                     setUserResult(userResult)
                     setGroupResult(groupResult)
                     setTopicResult(topicResult)
+                    setKnowledgeBaseFoldersResult(knowledgeBaseFolders)
+                    setKnowledgeBaseFilesResult(knowledgeBaseFiles)
 
                     setIsLoadingResults(false)
                 })
@@ -181,6 +174,37 @@ const SearchField = () => {
                                 })}
                             </>
                         )}
+                        {knowledgeBaseFoldersResult && knowledgeBaseFoldersResult.length > 0 && (
+                            <>
+                                <span className="divider">Folders</span>
+                                {knowledgeBaseFoldersResult.map((knowledgeBaseFoldersResult) => {
+                                    return (
+                                        <li key={knowledgeBaseFoldersResult.id}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/knowledgebase/' + knowledgeBaseFoldersResult.id}>
+                                                <Folder size={18} strokeWidth={2.7} /> {knowledgeBaseFoldersResult.knowledge_base_folder_name}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </>
+                        )}
+                        {knowledgeBaseFilesResult && knowledgeBaseFilesResult.length > 0 && (
+                            <>
+                                <span className="divider">Files</span>
+                                {knowledgeBaseFilesResult.map((knowledgeBaseFilesResult) => {
+                                    return (
+                                        <li key={knowledgeBaseFilesResult.id}>
+                                            <Link
+                                                onClick={() => document.activeElement.blur()}
+                                                to={'/app/knowledgebase/' + knowledgeBaseFilesResult.knowledge_base_file_folder_id + '/' + knowledgeBaseFilesResult.id}
+                                            >
+                                                <FileText size={18} strokeWidth={2.7} /> {knowledgeBaseFilesResult.knowledge_base_file_name}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </>
+                        )}
 
                         {userResult &&
                             groupResult &&
@@ -189,6 +213,8 @@ const SearchField = () => {
                             userResult.length == 0 &&
                             groupResult.length == 0 &&
                             topicResult.length == 0 &&
+                            knowledgeBaseFoldersResult.length == 0 &&
+                            knowledgeBaseFilesResult.length == 0 &&
                             searchQuery.length >= minimumSearchLength && (
                                 <center className="search-error">
                                     <AlertTriangle size={35} strokeWidth={2} />
@@ -197,7 +223,13 @@ const SearchField = () => {
                                 </center>
                             )}
 
-                        {((userResult.length == 0 && groupResult.length == 0 && topicResult.length == 0 && searchQuery.length < minimumSearchLength) || searchQuery.length == 0) && (
+                        {((userResult.length == 0 &&
+                            groupResult.length == 0 &&
+                            topicResult.length == 0 &&
+                            knowledgeBaseFoldersResult.length == 0 &&
+                            knowledgeBaseFilesResult.length == 0 &&
+                            searchQuery.length < minimumSearchLength) ||
+                            searchQuery.length == 0) && (
                             <center className="search-error">
                                 <Zap size={35} strokeWidth={2} />
                                 <br />

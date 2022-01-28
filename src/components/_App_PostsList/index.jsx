@@ -126,7 +126,11 @@ export default function PostsList(props) {
                                     <Feed.Event id={'post_' + item.id} className={visibleCommentSections.includes(item.id) == 0 ? 'event--no-comments-visible' : ''}>
                                         <Feed.Label className="user-avatar">
                                             <Link to={'/app/user/' + item.email}>
-                                                {item.avatar == '' ? <img loading="lazy" src={unknownAvatar} /> : <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />}
+                                                {item.avatar == '' ? (
+                                                    <img loading="lazy" src={unknownAvatar} />
+                                                ) : (
+                                                    <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + item.avatar.replace('./', '')} />
+                                                )}
                                             </Link>
                                         </Feed.Label>
                                         <Feed.Content>
@@ -142,7 +146,7 @@ export default function PostsList(props) {
                                                 <Link className={`${item.group_id !== 0 && `user--group-member `}user`} to={'/app/user/' + item.email}>
                                                     {item.group_id !== 0 && <CornerDownRight size={12} strokeWidth={2.5} />} {item.name}
                                                 </Link>
-                                                <Feed.Date>{getFriendlyDate(new Date(item.created_at.replace(/-/g, "/")))}</Feed.Date>
+                                                <Feed.Date>{getFriendlyDate(new Date(item.created_at.replace(/-/g, '/')))}</Feed.Date>
                                             </Feed.Summary>
                                             <Feed.Extra className={item.post_content.length > 465 ? 'collapsed' : ''} text>
                                                 <div dangerouslySetInnerHTML={{ __html: item.post_content }}></div>

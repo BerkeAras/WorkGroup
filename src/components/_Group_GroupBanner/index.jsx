@@ -417,7 +417,7 @@ function GroupBanner(props) {
                                         <List.Item>
                                             <List.Content>
                                                 <List.Header as="a">Berke Aras</List.Header>
-                                                <List.Description as="a">{getDate(request.created_at.replace(/-/g, "/"))}</List.Description>
+                                                <List.Description as="a">{getDate(request.created_at.replace(/-/g, '/'))}</List.Description>
                                             </List.Content>
                                         </List.Item>
                                     </List>
