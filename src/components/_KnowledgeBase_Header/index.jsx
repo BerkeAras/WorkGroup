@@ -22,6 +22,13 @@ function KnowledgeBaseHeader(props) {
     const [modifyFolderName, setModifyFolderName] = useState('')
     const [modifyFolderDescription, setModifyFolderDescription] = useState('')
 
+    const [showModifyFileModal, setShowModifyFileModal] = useState(false)
+    const [modifyFileName, setModifyFileName] = useState('')
+    const [modifyFileDescription, setModifyFileDescription] = useState('')
+    const [modifyFileUpdateContent, setModifyFileUpdateContent] = useState(false);
+
+    const [showDeleteFileModal, setShowDeleteFileModal] = useState(false)
+
     useEffect(() => {
         // Get Folders
         let tokenHeaders = new Headers()
@@ -57,6 +64,8 @@ function KnowledgeBaseHeader(props) {
                 .then((result) => {
                     setFolderPermissions(result.permissions)
                     setParentFolderId(result.knowledge_base_file_folder_id)
+                    setModifyFileName(result.knowledge_base_file_name);
+                    setModifyFileDescription(result.knowledge_base_file_description);
                     setIsLoading(false)
                 })
                 .catch((error) => {
@@ -71,6 +80,15 @@ function KnowledgeBaseHeader(props) {
 
     const openModifyFolderModal = () => {
         setShowModifyFolderModal(true)
+    }
+
+    const openDeleteFileModal = () => {
+        setShowModifyFileModal(false)
+        setShowDeleteFileModal(true);
+    }
+
+    const openFileUpdateModal = () => {
+        setShowModifyFileModal(true)
     }
 
     const createNewFolder = () => {
@@ -105,6 +123,7 @@ function KnowledgeBaseHeader(props) {
                 })
         }
     }
+
     const modifyFolder = () => {
         if (modifyFolderName.length > 0) {
             setIsLoading(true)
@@ -139,6 +158,43 @@ function KnowledgeBaseHeader(props) {
         }
     }
 
+    const modifyFile = () => {
+        setIsLoading(true)
+
+        if (modifyFileName.length > 0) {
+            let tokenHeaders = new Headers()
+            tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+            let folderDetailsId = 0
+            if (folderId !== undefined) {
+                folderDetailsId = folderId
+            }
+
+            const formData = new FormData()
+            formData.append('file_name', modifyFileName.trim())
+            formData.append('file_description', modifyFileDescription.trim())
+            formData.append('file_id', fileId)
+            formData.append('modify_file', modifyFileUpdateContent)
+            formData.append('modified_file', uploadFile)
+
+            let requestOptions = {
+                method: 'POST',
+                headers: tokenHeaders,
+                body: formData,
+            }
+
+            fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/modifyFile', requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    setIsLoading(false);
+                    console.log('RA', result);
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        }
+    }
+
     const fileChange = (e) => {
         setUploadFile(e.target.files[0])
     }
@@ -163,7 +219,33 @@ function KnowledgeBaseHeader(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/uploadFile', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setIsLoading(false)
+                location.reload()
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
+    const deleteFile = () => {
+        setIsLoading(true)
+
+        let tokenHeaders = new Headers()
+        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+        const formData = new FormData()
+        formData.append('folder_id', folderId)
+        formData.append('file_id', fileId)
+
+        let requestOptions = {
+            method: 'POST',
+            headers: tokenHeaders,
+            body: formData,
+        }
+
+        fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/deleteFile', requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                location.href = `/app/knowledgebase/${parentFolderId != 0 ? parentFolderId : ''}`;
             })
             .catch((error) => {
                 console.error(error)
@@ -227,6 +309,11 @@ function KnowledgeBaseHeader(props) {
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.showFileHistory} basic size="tiny">
                                             <Icon name="history" />
                                             History
+                                        </Button>
+                                    )}
+                                    {(fileId !== undefined && folderPermissions['modify'] == true && props.editorMode) && (
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
+                                            Update File
                                         </Button>
                                     )}
                                     {folderPermissions['write'] == true && (
@@ -355,6 +442,91 @@ function KnowledgeBaseHeader(props) {
                         </Button>
                         <Button disabled={isLoading} loading={isLoading} primary onClick={modifyFolder}>
                             Save
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
+
+            {showModifyFileModal && (
+                <Modal onClose={() => setShowModifyFileModal(false)} onOpen={() => setShowModifyFileModal(true)} open={showModifyFileModal} size="mini">
+                    <Modal.Header>Modify this File</Modal.Header>
+                    <Modal.Content>
+                        <Form.Field>
+                            <Input
+                                disabled={isLoading}
+                                value={modifyFileName}
+                                onBlur={() => {
+                                    setModifyFileName(modifyFileName.trim())
+                                }}
+                                onChange={(e) => {
+                                    setModifyFileName(e.target.value)
+                                }}
+                                autoFocus
+                                fluid
+                                size="small"
+                                placeholder="File Name"
+                            />
+                        </Form.Field>
+                        <br />
+                        <Form.Field>
+                            <Input
+                                disabled={isLoading}
+                                value={modifyFileDescription}
+                                onBlur={() => {
+                                    setModifyFileDescription(modifyFileDescription.trim())
+                                }}
+                                onChange={(e) => {
+                                    setModifyFileDescription(e.target.value)
+                                }}
+                                fluid
+                                size="small"
+                                placeholder="File Description"
+                            />
+                        </Form.Field>
+                        <br />
+                        <Form.Field>
+                            <Checkbox disabled={props.isLoading} checked={modifyFileUpdateContent} onChange={() => {setModifyFileUpdateContent(!modifyFileUpdateContent)}} label="Update File" />
+                        </Form.Field>
+                        {modifyFileUpdateContent && (
+                            <Form.Field><br />
+                                <Input
+                                    disabled={isLoading}
+                                    type="file"
+                                    fluid
+                                    size="small"
+                                    onChange={(e) => {
+                                        fileChange(e)
+                                    }}
+                                />
+                            </Form.Field>
+                        )}
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button disabled={isLoading} color="red" onClick={openDeleteFileModal}>
+                            Delete File
+                        </Button>
+                        <Button disabled={isLoading} color="black" onClick={() => setShowModifyFileModal(false)}>
+                            Cancel
+                        </Button>
+                        <Button disabled={isLoading} loading={isLoading} primary onClick={modifyFile}>
+                            Save
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
+
+            {showDeleteFileModal && (
+                <Modal onClose={() => setShowDeleteFileModal(false)} onOpen={() => setShowDeleteFileModal(true)} open={showDeleteFileModal} size="mini">
+                    <Modal.Header>Warning</Modal.Header>
+                    <Modal.Content>
+                        <p>Do you really want to delete this File?</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button disabled={isLoading} color="black" onClick={() => setShowDeleteFileModal(false)}>
+                            Cancel
+                        </Button>
+                        <Button disabled={isLoading} color="red" onClick={deleteFile}>
+                            Delete File
                         </Button>
                     </Modal.Actions>
                 </Modal>
