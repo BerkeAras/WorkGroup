@@ -17,6 +17,7 @@ function KnowledgeBaseHeader(props) {
     const [openUploadFileModal, setOpenUploadFileModal] = useState(false)
     const [uploadFile, setUploadFile] = useState(null)
     const [newFileName, setNewFileName] = useState('')
+    const [newFileDescription, setNewFileDescription] = useState('')
 
     const [showModifyFolderModal, setShowModifyFolderModal] = useState(false)
     const [modifyFolderName, setModifyFolderName] = useState('')
@@ -29,6 +30,11 @@ function KnowledgeBaseHeader(props) {
 
     const [showDeleteFileModal, setShowDeleteFileModal] = useState(false)
     const [showDeleteFolderModal, setShowDeleteFolderModal] = useState(false)
+
+    const [openNewFileModal, setOpenNewFileModal] = useState(false)
+
+    const [showErrorModal, setShowErrorModal] = useState(false)
+    const [errorModalText, setErrorModalText] = useState('')
 
     useEffect(() => {
         // Get Folders
@@ -50,8 +56,8 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFolder?folder_id=' + folderDetailsId, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setModifyFolderName(result.knowledge_base_folder_name)
-                    setModifyFolderDescription(result.knowledge_base_folder_description)
+                    setModifyFolderName(result.knowledge_base_folder_name !== null ? result.knowledge_base_folder_name : '')
+                    setModifyFolderDescription(result.knowledge_base_folder_description !== null ? result.knowledge_base_folder_description : '')
                     setIsLoading(false)
                     setParentFolderId(result.knowledge_base_folder_parent_id)
                     setFolderPermissions(result.permissions)
@@ -122,7 +128,14 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/createFolder', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    location.reload()
+                    setIsLoading(false)
+
+                    if (!result.success) {
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
+                    } else {
+                        window.location.reload()
+                    }
                 })
                 .catch((error) => {
                     console.error(error)
@@ -156,7 +169,14 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/modifyFolder', requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    location.reload()
+                    setIsLoading(false)
+
+                    if (!result.success) {
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
+                    } else {
+                        window.location.reload()
+                    }
                 })
                 .catch((error) => {
                     console.error(error)
@@ -193,7 +213,13 @@ function KnowledgeBaseHeader(props) {
                 .then((response) => response.json())
                 .then((result) => {
                     setIsLoading(false)
-                    console.log('RA', result)
+
+                    if (!result.success) {
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
+                    } else {
+                        window.location.reload()
+                    }
                 })
                 .catch((error) => {
                     console.error(error)
@@ -225,7 +251,14 @@ function KnowledgeBaseHeader(props) {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/uploadFile', requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                location.reload()
+                setIsLoading(false)
+
+                if (!result.success) {
+                    setShowErrorModal(true)
+                    setErrorModalText(result.error)
+                } else {
+                    window.location.reload()
+                }
             })
             .catch((error) => {
                 console.error(error)
@@ -283,6 +316,47 @@ function KnowledgeBaseHeader(props) {
             })
     }
 
+    const createNewFile = () => {
+        if (newFileName.length > 0) {
+            setIsLoading(true)
+
+            let tokenHeaders = new Headers()
+            tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+
+            let folderDetailsId = 0
+            if (folderId !== undefined) {
+                folderDetailsId = folderId
+            }
+
+            const formData = new FormData()
+            formData.append('file_name', newFileName)
+            formData.append('file_description', newFileDescription)
+            formData.append('folder_id', folderDetailsId)
+
+            let requestOptions = {
+                method: 'POST',
+                headers: tokenHeaders,
+                body: formData,
+            }
+
+            fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/createNewFile', requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    setIsLoading(false)
+
+                    if (!result.success) {
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
+                    } else {
+                        location.href = `/app/knowledgebase/${result.folder_id}/${result.file_id}`
+                    }
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        }
+    }
+
     return (
         <>
             {!isLoading && (
@@ -311,23 +385,43 @@ function KnowledgeBaseHeader(props) {
                                         </Button>
                                     )}
                                     &nbsp;
-                                    {folderPermissions['write'] == true && fileId == undefined && props.editorMode && (
-                                        <Button
-                                            loading={props.isLoading}
-                                            disabled={props.isLoading}
-                                            onClick={() => {
-                                                setOpenUploadFileModal(true)
-                                            }}
-                                            primary
-                                            size="tiny"
-                                        >
-                                            Upload File
-                                        </Button>
-                                    )}
-                                    &nbsp;
                                     {folderPermissions['modify'] == true && fileId == undefined && props.editorMode && folderId != undefined && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={openModifyFolderModal} primary size="tiny">
                                             Modify Folder
+                                        </Button>
+                                    )}
+                                    &nbsp;
+                                    {folderPermissions['write'] == true && fileId == undefined && folderId != undefined && props.editorMode && (
+                                        <>
+                                            <Button
+                                                loading={props.isLoading}
+                                                disabled={props.isLoading}
+                                                onClick={() => {
+                                                    setOpenUploadFileModal(true)
+                                                }}
+                                                primary
+                                                size="tiny"
+                                            >
+                                                Upload File
+                                            </Button>
+                                            &nbsp;
+                                            <Button
+                                                loading={props.isLoading}
+                                                disabled={props.isLoading}
+                                                onClick={() => {
+                                                    setOpenNewFileModal(true)
+                                                }}
+                                                primary
+                                                size="tiny"
+                                            >
+                                                New Markdown-File
+                                            </Button>
+                                        </>
+                                    )}
+                                    &nbsp;
+                                    {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && (
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
+                                            Update File
                                         </Button>
                                     )}
                                     &nbsp;
@@ -336,17 +430,14 @@ function KnowledgeBaseHeader(props) {
                                             Save File
                                         </Button>
                                     )}
+                                    &nbsp;
                                     {fileId !== undefined && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.showFileHistory} basic size="tiny">
                                             <Icon name="history" />
                                             History
                                         </Button>
                                     )}
-                                    {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
-                                            Update File
-                                        </Button>
-                                    )}
+                                    &nbsp;
                                     {folderPermissions['write'] == true && (
                                         <Checkbox toggle disabled={props.isLoading} label="Use edit-mode" checked={props.editorMode} onChange={props.onEditorModeChange} />
                                     )}
@@ -488,6 +579,7 @@ function KnowledgeBaseHeader(props) {
                                 size="small"
                                 placeholder="File Name"
                             />
+                            <small>Files called &apos;index&apos; are the start pages of folders.</small>
                         </Form.Field>
                         <br />
                         <Form.Field>
@@ -571,6 +663,76 @@ function KnowledgeBaseHeader(props) {
                         </Button>
                         <Button disabled={isLoading} color="red" onClick={deleteFolder}>
                             Delete irreversibly
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
+
+            {openNewFileModal && (
+                <Modal
+                    onClose={() => {
+                        setOpenNewFileModal(false)
+                        setNewFileName('')
+                        setNewFileDescription('')
+                    }}
+                    onOpen={() => {
+                        setOpenNewFileModal(true)
+                        setNewFileName('')
+                        setNewFileDescription('')
+                    }}
+                    open={openNewFileModal}
+                    size="mini"
+                >
+                    <Modal.Header>Warning</Modal.Header>
+                    <Modal.Content>
+                        <Form.Field>
+                            <Input
+                                disabled={isLoading}
+                                value={newFileName}
+                                onChange={(e) => {
+                                    setNewFileName(e.target.value)
+                                }}
+                                autoFocus
+                                fluid
+                                size="small"
+                                placeholder="New File Name"
+                            />
+                            <small>Files called &apos;index&apos; are the start pages of folders.</small>
+                        </Form.Field>
+                        <br />
+                        <Form.Field>
+                            <Input
+                                disabled={isLoading}
+                                value={newFileDescription}
+                                onChange={(e) => {
+                                    setNewFileDescription(e.target.value)
+                                }}
+                                fluid
+                                size="small"
+                                placeholder="File Description"
+                            />
+                        </Form.Field>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button disabled={isLoading} color="black" onClick={() => setOpenNewFileModal(false)}>
+                            Cancel
+                        </Button>
+                        <Button disabled={isLoading} loading={isLoading} primary onClick={createNewFile}>
+                            Create File
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
+
+            {showErrorModal && (
+                <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                    <Modal.Header>Warning</Modal.Header>
+                    <Modal.Content>
+                        <p>{errorModalText}</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button disabled={isLoading} color="black" onClick={() => setShowErrorModal(false)}>
+                            Close
                         </Button>
                     </Modal.Actions>
                 </Modal>

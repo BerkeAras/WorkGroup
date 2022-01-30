@@ -111,9 +111,6 @@ export default function UserSettings(props) {
                 }
                 setIsLoading(false)
             })
-            .catch((error) => {
-                console.log('err', error)
-            })
     }
 
     return (
