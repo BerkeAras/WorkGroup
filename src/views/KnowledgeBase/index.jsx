@@ -113,8 +113,8 @@ function KnowledgeBase() {
                 setIsLoading(false)
 
                 if (!response.success) {
-                    setShowErrorModal(true);
-                    setErrorModalText(response.error);
+                    setShowErrorModal(true)
+                    setErrorModalText(response.error)
                 }
             })
     }

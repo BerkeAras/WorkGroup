@@ -56,8 +56,8 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFolder?folder_id=' + folderDetailsId, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setModifyFolderName((result.knowledge_base_folder_name !== null) ? result.knowledge_base_folder_name : '')
-                    setModifyFolderDescription((result.knowledge_base_folder_description !== null) ? result.knowledge_base_folder_description : '')
+                    setModifyFolderName(result.knowledge_base_folder_name !== null ? result.knowledge_base_folder_name : '')
+                    setModifyFolderDescription(result.knowledge_base_folder_description !== null ? result.knowledge_base_folder_description : '')
                     setIsLoading(false)
                     setParentFolderId(result.knowledge_base_folder_parent_id)
                     setFolderPermissions(result.permissions)
@@ -131,10 +131,10 @@ function KnowledgeBaseHeader(props) {
                     setIsLoading(false)
 
                     if (!result.success) {
-                        setShowErrorModal(true);
-                        setErrorModalText(result.error);
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
                     } else {
-                        window.location.reload();
+                        window.location.reload()
                     }
                 })
                 .catch((error) => {
@@ -172,10 +172,10 @@ function KnowledgeBaseHeader(props) {
                     setIsLoading(false)
 
                     if (!result.success) {
-                        setShowErrorModal(true);
-                        setErrorModalText(result.error);
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
                     } else {
-                        window.location.reload();
+                        window.location.reload()
                     }
                 })
                 .catch((error) => {
@@ -215,10 +215,10 @@ function KnowledgeBaseHeader(props) {
                     setIsLoading(false)
 
                     if (!result.success) {
-                        setShowErrorModal(true);
-                        setErrorModalText(result.error);
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
                     } else {
-                        window.location.reload();
+                        window.location.reload()
                     }
                 })
                 .catch((error) => {
@@ -254,10 +254,10 @@ function KnowledgeBaseHeader(props) {
                 setIsLoading(false)
 
                 if (!result.success) {
-                    setShowErrorModal(true);
-                    setErrorModalText(result.error);
+                    setShowErrorModal(true)
+                    setErrorModalText(result.error)
                 } else {
-                    window.location.reload();
+                    window.location.reload()
                 }
             })
             .catch((error) => {
@@ -345,10 +345,10 @@ function KnowledgeBaseHeader(props) {
                     setIsLoading(false)
 
                     if (!result.success) {
-                        setShowErrorModal(true);
-                        setErrorModalText(result.error);
+                        setShowErrorModal(true)
+                        setErrorModalText(result.error)
                     } else {
-                        location.href = `/app/knowledgebase/${result.folder_id}/${result.file_id}`;
+                        location.href = `/app/knowledgebase/${result.folder_id}/${result.file_id}`
                     }
                 })
                 .catch((error) => {
@@ -403,7 +403,8 @@ function KnowledgeBaseHeader(props) {
                                                 size="tiny"
                                             >
                                                 Upload File
-                                            </Button>&nbsp;
+                                            </Button>
+                                            &nbsp;
                                             <Button
                                                 loading={props.isLoading}
                                                 disabled={props.isLoading}
@@ -668,7 +669,20 @@ function KnowledgeBaseHeader(props) {
             )}
 
             {openNewFileModal && (
-                <Modal onClose={() => {setOpenNewFileModal(false);setNewFileName('');setNewFileDescription('')}} onOpen={() => {setOpenNewFileModal(true);setNewFileName('');setNewFileDescription('')}} open={openNewFileModal} size="mini">
+                <Modal
+                    onClose={() => {
+                        setOpenNewFileModal(false)
+                        setNewFileName('')
+                        setNewFileDescription('')
+                    }}
+                    onOpen={() => {
+                        setOpenNewFileModal(true)
+                        setNewFileName('')
+                        setNewFileDescription('')
+                    }}
+                    open={openNewFileModal}
+                    size="mini"
+                >
                     <Modal.Header>Warning</Modal.Header>
                     <Modal.Content>
                         <Form.Field>
