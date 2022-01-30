@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, NavLink, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import './style.scss'
-import { Button, Loader } from 'semantic-ui-react'
+import { Button, Loader, Modal } from 'semantic-ui-react'
 import { Database, Folder, File, Zap } from 'react-feather'
 
 // Components
@@ -23,6 +23,9 @@ function KnowledgeBase() {
     const [fileExtension, setFileExtension] = useState('')
     const [modifiedFileContent, setModifiedFileContentState] = useState('')
     const [showFileHistoryModal, setShowFileHistoryModal] = useState(false)
+
+    const [showErrorModal, setShowErrorModal] = useState(false)
+    const [errorModalText, setErrorModalText] = useState('')
 
     useEffect(() => {
         document.title = 'KnowledgeBase – WorkGroup'
@@ -108,6 +111,11 @@ function KnowledgeBase() {
             })
             .then((response) => {
                 setIsLoading(false)
+
+                if (!response.success) {
+                    setShowErrorModal(true);
+                    setErrorModalText(response.error);
+                }
             })
     }
 
@@ -122,6 +130,20 @@ function KnowledgeBase() {
     return (
         <div className="app">
             <Header />
+
+            {showErrorModal && (
+                <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                    <Modal.Header>Warning</Modal.Header>
+                    <Modal.Content>
+                        <p>{errorModalText}</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button disabled={isLoading} color="black" onClick={() => setShowErrorModal(false)}>
+                            Close
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
 
             {showFileHistoryModal && <KnowledgeBaseFileHistory isLoading={isLoading} onClose={() => setShowFileHistoryModal(false)} />}
 

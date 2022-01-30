@@ -49,17 +49,14 @@ function KnowledgeBaseFileReader(props) {
             })
             .then((result) => {
                 if (result.error) {
-                    console.log('RES_Error', result.error)
                     if (result.error == 'Index not found') {
                         setErrorNoIndex(true)
                     }
                 } else {
-                    console.log('RES_noError')
                     setFile(result)
                     props.onFileExtensionChange(result.knowledge_base_file_extension)
 
                     if (!result.file_readable) {
-                        console.log('file not readable')
                         fetch(
                             process.env.REACT_APP_API_URL +
                                 `/api/knowledgebase/readFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
@@ -82,11 +79,7 @@ function KnowledgeBaseFileReader(props) {
                                 a.click()
                                 a.remove()
                             })
-                            .catch((error) => {
-                                console.log('A1', error)
-                            })
                     } else {
-                        console.log('file readable')
                         fetch(
                             process.env.REACT_APP_API_URL +
                                 `/api/knowledgebase/readFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
@@ -100,9 +93,6 @@ function KnowledgeBaseFileReader(props) {
                                 if (imageExtensions.includes(result.knowledge_base_file_extension)) {
                                     setImageUrl(previewResult)
                                 }
-                            })
-                            .catch((error) => {
-                                console.log('A2', error)
                             })
                     }
                 }
