@@ -56,11 +56,17 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFolder?folder_id=' + folderDetailsId, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setModifyFolderName(result.knowledge_base_folder_name !== null ? result.knowledge_base_folder_name : '')
-                    setModifyFolderDescription(result.knowledge_base_folder_description !== null ? result.knowledge_base_folder_description : '')
-                    setIsLoading(false)
-                    setParentFolderId(result.knowledge_base_folder_parent_id)
-                    setFolderPermissions(result.permissions)
+                    if (result.error) {
+                        setIsLoading(false)
+                        setShowErrorModal(true)
+                        setErrorModalText("This folder doesn't exist. Maybe it was deleted or you don't have permission to view it.")
+                    } else {
+                        setModifyFolderName(result.knowledge_base_folder_name !== null ? result.knowledge_base_folder_name : '')
+                        setModifyFolderDescription(result.knowledge_base_folder_description !== null ? result.knowledge_base_folder_description : '')
+                        setIsLoading(false)
+                        setParentFolderId(result.knowledge_base_folder_parent_id)
+                        setFolderPermissions(result.permissions)
+                    }
                 })
                 .catch((error) => {
                     console.error(error)
@@ -69,11 +75,17 @@ function KnowledgeBaseHeader(props) {
             fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFile?file_id=' + fileId, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    setFolderPermissions(result.permissions)
-                    setParentFolderId(result.knowledge_base_file_folder_id)
-                    setModifyFileName(result.knowledge_base_file_name)
-                    setModifyFileDescription(result.knowledge_base_file_description)
-                    setIsLoading(false)
+                    if (result.error) {
+                        setIsLoading(false)
+                        setShowErrorModal(true)
+                        setErrorModalText("This file doesn't exist. Maybe it was deleted or you don't have permission to view it.")
+                    } else {
+                        setFolderPermissions(result.permissions)
+                        setParentFolderId(result.knowledge_base_file_folder_id)
+                        setModifyFileName(result.knowledge_base_file_name)
+                        setModifyFileDescription(result.knowledge_base_file_description)
+                        setIsLoading(false)
+                    }
                 })
                 .catch((error) => {
                     console.error(error)

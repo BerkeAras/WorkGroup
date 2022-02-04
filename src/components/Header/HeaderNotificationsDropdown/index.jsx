@@ -11,8 +11,8 @@ const HeaderNotificationsDropdown = (props) => {
 
     useEffect(() => {
         document.addEventListener('mouseup', (e) => {
-            if (document.querySelector('.header__dropdown')) {
-                const container = document.querySelector('.header__dropdown')
+            if (document.querySelector('.header__notifications__dropdown')) {
+                const container = document.querySelector('.header__notifications__dropdown')
                 if (!container.contains(e.target)) {
                     container.style.display = 'none'
                     props.setDropDownVisible(false)
