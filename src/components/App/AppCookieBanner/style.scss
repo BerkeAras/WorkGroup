@@ -1,0 +1,88 @@
+.cookie-banner {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 20px 30px;
+    background: #f9f9f9;
+    border-top: 1px solid #bec1c7;
+    box-shadow: 0px -2px 18px #00000040;
+
+    p {
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+        line-height: 30px;
+        font-weight: 500;
+        color: #0e3560;
+        margin-bottom: 30px;
+
+        svg {
+            margin-right: 20px;
+            flex: none;
+        }
+    }
+    .button:first-of-type {
+        margin-left: 44px;
+        margin-right: 10px;
+    }
+}
+.cookie-modal {
+    .ui.toggle.checkbox input:checked ~ .box:before,
+    .ui.toggle.checkbox input:checked ~ label:before {
+        background-color: #2c85d0 !important;
+    }
+    .ui.toggle.checkbox input:checked ~ .box:after,
+    .ui.toggle.checkbox input:checked ~ label:after {
+        box-shadow: 0 0 15px 0px #0000005c !important;
+    }
+
+    .content {
+        font-size: 15px !important;
+
+        .cookie-explenation {
+            .checkbox {
+                label {
+                    font-size: 15px;
+                    font-weight: 500;
+                    color: #0e3560 !important;
+                }
+            }
+            p {
+                margin-top: 15px;
+                font-size: 15px;
+            }
+            margin-top: 30px;
+        }
+    }
+}
+@media (max-width: 1130px) {
+    .cookie-banner {
+        padding: 20px 10px;
+    }
+}
+@media (max-width: 768px) {
+    .cookie-banner {
+        padding: 10px;
+        max-height: 50%;
+        svg {
+            display: none;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 24px;
+            font-size: 15px;
+            opacity: 1;
+            overflow: auto;
+            height: 120px;
+            padding: 10px 0;
+            display: block;
+            box-shadow: inset 0px -19px 10px -19px #10394b4d;
+        }
+        .button {
+            margin-left: 0 !important;
+            width: 100%;
+            margin-top: 10px !important;
+        }
+    }
+}

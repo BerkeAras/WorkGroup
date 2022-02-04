@@ -28,6 +28,8 @@ export default function loadPosts(
                 filterGetParameter += '&user=' + config.filter
             } else if (config.filterBy === 'group') {
                 filterGetParameter += '&group=' + config.filter
+            } else if (config.filterBy === 'id') {
+                filterGetParameter += '&id=' + config.filter
             }
         }
 

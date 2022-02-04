@@ -7,11 +7,11 @@ import { Button, Loader, Modal } from 'semantic-ui-react'
 import { Database, Folder, File, Zap } from 'react-feather'
 
 // Components
-import Header from '../../components/Header'
-import KnowledgeBaseSidebar from '../../components/_KnowledgeBase_Sidebar'
-import KnowledgeBaseHeader from '../../components/_KnowledgeBase_Header'
-import KnowledgeBaseFileReader from '../../components/_KnowledgeBase_FileReader'
-import KnowledgeBaseFileHistory from '../../components/_KnowledgeBase_FileHistory'
+import Header from '../../components/Header/Header'
+import KnowledgeBaseSidebar from '../../components/KnowledgeBase/KnowledgeBaseSidebar'
+import KnowledgeBaseHeader from '../../components/KnowledgeBase/KnowledgeBaseHeader'
+import KnowledgeBaseFileReader from '../../components/KnowledgeBase/KnowledgeBaseFileReader'
+import KnowledgeBaseFileHistory from '../../components/KnowledgeBase/KnowledgeBaseFileHistory'
 
 function KnowledgeBase() {
     const { folderId, fileId, historyId } = useParams()

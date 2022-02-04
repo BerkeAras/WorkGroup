@@ -5,11 +5,11 @@ import './style.scss'
 import { User as UserIcon, Info } from 'react-feather'
 
 // Components
-import Header from '../../components/Header'
-import CreatePostForm from '../../components/_App_CreatePostForm'
-import PostsList from '../../components/_App_PostsList'
+import Header from '../../components/Header/Header'
+import CreatePostForm from '../../components/Feed/FeedCreatePostForm'
+import PostsList from '../../components/Feed/FeedPostsList'
 
-import GroupBanner from '../../components/_Group_GroupBanner'
+import GroupBanner from '../../components/Group/GroupBanner'
 
 function Group() {
     let { id } = useParams()

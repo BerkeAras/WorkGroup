@@ -10,6 +10,9 @@ body {
     padding: 0;
     font-family: 'PT Sans', sans-serif !important;
 }
+body {
+    color: #0e3560 !important;
+}
 
 #root,
 .app {
@@ -127,6 +130,14 @@ optgroup,
 select,
 textarea {
     font-family: 'PT Sans', sans-serif !important;
+}
+
+.ui.modal>.header,
+.content_container .text.extra *,
+.SearchField-Results center span,
+.ui.comments .comment .author,
+.ui.feed>.event>.content a {
+    color: #0e3560 !important;
 }
 
 // Button overwriting

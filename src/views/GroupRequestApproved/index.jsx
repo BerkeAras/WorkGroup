@@ -8,7 +8,7 @@ import unknownAvatar from '../../static/unknown.png'
 import unknownBanner from '../../static/banner.jpg'
 
 // Components
-import Header from '../../components/Header'
+import Header from '../../components/Header/Header'
 
 function GroupRequestApproved() {
     useEffect(() => {

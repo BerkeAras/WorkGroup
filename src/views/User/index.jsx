@@ -5,10 +5,10 @@ import './style.scss'
 import { User as UserIcon, Mail, Briefcase, MapPin, Globe } from 'react-feather'
 
 // Components
-import Header from '../../components/Header'
-import PostsList from '../../components/_App_PostsList'
+import Header from '../../components/Header/Header'
+import PostsList from '../../components/Feed/FeedPostsList'
 
-import UserBanner from '../../components/_User_UserBanner'
+import UserBanner from '../../components/User/UserBanner'
 
 function User() {
     let { email } = useParams()

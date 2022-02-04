@@ -6,7 +6,7 @@ import './style.scss'
 import { Monitor, Server, AtSign, BarChart2, Home, Users } from 'react-feather'
 
 // Components
-import Header from '../../components/Header'
+import Header from '../../components/Header/Header'
 import SettingsHome from './Home'
 import SettingsUsers from './Users'
 import SettingsFrontend from './Frontend'

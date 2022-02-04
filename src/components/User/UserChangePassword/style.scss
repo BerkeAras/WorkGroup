@@ -1,0 +1,38 @@
+.password-reset-modal {
+    .userPin input {
+        text-align: center !important;
+        letter-spacing: 1em;
+        padding-right: 0 !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    &-loader {
+        position: relative;
+        width: 100%;
+        height: 100px;
+
+        .loader {
+            color: #0e3560 !important;
+
+            &::before {
+                border-color: rgb(0 0 0 / 15%) !important;
+            }
+            &::after {
+                border-color: #000 transparent transparent !important;
+            }
+        }
+    }
+
+    center {
+        padding: 10px 0;
+
+        svg {
+            color: #cecece;
+            margin-bottom: 20px;
+        }
+        span {
+            font-size: 18px;
+            font-style: italic;
+        }
+    }
+}

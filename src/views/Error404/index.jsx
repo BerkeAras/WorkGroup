@@ -6,7 +6,7 @@ import { Button } from 'semantic-ui-react'
 import { AlertTriangle } from 'react-feather'
 
 // Components
-import Header from '../../components/Header'
+import Header from '../../components/Header/Header'
 
 function Error404() {
     useEffect(() => {
