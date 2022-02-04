@@ -120,8 +120,8 @@ export default function PostItem(props) {
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault()
-                                                    setImageModalUrl(process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url)
-                                                    setImageModalVisible(true)
+                                                    props.setImageModalUrl(process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url)
+                                                    props.setImageModalVisible(true)
                                                 }}
                                             >
                                                 <img loading="lazy" src={process.env.REACT_APP_API_URL + '/static/' + postImage.post_image_url} />
@@ -195,4 +195,6 @@ PostItem.propTypes = {
     post: PropTypes.any,
     reportModalVisible: PropTypes.func,
     reportModalPostId: PropTypes.func,
+    setImageModalUrl: PropTypes.func,
+    setImageModalVisible: PropTypes.func,
 }
