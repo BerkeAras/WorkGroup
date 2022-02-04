@@ -69,7 +69,7 @@ const HeaderNotificationsDropdown = (props) => {
                             <div className={`notification-item ${notification.notification_read == 1 && `notification-item--read`}`}>
                                 <div className="notification-avatar">
                                     <img
-                                        src={notification.user.avatar}
+                                        src={process.env.REACT_APP_API_URL + '/' + notification.user.avatar.replace('./', '')}
                                         onError={(e) => {
                                             e.target.src = unknownAvatar
                                         }}
