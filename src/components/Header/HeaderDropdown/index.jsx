@@ -18,7 +18,7 @@ const HeaderDropdown = (props) => {
 
     const handleDropdownBlur = (e) => {
         const currentTarget = e.currentTarget
-
+        
         setTimeout(() => {
             if (!currentTarget.contains(document.activeElement)) {
                 const container = document.querySelector('.header__dropdown')
