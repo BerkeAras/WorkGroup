@@ -115,7 +115,10 @@
         }
     }
     &--no-comments-visible {
-        border-radius: 0.28571429rem !important;
+        border-radius: 8px !important;
+    }
+    &:not(&--no-comments-visible) {
+        border-radius: 8px 8px 0 0 !important;
     }
     .empty-feed {
         text-align: center;
@@ -220,7 +223,7 @@
 }
 
 .comments-group {
-    border-radius: 0 0 0.28571429rem 0.28571429rem;
+    border-radius: 0 0 8px 8px;
     box-shadow: 0 2px 3px 0 #d4d4d5;
     background: white !important;
     padding: 15px !important;

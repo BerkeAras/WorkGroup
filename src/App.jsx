@@ -305,7 +305,7 @@ class App extends React.Component {
                                     <SignIn />
                                 </Route>
                                 <Route path="/app">
-                                    <Redirect to="/" />
+                                    <Redirect to={`/?ref=${window.location.pathname}`} />
                                 </Route>
                                 <Route exact path="/signup">
                                     <SignUpWrapper />

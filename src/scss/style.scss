@@ -176,3 +176,7 @@ textarea {
         box-shadow: 0 0 0px 3px rgba(47, 48, 50, 0.3) !important;
     }
 }
+
+.ui.card, .ui.cards>.card {
+    border-radius: 8px !important;
+}

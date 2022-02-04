@@ -67,8 +67,14 @@ function KnowledgeBase() {
         fetch(process.env.REACT_APP_API_URL + '/api/knowledgebase/getFiles?folder_parent_id=' + folder_parent_id, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setFiles(result)
-                setIsLoading(false)
+                if (result.error) {
+                    setIsLoading(false)
+                    setShowErrorModal(true)
+                    setErrorModalText("This file doesn't exist. Maybe it was deleted or you don't have permission to view it.")
+                } else {
+                    setFiles(result)
+                    setIsLoading(false)
+                }
             })
             .catch((error) => {
                 console.error(error)
