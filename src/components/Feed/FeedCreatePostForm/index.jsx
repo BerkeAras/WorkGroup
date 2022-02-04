@@ -3,7 +3,7 @@ import './style.scss'
 import { Card, Input, Modal, Button, TextArea, Form, Popup } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 let linkify = require('linkifyjs')
-require('linkifyjs/plugins/hashtag')(linkify) // optional
+require('linkifyjs/plugins/hashtag')(linkify)
 let linkifyHtml = require('linkifyjs/html')
 
 import convertToMarkup from './convertToMarkup'
