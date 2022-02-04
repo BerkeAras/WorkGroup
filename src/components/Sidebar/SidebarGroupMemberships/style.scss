@@ -1,0 +1,44 @@
+.groups-container {
+    .group-item {
+        display: inline-block;
+        line-height: 20px;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #0e3560;
+        margin-bottom: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: all 0.2s !important;
+        &:hover {
+            background-color: #eeeeee;
+            transform: scale(0.98);
+        }
+        svg {
+            float: left;
+            margin-top: 1px;
+            margin-left: 5px;
+            margin-right: 15px;
+            opacity: 0.7;
+        }
+        &:active {
+            transform: scale(0.95);
+            outline: none !important;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+    }
+    .empty-groups {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        font-style: italic;
+        opacity: 0.6;
+        font-weight: 100;
+    }
+}

@@ -6,8 +6,8 @@ import './style.scss'
 import unknownAvatar from '../../../static/unknown.png'
 
 import { Eye, Zap, Settings, Info } from 'react-feather'
-import UserInformation from '../../../components/_Settings_UserInformation'
-import UserSettings from '../../../components/_Settings_UserSettings'
+import UserInformation from '../../../components/Settings/SettingsUserInformation'
+import UserSettings from '../../../components/Settings/SettingsUserSettings'
 
 const sortByOptions = [
     { key: 'created-at-desc', text: 'Registration (latest)', value: 'created-at-desc' },
@@ -69,7 +69,7 @@ function SettingsUsers() {
 
     const getDate = (date) => {
         if (date !== null) {
-            date = date.replace(/-/g, '/');
+            date = date.replace(/-/g, '/')
         }
         let newDate = new Date(date)
 

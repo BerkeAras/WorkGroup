@@ -7,13 +7,13 @@ import logo from '../../static/logo.svg'
 import ConfigContext from '../../store/ConfigContext'
 
 // Components
-import SidebarLeft from '../../components/SidebarLeft'
-import SidebarRight from '../../components/SidebarRight'
-import Header from '../../components/Header'
+import SidebarLeft from '../../components/Sidebar/SidebarLeft'
+import SidebarRight from '../../components/Sidebar/SidebarRight'
+import Header from '../../components/Header/Header'
 import Content from '../../components/Content'
 
-import CreatePostForm from '../../components/_App_CreatePostForm'
-import PostsList from '../../components/_App_PostsList'
+import CreatePostForm from '../../components/Feed/FeedCreatePostForm'
+import PostsList from '../../components/Feed/FeedPostsList'
 
 const MainApp = () => {
     const contextValue = useContext(ConfigContext)

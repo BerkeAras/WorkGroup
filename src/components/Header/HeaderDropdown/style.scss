@@ -1,0 +1,39 @@
+@import '../../../scss/variables';
+.header__dropdown {
+    display: inline-block;
+    position: absolute;
+    top: 47px;
+    right: calc((100% - 1300px) / 2);
+    background: white;
+    padding: 10px;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    border-radius: 10px;
+    width: 260px;
+    z-index: 10000;
+    .header__dropdown-item {
+        display: inline-block;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #0e3560;
+        transition: all 0.1s;
+        margin-bottom: 4px;
+        &:hover {
+            background: #f7f7f7;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+        &--active {
+            background-color: #f7f7f7;
+            color: $primary-color;
+        }
+    }
+
+    @media (max-width: 1300px) {
+        right: 10px;
+    }
+}

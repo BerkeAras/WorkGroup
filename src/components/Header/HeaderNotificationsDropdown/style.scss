@@ -1,0 +1,115 @@
+@import '../../../scss/variables';
+.empty-notifications {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+    opacity: 0.6;
+    font-weight: 100;
+}
+.header__notifications__dropdown {
+    display: inline-block;
+    position: absolute;
+    top: 47px;
+    right: calc((100% - 1190px) / 2);
+    background: white;
+    padding: 10px;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    border-radius: 10px;
+    width: 360px;
+    z-index: 10000;
+    max-height: 500px;
+    overflow: auto;
+    &-item {
+        display: inline-block;
+        width: 100%;
+        padding: 11px 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #0e3560;
+        transition: all 0.1s;
+        margin-bottom: 4px;
+        &:hover {
+            background: #f7f7f7;
+        }
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+        &--active {
+            background-color: #f7f7f7;
+            color: $primary-color;
+        }
+    }
+
+    a {
+        display: inline-flex;
+
+        .notification-item {
+            width: 100%;
+            max-height: 100px;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+            background: white;
+            transition: all 0.1s;
+
+            .notification-avatar {
+                width: 35px;
+                height: 35px;
+                float: left;
+                position: relative;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                    object-fit: cover;
+                    border-radius: 100%;
+                }
+                .online-indicator {
+                    position: absolute;
+                    bottom: -2px;
+                    right: -2px;
+                    width: 12px;
+                    height: 12px;
+                    background: #8bc34a;
+                    border-radius: 100px;
+                    border: 2px solid white;
+                }
+            }
+            .notification-content {
+                float: left;
+                width: calc(100% - 35px);
+                padding-left: 15px;
+
+                b {
+                    color: #0e3560;
+                }
+                p {
+                    color: #3f658e;
+                }
+            }
+
+            &:hover {
+                background: #f7f7f7;
+            }
+            &--active {
+                background-color: #f7f7f7;
+                color: $primary-color;
+            }
+
+            &--read {
+                opacity: 0.5;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1300px) {
+        right: 10px;
+    }
+}

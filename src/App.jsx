@@ -14,12 +14,12 @@ import GroupRequestApproved from './views/GroupRequestApproved'
 import GroupRequestPending from './views/GroupRequestPending'
 import GroupRequestUpdate from './views/GroupRequestUpdate'
 import Settings from './views/Settings'
-import Error404 from './views/Error404'
+import SinglePost from './views/SinglePost'
 import KnowledgeBase from './views/KnowledgeBase'
 import { Loader } from 'semantic-ui-react'
 
-import FirstLogin from './components/_User_FirstLogin'
-import CookieBanner from './components/_App_CookieBanner'
+import FirstLogin from './components/User/UserFirstLogin'
+import CookieBanner from './components/App/AppCookieBanner'
 import { AuthProvider } from './store/AuthContext'
 import ConfigContext from './store/ConfigContext.jsx'
 import SignUpWrapper from './views/auth/SignUp'
@@ -250,6 +250,9 @@ class App extends React.Component {
                                 </Route>
                                 <Route exact path="/app">
                                     <MainApp />
+                                </Route>
+                                <Route exact path="/app/post/:postId">
+                                    <SinglePost />
                                 </Route>
                                 <Route exact path="/logout">
                                     <LogOut />
