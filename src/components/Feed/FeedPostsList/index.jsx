@@ -56,7 +56,6 @@ export default function PostsList(props) {
             }
         }
 
-
         setPaginationPage(page)
 
         postLoader
@@ -216,5 +215,5 @@ export default function PostsList(props) {
 PostsList.propTypes = {
     user: PropTypes.string,
     group: PropTypes.any,
-    postId: PropTypes.number
+    postId: PropTypes.number,
 }

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { Link, NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Loader } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react'
 import unknownAvatar from '../../../static/unknown.png'
 
 const HeaderNotificationsDropdown = (props) => {
-
-    const [isLoading, setIsLoading] = useState(true);
-    const [notifications, setNotifications] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
         document.addEventListener('mouseup', (e) => {
@@ -33,7 +32,7 @@ const HeaderNotificationsDropdown = (props) => {
         fetch(process.env.REACT_APP_API_URL + `/api/notifications/getInAppNotifications?select=30&setread`, requestOptions)
             .then((res) => res.json())
             .then((res) => {
-                setIsLoading(false);
+                setIsLoading(false)
                 setNotifications(res)
             })
     }, [])
@@ -51,30 +50,40 @@ const HeaderNotificationsDropdown = (props) => {
     }
 
     return (
-        <div onBlur={(e) => {handleDropdownBlur(e)}} className="header__notifications__dropdown">
+        <div
+            onBlur={(e) => {
+                handleDropdownBlur(e)
+            }}
+            className="header__notifications__dropdown"
+        >
             {isLoading ? (
-                <div style={{padding:'50px 0'}}><Loader active size="medium" content="" /></div>
+                <div style={{ padding: '50px 0' }}>
+                    <Loader active size="medium" content="" />
+                </div>
+            ) : notifications.length == 0 ? (
+                <span className="empty-notifications">You have no unread notifications.</span>
             ) : (
-                notifications.length == 0 ? (
-                    <span className="empty-notifications">You have no unread notifications.</span>
-                ) : (
-                    notifications.map((notification, index) => {
-                        return (
-                            <Link key={index} to={notification.notification_link}>
-                                <div className={`notification-item ${(notification.notification_read == 1 && `notification-item--read`)}`}>
-                                    <div className="notification-avatar">
-                                        <img src={notification.user.avatar} onError={(e) => {e.target.src = unknownAvatar}} />
-                                        {notification.user.user_online == 1 && <div className="online-indicator"></div>}
-                                    </div>
-                                    <div className="notification-content">
-                                        <b>{notification.notification_subject}</b>
-                                        <p>{notification.notification_content}</p>
-                                    </div>
+                notifications.map((notification, index) => {
+                    return (
+                        <Link key={index} to={notification.notification_link}>
+                            <div className={`notification-item ${notification.notification_read == 1 && `notification-item--read`}`}>
+                                <div className="notification-avatar">
+                                    <img
+                                        src={notification.user.avatar}
+                                        onError={(e) => {
+                                            e.target.src = unknownAvatar
+                                        }}
+                                    />
+                                    {notification.user.user_online == 1 && <div className="online-indicator"></div>}
                                 </div>
-                            </Link>
-                        )
-                    })
-                )
+                                <div className="notification-content">
+                                    <b>{notification.notification_subject}</b>
+                                    <p>{notification.notification_content}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    )
+                })
             )}
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import './style.scss'
 
@@ -10,7 +10,6 @@ import Content from '../../components/Content'
 import PostsList from '../../components/Feed/FeedPostsList'
 
 export default function SinglePost() {
-
     let { postId } = useParams()
 
     useEffect(() => {

@@ -69,7 +69,7 @@ function SettingsUsers() {
 
     const getDate = (date) => {
         if (date !== null) {
-            date = date.replace(/-/g, '/');
+            date = date.replace(/-/g, '/')
         }
         let newDate = new Date(date)
 

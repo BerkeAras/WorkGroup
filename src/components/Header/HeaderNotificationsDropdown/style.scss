@@ -44,7 +44,7 @@
     }
 
     a {
-	    display: inline-flex;
+        display: inline-flex;
 
         .notification-item {
             width: 100%;
@@ -100,7 +100,7 @@
             }
 
             &--read {
-                opacity: .5;
+                opacity: 0.5;
 
                 &:hover {
                     opacity: 1;

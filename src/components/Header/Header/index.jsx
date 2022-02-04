@@ -22,14 +22,14 @@ const Header = () => {
 
     const showHeaderDropdown = (e) => {
         e.preventDefault()
-        setNotificationsDropdownVisible(false);
+        setNotificationsDropdownVisible(false)
         setDropDownVisible(!dropdownVisible)
     }
 
     const showNotificationsDropdown = (e) => {
         e.preventDefault()
-        setDropDownVisible(false);
-        setHasUnreadNotifications(false);
+        setDropDownVisible(false)
+        setHasUnreadNotifications(false)
         setNotificationsDropdownVisible(!notificationsDropdownVisible)
     }
 
@@ -58,14 +58,14 @@ const Header = () => {
             setHeaderLogo(process.env.REACT_APP_API_URL + '/static/' + contextValue.app.logo)
         }
 
-        notificationListener();
+        notificationListener()
 
         // Run notificationListener every minute
         const interval = setInterval(() => {
-            notificationListener();
-        }, 60000);
+            notificationListener()
+        }, 60000)
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval)
     }, [contextValue])
 
     const notificationListener = () => {
@@ -83,9 +83,9 @@ const Header = () => {
             .then((res) => res.json())
             .then((res) => {
                 if (res > 0) {
-                    setHasUnreadNotifications(true);
+                    setHasUnreadNotifications(true)
                 } else {
-                    setHasUnreadNotifications(false);
+                    setHasUnreadNotifications(false)
                 }
             })
     }
@@ -128,7 +128,9 @@ const Header = () => {
                 </div>
 
                 {dropdownVisible ? <HeaderDropdown setDropDownVisible={setDropDownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderDropdown> : null}
-                {notificationsDropdownVisible ? <HeaderNotificationsDropdown setDropDownVisible={setNotificationsDropdownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderNotificationsDropdown> : null}
+                {notificationsDropdownVisible ? (
+                    <HeaderNotificationsDropdown setDropDownVisible={setNotificationsDropdownVisible} onBlurHandler={(e) => handleDropdownBlur(e)}></HeaderNotificationsDropdown>
+                ) : null}
             </div>
         </>
     )

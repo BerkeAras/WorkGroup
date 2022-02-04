@@ -80,11 +80,7 @@ export default function PostItem(props) {
             <Feed.Event id={'post_' + props.post.id} className={visibleCommentSections.includes(props.post.id) == 0 ? 'event--no-comments-visible' : ''}>
                 <Feed.Label className="user-avatar">
                     <Link to={'/app/user/' + props.post.email}>
-                        {props.post.avatar == '' ? (
-                            <img loading="lazy" src={unknownAvatar} />
-                        ) : (
-                            <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + props.post.avatar.replace('./', '')} />
-                        )}
+                        {props.post.avatar == '' ? <img loading="lazy" src={unknownAvatar} /> : <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + props.post.avatar.replace('./', '')} />}
                     </Link>
                 </Feed.Label>
                 <Feed.Content>
@@ -139,14 +135,7 @@ export default function PostItem(props) {
                             <div className="post-files">
                                 {props.post.files.map((postFile, index) => {
                                     return (
-                                        <a
-                                            href={process.env.REACT_APP_API_URL + '/static/files/' + postFile.post_file_url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            download
-                                            key={index}
-                                            className="post-file"
-                                        >
+                                        <a href={process.env.REACT_APP_API_URL + '/static/files/' + postFile.post_file_url} target="_blank" rel="noreferrer" download key={index} className="post-file">
                                             <div className="post-file-icon">
                                                 <FileText size={20} strokeWidth={2} />
                                             </div>
@@ -180,10 +169,7 @@ export default function PostItem(props) {
                             <MessageCircle size={16} strokeWidth={2.5} />
                             <span>{getComments(props.post.comments)}</span>
                         </a>
-                        <Link
-                            to={`/app/post/${props.post.id}`}
-                            className="share-button"
-                        >
+                        <Link to={`/app/post/${props.post.id}`} className="share-button">
                             <span>Share</span>
                             <Share2 size={16} strokeWidth={2.5} />
                         </Link>
@@ -208,5 +194,5 @@ export default function PostItem(props) {
 PostItem.propTypes = {
     post: PropTypes.any,
     reportModalVisible: PropTypes.func,
-    reportModalPostId: PropTypes.func
+    reportModalPostId: PropTypes.func,
 }
