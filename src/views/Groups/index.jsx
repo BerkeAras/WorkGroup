@@ -1,16 +1,20 @@
 /* eslint-disable no-useless-constructor */
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
 import './style.scss'
 import { Button, Popup, Modal, Input, Checkbox } from 'semantic-ui-react'
 import { Hash, Zap } from 'react-feather'
 import unknownAvatar from '../../static/unknown.png'
 import unknownBanner from '../../static/banner.jpg'
+import ConfigContext from '../../store/ConfigContext'
+import AuthContext from '../../store/AuthContext'
 
 // Components
 import Header from '../../components/Header/Header'
 
 function Groups() {
+    const authContextValue = useContext(AuthContext)
+    const contextValue = useContext(ConfigContext)
     const [groupsList, setGroupsList] = useState([])
     const [tagsList, setTagsList] = useState([])
     const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false)
@@ -65,7 +69,7 @@ function Groups() {
                     setTagsList(res)
                 }
             })
-    }, [])
+    }, [authContextValue])
 
     const joinGroup = (groupId) => {
         let header = new Headers()
@@ -197,16 +201,20 @@ function Groups() {
                 <div className="groups-content">
                     {groupsList.length > 0 && (
                         <div className="group-topics">
-                            <Button
-                                onClick={() => {
-                                    setCreateGroupModalOpen(true)
-                                }}
-                                fluid
-                                primary
-                            >
-                                Create a group
-                            </Button>
-                            <br />
+                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') || authContextValue.is_admin == 1 && (
+                                <>
+                                    <Button
+                                        onClick={() => {
+                                            setCreateGroupModalOpen(true)
+                                        }}
+                                        fluid
+                                        primary
+                                    >
+                                        Create a group
+                                    </Button>
+                                    <br />
+                                </>
+                            )}
                             {tagsList.length > 0 &&
                                 tagsList.map((tag) => {
                                     return (
@@ -221,17 +229,21 @@ function Groups() {
                         <center>
                             <Zap size={35} strokeWidth={2} />
                             <h1>There are no groups in your workspace.</h1>
-                            <span>Go ahead and create the first group!</span>
-                            <br />
-                            <br />
-                            <Button
-                                onClick={() => {
-                                    setCreateGroupModalOpen(true)
-                                }}
-                                primary
-                            >
-                                Create the first group
-                            </Button>
+                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') || authContextValue.is_admin == 1 && (
+                                <>
+                                    <span>Go ahead and create the first group!</span>
+                                    <br />
+                                    <br />
+                                    <Button
+                                        onClick={() => {
+                                            setCreateGroupModalOpen(true)
+                                        }}
+                                        primary
+                                    >
+                                        Create the first group
+                                    </Button>
+                                </>
+                            )}
                         </center>
                     )}
                     <div className="group-list">
@@ -277,9 +289,9 @@ function Groups() {
                                                     position="bottom left"
                                                 />
                                             ) : group.hasAlreadyRequested === true ? (
-                                                <Link component={Button} to={`/app/group/${group.id}/request/${group.requestId}/cancelled`} size="small" negative>
+                                                <Button as={Link} to={`/app/group/${group.id}/request/${group.requestId}/cancelled`} size="small" negative>
                                                     Cancel the group request.
-                                                </Link>
+                                                </Button>
                                             ) : (
                                                 <Button
                                                     onClick={(e) => {
@@ -294,9 +306,9 @@ function Groups() {
                                                 </Button>
                                             )}
                                             &nbsp;
-                                            <Link component={Button} to={`/app/group/${group.id}`} size="small">
+                                            <Button as={Link} to={`/app/group/${group.id}`} size="small">
                                                 Visit group
-                                            </Link>
+                                            </Button>
                                         </div>
                                     </div>
                                 )

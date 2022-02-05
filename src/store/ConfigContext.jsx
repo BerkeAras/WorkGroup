@@ -7,6 +7,7 @@ const ConfigContext = React.createContext({
         appUrl: 'http://localhost:3000',
         appRegistrationEnabled: false,
         appPasswordResetEnabled: false,
+        appGroupCreationEnabled: false,
         appMinimumSearchLength: 3,
         appMaximumPostsPerPage: 10,
         serverApiUrl: process.env.REACT_APP_API_URL,

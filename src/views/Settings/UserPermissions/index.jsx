@@ -5,9 +5,10 @@ import './style.scss'
 
 import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
 
-function SettingsAuth() {
+function SettingsUserPermissions() {
     const [appRegistrationEnabled, setAppRegistrationEnabled] = useState('')
     const [appPasswordResetEnabled, setAppPasswordResetEnabled] = useState('')
+    const [appGroupCreationEnabled, setAppGroupCreationEnabled] = useState('')
 
     const [isLoading, setIsLoading] = useState(true)
     const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -30,7 +31,7 @@ function SettingsAuth() {
     }
 
     useEffect(() => {
-        document.title = 'Authentication – Settings – WorkGroup'
+        document.title = 'User Permissions – Settings – WorkGroup'
 
         let tokenHeaders = new Headers()
         tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -52,6 +53,9 @@ function SettingsAuth() {
                     if (settingsItem.config_key == 'app.password_reset_enabled') {
                         setAppPasswordResetEnabled(stringToBoolean(settingsItem.config_value))
                     }
+                    if (settingsItem.config_key == 'app.group_creation_enabled') {
+                        setAppGroupCreationEnabled(stringToBoolean(settingsItem.config_value))
+                    }
                 })
             })
             .catch((error) => {
@@ -72,6 +76,7 @@ function SettingsAuth() {
             body: JSON.stringify({
                 'app.registration_enabled': appRegistrationEnabled.toString(),
                 'app.password_reset_enabled': appPasswordResetEnabled.toString(),
+                'app.group_creation_enabled': appGroupCreationEnabled.toString(),
             }),
             redirect: 'follow',
         }
@@ -93,35 +98,47 @@ function SettingsAuth() {
             <div className="settings_content">
                 {isLoading ? (
                     <center className="settings_content_loader">
-                        <Loader active>Loading Authentication Settings...</Loader>
+                        <Loader active>Loading User Permissions Settings...</Loader>
                     </center>
                 ) : (
                     <>
                         <Form>
-                        <Form.Field>
-                            <label>Registration enabled</label>
-                            <Checkbox
-                                disabled={isLoading}
-                                onChange={(e) => {
-                                    setAppRegistrationEnabled(!appRegistrationEnabled)
-                                }}
-                                checked={stringToBoolean(appRegistrationEnabled.toString())}
-                                toggle
-                                label="Can users sign up?"
-                            />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Password reset enabled</label>
-                            <Checkbox
-                                disabled={isLoading}
-                                onChange={(e) => {
-                                    setAppPasswordResetEnabled(!appPasswordResetEnabled)
-                                }}
-                                checked={stringToBoolean(appPasswordResetEnabled.toString())}
-                                toggle
-                                label="Can users reset their passwords?"
-                            />
-                        </Form.Field>
+                            <Form.Field>
+                                <label>Registration enabled</label>
+                                <Checkbox
+                                    disabled={isLoading}
+                                    onChange={(e) => {
+                                        setAppRegistrationEnabled(!appRegistrationEnabled)
+                                    }}
+                                    checked={stringToBoolean(appRegistrationEnabled.toString())}
+                                    toggle
+                                    label="Can users sign up?"
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Password reset enabled</label>
+                                <Checkbox
+                                    disabled={isLoading}
+                                    onChange={(e) => {
+                                        setAppPasswordResetEnabled(!appPasswordResetEnabled)
+                                    }}
+                                    checked={stringToBoolean(appPasswordResetEnabled.toString())}
+                                    toggle
+                                    label="Can users reset their passwords?"
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Group creation enabled</label>
+                                <Checkbox
+                                    disabled={isLoading}
+                                    onChange={(e) => {
+                                        setAppGroupCreationEnabled(!appGroupCreationEnabled)
+                                    }}
+                                    checked={stringToBoolean(appGroupCreationEnabled.toString())}
+                                    toggle
+                                    label="Can users create new groups?"
+                                />
+                            </Form.Field>
                             <br />
                             <Button loading={isLoading} type="button" onClick={saveAnalyticsSettings} primary>
                                 Save settings
@@ -153,4 +170,4 @@ function SettingsAuth() {
     )
 }
 
-export default SettingsAuth;
+export default SettingsUserPermissions;
