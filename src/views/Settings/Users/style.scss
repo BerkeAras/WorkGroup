@@ -10,7 +10,10 @@
     }
 
     .dropdown {
-        border-radius: 3px !important;
+        border-radius: 10px !important;
+    }
+    .ui.active.selection.dropdown {
+        border-radius: 10px 10px 0 0 !important;
     }
 
     .item[role='listitem'] {

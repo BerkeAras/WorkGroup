@@ -49,6 +49,9 @@ textarea,
 .ui.dropdown {
     line-height: 1.21428571em;
 }
+.ui.selection.dropdown .menu {
+    border-radius: 0 0 10px 10px !important;
+}
 
 .input input:focus,
 input.search:focus,
