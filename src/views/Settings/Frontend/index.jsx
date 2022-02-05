@@ -67,12 +67,6 @@ function SettingsFrontend() {
                     if (settingsItem.config_key == 'app.url') {
                         setAppUrl(settingsItem.config_value)
                     }
-                    if (settingsItem.config_key == 'app.registration_enabled') {
-                        setAppRegistrationEnabled(stringToBoolean(settingsItem.config_value))
-                    }
-                    if (settingsItem.config_key == 'app.password_reset_enabled') {
-                        setAppPasswordResetEnabled(stringToBoolean(settingsItem.config_value))
-                    }
                     if (settingsItem.config_key == 'app.minimum_search_length') {
                         setSearchLength(settingsItem.config_value)
                     }
@@ -147,8 +141,6 @@ function SettingsFrontend() {
                 'app.name': appName,
                 'app.locale': appLocale,
                 'app.url': appUrl,
-                'app.registration_enabled': appRegistrationEnabled.toString(),
-                'app.password_reset_enabled': appPasswordResetEnabled.toString(),
                 'app.minimum_search_length': searchLength,
                 'app.maximum_posts_per_page': postsPerPage,
             }),
@@ -202,8 +194,8 @@ function SettingsFrontend() {
                                 selection
                                 options={locales}
                                 value={appLocale}
-                                onChange={(e) => {
-                                    setAppLocale(e.target.getAttribute('code'))
+                                onChange={(e, { value }) => {
+                                    setAppLocale(value)
                                 }}
                             />
                         </Form.Field>
@@ -218,30 +210,6 @@ function SettingsFrontend() {
                         <Form.Field>
                             <label>Maximum Posts per Page</label>
                             <Input min={10} disabled={isLoading} type="number" value={postsPerPage} onChange={(e) => setPostsPerPage(e.target.value)} placeholder="Maximum Posts to show per Page" />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Registration enabled</label>
-                            <Checkbox
-                                disabled={isLoading}
-                                onChange={(e) => {
-                                    setAppRegistrationEnabled(!appRegistrationEnabled)
-                                }}
-                                checked={stringToBoolean(appRegistrationEnabled.toString())}
-                                toggle
-                                label="Can users sign up?"
-                            />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Password reset enabled</label>
-                            <Checkbox
-                                disabled={isLoading}
-                                onChange={(e) => {
-                                    setAppPasswordResetEnabled(!appPasswordResetEnabled)
-                                }}
-                                checked={stringToBoolean(appPasswordResetEnabled.toString())}
-                                toggle
-                                label="Can users reset their passwords?"
-                            />
                         </Form.Field>
                         <br />
                         <Button loading={isLoading} type="button" onClick={saveFrontendSettings} primary>
