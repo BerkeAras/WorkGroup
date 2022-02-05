@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams } from 'react-router-dom'
 import './style.scss'
 
-import { Monitor, Server, AtSign, BarChart2, Home, Users, LogIn, MoreHorizontal } from 'react-feather'
+import { Monitor, Server, AtSign, BarChart2, Home, Users, Key, MoreHorizontal } from 'react-feather'
 
 // Components
 import Header from '../../components/Header/Header'
@@ -13,7 +13,7 @@ import SettingsFrontend from './Frontend'
 import SettingsServer from './Server'
 import SettingsMail from './Mail'
 import SettingsAnalytics from './Analytics'
-import SettingsAuth from './Auth'
+import SettingsUserPermissions from './UserPermissions'
 import SettingsOther from './Other'
 
 function Settings() {
@@ -42,8 +42,8 @@ function Settings() {
                     <NavLink key="settings-analytics" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/analytics">
                         <BarChart2 size={18} strokeWidth={2.7} /> Analytics
                     </NavLink>
-                    <NavLink key="settings-auth" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/auth">
-                        <LogIn size={18} strokeWidth={2.7} /> Authentication
+                    <NavLink key="settings-auth" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/user-permissions">
+                        <Key size={18} strokeWidth={2.7} /> User Permissions
                     </NavLink>
                     <NavLink key="settings-other" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/other">
                         <MoreHorizontal size={18} strokeWidth={2.7} /> Other Settings
@@ -63,8 +63,8 @@ function Settings() {
                     <SettingsMail />
                 ) : category == 'analytics' ? (
                     <SettingsAnalytics />
-                ) : category == 'auth' ? (
-                    <SettingsAuth />
+                ) : category == 'user-permissions' ? (
+                    <SettingsUserPermissions />
                 ) : category == 'other' ? (
                     <SettingsOther />
                 ) : (

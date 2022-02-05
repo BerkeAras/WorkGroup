@@ -431,15 +431,15 @@ function KnowledgeBaseHeader(props) {
                                         </>
                                     )}
                                     &nbsp;
-                                    {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
-                                            Update File
+                                    {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && props.fileExtension == 'md' && (
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.onFileContentSave} basic size="tiny">
+                                            Save File
                                         </Button>
                                     )}
                                     &nbsp;
-                                    {folderPermissions['modify'] == true && props.editorMode && props.fileExtension == 'md' && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.onFileContentSave} primary size="tiny">
-                                            Save File
+                                    {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && (
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
+                                            Update File
                                         </Button>
                                     )}
                                     &nbsp;
