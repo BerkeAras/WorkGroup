@@ -4,6 +4,7 @@ import { Modal, Message, Button, Form, Loader, Input } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import AuthContext from '../../../store/AuthContext'
 import { CheckCircle } from 'react-feather'
+import W_Modal from '../../W_Modal'
 
 export default function ChangePassword(props) {
     const contextValue = useContext(AuthContext)
@@ -122,7 +123,7 @@ export default function ChangePassword(props) {
     }
 
     return (
-        <Modal
+        <W_Modal
             onClose={() => props.isOpenStateController(false)}
             onOpen={() => {
                 props.isOpenStateController(true)
@@ -222,7 +223,7 @@ export default function ChangePassword(props) {
                     <Button content={resetStep == 3 ? 'Close' : 'Next step'} onClick={resetPassword} positive />
                 )}
             </Modal.Actions>
-        </Modal>
+        </W_Modal>
     )
 }
 

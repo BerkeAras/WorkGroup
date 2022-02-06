@@ -9,6 +9,7 @@ import loadPosts from '../../../utils/loadPosts'
 import likePost from '../../../utils/likePost'
 import toggleComment from '../../../utils/toggleComment'
 import VirtualScroll from 'react-dynamic-virtual-scroll'
+import W_Modal from '../../W_Modal'
 
 import unknownAvatar from '../../../static/unknown.png'
 
@@ -167,17 +168,19 @@ export default function PostsList(props) {
 
             {isLoading && <Loader active>Loading Feed</Loader>}
 
-            <Modal
-                onClose={() => setImageModalVisible(false)}
-                onClick={() => setImageModalVisible(false)}
-                onOpen={() => setImageModalVisible(true)}
-                open={imageModalVisible}
-                className="image-modal-content"
-            >
-                <Modal.Content>
-                    <img src={imageModalUrl} />
-                </Modal.Content>
-            </Modal>
+            {imageModalVisible && (
+                <W_Modal
+                    onClose={() => setImageModalVisible(false)}
+                    onClick={() => setImageModalVisible(false)}
+                    onOpen={() => setImageModalVisible(true)}
+                    open={imageModalVisible}
+                    className="image-modal-content"
+                >
+                    <Modal.Content>
+                        <img src={imageModalUrl} />
+                    </Modal.Content>
+                </W_Modal>
+            )}
 
             {reportModalVisible && (
                 <ReportPost
@@ -190,24 +193,28 @@ export default function PostsList(props) {
                 />
             )}
 
-            <Modal onClose={() => setReportSuccessVisible(false)} onOpen={() => setReportSuccessVisible(true)} open={reportSuccessVisible} size="mini">
-                <Modal.Header>Post reported!</Modal.Header>
-                <Modal.Content>Thank you for your feedback about this post. We will review it immediately.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setReportSuccessVisible(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
-            <Modal onClose={() => setReportErrorVisible(false)} onOpen={() => setReportErrorVisible(true)} open={reportErrorVisible} size="mini">
-                <Modal.Header>Post could not be reported!</Modal.Header>
-                <Modal.Content>Unfortunately, this post could not be reported. Please try again later.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setReportErrorVisible(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
+            {reportSuccessVisible && (
+                <W_Modal onClose={() => setReportSuccessVisible(false)} onOpen={() => setReportSuccessVisible(true)} open={reportSuccessVisible} size="mini">
+                    <Modal.Header>Post reported!</Modal.Header>
+                    <Modal.Content>Thank you for your feedback about this post. We will review it immediately.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setReportSuccessVisible(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
+            {reportErrorVisible && (
+                <W_Modal onClose={() => setReportErrorVisible(false)} onOpen={() => setReportErrorVisible(true)} open={reportErrorVisible} size="mini">
+                    <Modal.Header>Post could not be reported!</Modal.Header>
+                    <Modal.Content>Unfortunately, this post could not be reported. Please try again later.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setReportErrorVisible(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
         </div>
     )
 }

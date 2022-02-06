@@ -5,6 +5,7 @@ import { Button, Loader, Modal, Input, Checkbox, List } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import { MoreVertical, Users, Zap } from 'react-feather'
 import { Link } from 'react-router-dom'
+import W_Modal from '../../W_Modal'
 
 import unknownBanner from '../../../static/banner.jpg'
 import unknownAvatar from '../../../static/unknown.png'
@@ -311,7 +312,7 @@ function GroupBanner(props) {
             )}
 
             {editGroupModalOpen && (
-                <Modal
+                <W_Modal
                     onClose={() => {
                         setEditGroupModalOpen(false)
                     }}
@@ -385,11 +386,11 @@ function GroupBanner(props) {
                             />
                         )}
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showRequestsModal && (
-                <Modal
+                <W_Modal
                     onClose={() => {
                         setShowRequestsModal(false)
                     }}
@@ -441,11 +442,11 @@ function GroupBanner(props) {
                             Close
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showRequestActionModal && (
-                <Modal
+                <W_Modal
                     onClose={() => {
                         setShowRequestActionModal(false)
                         setGroupRequestActionId(null)
@@ -493,11 +494,11 @@ function GroupBanner(props) {
                             Cancel
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showMembersModal && (
-                <Modal
+                <W_Modal
                     onClose={() => {
                         setShowMembersModal(false)
                     }}
@@ -552,7 +553,7 @@ function GroupBanner(props) {
                             Close
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
         </div>
     )

@@ -8,6 +8,7 @@ import unknownAvatar from '../../static/unknown.png'
 import unknownBanner from '../../static/banner.jpg'
 import ConfigContext from '../../store/ConfigContext'
 import AuthContext from '../../store/AuthContext'
+import W_Modal from '../../components/W_Modal'
 
 // Components
 import Header from '../../components/Header/Header'
@@ -171,31 +172,33 @@ function Groups() {
         <div className="app">
             <Header />
 
-            <Modal
-                onClose={() => {
-                    setErrorModalOpen(false)
-                    window.location.reload()
-                }}
-                onOpen={() => {
-                    setErrorModalOpen(true)
-                }}
-                open={errorModalOpen}
-                size="mini"
-            >
-                <Modal.Header>Group could not be created!</Modal.Header>
-                <Modal.Content>Your post could not be created to a server error! We are working to fix this bug.</Modal.Content>
-                <Modal.Actions>
-                    <Button
-                        color="black"
-                        onClick={() => {
-                            setErrorModalOpen(false)
-                            window.location.reload()
-                        }}
-                    >
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
+            {errorModalOpen && (
+                <W_Modal
+                    onClose={() => {
+                        setErrorModalOpen(false)
+                        window.location.reload()
+                    }}
+                    onOpen={() => {
+                        setErrorModalOpen(true)
+                    }}
+                    open={errorModalOpen}
+                    size="mini"
+                >
+                    <Modal.Header>Group could not be created!</Modal.Header>
+                    <Modal.Content>Your post could not be created to a server error! We are working to fix this bug.</Modal.Content>
+                    <Modal.Actions>
+                        <Button
+                            color="black"
+                            onClick={() => {
+                                setErrorModalOpen(false)
+                                window.location.reload()
+                            }}
+                        >
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
 
             <div id="main_content" className="main_content">
                 <div className="groups-content">
@@ -317,85 +320,87 @@ function Groups() {
                 </div>
             </div>
 
-            <Modal
-                onClose={() => {
-                    setCreateGroupModalOpen(false)
-                }}
-                onOpen={() => {
-                    setCreateGroupModalOpen(true)
-                }}
-                open={createGroupModalOpen}
-                size="tiny"
-            >
-                <Modal.Header>Create a new group</Modal.Header>
-                <Modal.Content style={{ position: 'relative', overflowX: 'hidden' }}>
-                    <img
-                        src={groupBannerPreview}
-                        onClick={() => {
-                            bannerInputRef.current.click()
-                        }}
-                        className="create-group-modal-banner"
-                    />
-                    <img
-                        src={groupAvatarPreview}
-                        onClick={() => {
-                            avatarInputRef.current.click()
-                        }}
-                        className="create-group-modal-avatar"
-                    />
-                    <input ref={bannerInputRef} type="file" hidden />
-                    <input ref={avatarInputRef} type="file" hidden />
-                    <Input
-                        error={groupTitleInputError}
-                        fluid
-                        onChange={(e) => {
-                            setGroupTitleInputError(false)
-                            setGroupTitleInput(e.target.value)
-                        }}
-                        value={groupTitleInput}
-                        type="text"
-                        placeholder="Title"
-                    />
-                    <br />
-                    <Input
-                        error={groupDescriptionInputError}
-                        fluid
-                        onChange={(e) => {
-                            setGroupDescriptionInputError(false)
-                            setGroupDescriptionInput(e.target.value)
-                        }}
-                        value={groupDescriptionInput}
-                        type="text"
-                        placeholder="Description"
-                    />
-                    <small className="create-group-modal-hint">Hint: use #hashtags to make your group better findable!</small>
-                    <br />
-                    <br />
-                    <Checkbox
-                        toggle
-                        checked={groupPrivateCheckbox}
-                        onChange={() => {
-                            setGroupPrivateCheckbox(!groupPrivateCheckbox)
-                        }}
-                        label="Private Group"
-                    />
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button
-                        color="black"
-                        onClick={() => {
-                            setCreateGroupModalOpen(false)
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                    {isCreatingGroup ? (
-                        <Button content="Create group" labelPosition="right" icon="checkmark" positive loading />
-                    ) : (
-                        <Button content="Create group" onClick={handleSubmit} labelPosition="right" icon="checkmark" positive />
-                    )}
-                </Modal.Actions>
-            </Modal>
+            {createGroupModalOpen && (
+                <W_Modal
+                    onClose={() => {
+                        setCreateGroupModalOpen(false)
+                    }}
+                    onOpen={() => {
+                        setCreateGroupModalOpen(true)
+                    }}
+                    open={createGroupModalOpen}
+                    size="tiny"
+                >
+                    <Modal.Header>Create a new group</Modal.Header>
+                    <Modal.Content style={{ position: 'relative', overflowX: 'hidden' }}>
+                        <img
+                            src={groupBannerPreview}
+                            onClick={() => {
+                                bannerInputRef.current.click()
+                            }}
+                            className="create-group-modal-banner"
+                        />
+                        <img
+                            src={groupAvatarPreview}
+                            onClick={() => {
+                                avatarInputRef.current.click()
+                            }}
+                            className="create-group-modal-avatar"
+                        />
+                        <input ref={bannerInputRef} type="file" hidden />
+                        <input ref={avatarInputRef} type="file" hidden />
+                        <Input
+                            error={groupTitleInputError}
+                            fluid
+                            onChange={(e) => {
+                                setGroupTitleInputError(false)
+                                setGroupTitleInput(e.target.value)
+                            }}
+                            value={groupTitleInput}
+                            type="text"
+                            placeholder="Title"
+                        />
+                        <br />
+                        <Input
+                            error={groupDescriptionInputError}
+                            fluid
+                            onChange={(e) => {
+                                setGroupDescriptionInputError(false)
+                                setGroupDescriptionInput(e.target.value)
+                            }}
+                            value={groupDescriptionInput}
+                            type="text"
+                            placeholder="Description"
+                        />
+                        <small className="create-group-modal-hint">Hint: use #hashtags to make your group better findable!</small>
+                        <br />
+                        <br />
+                        <Checkbox
+                            toggle
+                            checked={groupPrivateCheckbox}
+                            onChange={() => {
+                                setGroupPrivateCheckbox(!groupPrivateCheckbox)
+                            }}
+                            label="Private Group"
+                        />
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button
+                            color="black"
+                            onClick={() => {
+                                setCreateGroupModalOpen(false)
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        {isCreatingGroup ? (
+                            <Button content="Create group" labelPosition="right" icon="checkmark" positive loading />
+                        ) : (
+                            <Button content="Create group" onClick={handleSubmit} labelPosition="right" icon="checkmark" positive />
+                        )}
+                    </Modal.Actions>
+                </W_Modal>
+            )}
         </div>
     )
 }

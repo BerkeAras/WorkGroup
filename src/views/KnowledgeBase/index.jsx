@@ -1,7 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, NavLink, useParams } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
 import './style.scss'
 import { Button, Loader, Modal } from 'semantic-ui-react'
 import { Database, Folder, File, Zap } from 'react-feather'
@@ -12,6 +11,7 @@ import KnowledgeBaseSidebar from '../../components/KnowledgeBase/KnowledgeBaseSi
 import KnowledgeBaseHeader from '../../components/KnowledgeBase/KnowledgeBaseHeader'
 import KnowledgeBaseFileReader from '../../components/KnowledgeBase/KnowledgeBaseFileReader'
 import KnowledgeBaseFileHistory from '../../components/KnowledgeBase/KnowledgeBaseFileHistory'
+import W_Modal from '../../components/W_Modal'
 
 function KnowledgeBase() {
     const { folderId, fileId, historyId } = useParams()
@@ -138,7 +138,7 @@ function KnowledgeBase() {
             <Header />
 
             {showErrorModal && (
-                <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                <W_Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
                     <Modal.Header>Warning</Modal.Header>
                     <Modal.Content>
                         <p>{errorModalText}</p>
@@ -148,7 +148,7 @@ function KnowledgeBase() {
                             Close
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showFileHistoryModal && <KnowledgeBaseFileHistory isLoading={isLoading} onClose={() => setShowFileHistoryModal(false)} />}

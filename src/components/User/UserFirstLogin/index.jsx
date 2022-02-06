@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import './style.scss'
 import { Modal, Header, Button, Form, TextArea, Input, Dropdown } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import axios, { put } from 'axios'
+import W_Modal from '../../W_Modal'
 
 import unknownBanner from '../../../static/banner.jpg'
 import unknownAvatar from '../../../static/unknown.png'
@@ -241,7 +241,7 @@ class FirstLogin extends React.Component {
     render() {
         const { file } = this.state
         return (
-            <Modal className="first-login-modal" onClose={() => this.props.handleStateChange()} open={true} size="tiny">
+            <W_Modal className="first-login-modal" onClose={() => this.props.handleStateChange()} open={true} size="tiny">
                 <Modal.Header>Set up your account</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
@@ -310,7 +310,7 @@ class FirstLogin extends React.Component {
                         />
                     )}
                 </Modal.Actions>
-            </Modal>
+            </W_Modal>
         )
     }
 }

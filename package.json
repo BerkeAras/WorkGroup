@@ -16,7 +16,7 @@
         "axios": "^0.21.1",
         "dotenv": "^10.0.0",
         "firebase": "^8.2.0",
-        "focus-trap-react": "^8.5.0",
+        "focus-trap-react": "^8.9.1",
         "linkifyjs": "^2.1.9",
         "react": "^17.0.1",
         "react-debounce-input": "^3.2.3",
