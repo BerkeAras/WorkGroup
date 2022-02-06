@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './scss/style.scss'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Loader } from 'semantic-ui-react'
 
 import SignIn from './views/auth/SignIn'
@@ -19,6 +19,7 @@ import SinglePost from './views/SinglePost'
 import KnowledgeBase from './views/KnowledgeBase'
 import SignUpWrapper from './views/auth/SignUp'
 import Topic from './views/Topic'
+import Error404 from './views/Error404'
 
 import FirstLogin from './components/User/UserFirstLogin'
 import CookieBanner from './components/App/AppCookieBanner'
@@ -254,103 +255,57 @@ class App extends React.Component {
     render() {
         return (
             <ConfigContext.Provider value={this.state.loadedConfig}>
-                <Router>
+                <BrowserRouter>
                     {this.state.first_login && <FirstLogin handleStateChange={this.handleStateChange} />}
-                    <Switch>
-                        {this.state.isLoggedIn === true && this.state.configLoaded === true && (
-                            <AuthProvider value={this.state.loginData}>
-                                <Route exact path="/">
-                                    <Redirect to="/app" />
-                                </Route>
-                                <Route exact path="/app">
-                                    <MainApp />
-                                </Route>
-                                <Route exact path="/app/post/:postId">
-                                    <SinglePost />
-                                </Route>
-                                <Route exact path="/app/topic/:hashTag">
-                                    <Topic />
-                                </Route>
-                                <Route exact path="/logout">
-                                    <LogOut />
-                                </Route>
-                                <Route path="/app/user/:email">
-                                    <User />
-                                </Route>
-                                <Route path="/app/group/:id" exact>
-                                    <Group />
-                                </Route>
-                                <Route path="/app/groups">
-                                    <Groups />
-                                </Route>
-                                <Route path="/app/group-request-approved">
-                                    <GroupRequestApproved />
-                                </Route>
-                                <Route path="/app/group-request-pending">
-                                    <GroupRequestPending />
-                                </Route>
-                                <Route exact path="/app/group/:id/request/:request_id/:request_status">
-                                    <GroupRequestUpdate />
-                                </Route>
-                                <Route exact path="/app/knowledgebase">
-                                    <KnowledgeBase />
-                                </Route>
-                                <Route exact path="/app/knowledgebase/:folderId">
-                                    <KnowledgeBase />
-                                </Route>
-                                <Route exact path="/app/knowledgebase/:folderId/:fileId">
-                                    <KnowledgeBase />
-                                </Route>
-                                <Route exact path="/app/knowledgebase/:folderId/:fileId/:historyId">
-                                    <KnowledgeBase />
-                                </Route>
+
+                    {this.state.isLoggedIn === true && this.state.configLoaded === true && (
+                        <AuthProvider value={this.state.loginData}>
+                            <Routes>
+                                <Route exact path="/" element={<Navigate to="/app" />} />
+                                <Route exact path="/app" element={<MainApp />} />
+                                <Route exact path="/app/post/:postId" element={<SinglePost />} />
+                                <Route exact path="/app/topic/:hashTag" element={<Topic />} />
+                                <Route exact path="/logout" element={<LogOut />} />
+                                <Route exact path="/app/user/:email" element={<User />} />
+                                <Route exact path="/app/group/:id" element={<Group />} />
+                                <Route exact path="/app/groups" element={<Groups />} />
+                                <Route exact path="/app/group-request-approved" element={<GroupRequestApproved />} />
+                                <Route exact path="/app/group-request-pending" element={<GroupRequestPending />} />
+                                <Route exact path="/app/group/:id/request/:request_id/:request_status" element={<GroupRequestUpdate />} />
+                                <Route exact path="/app/knowledgebase" element={<KnowledgeBase />} />
+                                <Route exact path="/app/knowledgebase/:folderId" element={<KnowledgeBase />} />
+                                <Route exact path="/app/knowledgebase/:folderId/:fileId" element={<KnowledgeBase />} />
+                                <Route exact path="/app/knowledgebase/:folderId/:fileId/:historyId" element={<KnowledgeBase />} />
                                 {this.state.loggedInUserIsAdmin && (
-                                    <>
-                                        <Route path="/app/settings/:category">
-                                            <Settings />
-                                        </Route>
-                                        <Route exact path="/app/settings">
-                                            <Redirect to="/app/settings/overview" />
-                                        </Route>
-                                    </>
+                                    <React.Fragment>
+                                        <Route path="/app/settings/:category" element={<Settings />} />
+                                        <Route exact path="/app/settings" element={<Navigate to="/app/settings/overview" />} />
+                                    </React.Fragment>
                                 )}
-                            </AuthProvider>
-                        )}
+                                <Route path="*" element={<Error404 />} />
+                            </Routes>
+                        </AuthProvider>
+                    )}
+                    <Routes>
                         {this.state.isLoggedIn === false && this.state.configLoaded === true && (
                             <React.Fragment>
-                                <Route exact path="/">
-                                    <SignIn />
-                                </Route>
-                                <Route path="/app">
-                                    <Redirect to={`/?ref=${window.location.pathname}`} />
-                                </Route>
-                                <Route exact path="/signup">
-                                    <SignUpWrapper />
-                                </Route>
-                                <Route path="/signup/activate/:token">
-                                    <ActivateAccount />
-                                </Route>
-                                <Route exact path="/password-reset">
-                                    <PasswordReset />
-                                </Route>
-                                <Route exact path="/logout">
-                                    <LogOut />
-                                </Route>
-                                <Route path="*">
-                                    <SignIn />
-                                </Route>
+                                <Route exact path="/" element={<SignIn />} />
+                                <Route path="/app" element={<Navigate to={`/?ref=${window.location.pathname}`} />} />
+                                <Route exact path="/signup" element={<SignUpWrapper />} />
+                                <Route path="/signup/activate/:token" element={<ActivateAccount />} />
+                                <Route exact path="/password-reset" element={<PasswordReset />} />
+                                <Route exact path="/logout" element={<LogOut />} />
+                                <Route path="*" element={<Error404 />} />
                             </React.Fragment>
                         )}
                         {(this.state.isLoggedIn === null || this.state.configLoaded == null || this.state.configLoaded == false) && (
                             <React.Fragment>
-                                <Route path="/*">
-                                    <Loader className="app-loader" active size="large" content="Initializing WorkGroup..." />
-                                </Route>
+                                <Route path="/*" element={<Loader className="app-loader" active size="large" content="Initializing WorkGroup..." />}></Route>
                             </React.Fragment>
                         )}
-                    </Switch>
+                    </Routes>
                     {this.state.configLoaded === true && <CookieBanner isLoggedIn={this.state.isLoggedIn} />}
-                </Router>
+                </BrowserRouter>
             </ConfigContext.Provider>
         )
     }

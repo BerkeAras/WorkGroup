@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './style.scss'
 import { Folder, Home } from 'react-feather'
 import PropTypes from 'prop-types'
@@ -36,7 +36,12 @@ function KnowledgeBaseSidebar(props) {
                 </div>
             ) : (
                 <>
-                    <NavLink exact key="KnowledgeBaseSidebar-home" className="KnowledgeBaseSidebar-item" activeClassName="KnowledgeBaseSidebar-item--active" to="/app/knowledgebase">
+                    <NavLink
+                        end
+                        key="KnowledgeBaseSidebar-home"
+                        className={({ isActive }) => (!isActive ? 'KnowledgeBaseSidebar-item' : 'KnowledgeBaseSidebar-item KnowledgeBaseSidebar-item--active')}
+                        to="/app/knowledgebase"
+                    >
                         <Home size={18} strokeWidth={2.7} /> Home
                     </NavLink>
                     <br />
@@ -46,9 +51,8 @@ function KnowledgeBaseSidebar(props) {
                         return (
                             <NavLink
                                 key={index}
-                                className="KnowledgeBaseSidebar-item"
                                 title={folder.knowledge_base_folder_description}
-                                activeClassName="KnowledgeBaseSidebar-item--active"
+                                className={({ isActive }) => (!isActive ? 'KnowledgeBaseSidebar-item' : 'KnowledgeBaseSidebar-item KnowledgeBaseSidebar-item--active')}
                                 to={'/app/knowledgebase/' + folder.id}
                             >
                                 <Folder size={18} strokeWidth={2.7} /> {folder.knowledge_base_folder_name}

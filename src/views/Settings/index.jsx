@@ -24,28 +24,44 @@ function Settings() {
             <Header />
             <div id="main_content" className="main_content">
                 <div className="settings_sidebar">
-                    <NavLink key="settings-home" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/overview">
+                    <NavLink
+                        key="settings-home"
+                        className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')}
+                        to="/app/settings/overview"
+                    >
                         <Home size={18} strokeWidth={2.7} /> Home
                     </NavLink>
-                    <NavLink key="settings-users" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/users">
+                    <NavLink key="settings-users" className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')} to="/app/settings/users">
                         <Users size={18} strokeWidth={2.7} /> Users
                     </NavLink>
-                    <NavLink key="settings-app" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/app">
+                    <NavLink key="settings-app" className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')} to="/app/settings/app">
                         <Monitor size={18} strokeWidth={2.7} /> Frontend
                     </NavLink>
-                    <NavLink key="settings-server" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/server">
+                    <NavLink
+                        key="settings-server"
+                        className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')}
+                        to="/app/settings/server"
+                    >
                         <Server size={18} strokeWidth={2.7} /> Server
                     </NavLink>
-                    <NavLink key="settings-mail" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/mail">
+                    <NavLink key="settings-mail" className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')} to="/app/settings/mail">
                         <AtSign size={18} strokeWidth={2.7} /> Mail
                     </NavLink>
-                    <NavLink key="settings-analytics" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/analytics">
+                    <NavLink
+                        key="settings-analytics"
+                        className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')}
+                        to="/app/settings/analytics"
+                    >
                         <BarChart2 size={18} strokeWidth={2.7} /> Analytics
                     </NavLink>
-                    <NavLink key="settings-auth" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/user-permissions">
+                    <NavLink
+                        key="settings-auth"
+                        className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')}
+                        to="/app/settings/user-permissions"
+                    >
                         <Key size={18} strokeWidth={2.7} /> User Permissions
                     </NavLink>
-                    <NavLink key="settings-other" className="settings_sidebar-item" activeClassName="settings_sidebar-item--active" to="/app/settings/other">
+                    <NavLink key="settings-other" className={({ isActive }) => (!isActive ? 'settings_sidebar-item' : 'settings_sidebar-item settings_sidebar-item--active')} to="/app/settings/other">
                         <MoreHorizontal size={18} strokeWidth={2.7} /> Other Settings
                     </NavLink>
                 </div>

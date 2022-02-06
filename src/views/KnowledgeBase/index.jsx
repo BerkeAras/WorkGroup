@@ -195,7 +195,7 @@ function KnowledgeBase() {
                                                     return (
                                                         <NavLink
                                                             key={`folder-${index}`}
-                                                            exact
+                                                            end
                                                             title={folder.knowledge_base_folder_description}
                                                             to={`/app/knowledgebase/${folder.id}`}
                                                             className="KnowledgeBase-Folder"
@@ -208,7 +208,7 @@ function KnowledgeBase() {
                                                     return (
                                                         <NavLink
                                                             key={`file-${index}`}
-                                                            exact
+                                                            end
                                                             title={file.knowledge_base_file_description}
                                                             to={`/app/knowledgebase/${folderId == undefined || folderId == null ? 0 : folderId}/${file.id}`}
                                                             className="KnowledgeBase-File"
