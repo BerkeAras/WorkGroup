@@ -9,20 +9,20 @@ import Content from '../../components/Content'
 
 import PostsList from '../../components/Feed/FeedPostsList'
 
-export default function SinglePost() {
-    let { postId } = useParams()
+export default function Topic() {
+    let { hashTag } = useParams()
 
     useEffect(() => {
-        document.title = 'Feed – WorkGroup'
-    }, [postId])
+        document.title = 'Topic #' + hashTag + ' – WorkGroup'
+    }, [hashTag])
 
     return (
         <div className="app">
             <Header />
-            <div id="main_content" className="main_content single-post-page">
+            <div id="main_content" className="main_content topic-page">
                 <SidebarLeft />
                 <Content>
-                    <PostsList postId={postId} />
+                    <PostsList hashTag={hashTag} />
                 </Content>
                 <SidebarRight />
             </div>
