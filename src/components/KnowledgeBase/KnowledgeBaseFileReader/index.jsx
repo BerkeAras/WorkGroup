@@ -142,7 +142,7 @@ function KnowledgeBaseFileReader(props) {
                                             }}
                                         ></textarea>
                                     ) : (
-                                        <ReactMarkdown linkTarget="_blank" remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeHighlight]}>
+                                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeHighlight]}>
                                             {fileContent}
                                         </ReactMarkdown>
                                     )}
