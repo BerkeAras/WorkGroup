@@ -165,7 +165,7 @@ const SearchField = () => {
                                 {topicResult.map((topic) => {
                                     return (
                                         <li key={topic.id}>
-                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topics/' + topic.topic}>
+                                            <Link onClick={() => document.activeElement.blur()} to={'/app/topic/' + topic.topic}>
                                                 <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                             </Link>
                                         </li>
