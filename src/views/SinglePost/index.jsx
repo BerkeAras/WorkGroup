@@ -14,7 +14,7 @@ export default function SinglePost() {
 
     useEffect(() => {
         document.title = 'Feed – WorkGroup'
-    }, [ postId ])
+    }, [postId])
 
     return (
         <div className="app">
