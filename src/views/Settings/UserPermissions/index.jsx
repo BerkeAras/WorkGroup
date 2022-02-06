@@ -173,4 +173,4 @@ function SettingsUserPermissions() {
     )
 }
 
-export default SettingsUserPermissions;
+export default SettingsUserPermissions

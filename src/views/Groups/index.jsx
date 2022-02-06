@@ -204,20 +204,21 @@ function Groups() {
                 <div className="groups-content">
                     {groupsList.length > 0 && (
                         <div className="group-topics">
-                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') || authContextValue.is_admin == 1 && (
-                                <>
-                                    <Button
-                                        onClick={() => {
-                                            setCreateGroupModalOpen(true)
-                                        }}
-                                        fluid
-                                        primary
-                                    >
-                                        Create a group
-                                    </Button>
-                                    <br />
-                                </>
-                            )}
+                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') ||
+                                (authContextValue.is_admin == 1 && (
+                                    <>
+                                        <Button
+                                            onClick={() => {
+                                                setCreateGroupModalOpen(true)
+                                            }}
+                                            fluid
+                                            primary
+                                        >
+                                            Create a group
+                                        </Button>
+                                        <br />
+                                    </>
+                                ))}
                             {tagsList.length > 0 &&
                                 tagsList.map((tag) => {
                                     return (
@@ -232,21 +233,22 @@ function Groups() {
                         <center>
                             <Zap size={35} strokeWidth={2} />
                             <h1>There are no groups in your workspace.</h1>
-                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') || authContextValue.is_admin == 1 && (
-                                <>
-                                    <span>Go ahead and create the first group!</span>
-                                    <br />
-                                    <br />
-                                    <Button
-                                        onClick={() => {
-                                            setCreateGroupModalOpen(true)
-                                        }}
-                                        primary
-                                    >
-                                        Create the first group
-                                    </Button>
-                                </>
-                            )}
+                            {(contextValue != undefined && contextValue.app.group_creation_enabled == 'true') ||
+                                (authContextValue.is_admin == 1 && (
+                                    <>
+                                        <span>Go ahead and create the first group!</span>
+                                        <br />
+                                        <br />
+                                        <Button
+                                            onClick={() => {
+                                                setCreateGroupModalOpen(true)
+                                            }}
+                                            primary
+                                        >
+                                            Create the first group
+                                        </Button>
+                                    </>
+                                ))}
                         </center>
                     )}
                     <div className="group-list">

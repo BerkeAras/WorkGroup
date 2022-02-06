@@ -17,7 +17,7 @@ function CookieBanner(props) {
     const [analyticsCookiesChecked, setAnalyticsCookiesChecked] = useState(false)
 
     useEffect(() => {
-        console.log('OPEN');
+        console.log('OPEN')
         if (localStorage.getItem('cookies_accepted') == 'true') {
             setCookiesAccepted(true)
             initializeTracking(location)
@@ -89,26 +89,28 @@ function CookieBanner(props) {
 
     return (
         <>
-            {contextValue != undefined && contextValue.analytics != undefined && (contextValue.analytics.google_analytics_enabled == 'true' || contextValue.analytics.google_analytics_enabled == true) && (
-                <>
-                    {cookiesAccepted == false && (
-                        <div className="cookie-banner">
-                            <p>
-                                <Info />
-                                We use cookies to improve our products, personalise your feed and advertising and to analyse how our products are used.
-                                <br />
-                                Select &quot;Accept cookies&quot; to consent to this use or set your cookie selection under &quot;Manage settings&quot;. You can change your cookie settings at any
-                                time and revoke your consent in your app-settings.
-                            </p>
+            {contextValue != undefined &&
+                contextValue.analytics != undefined &&
+                (contextValue.analytics.google_analytics_enabled == 'true' || contextValue.analytics.google_analytics_enabled == true) && (
+                    <>
+                        {cookiesAccepted == false && (
+                            <div className="cookie-banner">
+                                <p>
+                                    <Info />
+                                    We use cookies to improve our products, personalise your feed and advertising and to analyse how our products are used.
+                                    <br />
+                                    Select &quot;Accept cookies&quot; to consent to this use or set your cookie selection under &quot;Manage settings&quot;. You can change your cookie settings at any
+                                    time and revoke your consent in your app-settings.
+                                </p>
 
-                            <Button onClick={acceptCookies} primary>
-                                Accept cookies
-                            </Button>
-                            <Button onClick={() => setShowCookieSettingsModal(true)}>Manage settings</Button>
-                        </div>
-                    )}
-                </>
-            )}
+                                <Button onClick={acceptCookies} primary>
+                                    Accept cookies
+                                </Button>
+                                <Button onClick={() => setShowCookieSettingsModal(true)}>Manage settings</Button>
+                            </div>
+                        )}
+                    </>
+                )}
             {showCookieSettingsModal && (
                 <W_Modal
                     className="cookie-modal"

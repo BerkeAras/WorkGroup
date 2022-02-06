@@ -46,7 +46,15 @@ function ReportPost(props) {
     }
 
     return (
-        <W_Modal onClose={props.handleClose} onOpen={props.handleOpen} open={props.open} size="tiny" className="report-post-modal" closeOnEscape={!reportIsLoading} closeOnDimmerClick={!reportIsLoading}>
+        <W_Modal
+            onClose={props.handleClose}
+            onOpen={props.handleOpen}
+            open={props.open}
+            size="tiny"
+            className="report-post-modal"
+            closeOnEscape={!reportIsLoading}
+            closeOnDimmerClick={!reportIsLoading}
+        >
             <Modal.Header>Report this post</Modal.Header>
             <Modal.Content>
                 <h3>Why do you want to report this post?</h3>

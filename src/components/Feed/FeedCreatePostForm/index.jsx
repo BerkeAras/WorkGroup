@@ -376,7 +376,12 @@ class CreatePostForm extends React.Component {
                     </W_Modal>
                 )}
                 {this.state.uploadFileSizeError && (
-                    <W_Modal onClose={() => this.setState({ uploadFileSizeError: false })} onOpen={() => this.setState({ uploadFileSizeError: true })} open={this.state.uploadFileSizeError} size="mini">
+                    <W_Modal
+                        onClose={() => this.setState({ uploadFileSizeError: false })}
+                        onOpen={() => this.setState({ uploadFileSizeError: true })}
+                        open={this.state.uploadFileSizeError}
+                        size="mini"
+                    >
                         <Modal.Header>Your file could not be uploaded!</Modal.Header>
                         <Modal.Content>Unfortunately, your file is too big to be uploaded.</Modal.Content>
                         <Modal.Actions>

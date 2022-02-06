@@ -184,12 +184,8 @@ function SettingsUsers() {
                 )}
             </div>
 
-            {showInformationModal && (
-                <UserInformation member={selectedMember} isOpenState={showInformationModal} isOpenStateController={setShowInformationModal} />
-            )}
-            {showSettingsModal && (
-                <UserSettings member={selectedMember} isOpenState={showSettingsModal} isOpenStateController={setShowSettingsModal} />
-            )}
+            {showInformationModal && <UserInformation member={selectedMember} isOpenState={showInformationModal} isOpenStateController={setShowInformationModal} />}
+            {showSettingsModal && <UserSettings member={selectedMember} isOpenState={showSettingsModal} isOpenStateController={setShowSettingsModal} />}
         </>
     )
 }

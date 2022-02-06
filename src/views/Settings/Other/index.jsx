@@ -6,23 +6,23 @@ import W_Modal from '../../../components/W_Modal'
 
 const qualityModes = [
     {
-        "key": "min",
-        "value": "min",
-        "code": "min",
-        "text": "Minimum (40% Quality)"
+        key: 'min',
+        value: 'min',
+        code: 'min',
+        text: 'Minimum (40% Quality)',
     },
     {
-        "key": "medium",
-        "value": "medium",
-        "code": "medium",
-        "text": "Medium (60% Quality)"
+        key: 'medium',
+        value: 'medium',
+        code: 'medium',
+        text: 'Medium (60% Quality)',
     },
     {
-        "key": "max",
-        "value": "max",
-        "code": "max",
-        "text": "Maximum (100% Quality / Lossless)"
-    }
+        key: 'max',
+        value: 'max',
+        code: 'max',
+        text: 'Maximum (100% Quality / Lossless)',
+    },
 ]
 
 function SettingsOther() {
@@ -200,4 +200,4 @@ function SettingsOther() {
     )
 }
 
-export default SettingsOther;
+export default SettingsOther

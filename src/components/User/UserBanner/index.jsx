@@ -133,9 +133,7 @@ function UserBanner(props) {
                     </div>
                 )}
             </div>
-            {showPasswordResetModal && (
-                <ChangePassword isOpenState={showPasswordResetModal} isOpenStateController={setShowPasswordResetModal} />
-            )}
+            {showPasswordResetModal && <ChangePassword isOpenState={showPasswordResetModal} isOpenStateController={setShowPasswordResetModal} />}
         </>
     )
 }

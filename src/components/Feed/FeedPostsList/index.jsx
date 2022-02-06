@@ -139,7 +139,14 @@ export default function PostsList(props) {
                     {items.length > 0 ? (
                         <React.Fragment>
                             {items.map((item) => (
-                                <PostItem key={item.id} post={item} setImageModalUrl={setImageModalUrl} setImageModalVisible={setImageModalVisible} reportModalVisible={setReportModalVisible} reportModalPostId={setReportModalPostId} />
+                                <PostItem
+                                    key={item.id}
+                                    post={item}
+                                    setImageModalUrl={setImageModalUrl}
+                                    setImageModalVisible={setImageModalVisible}
+                                    reportModalVisible={setReportModalVisible}
+                                    reportModalPostId={setReportModalPostId}
+                                />
                             ))}
 
                             {props.postId == undefined && (
