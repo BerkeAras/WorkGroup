@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { Placeholder, Icon } from 'semantic-ui-react'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams, NavLink } from 'react-router-dom'
 import { Hash } from 'react-feather'
 
 const SidebarPopularItems = () => {
@@ -56,9 +56,9 @@ const SidebarPopularItems = () => {
                     ) : (
                         topics.map((topic) => {
                             return (
-                                <Link key={`topic-${topic.id}`} className="topic-item" to={`/app/topics/` + topic.topic}>
+                                <NavLink key={`topic-${topic.id}`} className="topic-item" activeClassName="topic-item--active" to={`/app/topic/` + topic.topic}>
                                     <Hash size={18} strokeWidth={2.7} /> {topic.topic}
-                                </Link>
+                                </NavLink>
                             )
                         })
                     )}

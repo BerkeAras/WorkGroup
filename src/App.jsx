@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './scss/style.scss'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect, useParams } from 'react-router-dom'
+import { Loader } from 'semantic-ui-react'
+
 import SignIn from './views/auth/SignIn'
-import SignUp from './views/auth/SignUp'
 import ActivateAccount from './views/auth/ActivateAccount'
 import PasswordReset from './views/auth/PasswordReset'
 import LogOut from './views/auth/LogOut'
@@ -16,13 +17,13 @@ import GroupRequestUpdate from './views/GroupRequestUpdate'
 import Settings from './views/Settings'
 import SinglePost from './views/SinglePost'
 import KnowledgeBase from './views/KnowledgeBase'
-import { Loader } from 'semantic-ui-react'
+import SignUpWrapper from './views/auth/SignUp'
+import Topic from './views/Topic'
 
 import FirstLogin from './components/User/UserFirstLogin'
 import CookieBanner from './components/App/AppCookieBanner'
 import { AuthProvider } from './store/AuthContext'
 import ConfigContext from './store/ConfigContext.jsx'
-import SignUpWrapper from './views/auth/SignUp'
 
 class App extends React.Component {
     constructor(props) {
@@ -266,6 +267,9 @@ class App extends React.Component {
                                 </Route>
                                 <Route exact path="/app/post/:postId">
                                     <SinglePost />
+                                </Route>
+                                <Route exact path="/app/topic/:hashTag">
+                                    <Topic />
                                 </Route>
                                 <Route exact path="/logout">
                                     <LogOut />

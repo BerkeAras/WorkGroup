@@ -30,6 +30,8 @@ export default function loadPosts(
                 filterGetParameter += '&group=' + config.filter
             } else if (config.filterBy === 'id') {
                 filterGetParameter += '&id=' + config.filter
+            } else if (config.filterBy === 'hashtag') {
+                filterGetParameter += '&hashtag=' + config.filter
             }
         }
 

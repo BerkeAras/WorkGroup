@@ -35,7 +35,7 @@ export default function PostsList(props) {
 
     useEffect(() => {
         loadMore()
-    }, [])
+    }, [props])
 
     const loadMore = (page = 1) => {
         setIsLoading(true)
@@ -46,13 +46,17 @@ export default function PostsList(props) {
         if (props.postId !== undefined) {
             postLoader = loadPosts({ page: 1, filterBy: 'id', filter: props.postId })
         } else {
-            if (props.group !== undefined) {
-                postLoader = loadPosts({ page: page, filterBy: 'group', filter: props.group })
+            if (props.hashTag !== undefined) {
+                postLoader = loadPosts({ page: 1, filterBy: 'hashtag', filter: props.hashTag })
             } else {
-                if (props.user !== '*') {
-                    postLoader = loadPosts({ page: page, filterBy: 'user', filter: props.user })
+                if (props.group !== undefined) {
+                    postLoader = loadPosts({ page: page, filterBy: 'group', filter: props.group })
                 } else {
-                    postLoader = loadPosts({ page: page })
+                    if (props.user !== '*') {
+                        postLoader = loadPosts({ page: page, filterBy: 'user', filter: props.user })
+                    } else {
+                        postLoader = loadPosts({ page: page })
+                    }
                 }
             }
         }
@@ -176,7 +180,7 @@ export default function PostsList(props) {
             {isLoading && <Loader active>Loading Feed</Loader>}
 
             {imageModalVisible && (
-                <W_Modal
+                <Modal
                     onClose={() => setImageModalVisible(false)}
                     onClick={() => setImageModalVisible(false)}
                     onOpen={() => setImageModalVisible(true)}
@@ -186,7 +190,7 @@ export default function PostsList(props) {
                     <Modal.Content>
                         <img src={imageModalUrl} />
                     </Modal.Content>
-                </W_Modal>
+                </Modal>
             )}
 
             {reportModalVisible && (
@@ -230,4 +234,5 @@ PostsList.propTypes = {
     user: PropTypes.string,
     group: PropTypes.any,
     postId: PropTypes.number,
+    hashTag: PropTypes.string,
 }

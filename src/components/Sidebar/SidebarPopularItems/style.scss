@@ -29,6 +29,10 @@
             transform: scale(0.95);
             outline: none !important;
         }
+        &--active {
+            background-color: #f7f7f7;
+            color: #2185d0;
+        }
         &:last-of-type {
             margin-bottom: 0 !important;
         }
