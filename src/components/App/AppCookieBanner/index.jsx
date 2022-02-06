@@ -17,7 +17,6 @@ function CookieBanner(props) {
     const [analyticsCookiesChecked, setAnalyticsCookiesChecked] = useState(false)
 
     useEffect(() => {
-        console.log('OPEN')
         if (localStorage.getItem('cookies_accepted') == 'true') {
             setCookiesAccepted(true)
             initializeTracking(location)
