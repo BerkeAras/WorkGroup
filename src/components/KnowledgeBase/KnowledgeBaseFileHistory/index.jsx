@@ -4,6 +4,7 @@ import './style.scss'
 import PropTypes from 'prop-types'
 import { Modal, Button, Loader, List } from 'semantic-ui-react'
 import { Zap } from 'react-feather'
+import W_Modal from '../../W_Modal'
 
 function KnowledgeBaseFileHistory(props) {
     const { folderId, fileId } = useParams()
@@ -91,7 +92,7 @@ function KnowledgeBaseFileHistory(props) {
     }
 
     return (
-        <Modal open={true} className="KnowledgeBaseFileHistory" onClose={props.onClose} size="tiny">
+        <W_Modal open={true} className="KnowledgeBaseFileHistory" onClose={props.onClose} size="tiny">
             <Modal.Header>File History</Modal.Header>
             <Modal.Content>
                 {isLoading ? (
@@ -134,7 +135,7 @@ function KnowledgeBaseFileHistory(props) {
                 )}
 
                 {showRestoreModal && (
-                    <Modal
+                    <W_Modal
                         onClose={() => {
                             setShowRestoreModal(false)
                             setRestoreFileId(null)
@@ -163,13 +164,13 @@ function KnowledgeBaseFileHistory(props) {
                                 Yes, restore
                             </Button>
                         </Modal.Actions>
-                    </Modal>
+                    </W_Modal>
                 )}
             </Modal.Content>
             <Modal.Actions>
                 <Button onClick={props.onClose}>Close</Button>
             </Modal.Actions>
-        </Modal>
+        </W_Modal>
     )
 }
 

@@ -45,10 +45,10 @@ const SignIn = () => {
                                 localStorage.setItem('token', json.data.token)
                                 setIsLoggedIn(true)
 
-                                const queryParams = new URLSearchParams(window.location.search);
-                                const ref = queryParams.get('ref');
+                                const queryParams = new URLSearchParams(window.location.search)
+                                const ref = queryParams.get('ref')
                                 if (ref !== null) {
-                                    location.href = ref;
+                                    location.href = ref
                                 } else {
                                     location.href = '/'
                                 }

@@ -4,6 +4,7 @@ import { Modal, Dropdown, Button, Form, TextArea, Input, Checkbox } from 'semant
 import PropTypes from 'prop-types'
 import AuthContext from '../../../store/AuthContext'
 import countryOptions from '../../../utils/countries'
+import W_Modal from '../../W_Modal'
 
 export default function UserSettings(props) {
     const contextValue = useContext(AuthContext)
@@ -116,7 +117,7 @@ export default function UserSettings(props) {
     return (
         props.member != null && (
             <>
-                <Modal
+                <W_Modal
                     onClose={() => props.isOpenStateController(false)}
                     onOpen={() => {
                         props.isOpenStateController(true)
@@ -329,26 +330,30 @@ export default function UserSettings(props) {
                             <Button onClick={handleSubmit} content="Save" labelPosition="right" icon="checkmark" positive />
                         )}
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
 
-                <Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
-                    <Modal.Header>Your settings have been saved successfully!</Modal.Header>
-                    <Modal.Actions>
-                        <Button color="black" onClick={() => setShowSuccessModal(false)}>
-                            Dismiss
-                        </Button>
-                    </Modal.Actions>
-                </Modal>
+                {showSuccessModal && (
+                    <W_Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
+                        <Modal.Header>Your settings have been saved successfully!</Modal.Header>
+                        <Modal.Actions>
+                            <Button color="black" onClick={() => setShowSuccessModal(false)}>
+                                Dismiss
+                            </Button>
+                        </Modal.Actions>
+                    </W_Modal>
+                )}
 
-                <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
-                    <Modal.Header>An Error occurred!</Modal.Header>
-                    <Modal.Content>{errorMessage}</Modal.Content>
-                    <Modal.Actions>
-                        <Button color="black" onClick={() => setShowErrorModal(false)}>
-                            Dismiss
-                        </Button>
-                    </Modal.Actions>
-                </Modal>
+                {showErrorModal && (
+                    <W_Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                        <Modal.Header>An Error occurred!</Modal.Header>
+                        <Modal.Content>{errorMessage}</Modal.Content>
+                        <Modal.Actions>
+                            <Button color="black" onClick={() => setShowErrorModal(false)}>
+                                Dismiss
+                            </Button>
+                        </Modal.Actions>
+                    </W_Modal>
+                )}
             </>
         )
     )

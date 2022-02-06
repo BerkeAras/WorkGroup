@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams } from 'react-router-dom'
 import './style.scss'
 import { Button, Icon, Modal, Input, Form, Checkbox } from 'semantic-ui-react'
-import { Folder, Home } from 'react-feather'
 import PropTypes from 'prop-types'
+import W_Modal from '../../W_Modal'
 
 function KnowledgeBaseHeader(props) {
     const { folderId, fileId } = useParams()
@@ -461,7 +461,7 @@ function KnowledgeBaseHeader(props) {
             )}
 
             {showNewFolderModal && (
-                <Modal onClose={() => setShowNewFolderModal(false)} onOpen={() => setShowNewFolderModal(true)} open={showNewFolderModal} size="mini">
+                <W_Modal onClose={() => setShowNewFolderModal(false)} onOpen={() => setShowNewFolderModal(true)} open={showNewFolderModal} size="mini">
                     <Modal.Header>Create a new Folder</Modal.Header>
                     <Modal.Content>
                         <Form.Field>
@@ -486,11 +486,11 @@ function KnowledgeBaseHeader(props) {
                             Create
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {openUploadFileModal && (
-                <Modal onClose={() => setOpenUploadFileModal(false)} onOpen={() => setOpenUploadFileModal(true)} open={openUploadFileModal} size="mini">
+                <W_Modal onClose={() => setOpenUploadFileModal(false)} onOpen={() => setOpenUploadFileModal(true)} open={openUploadFileModal} size="mini">
                     <Modal.Header>Upload a File</Modal.Header>
                     <Modal.Content>
                         <Form.Field>
@@ -527,11 +527,11 @@ function KnowledgeBaseHeader(props) {
                             Create
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showModifyFolderModal && (
-                <Modal onClose={() => setShowModifyFolderModal(false)} onOpen={() => setShowModifyFolderModal(true)} open={showModifyFolderModal} size="mini">
+                <W_Modal onClose={() => setShowModifyFolderModal(false)} onOpen={() => setShowModifyFolderModal(true)} open={showModifyFolderModal} size="mini">
                     <Modal.Header>Modify this Folder</Modal.Header>
                     <Modal.Content>
                         <Form.Field>
@@ -572,11 +572,11 @@ function KnowledgeBaseHeader(props) {
                             Save
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showModifyFileModal && (
-                <Modal onClose={() => setShowModifyFileModal(false)} onOpen={() => setShowModifyFileModal(true)} open={showModifyFileModal} size="mini">
+                <W_Modal onClose={() => setShowModifyFileModal(false)} onOpen={() => setShowModifyFileModal(true)} open={showModifyFileModal} size="mini">
                     <Modal.Header>Modify this File</Modal.Header>
                     <Modal.Content>
                         <Form.Field>
@@ -643,11 +643,11 @@ function KnowledgeBaseHeader(props) {
                             Save
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showDeleteFileModal && (
-                <Modal onClose={() => setShowDeleteFileModal(false)} onOpen={() => setShowDeleteFileModal(true)} open={showDeleteFileModal} size="mini">
+                <W_Modal onClose={() => setShowDeleteFileModal(false)} onOpen={() => setShowDeleteFileModal(true)} open={showDeleteFileModal} size="mini">
                     <Modal.Header>Warning</Modal.Header>
                     <Modal.Content>
                         <p>Do you really want to delete this file? You cannot undo this operation!</p>
@@ -660,11 +660,11 @@ function KnowledgeBaseHeader(props) {
                             Delete irreversibly
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showDeleteFolderModal && (
-                <Modal onClose={() => setShowDeleteFolderModal(false)} onOpen={() => setShowDeleteFolderModal(true)} open={showDeleteFolderModal} size="mini">
+                <W_Modal onClose={() => setShowDeleteFolderModal(false)} onOpen={() => setShowDeleteFolderModal(true)} open={showDeleteFolderModal} size="mini">
                     <Modal.Header>Warning</Modal.Header>
                     <Modal.Content>
                         <p>Do you really want to delete this folder? You cannot undo this operation!</p>
@@ -677,11 +677,11 @@ function KnowledgeBaseHeader(props) {
                             Delete irreversibly
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {openNewFileModal && (
-                <Modal
+                <W_Modal
                     onClose={() => {
                         setOpenNewFileModal(false)
                         setNewFileName('')
@@ -733,11 +733,11 @@ function KnowledgeBaseHeader(props) {
                             Create File
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
 
             {showErrorModal && (
-                <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                <W_Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
                     <Modal.Header>Warning</Modal.Header>
                     <Modal.Content>
                         <p>{errorModalText}</p>
@@ -747,7 +747,7 @@ function KnowledgeBaseHeader(props) {
                             Close
                         </Button>
                     </Modal.Actions>
-                </Modal>
+                </W_Modal>
             )}
         </>
     )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal, Form, TextArea } from 'semantic-ui-react'
+import W_Modal from '../../W_Modal'
 import './style.scss'
 
 function ReportPost(props) {
@@ -45,7 +46,15 @@ function ReportPost(props) {
     }
 
     return (
-        <Modal onClose={props.handleClose} onOpen={props.handleOpen} open={props.open} size="tiny" className="report-post-modal" closeOnEscape={!reportIsLoading} closeOnDimmerClick={!reportIsLoading}>
+        <W_Modal
+            onClose={props.handleClose}
+            onOpen={props.handleOpen}
+            open={props.open}
+            size="tiny"
+            className="report-post-modal"
+            closeOnEscape={!reportIsLoading}
+            closeOnDimmerClick={!reportIsLoading}
+        >
             <Modal.Header>Report this post</Modal.Header>
             <Modal.Content>
                 <h3>Why do you want to report this post?</h3>
@@ -83,7 +92,7 @@ function ReportPost(props) {
                 </Button>
                 <Button content="Report" labelPosition="right" icon="checkmark" positive loading={reportIsLoading} disabled={reportIsLoading} onClick={handleReport} />
             </Modal.Actions>
-        </Modal>
+        </W_Modal>
     )
 }
 

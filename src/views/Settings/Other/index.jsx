@@ -1,29 +1,28 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState, useEffect } from 'react'
-import { Button, Form, Dropdown, Loader, Modal, Checkbox } from 'semantic-ui-react'
+import { Button, Form, Dropdown, Loader, Modal } from 'semantic-ui-react'
 import './style.scss'
-
-import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
+import W_Modal from '../../../components/W_Modal'
 
 const qualityModes = [
     {
-        "key": "min",
-        "value": "min",
-        "code": "min",
-        "text": "Minimum (40% Quality)"
+        key: 'min',
+        value: 'min',
+        code: 'min',
+        text: 'Minimum (40% Quality)',
     },
     {
-        "key": "medium",
-        "value": "medium",
-        "code": "medium",
-        "text": "Medium (60% Quality)"
+        key: 'medium',
+        value: 'medium',
+        code: 'medium',
+        text: 'Medium (60% Quality)',
     },
     {
-        "key": "max",
-        "value": "max",
-        "code": "max",
-        "text": "Maximum (100% Quality / Lossless)"
-    }
+        key: 'max',
+        value: 'max',
+        code: 'max',
+        text: 'Maximum (100% Quality / Lossless)',
+    },
 ]
 
 function SettingsOther() {
@@ -175,26 +174,30 @@ function SettingsOther() {
                 )}
             </div>
 
-            <Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
-                <Modal.Header>Your settings have been saved successfully!</Modal.Header>
-                <Modal.Content>To apply all settings, please reload this page.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setShowSuccessModal(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
-            <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
-                <Modal.Header>Your settings could not be saved!</Modal.Header>
-                <Modal.Content>An error has occurred. Please contact your administrator.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setShowErrorModal(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
+            {showSuccessModal && (
+                <W_Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
+                    <Modal.Header>Your settings have been saved successfully!</Modal.Header>
+                    <Modal.Content>To apply all settings, please reload this page.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setShowSuccessModal(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
+            {showErrorModal && (
+                <W_Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                    <Modal.Header>Your settings could not be saved!</Modal.Header>
+                    <Modal.Content>An error has occurred. Please contact your administrator.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setShowErrorModal(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
         </>
     )
 }
 
-export default SettingsOther;
+export default SettingsOther

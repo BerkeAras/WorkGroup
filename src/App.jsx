@@ -90,17 +90,15 @@ class App extends React.Component {
                         resultData.app.registration_enabled = configItems.config_value
                     }
                     if (configItems.config_key === 'app.password_reset_enabled') {
-
                         if (this.state.loggedInUserIsAdmin) {
-                            resultData.app.password_reset_enabled = true;
+                            resultData.app.password_reset_enabled = true
                         } else {
                             resultData.app.password_reset_enabled = configItems.config_value
                         }
-
                     }
                     if (configItems.config_key === 'app.group_creation_enabled') {
                         if (this.state.loggedInUserIsAdmin) {
-                            resultData.app.group_creation_enabled = true;
+                            resultData.app.group_creation_enabled = true
                         } else {
                             resultData.app.group_creation_enabled = configItems.config_value
                         }

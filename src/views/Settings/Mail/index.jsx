@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Input, Loader, Modal, Dropdown } from 'semantic-ui-react'
 import './style.scss'
-import locales from './locales.json'
-
-import { Monitor, Server, AtSign, BarChart2, Home, Zap } from 'react-feather'
+import W_Modal from '../../../components/W_Modal'
 
 const EncryptionTypes = [
     {
@@ -195,24 +193,28 @@ function SettingsMail() {
                 )}
             </div>
 
-            <Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
-                <Modal.Header>Your settings have been saved successfully!</Modal.Header>
-                <Modal.Content>To apply all settings, please reload this page.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setShowSuccessModal(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
-            <Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
-                <Modal.Header>Your settings could not be saved!</Modal.Header>
-                <Modal.Content>An error has occurred. Please contact your administrator.</Modal.Content>
-                <Modal.Actions>
-                    <Button color="black" onClick={() => setShowErrorModal(false)}>
-                        Dismiss
-                    </Button>
-                </Modal.Actions>
-            </Modal>
+            {showSuccessModal && (
+                <W_Modal onClose={() => setShowSuccessModal(false)} onOpen={() => setShowSuccessModal(true)} open={showSuccessModal} size="mini">
+                    <Modal.Header>Your settings have been saved successfully!</Modal.Header>
+                    <Modal.Content>To apply all settings, please reload this page.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setShowSuccessModal(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
+            {showErrorModal && (
+                <W_Modal onClose={() => setShowErrorModal(false)} onOpen={() => setShowErrorModal(true)} open={showErrorModal} size="mini">
+                    <Modal.Header>Your settings could not be saved!</Modal.Header>
+                    <Modal.Content>An error has occurred. Please contact your administrator.</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setShowErrorModal(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
         </>
     )
 }
