@@ -5,6 +5,8 @@ import { Database, Folder, File, Zap } from 'react-feather'
 import { Loader } from 'semantic-ui-react'
 import nl2br from 'react-newline-to-break'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+import rehypeHighlight from 'rehype-highlight'
 import PropTypes from 'prop-types'
 import './style.scss'
 
@@ -140,7 +142,9 @@ function KnowledgeBaseFileReader(props) {
                                             }}
                                         ></textarea>
                                     ) : (
-                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{fileContent}</ReactMarkdown>
+                                        <ReactMarkdown linkTarget="_blank" remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeHighlight]}>
+                                            {fileContent}
+                                        </ReactMarkdown>
                                     )}
                                 </>
                             ) : file.knowledge_base_file_extension == 'txt' ? (

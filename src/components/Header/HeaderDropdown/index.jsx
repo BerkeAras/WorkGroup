@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './style.scss'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const HeaderDropdown = (props) => {
@@ -35,18 +35,22 @@ const HeaderDropdown = (props) => {
             }}
             className="header__dropdown"
         >
-            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to={'/app/user/' + localStorage.getItem('user_email')}>
+            <NavLink
+                end
+                className={({ isActive }) => (!isActive ? 'header__dropdown-item' : 'header__dropdown-item header__dropdown-item--active')}
+                to={'/app/user/' + localStorage.getItem('user_email')}
+            >
                 My Account
             </NavLink>
             {localStorage.getItem('user_admin') !== undefined && localStorage.getItem('user_admin') == '1' && (
-                <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/app/settings">
+                <NavLink className={({ isActive }) => (!isActive ? 'header__dropdown-item' : 'header__dropdown-item header__dropdown-item--active')} to="/app/settings">
                     Manage WorkGroup
                 </NavLink>
             )}
             <a className="header__dropdown-item" href="https://github.com/BerkeAras/WorkGroup#contact" target="_blank" rel="noreferrer">
                 Get help
             </a>
-            <NavLink exact className="header__dropdown-item" activeClassName="header__dropdown-item--active" to="/logout">
+            <NavLink end className={({ isActive }) => (!isActive ? 'header__dropdown-item' : 'header__dropdown-item header__dropdown-item--active')} to="/logout">
                 Log out
             </NavLink>
         </div>

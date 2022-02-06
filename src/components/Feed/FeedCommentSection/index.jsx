@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './style.scss'
 import { Feed, Icon, Header, Loader, Button, Comment, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
@@ -168,7 +168,7 @@ class CommentSection extends React.Component {
                         })
                     )
                 ) : (
-                    <Redirect to="/" />
+                    <Navigate to="/" />
                 )}
 
                 <Form onSubmit={this.handleSubmit} reply>

@@ -96,7 +96,7 @@ const Header = () => {
                 Skip to content
             </a>
             <div className="nav-header">
-                <NavLink exact to="/" className="header__logo">
+                <NavLink to="/" className="header__logo">
                     <img src={headerLogo} alt="Logo" />
                 </NavLink>
                 <SearchField />
@@ -116,13 +116,13 @@ const Header = () => {
                         <X></X>
                     </div>
 
-                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app">
+                    <NavLink end className={({ isActive }) => (!isActive ? 'header__menu-item' : 'header__menu-item header__menu-item--active')} to="/app">
                         Home
                     </NavLink>
-                    <NavLink exact className="header__menu-item" activeClassName="header__menu-item--active" to="/app/groups">
+                    <NavLink end className={({ isActive }) => (!isActive ? 'header__menu-item' : 'header__menu-item header__menu-item--active')} to="/app/groups">
                         Groups
                     </NavLink>
-                    <NavLink className="header__menu-item" activeClassName="header__menu-item--active" to="/app/knowledgebase">
+                    <NavLink className={({ isActive }) => (!isActive ? 'header__menu-item' : 'header__menu-item header__menu-item--active')} to="/app/knowledgebase">
                         Knowledge Base
                     </NavLink>
                 </div>

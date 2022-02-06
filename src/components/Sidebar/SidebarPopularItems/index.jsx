@@ -56,7 +56,7 @@ const SidebarPopularItems = () => {
                     ) : (
                         topics.map((topic) => {
                             return (
-                                <NavLink key={`topic-${topic.id}`} className="topic-item" activeClassName="topic-item--active" to={`/app/topic/` + topic.topic}>
+                                <NavLink key={`topic-${topic.id}`} className={({ isActive }) => (!isActive ? 'topic-item' : 'topic-item topic-item--active')} to={`/app/topic/` + topic.topic}>
                                     <Hash size={18} strokeWidth={2.7} /> {topic.topic}
                                 </NavLink>
                             )
