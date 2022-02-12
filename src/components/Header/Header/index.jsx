@@ -83,8 +83,10 @@ const Header = () => {
             .then((res) => res.json())
             .then((res) => {
                 if (res > 0) {
+                    document.getElementById('favicon').href = '/assets/favicon-new-message.ico'
                     setHasUnreadNotifications(true)
                 } else {
+                    document.getElementById('favicon').href = '/assets/favicon.ico'
                     setHasUnreadNotifications(false)
                 }
             })

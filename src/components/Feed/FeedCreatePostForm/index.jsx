@@ -31,6 +31,8 @@ class CreatePostForm extends React.Component {
         }
         this.publishPost = this.publishPost.bind(this)
         this.textareaRef = React.createRef(null)
+        this.imageInputRef = React.createRef(null)
+        this.fileInputRef = React.createRef(null)
     }
 
     reloadPage = () => {
@@ -205,9 +207,6 @@ class CreatePostForm extends React.Component {
         }
     }
 
-    imageInputRef = React.createRef()
-    fileInputRef = React.createRef()
-
     removeUploadedImage = (index) => {
         let uploadedImagesState = this.state.uploadedImages
         uploadedImagesState.splice(index, 1)
@@ -250,6 +249,8 @@ class CreatePostForm extends React.Component {
                     >
                         <Modal.Header>Create a new post</Modal.Header>
                         <Modal.Content>
+                            <input ref={this.imageInputRef} accept="image/*" type="file" onChange={this.imageChange} hidden />
+                            <input ref={this.fileInputRef} type="file" onChange={this.fileChange} hidden />
                             <div
                                 className="fake-textarea"
                                 onPaste={() => {
@@ -315,7 +316,16 @@ class CreatePostForm extends React.Component {
                         <Modal.Actions>
                             <div className="left-actions">
                                 <Popup
-                                    trigger={<Button loading={this.state.uploadImageLoading} onClick={() => this.imageInputRef.current.click()} icon="picture" basic></Button>}
+                                    trigger={
+                                        <Button
+                                            loading={this.state.uploadImageLoading}
+                                            onClick={() => {
+                                                this.imageInputRef.current.click()
+                                            }}
+                                            icon="picture"
+                                            basic
+                                        ></Button>
+                                    }
                                     content="Upload images"
                                     position="bottom left"
                                 />
@@ -337,8 +347,6 @@ class CreatePostForm extends React.Component {
                         </Modal.Actions>
                     </W_Modal>
                 )}
-                <input ref={this.imageInputRef} accept="image/*" type="file" hidden onChange={this.imageChange} />
-                <input ref={this.fileInputRef} type="file" hidden onChange={this.fileChange} />
                 {this.state.successModalOpen && (
                     <W_Modal
                         onClose={() => {
