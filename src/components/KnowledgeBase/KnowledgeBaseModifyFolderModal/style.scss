@@ -1,5 +1,4 @@
 .KnowledgeBaseModifyFolderModal {
-
     &-loader {
         position: relative;
         width: 100%;
@@ -81,7 +80,8 @@
                 float: left;
             }
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 color: darken(#db2828, 10%);
             }
 
@@ -89,7 +89,8 @@
                 margin-top: 20px;
                 color: #2185d0;
 
-                &:hover, &:focus {
+                &:hover,
+                &:focus {
                     color: darken(#2185d0, 10%);
                 }
             }

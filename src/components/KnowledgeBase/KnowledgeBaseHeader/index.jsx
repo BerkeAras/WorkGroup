@@ -497,15 +497,17 @@ function KnowledgeBaseHeader(props) {
                 </W_Modal>
             )}
 
-            {showModifyFolderModal && <KnowledgeBaseModifyFolderModal
-                openDeleteFolderModal={openDeleteFolderModal}
-                folderPermissions={folderPermissions}
-                folderId={folderId}
-                setShowModifyFolderModal={setShowModifyFolderModal}
-                showModifyFolderModal={showModifyFolderModal}
-                modifyFolderName={modifyFolderName}
-                modifyFolderDescription={modifyFolderDescription}
-            />}
+            {showModifyFolderModal && (
+                <KnowledgeBaseModifyFolderModal
+                    openDeleteFolderModal={openDeleteFolderModal}
+                    folderPermissions={folderPermissions}
+                    folderId={folderId}
+                    setShowModifyFolderModal={setShowModifyFolderModal}
+                    showModifyFolderModal={showModifyFolderModal}
+                    modifyFolderName={modifyFolderName}
+                    modifyFolderDescription={modifyFolderDescription}
+                />
+            )}
 
             {showModifyFileModal && (
                 <W_Modal onClose={() => setShowModifyFileModal(false)} onOpen={() => setShowModifyFileModal(true)} open={showModifyFileModal} size="mini">

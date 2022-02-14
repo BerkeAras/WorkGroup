@@ -197,7 +197,13 @@ export default function KnowledgeBaseModifyFolderModal(props) {
     }
 
     return (
-        <W_Modal className="KnowledgeBaseModifyFolderModal" onClose={() => props.setShowModifyFolderModal(false)} onOpen={() => props.setShowModifyFolderModal(true)} open={props.showModifyFolderModal} size="mini">
+        <W_Modal
+            className="KnowledgeBaseModifyFolderModal"
+            onClose={() => props.setShowModifyFolderModal(false)}
+            onOpen={() => props.setShowModifyFolderModal(true)}
+            open={props.showModifyFolderModal}
+            size="mini"
+        >
             <Modal.Header>Modify this Folder</Modal.Header>
             <Modal.Content>
                 {showError ? (
@@ -239,17 +245,29 @@ export default function KnowledgeBaseModifyFolderModal(props) {
 
                                 {props.folderPermissions['delete'] == true && (
                                     <center>
-                                        <a className="permissions-link" href="#" onClick={(e) => {e.preventDefault();setIsLoading(true);setPermissionsStep(1)}}><Lock size={16} /> Configurate the permissions</a>
+                                        <a
+                                            className="permissions-link"
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                setIsLoading(true)
+                                                setPermissionsStep(1)
+                                            }}
+                                        >
+                                            <Lock size={16} /> Configurate the permissions
+                                        </a>
                                     </center>
                                 )}
 
                                 {props.folderPermissions['delete'] == true && (
                                     <center>
-                                        <a href="#" onClick={props.openDeleteFolderModal}><Trash2 size={16} /> Delete this Folder</a>
+                                        <a href="#" onClick={props.openDeleteFolderModal}>
+                                            <Trash2 size={16} /> Delete this Folder
+                                        </a>
                                     </center>
                                 )}
                             </>
-                        ) : (permissionsStep == 1) ? (
+                        ) : permissionsStep == 1 ? (
                             <>
                                 {isLoading ? (
                                     <div className="KnowledgeBaseModifyFolderModal-loader">
@@ -257,38 +275,36 @@ export default function KnowledgeBaseModifyFolderModal(props) {
                                             Loading...
                                         </Loader>
                                     </div>
+                                ) : permissions.length > 0 ? (
+                                    <List divided relaxed>
+                                        {permissions.map((user) => {
+                                            return (
+                                                <List.Item
+                                                    key={user.id}
+                                                    onClick={() => {
+                                                        openUserPermissions(user)
+                                                    }}
+                                                >
+                                                    <List.Content>
+                                                        <div className="item-avatar">
+                                                            <User size={18} />
+                                                        </div>
+                                                        {!user.user ? 'Global' : user.user.name}
+                                                        <ChevronRight />
+                                                    </List.Content>
+                                                </List.Item>
+                                            )
+                                        })}
+                                    </List>
                                 ) : (
-                                    permissions.length > 0 ? (
-                                        <List divided relaxed>
-                                            {permissions.map((user) => {
-                                                return (
-                                                    <List.Item
-                                                        key={user.id}
-                                                        onClick={() => {
-                                                            openUserPermissions(user)
-                                                        }}
-                                                    >
-                                                        <List.Content>
-                                                            <div className="item-avatar">
-                                                                <User size={18} />
-                                                            </div>
-                                                            {!user.user ? 'Global' : user.user.name}
-                                                            <ChevronRight />
-                                                        </List.Content>
-                                                    </List.Item>
-                                                )
-                                            })}
-                                        </List>
-                                    ) : (
-                                        <center>
-                                            <Zap size={35} strokeWidth={2} />
-                                            <br />
-                                            <span>Start by adding a user to the folder</span>
-                                        </center>
-                                    )
+                                    <center>
+                                        <Zap size={35} strokeWidth={2} />
+                                        <br />
+                                        <span>Start by adding a user to the folder</span>
+                                    </center>
                                 )}
                             </>
-                        ) : (permissionsStep == 2) ? (
+                        ) : permissionsStep == 2 ? (
                             <>
                                 {userIsAdmin && (
                                     <>
@@ -343,7 +359,7 @@ export default function KnowledgeBaseModifyFolderModal(props) {
                                     />
                                 </Form.Field>
                             </>
-                        ) : (permissionsStep == 3) ? (
+                        ) : permissionsStep == 3 ? (
                             <>
                                 {newUserEmailError && (
                                     <>
@@ -393,57 +409,62 @@ export default function KnowledgeBaseModifyFolderModal(props) {
                     Cancel
                 </Button>
                 {showError ? (
-                    <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={() => {setShowError(false)}}>
+                    <Button
+                        disabled={isLoading || !props.folderPermissions['modify']}
+                        loading={isLoading}
+                        primary
+                        onClick={() => {
+                            setShowError(false)
+                        }}
+                    >
                         OK
                     </Button>
+                ) : permissionsStep == 0 ? (
+                    <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
+                        Save
+                    </Button>
+                ) : permissionsStep == 1 ? (
+                    <>
+                        <Button disabled={isLoading} loading={isLoading} primary labelPosition="left" icon onClick={() => setPermissionsStep(3)}>
+                            New User
+                            <Icon name="add" />
+                        </Button>
+                        <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
+                            Done
+                        </Button>
+                    </>
+                ) : permissionsStep == 2 ? (
+                    <>
+                        <Button disabled={isLoading} loading={isLoading} color="red" onClick={removeUser}>
+                            Remove User
+                        </Button>
+                        <Button disabled={isLoading} loading={isLoading} primary onClick={storePermissions}>
+                            Next
+                        </Button>
+                    </>
+                ) : permissionsStep == 3 ? (
+                    <>
+                        <Button
+                            disabled={isLoading}
+                            loading={isLoading}
+                            color="black"
+                            onClick={() => {
+                                setPermissionsStep(1)
+                                setNewUserEmail('')
+                                setNewGlobalUser(false)
+                                setNewUserEmailError(false)
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button disabled={isLoading} loading={isLoading} primary onClick={createPermission}>
+                            Next
+                        </Button>
+                    </>
                 ) : (
-                    permissionsStep == 0 ? (
-                        <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
-                            Save
-                        </Button>
-                    ) : (permissionsStep == 1) ? (
-                        <>
-                            <Button disabled={isLoading} loading={isLoading} primary labelPosition="left" icon onClick={() => setPermissionsStep(3)}>
-                                New User
-                                <Icon name="add" />
-                            </Button>
-                            <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
-                                Done
-                            </Button>
-                        </>
-                    ) : (permissionsStep == 2) ? (
-                        <>
-                            <Button disabled={isLoading} loading={isLoading} color="red" onClick={removeUser}>
-                                Remove User
-                            </Button>
-                            <Button disabled={isLoading} loading={isLoading} primary onClick={storePermissions}>
-                                Next
-                            </Button>
-                        </>
-                    ) : (permissionsStep == 3) ? (
-                        <>
-                            <Button
-                                disabled={isLoading}
-                                loading={isLoading}
-                                color="black"
-                                onClick={() => {
-                                    setPermissionsStep(1)
-                                    setNewUserEmail('')
-                                    setNewGlobalUser(false)
-                                    setNewUserEmailError(false)
-                                }}
-                            >
-                                Back
-                            </Button>
-                            <Button disabled={isLoading} loading={isLoading} primary onClick={createPermission}>
-                                Next
-                            </Button>
-                        </>
-                    ) : (
-                        <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
-                            Save
-                        </Button>
-                    )
+                    <Button disabled={isLoading || !props.folderPermissions['modify']} loading={isLoading} primary onClick={modifyFolder}>
+                        Save
+                    </Button>
                 )}
             </Modal.Actions>
         </W_Modal>
@@ -457,5 +478,5 @@ KnowledgeBaseModifyFolderModal.propTypes = {
     folderPermissions: PropTypes.object.isRequired,
     openDeleteFolderModal: PropTypes.func.isRequired,
     modifyFolderName: PropTypes.string,
-    modifyFolderDescription: PropTypes.string
+    modifyFolderDescription: PropTypes.string,
 }
