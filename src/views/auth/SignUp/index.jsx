@@ -76,6 +76,9 @@ const SignUp = (props) => {
                                 } else if (data.message == 'User existing') {
                                     setError('already_registered')
                                     setIsSigningUp(false)
+                                } else {
+                                    setError('unknown_error')
+                                    setIsSigningUp(false)
                                 }
                             })
                     }, 300)
@@ -182,6 +185,7 @@ const ErrorMsg = (props) => {
         inputs_empty: 'Please fill out everything!',
         password_too_short: 'Your password is too short! Please enter at least 8 characters.',
         no_permission: 'You do not have permission to sign up.',
+        unknown_error: 'An unknown error occured! Please try again later.',
     }
 
     return (
