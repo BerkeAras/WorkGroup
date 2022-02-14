@@ -64,6 +64,12 @@ function GroupBanner(props) {
 
             setGroupAvatarPreview(process.env.REACT_APP_API_URL + '/' + groupInformation['group_avatar'].replace('./', ''))
         }
+
+        const queryParams = new URLSearchParams(window.location.search)
+        const requests = queryParams.get('requests')
+        if (requests !== null) {
+            setShowRequestsModal(true)
+        }
     }, [props.groupInformation])
 
     const bannerChange = (e) => {
@@ -209,6 +215,7 @@ function GroupBanner(props) {
             .then((response) => response.json())
             .then((result) => {
                 if (result.status == 1) {
+                    console.log(result['requests'])
                     setGroupRequests(result['requests'])
                 } else {
                     setGroupRequests([])
@@ -417,7 +424,7 @@ function GroupBanner(props) {
                                     >
                                         <List.Item>
                                             <List.Content>
-                                                <List.Header as="a">Berke Aras</List.Header>
+                                                <List.Header as="a">{request.name}</List.Header>
                                                 <List.Description as="a">{getDate(request.created_at.replace(/-/g, '/'))}</List.Description>
                                             </List.Content>
                                         </List.Item>

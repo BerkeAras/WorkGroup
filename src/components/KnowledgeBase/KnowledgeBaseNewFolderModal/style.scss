@@ -1,0 +1,52 @@
+.KnowledgeBaseNewFolderModal {
+    .item[role='listitem'] {
+        padding: 10px !important;
+        background: transparent;
+        transition: all 0.15s;
+        cursor: pointer;
+
+        div.item-avatar {
+            width: 32px;
+            height: 32px;
+            float: left;
+            border-radius: 100px;
+            background: #ebebeb;
+            margin-right: 10px;
+
+            svg {
+                margin: 7px;
+            }
+        }
+
+        .content {
+            line-height: 31px !important;
+            font-size: 16px;
+
+            svg {
+                float: right;
+                margin: 4px 0;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            background: #f2f4f5;
+        }
+    }
+
+    center {
+        svg {
+            color: #cecece;
+            margin-bottom: 20px;
+        }
+        span {
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.87);
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+    }
+}

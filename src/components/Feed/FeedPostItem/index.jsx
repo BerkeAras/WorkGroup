@@ -150,7 +150,7 @@ export default function PostItem(props) {
                         <Feed.Like
                             href="#"
                             onClick={(e) => {
-                                e.preventDefault();
+                                e.preventDefault()
                                 likePost(e)
                             }}
                             id={'post_like_id_' + props.post.id}
@@ -163,7 +163,7 @@ export default function PostItem(props) {
                             href="#"
                             className="comment-button"
                             onClick={(e) => {
-                                e.preventDefault();
+                                e.preventDefault()
                                 commentOpener(e)
                             }}
                             id={'post_comment_id_' + props.post.id}
@@ -179,7 +179,7 @@ export default function PostItem(props) {
                             href="#"
                             className="report-button"
                             onClick={(e) => {
-                                e.preventDefault();
+                                e.preventDefault()
                                 reportPost(e, props.post.id)
                             }}
                         >

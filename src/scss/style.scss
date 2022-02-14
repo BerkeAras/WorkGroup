@@ -93,6 +93,27 @@ textarea {
     font-size: 16px !important;
 }
 
+.ui.checkbox:not(.toggle) .box:before,
+.ui.checkbox:not(.toggle) label:before {
+    border-radius: 5px !important;
+}
+.ui.checkbox label:active,
+.ui.checkbox label:focus,
+.ui.checkbox input:focus ~ label {
+    &:before {
+        box-shadow: 0 0 0px 3px rgb(33 133 208 / 40%) !important;
+    }
+}
+.ui.checkbox input:checked ~ .box:before,
+.ui.checkbox input:checked ~ label:before {
+    background: #f9fafb !important;
+    border-color: rgb(44 133 208) !important;
+}
+.ui.checkbox input:checked ~ .box:after,
+.ui.checkbox input:checked ~ label:after {
+    font-size: 12px !important;
+}
+
 // App-Like feeling
 @media (max-width: 768px) {
     html,
@@ -139,7 +160,9 @@ textarea {
 .content_container .text.extra *,
 .SearchField-Results center span,
 .ui.comments .comment .author,
-.ui.feed > .event > .content a {
+.ui.feed > .event > .content a,
+.ui.checkbox input:checked ~ .box:after,
+.ui.checkbox input:checked ~ label:after {
     color: #0e3560 !important;
 }
 

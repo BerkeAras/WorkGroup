@@ -4,6 +4,8 @@ import './style.scss'
 import { Button, Icon, Modal, Input, Form, Checkbox } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import W_Modal from '../../W_Modal'
+import KnowledgeBaseNewFolderModal from '../KnowledgeBaseNewFolderModal'
+import KnowledgeBaseModifyFolderModal from '../KnowledgeBaseModifyFolderModal'
 
 function KnowledgeBaseHeader(props) {
     const { folderId, fileId } = useParams()
@@ -156,7 +158,7 @@ function KnowledgeBaseHeader(props) {
     }
 
     const modifyFolder = () => {
-        if (modifyFolderName.length > 0) {
+        if (modifyFolderName.length > 0 && folderPermissions['modify']) {
             setIsLoading(true)
 
             let tokenHeaders = new Headers()
@@ -388,7 +390,6 @@ function KnowledgeBaseHeader(props) {
                                         </Button>
                                     </Link>
                                 ))}
-                            &nbsp;
                             {folderPermissions != undefined && folderPermissions != null && (
                                 <>
                                     {folderPermissions['write'] == true && fileId == undefined && props.editorMode && (
@@ -396,13 +397,11 @@ function KnowledgeBaseHeader(props) {
                                             New Folder
                                         </Button>
                                     )}
-                                    &nbsp;
-                                    {folderPermissions['modify'] == true && fileId == undefined && props.editorMode && folderId != undefined && (
+                                    {(folderPermissions['modify'] == true || folderPermissions['delete'] == true) && fileId == undefined && props.editorMode && folderId != undefined && (
                                         <Button loading={props.isLoading} disabled={props.isLoading} onClick={openModifyFolderModal} primary size="tiny">
                                             Modify Folder
                                         </Button>
                                     )}
-                                    &nbsp;
                                     {folderPermissions['write'] == true && fileId == undefined && folderId != undefined && props.editorMode && (
                                         <>
                                             <Button
@@ -416,7 +415,6 @@ function KnowledgeBaseHeader(props) {
                                             >
                                                 Upload File
                                             </Button>
-                                            &nbsp;
                                             <Button
                                                 loading={props.isLoading}
                                                 disabled={props.isLoading}
@@ -430,26 +428,22 @@ function KnowledgeBaseHeader(props) {
                                             </Button>
                                         </>
                                     )}
-                                    &nbsp;
                                     {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && props.fileExtension == 'md' && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.onFileContentSave} basic size="tiny">
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.onFileContentSave} primary size="tiny">
                                             Save File
                                         </Button>
                                     )}
-                                    &nbsp;
                                     {fileId !== undefined && folderPermissions['modify'] == true && props.editorMode && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} basic size="tiny">
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={openFileUpdateModal} primary size="tiny">
                                             Update File
                                         </Button>
                                     )}
-                                    &nbsp;
                                     {fileId !== undefined && (
-                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.showFileHistory} basic size="tiny">
+                                        <Button loading={props.isLoading} disabled={props.isLoading} onClick={props.showFileHistory} primary size="tiny">
                                             <Icon name="history" />
                                             History
                                         </Button>
                                     )}
-                                    &nbsp;
                                     {folderPermissions['write'] == true && (
                                         <Checkbox toggle disabled={props.isLoading} label="Use edit-mode" checked={props.editorMode} onChange={props.onEditorModeChange} />
                                     )}
@@ -460,34 +454,7 @@ function KnowledgeBaseHeader(props) {
                 </>
             )}
 
-            {showNewFolderModal && (
-                <W_Modal onClose={() => setShowNewFolderModal(false)} onOpen={() => setShowNewFolderModal(true)} open={showNewFolderModal} size="mini">
-                    <Modal.Header>Create a new Folder</Modal.Header>
-                    <Modal.Content>
-                        <Form.Field>
-                            <Input
-                                disabled={isLoading}
-                                value={newFolderName}
-                                onChange={(e) => {
-                                    setNewFolderName(e.target.value)
-                                }}
-                                autoFocus
-                                fluid
-                                size="small"
-                                placeholder="Folder Name"
-                            />
-                        </Form.Field>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button disabled={isLoading} color="black" onClick={() => setShowNewFolderModal(false)}>
-                            Cancel
-                        </Button>
-                        <Button disabled={isLoading} loading={isLoading} primary onClick={createNewFolder}>
-                            Create
-                        </Button>
-                    </Modal.Actions>
-                </W_Modal>
-            )}
+            {showNewFolderModal && <KnowledgeBaseNewFolderModal folderId={folderId} setShowNewFolderModal={setShowNewFolderModal} showNewFolderModal={showNewFolderModal} />}
 
             {openUploadFileModal && (
                 <W_Modal onClose={() => setOpenUploadFileModal(false)} onOpen={() => setOpenUploadFileModal(true)} open={openUploadFileModal} size="mini">
@@ -531,48 +498,15 @@ function KnowledgeBaseHeader(props) {
             )}
 
             {showModifyFolderModal && (
-                <W_Modal onClose={() => setShowModifyFolderModal(false)} onOpen={() => setShowModifyFolderModal(true)} open={showModifyFolderModal} size="mini">
-                    <Modal.Header>Modify this Folder</Modal.Header>
-                    <Modal.Content>
-                        <Form.Field>
-                            <Input
-                                disabled={isLoading}
-                                value={modifyFolderName}
-                                onChange={(e) => {
-                                    setModifyFolderName(e.target.value)
-                                }}
-                                autoFocus
-                                fluid
-                                size="small"
-                                placeholder="Folder Name"
-                            />
-                        </Form.Field>
-                        <br />
-                        <Form.Field>
-                            <Input
-                                disabled={isLoading}
-                                value={modifyFolderDescription}
-                                onChange={(e) => {
-                                    setModifyFolderDescription(e.target.value)
-                                }}
-                                fluid
-                                size="small"
-                                placeholder="Folder Description"
-                            />
-                        </Form.Field>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button disabled={isLoading} color="red" onClick={openDeleteFolderModal}>
-                            Delete Folder
-                        </Button>
-                        <Button disabled={isLoading} color="black" onClick={() => setShowModifyFolderModal(false)}>
-                            Cancel
-                        </Button>
-                        <Button disabled={isLoading} loading={isLoading} primary onClick={modifyFolder}>
-                            Save
-                        </Button>
-                    </Modal.Actions>
-                </W_Modal>
+                <KnowledgeBaseModifyFolderModal
+                    openDeleteFolderModal={openDeleteFolderModal}
+                    folderPermissions={folderPermissions}
+                    folderId={folderId}
+                    setShowModifyFolderModal={setShowModifyFolderModal}
+                    showModifyFolderModal={showModifyFolderModal}
+                    modifyFolderName={modifyFolderName}
+                    modifyFolderDescription={modifyFolderDescription}
+                />
             )}
 
             {showModifyFileModal && (
