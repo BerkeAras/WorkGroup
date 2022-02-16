@@ -272,7 +272,7 @@ export default function KnowledgeBaseNewFolderModal(props) {
                                         >
                                             <List.Content>
                                                 <div className="item-avatar">
-                                                    <User size={18} />
+                                                    {!user.user ? <Users size={18} /> : <User size={18} />}
                                                 </div>
                                                 {!user.user ? 'Global' : user.user.name}
                                                 <ChevronRight />

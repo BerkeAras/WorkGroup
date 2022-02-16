@@ -3,7 +3,7 @@ import './style.scss'
 import { Icon, Button, Message, Modal, Input, Form, Checkbox, Loader, List } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import W_Modal from '../../W_Modal'
-import { Trash2, Lock, Zap, User, ChevronRight } from 'react-feather'
+import { Trash2, Lock, Zap, User, Users, ChevronRight } from 'react-feather'
 
 export default function KnowledgeBaseModifyFolderModal(props) {
     const [folderName, setFolderName] = useState(props.modifyFolderName)
@@ -287,7 +287,7 @@ export default function KnowledgeBaseModifyFolderModal(props) {
                                                 >
                                                     <List.Content>
                                                         <div className="item-avatar">
-                                                            <User size={18} />
+                                                            {!user.user ? <Users size={18} /> : <User size={18} />}
                                                         </div>
                                                         {!user.user ? 'Global' : user.user.name}
                                                         <ChevronRight />
