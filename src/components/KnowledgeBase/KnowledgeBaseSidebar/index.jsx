@@ -37,10 +37,16 @@ function KnowledgeBaseSidebar(props) {
                 </div>
             ) : (
                 <>
-                    <a href="#" onClick={(e) => {
-                        e.preventDefault();
-                        setSidebarOpen(!sidebarOpen)
-                    }} className="KnowledgeBaseSidebar-mobile-button"><ChevronRight /></a>
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            setSidebarOpen(!sidebarOpen)
+                        }}
+                        className="KnowledgeBaseSidebar-mobile-button"
+                    >
+                        <ChevronRight />
+                    </a>
                     <NavLink
                         end
                         onClick={() => setSidebarOpen(false)}
