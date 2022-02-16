@@ -13,6 +13,7 @@
     .checkbox {
         float: right;
         padding-top: 5px;
+        z-index: 0;
     }
 
     button {
@@ -20,5 +21,15 @@
     }
     a {
         outline: none;
+    }
+
+    @media (max-width: 768px) {
+        overflow-y: none;
+        overflow-x: auto;
+    	white-space: nowrap;
+
+        div.checkbox {
+            float: none;
+        }
     }
 }

@@ -11,6 +11,8 @@
     z-index: 0;
     padding: 65px 10px 10px;
     overflow: auto;
+    z-index: 1;
+    transition: all .2s;
 
     hr {
         height: 1px;
@@ -53,6 +55,63 @@
         }
         &:last-of-type {
             margin-bottom: 0 !important;
+        }
+    }
+
+    &-mobile-button {
+        display: none;
+        height: 40px;
+        width: 40px;
+        border-radius: 100px;
+        background: #f7f7f7;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 15px;
+        position: relative;
+
+        svg {
+            margin: 8px;
+            transform: none;
+            transition: all .2s;
+        }
+
+        &:hover {
+            color: #2185d0;
+            background-color: #eeeeee;
+            transform: scale(0.98);
+        }
+        &:active {
+            transform: scale(0.93);
+            outline: none !important;
+        }
+    }
+
+    &--mobile-open {
+        width: 90% !important;
+        max-width: 400px !important;
+
+        .KnowledgeBaseSidebar-mobile-button {
+            svg {
+                transform: rotate(180deg) !important;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 50px;
+        padding: 65px 5px 5px;
+
+        &:not(&--mobile-open) {
+            *:not(.KnowledgeBaseSidebar-mobile-button):not(.KnowledgeBaseSidebar-mobile-button *) {
+                opacity: 0;
+                pointer-events: none;
+                touch-action: none;
+            }
+        }
+
+        &-mobile-button {
+            display: inline-block;
         }
     }
 }

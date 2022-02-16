@@ -5,7 +5,7 @@ body {
 }
 
 .main_content--knowledge-base {
-    padding: 20px;
+    padding: 20px !important;
     position: absolute;
     top: 51px;
     right: 0;
@@ -75,5 +75,9 @@ body {
         h1 {
             margin-top: 0;
         }
+    }
+
+    @media (max-width: 768px) {
+        width: calc(100% - 50px) !important;
     }
 }
