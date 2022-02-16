@@ -14,6 +14,7 @@ const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'tiff']
 
 function KnowledgeBaseFileReader(props) {
     const { fileId, folderId, historyId } = useParams()
+    const [isLoading, setIsLoading] = useState(false)
     const [file, setFile] = useState(null)
     const [fileContent, setFileContent] = useState('')
     const [imageUrl, setImageUrl] = useState(null)
@@ -21,85 +22,95 @@ function KnowledgeBaseFileReader(props) {
     const [modifiedFileTextAreaContent, setModifiedFileTextAreaContent] = useState('')
     const [errorNoIndex, setErrorNoIndex] = useState(false)
     const [error, setError] = useState(false)
+    const [isRendered, setIsRendered] = useState(false)
 
     useEffect(() => {
-        let tokenHeaders = new Headers()
-        tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        if (isRendered) {
+            let tokenHeaders = new Headers()
+            tokenHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
 
-        let requestOptions = {
-            method: 'GET',
-            headers: tokenHeaders,
-            redirect: 'follow',
-        }
+            let requestOptions = {
+                method: 'GET',
+                headers: tokenHeaders,
+                redirect: 'follow',
+            }
 
-        let file_id = fileId
-        if (historyId != undefined && historyId != null) {
-            file_id = 'history_' + historyId
-        }
+            let file_id = fileId
+            if (historyId != undefined && historyId != null) {
+                file_id = 'history_' + historyId
+            }
 
-        fetch(
-            process.env.REACT_APP_API_URL + `/api/knowledgebase/getFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
-            requestOptions
-        )
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    setError(true)
-                    return
-                }
-            })
-            .then((result) => {
-                if (result.error) {
-                    if (result.error == 'Index not found') {
-                        setErrorNoIndex(true)
-                    }
-                } else {
-                    setFile(result)
-                    props.onFileExtensionChange(result.knowledge_base_file_extension)
-
-                    if (!result.file_readable) {
-                        fetch(
-                            process.env.REACT_APP_API_URL +
-                                `/api/knowledgebase/readFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
-                            requestOptions
-                        )
-                            .then((response) => {
-                                if (!response.ok) {
-                                    setError(true)
-                                    return
-                                }
-                                response.blob()
-                            })
-                            .then((blobResult) => {
-                                let url = window.URL.createObjectURL(blobResult)
-                                let a = document.createElement('a')
-                                a.href = url
-                                a.download = result.knowledge_base_file_path
-                                setBlobDownload(url)
-                                document.body.appendChild(a)
-                                a.click()
-                                a.remove()
-                            })
+            fetch(
+                process.env.REACT_APP_API_URL + `/api/knowledgebase/getFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
+                requestOptions
+            )
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
                     } else {
-                        fetch(
-                            process.env.REACT_APP_API_URL +
-                                `/api/knowledgebase/readFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
-                            requestOptions
-                        )
-                            .then((response) => response.text())
-                            .then((previewResult) => {
-                                props.setModifiedFileContentProp(previewResult)
-                                setFileContent(previewResult)
-
-                                if (imageExtensions.includes(result.knowledge_base_file_extension)) {
-                                    setImageUrl(previewResult)
-                                }
-                            })
+                        setError(true)
+                        return
                     }
-                }
-            })
-    }, [historyId, fileId, folderId])
+                })
+                .then((result) => {
+                    if (result.error) {
+                        if (result.error == 'Index not found') {
+                            setErrorNoIndex(true)
+                        }
+                    } else {
+                        setFile(result)
+                        props.onFileExtensionChange(result.knowledge_base_file_extension)
+
+                        if (!result.file_readable) {
+                            // Create a download token first
+                            if (!isLoading) {
+                                setIsLoading(true)
+                                fetch(process.env.REACT_APP_API_URL + `/api/knowledgebase/createDownloadToken?file_id=` + file_id, requestOptions)
+                                    .then((response) => {
+                                        if (response.ok) {
+                                            return response.json()
+                                        } else {
+                                            setError(true)
+                                            return
+                                        }
+                                    })
+                                    .then((result) => {
+                                        let token = result.token
+
+                                        // Download the file
+                                        let a = document.createElement('a')
+                                        a.href = process.env.REACT_APP_API_URL + `/api/knowledgebase/readFile?file_id=${file_id}&token=${token}`
+                                        a.download = result.knowledge_base_file_name + '.' + result.knowledge_base_file_extension
+                                        a.click()
+                                        setTimeout(() => {
+                                            setIsLoading(false)
+                                        }, 1000) // Wait a second to prevent duplicate downloads
+                                    })
+                            }
+                        } else {
+                            fetch(
+                                process.env.REACT_APP_API_URL +
+                                    `/api/knowledgebase/readFile${file_id == null ? (props.editorMode ? `?file_id=` + file_id : `?folder_id=` + folderId) : `?file_id=` + file_id}`,
+                                requestOptions
+                            )
+                                .then((response) => response.text())
+                                .then((previewResult) => {
+                                    props.setModifiedFileContentProp(previewResult)
+                                    setFileContent(previewResult)
+
+                                    if (imageExtensions.includes(result.knowledge_base_file_extension)) {
+                                        setImageUrl(previewResult)
+                                    }
+                                })
+                        }
+                    }
+                })
+        }
+
+        if (!isRendered) {
+            setIsRendered(true)
+        }
+    }, [historyId, fileId, folderId, isRendered])
 
     return (
         <div className="KnowledgeBaseFileReader">
@@ -118,14 +129,13 @@ function KnowledgeBaseFileReader(props) {
             ) : file != null ? (
                 <>
                     {!file.file_readable ? (
-                        <center>
+                        <center style={{ margin: '50px 0' }}>
                             <Zap size={35} strokeWidth={2} />
-                            <h1>The file &quot;{file.knowledge_base_file_name}&quot; is being downloaded...</h1>
+                            <h1>
+                                The file &quot;{file.knowledge_base_file_name}.{file.knowledge_base_file_extension}&quot; is being downloaded...
+                            </h1>
                             <span>
-                                Download did not start?{' '}
-                                <a href={blobDownload} rel="noreferrer" target="_blank" download={file.knowledge_base_file_path}>
-                                    Try again.
-                                </a>
+                                The Download did not start? <a href="?">Try again.</a>
                             </span>
                         </center>
                     ) : (
