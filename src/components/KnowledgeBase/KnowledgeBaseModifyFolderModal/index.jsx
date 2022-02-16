@@ -286,9 +286,7 @@ export default function KnowledgeBaseModifyFolderModal(props) {
                                                     }}
                                                 >
                                                     <List.Content>
-                                                        <div className="item-avatar">
-                                                            {!user.user ? <Users size={18} /> : <User size={18} />}
-                                                        </div>
+                                                        <div className="item-avatar">{!user.user ? <Users size={18} /> : <User size={18} />}</div>
                                                         {!user.user ? 'Global' : user.user.name}
                                                         <ChevronRight />
                                                     </List.Content>
