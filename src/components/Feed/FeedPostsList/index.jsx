@@ -32,6 +32,12 @@ export default function PostsList(props) {
     const [reportSuccessVisible, setReportSuccessVisible] = useState(false)
     const [reportErrorVisible, setReportErrorVisible] = useState(false)
     const [postIdInvalid, setPostIdInvalid] = useState(false)
+    const [pinnedModalStatus, setPinnedModalStatus] = useState(0)
+    const [pinnedModalVisible, setPinnedModalVisible] = useState(false)
+    const [disabledModalVisible, setDisabledModalVisible] = useState(false)
+    const [disabledModalStatus, setDisabledModalStatus] = useState(0)
+    const [clearedModalVisible, setClearedModalVisible] = useState(false)
+    const [clearedModalStatus, setClearedModalStatus] = useState("comments")
 
     useEffect(() => {
         loadMore()
@@ -101,39 +107,8 @@ export default function PostsList(props) {
         }
     }
 
-    const getLikes = (likes) => {
-        let returnStr = '0 Likes'
-
-        if (likes == 1) {
-            returnStr = '1 Like'
-        } else {
-            returnStr = likes + ' Likes'
-        }
-
-        return returnStr
-    }
-
-    const getComments = (comments) => {
-        let returnStr = '0 Comments'
-
-        if (comments == 1) {
-            returnStr = '1 Comment'
-        } else {
-            returnStr = comments + ' Comments'
-        }
-
-        return returnStr
-    }
-
-    const reportPost = (e, postId) => {
-        e.preventDefault()
-
-        setReportModalVisible(true)
-        setReportModalPostId(postId)
-    }
-
-    const commentOpener = (e) => {
-        setVisibleCommentSections(toggleComment(e, visibleCommentSections))
+    const reloadFeed = () => {
+        loadMore(paginationPage)
     }
 
     return (
@@ -150,6 +125,14 @@ export default function PostsList(props) {
                                     setImageModalVisible={setImageModalVisible}
                                     reportModalVisible={setReportModalVisible}
                                     reportModalPostId={setReportModalPostId}
+                                    setIsLoading={setIsLoading}
+                                    reloadFeed={reloadFeed}
+                                    setPinnedModalVisible={setPinnedModalVisible}
+                                    setPinnedModalStatus={setPinnedModalStatus}
+                                    setDisabledModalVisible={setDisabledModalVisible}
+                                    setDisabledModalStatus={setDisabledModalStatus}
+                                    setClearedModalVisible={setClearedModalVisible}
+                                    setClearedModalStatus={setClearedModalStatus}
                                 />
                             ))}
 
@@ -202,6 +185,40 @@ export default function PostsList(props) {
                     open={reportModalVisible}
                     postId={reportModalPostId}
                 />
+            )}
+
+            {pinnedModalVisible && (
+                <W_Modal onClose={() => setPinnedModalVisible(false)} onOpen={() => setPinnedModalVisible(true)} open={pinnedModalVisible} size="mini">
+                    <Modal.Header>Post {(pinnedModalStatus == 1 ? 'pinned!' : 'unpinned!')}</Modal.Header>
+                    <Modal.Content>The Post has been {(pinnedModalStatus == 1 ? 'pinned' : 'unpinned')} successfully!</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setPinnedModalVisible(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
+            {disabledModalVisible && (
+                <W_Modal onClose={() => setDisabledModalVisible(false)} onOpen={() => setDisabledModalVisible(true)} open={disabledModalVisible} size="mini">
+                    <Modal.Header>Post {(disabledModalStatus == 1 ? 'enabled!' : 'disabled!')}</Modal.Header>
+                    <Modal.Content>The Post has been {(disabledModalStatus == 1 ? 'enabled' : 'disabled')} successfully!</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setDisabledModalVisible(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
+            )}
+            {clearedModalVisible && (
+                <W_Modal onClose={() => setClearedModalVisible(false)} onOpen={() => setClearedModalVisible(true)} open={clearedModalVisible} size="mini">
+                    <Modal.Header>{(clearedModalStatus == "comments" ? 'Comments' : 'Likes')} cleared!</Modal.Header>
+                    <Modal.Content>All {clearedModalStatus} has been cleared successfully!</Modal.Content>
+                    <Modal.Actions>
+                        <Button color="black" onClick={() => setClearedModalVisible(false)}>
+                            Dismiss
+                        </Button>
+                    </Modal.Actions>
+                </W_Modal>
             )}
 
             {reportSuccessVisible && (

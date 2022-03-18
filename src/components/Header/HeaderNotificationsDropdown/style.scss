@@ -7,6 +7,7 @@
     opacity: 0.6;
     font-weight: 100;
 }
+
 .header__notifications__dropdown {
     display: inline-block;
     position: absolute;
@@ -42,10 +43,9 @@
             color: $primary-color;
         }
     }
-
     a {
         display: inline-flex;
-
+        width: 100%;
         .notification-item {
             width: 100%;
             max-height: 100px;
@@ -54,13 +54,11 @@
             border-radius: 10px;
             background: white;
             transition: all 0.1s;
-
             .notification-avatar {
                 width: 35px;
                 height: 35px;
                 float: left;
                 position: relative;
-
                 img {
                     width: 35px;
                     height: 35px;
@@ -82,15 +80,17 @@
                 float: left;
                 width: calc(100% - 35px);
                 padding-left: 15px;
-
                 b {
                     color: #0e3560;
                 }
                 p {
                     color: #3f658e;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
-
             &:hover {
                 background: #f7f7f7;
             }
@@ -98,17 +98,14 @@
                 background-color: #f7f7f7;
                 color: $primary-color;
             }
-
             &--read {
                 opacity: 0.3;
-
                 &:hover {
                     opacity: 1;
                 }
             }
         }
     }
-
     @media (max-width: 1300px) {
         right: 10px;
     }

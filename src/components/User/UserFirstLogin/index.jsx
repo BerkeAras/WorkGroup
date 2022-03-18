@@ -8,6 +8,11 @@ import unknownBanner from '../../../static/banner.jpg'
 import unknownAvatar from '../../../static/unknown.png'
 import countryOptions from '../../../utils/countries'
 
+const notificationOptions = [
+    { text: 'In App Message', key: 'inapp', value: 'inapp' },
+    { text: 'E-Mail', key: 'email', value: 'email' },
+]
+
 class FirstLogin extends React.Component {
     constructor(props) {
         super(props)
@@ -24,6 +29,7 @@ class FirstLogin extends React.Component {
             isLoading: false,
             bannerPreviewUrl: unknownBanner,
             avatarPreviewUrl: unknownAvatar,
+            notificationType: 'inapp'
         }
 
         this.handleSloganChange = this.handleSloganChange.bind(this)
@@ -33,6 +39,7 @@ class FirstLogin extends React.Component {
         this.handleBirthdayChange = this.handleBirthdayChange.bind(this)
         this.handlePhoneChange = this.handlePhoneChange.bind(this)
         this.handleCountryChange = this.handleCountryChange.bind(this)
+        this.handleNotificationChange = this.handleNotificationChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -58,6 +65,7 @@ class FirstLogin extends React.Component {
                         phone: res[0].user_phone,
                         slogan: res[0].user_slogan,
                         street: res[0].user_street,
+                        notificationType: res[0].notification_delivery_type,
                     })
                     if (res[0].banner !== '') {
                         this.setState({
@@ -174,6 +182,10 @@ class FirstLogin extends React.Component {
         this.setState({ country: value })
     }
 
+    handleNotificationChange(e, { value }) {
+        this.setState({ notificationType: value })
+    }
+
     handleSubmit(event) {
         event.preventDefault()
 
@@ -206,8 +218,9 @@ class FirstLogin extends React.Component {
         let department = this.state.department
         let birthday = this.state.birthday
         let phone = this.state.phone
+        let notificationType = this.state.notificationType
 
-        let formContent = [slogan, country, city, street, department, birthday, phone]
+        let formContent = [slogan, country, city, street, department, birthday, phone, notificationType]
 
         let myHeaders = new Headers()
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -221,6 +234,7 @@ class FirstLogin extends React.Component {
         urlencoded.append('department', department)
         urlencoded.append('birthday', birthday)
         urlencoded.append('phone', phone)
+        urlencoded.append('notificationType', notificationType)
 
         let requestOptions = {
             method: 'POST',
@@ -283,6 +297,10 @@ class FirstLogin extends React.Component {
                         <Form.Field>
                             <label>Your Phone</label>
                             <Input value={this.state.phone} onChange={this.handlePhoneChange} type="tel" placeholder="Enter your Phone" />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Notification Type</label>
+                            <Dropdown placeholder="Select your Notification Type" fluid selection options={notificationOptions} value={this.state.notificationType} onChange={this.handleNotificationChange} />
                         </Form.Field>
                     </Form>
                 </Modal.Content>

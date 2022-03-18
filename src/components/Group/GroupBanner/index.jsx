@@ -215,7 +215,6 @@ function GroupBanner(props) {
             .then((response) => response.json())
             .then((result) => {
                 if (result.status == 1) {
-                    console.log(result['requests'])
                     setGroupRequests(result['requests'])
                 } else {
                     setGroupRequests([])
