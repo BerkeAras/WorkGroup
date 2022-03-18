@@ -37,7 +37,7 @@ export default function PostsList(props) {
     const [disabledModalVisible, setDisabledModalVisible] = useState(false)
     const [disabledModalStatus, setDisabledModalStatus] = useState(0)
     const [clearedModalVisible, setClearedModalVisible] = useState(false)
-    const [clearedModalStatus, setClearedModalStatus] = useState("comments")
+    const [clearedModalStatus, setClearedModalStatus] = useState('comments')
 
     useEffect(() => {
         loadMore()
@@ -189,8 +189,8 @@ export default function PostsList(props) {
 
             {pinnedModalVisible && (
                 <W_Modal onClose={() => setPinnedModalVisible(false)} onOpen={() => setPinnedModalVisible(true)} open={pinnedModalVisible} size="mini">
-                    <Modal.Header>Post {(pinnedModalStatus == 1 ? 'pinned!' : 'unpinned!')}</Modal.Header>
-                    <Modal.Content>The Post has been {(pinnedModalStatus == 1 ? 'pinned' : 'unpinned')} successfully!</Modal.Content>
+                    <Modal.Header>Post {pinnedModalStatus == 1 ? 'pinned!' : 'unpinned!'}</Modal.Header>
+                    <Modal.Content>The Post has been {pinnedModalStatus == 1 ? 'pinned' : 'unpinned'} successfully!</Modal.Content>
                     <Modal.Actions>
                         <Button color="black" onClick={() => setPinnedModalVisible(false)}>
                             Dismiss
@@ -200,8 +200,8 @@ export default function PostsList(props) {
             )}
             {disabledModalVisible && (
                 <W_Modal onClose={() => setDisabledModalVisible(false)} onOpen={() => setDisabledModalVisible(true)} open={disabledModalVisible} size="mini">
-                    <Modal.Header>Post {(disabledModalStatus == 1 ? 'enabled!' : 'disabled!')}</Modal.Header>
-                    <Modal.Content>The Post has been {(disabledModalStatus == 1 ? 'enabled' : 'disabled')} successfully!</Modal.Content>
+                    <Modal.Header>Post {disabledModalStatus == 1 ? 'enabled!' : 'disabled!'}</Modal.Header>
+                    <Modal.Content>The Post has been {disabledModalStatus == 1 ? 'enabled' : 'disabled'} successfully!</Modal.Content>
                     <Modal.Actions>
                         <Button color="black" onClick={() => setDisabledModalVisible(false)}>
                             Dismiss
@@ -211,7 +211,7 @@ export default function PostsList(props) {
             )}
             {clearedModalVisible && (
                 <W_Modal onClose={() => setClearedModalVisible(false)} onOpen={() => setClearedModalVisible(true)} open={clearedModalVisible} size="mini">
-                    <Modal.Header>{(clearedModalStatus == "comments" ? 'Comments' : 'Likes')} cleared!</Modal.Header>
+                    <Modal.Header>{clearedModalStatus == 'comments' ? 'Comments' : 'Likes'} cleared!</Modal.Header>
                     <Modal.Content>All {clearedModalStatus} has been cleared successfully!</Modal.Content>
                     <Modal.Actions>
                         <Button color="black" onClick={() => setClearedModalVisible(false)}>

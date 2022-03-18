@@ -5,7 +5,7 @@ import { MentionsInput, Mention } from 'react-mentions'
 import { Header, Loader, Button, Comment, Form, Feed } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import mentionStyles from './mentionStyles'
-import {ThumbsUp} from 'react-feather'
+import { ThumbsUp } from 'react-feather'
 
 import unknownAvatar from '../../../static/unknown.png'
 import likeComment from '../../../utils/likeComment'
@@ -67,10 +67,9 @@ class CommentSection extends React.Component {
     handleSubmit(e, postId) {
         e.preventDefault()
 
-        
         let postContent = this.state.newCommentContentRaw
         postContent = postContent.replace(/(?:\r\n|\r|\n)/g, '<br>')
-        
+
         if (postContent !== null && postContent.trim() !== '' && postContent.replaceAll('<br>', '').trim() !== '') {
             this.setState({ isPosting: true, isLoading: true })
 
@@ -145,8 +144,8 @@ class CommentSection extends React.Component {
         fetch(process.env.REACT_APP_API_URL + '/api/search?query=' + query, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                let userResult = result[0];
-                return userResult.map(user => ({ display: user.name, id: user.id }))
+                let userResult = result[0]
+                return userResult.map((user) => ({ display: user.name, id: user.id }))
             })
             .then(callback)
     }
@@ -161,7 +160,7 @@ class CommentSection extends React.Component {
             padding: '5px 15px',
             borderBottom: '1px solid rgba(0,0,0,0.15)',
             '&focused': {
-            backgroundColor: '#cee4e5',
+                backgroundColor: '#cee4e5',
             },
         },
     }
@@ -186,10 +185,10 @@ class CommentSection extends React.Component {
                 </Header>
 
                 {this.state.isLoading ? (
-                    <div style={{position:'relative',height:'130px'}}>
+                    <div style={{ position: 'relative', height: '130px' }}>
                         <Loader active>Loading Comments</Loader>
                     </div>
-                ): (
+                ) : (
                     <>
                         {this.state.comments ? (
                             this.state.comments.length == 0 ? (
@@ -197,7 +196,7 @@ class CommentSection extends React.Component {
                             ) : (
                                 this.state.comments.map((comment) => {
                                     return (
-                                        <Comment key={comment.id} id={"comment_" + comment.id}>
+                                        <Comment key={comment.id} id={'comment_' + comment.id}>
                                             {comment.avatar == '' ? (
                                                 <Comment.Avatar href={'/app/user/' + comment.email} src={unknownAvatar} />
                                             ) : (
@@ -232,27 +231,43 @@ class CommentSection extends React.Component {
                             <Navigate to="/" />
                         )}
 
-                        <Form onSubmit={(e) => {this.handleSubmit(e, this.props.postId)}} reply>
+                        <Form
+                            onSubmit={(e) => {
+                                this.handleSubmit(e, this.props.postId)
+                            }}
+                            reply
+                        >
                             <br />
-                            <MentionsInput className='MentionsInputComment' style={{minHeight:'60px',marginBottom:'10px'}} disabled={this.state.isLoading} value={this.state.newCommentContent} onChange={(event, newValue, newPlainTextValue, mentions) => {this.setState({newCommentContent:event.target.value,newCommentContentRaw:newValue})}}>
-                                <Mention
-                                    displayTransform={(id, name) => `@${name}`}
-                                    trigger="@"
-                                    data={this.fetchUsers}
-                                    style={mentionStyles}
-                                    appendSpaceOnAdd
-                                />
+                            <MentionsInput
+                                className="MentionsInputComment"
+                                style={{ minHeight: '60px', marginBottom: '10px' }}
+                                disabled={this.state.isLoading}
+                                value={this.state.newCommentContent}
+                                onChange={(event, newValue, newPlainTextValue, mentions) => {
+                                    this.setState({ newCommentContent: event.target.value, newCommentContentRaw: newValue })
+                                }}
+                            >
+                                <Mention displayTransform={(id, name) => `@${name}`} trigger="@" data={this.fetchUsers} style={mentionStyles} appendSpaceOnAdd />
                             </MentionsInput>
 
                             {this.state.isPosting === true ? (
                                 <Button size="small" compact content="Add Reply" loading labelPosition="left" icon="edit" primary />
                             ) : (
-                                <Button size="small" compact content="Add Reply" onClick={(e) => {this.handleSubmit(e, this.props.postId)}} labelPosition="left" icon="edit" primary />
+                                <Button
+                                    size="small"
+                                    compact
+                                    content="Add Reply"
+                                    onClick={(e) => {
+                                        this.handleSubmit(e, this.props.postId)
+                                    }}
+                                    labelPosition="left"
+                                    icon="edit"
+                                    primary
+                                />
                             )}
                         </Form>
                     </>
                 )}
-
             </Comment.Group>
         )
     }

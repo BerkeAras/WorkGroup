@@ -14,7 +14,7 @@
     min-height: unset !important;
     max-height: unset !important;
     line-height: unset !important;
-    font-family: "PT Sans", sans-serif !important;
+    font-family: 'PT Sans', sans-serif !important;
     font-size: 16px !important;
 }
 
@@ -46,14 +46,14 @@
 
 .MentionsInputComment--multiLine .MentionsInputComment__control {
     font-size: 16px;
-    font-family: "PT Sans", sans-serif !important;
+    font-family: 'PT Sans', sans-serif !important;
 }
 
 .MentionsInputComment--multiLine .MentionsInputComment__highlighter {
     border: 1px solid transparent;
     padding: 9px;
     min-height: 63px;
-    padding: .78571429em 1em !important;
+    padding: 0.78571429em 1em !important;
 }
 
 .MentionsInputComment--multiLine .MentionsInputComment__highlighter strong {

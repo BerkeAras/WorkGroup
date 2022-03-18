@@ -18,7 +18,7 @@ export default function PostItem(props) {
     const [isLoading, setIsLoading] = useState(false)
     const [showDeleteCommentsModal, setShowDeleteCommentsModal] = useState(false)
     const [showDeleteLikesModal, setShowDeleteLikesModal] = useState(false)
-    
+
     const toggleLongText = (postId) => {
         document.querySelector('#post_' + postId + ' div.text').classList.toggle('collapsed')
         if (document.querySelector('#post_' + postId + ' .toggle-long-text-button')) {
@@ -66,7 +66,7 @@ export default function PostItem(props) {
     }
 
     const pinPost = (postId) => {
-        props.setIsLoading(true);
+        props.setIsLoading(true)
 
         let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -76,22 +76,22 @@ export default function PostItem(props) {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                postId: postId
+                postId: postId,
             }),
         }
         // eslint-disable-next-line no-undef
         fetch(process.env.REACT_APP_API_URL + '/api/content/pinPost', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                props.setIsLoading(false);
-                props.reloadFeed();
-                props.setPinnedModalVisible(true);
-                props.setPinnedModalStatus(data.is_pinned);
+                props.setIsLoading(false)
+                props.reloadFeed()
+                props.setPinnedModalVisible(true)
+                props.setPinnedModalStatus(data.is_pinned)
             })
     }
 
     const disablePost = (postId) => {
-        props.setIsLoading(true);
+        props.setIsLoading(true)
 
         let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -101,22 +101,22 @@ export default function PostItem(props) {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                postId: postId
+                postId: postId,
             }),
         }
         // eslint-disable-next-line no-undef
         fetch(process.env.REACT_APP_API_URL + '/api/content/togglePostStatus', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                props.setIsLoading(false);
-                props.reloadFeed();
-                props.setDisabledModalVisible(true);
-                props.setDisabledModalStatus(data.status);
+                props.setIsLoading(false)
+                props.reloadFeed()
+                props.setDisabledModalVisible(true)
+                props.setDisabledModalStatus(data.status)
             })
     }
-    
+
     const clearComments = (postId) => {
-        props.setIsLoading(true);
+        props.setIsLoading(true)
 
         let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -126,22 +126,22 @@ export default function PostItem(props) {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                postId: postId
+                postId: postId,
             }),
         }
         // eslint-disable-next-line no-undef
         fetch(process.env.REACT_APP_API_URL + '/api/content/clearComments', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                props.setIsLoading(false);
-                props.reloadFeed();
-                props.setClearedModalVisible(true);
-                props.setClearedModalStatus("comments");
+                props.setIsLoading(false)
+                props.reloadFeed()
+                props.setClearedModalVisible(true)
+                props.setClearedModalStatus('comments')
             })
     }
-    
+
     const clearLikes = (postId) => {
-        props.setIsLoading(true);
+        props.setIsLoading(true)
 
         let header = new Headers()
         header.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
@@ -151,23 +151,30 @@ export default function PostItem(props) {
             method: 'POST',
             headers: header,
             body: JSON.stringify({
-                postId: postId
+                postId: postId,
             }),
         }
         // eslint-disable-next-line no-undef
         fetch(process.env.REACT_APP_API_URL + '/api/content/clearLikes', requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                props.setIsLoading(false);
-                props.reloadFeed();
-                props.setClearedModalVisible(true);
-                props.setClearedModalStatus("likes");
+                props.setIsLoading(false)
+                props.reloadFeed()
+                props.setClearedModalVisible(true)
+                props.setClearedModalStatus('likes')
             })
     }
 
     return (
         <React.Fragment key={props.post.id}>
-            <Feed.Event id={'post_' + props.post.id} className={[visibleCommentSections.includes(props.post.id) == 0 ? 'event--no-comments-visible' : '', props.post.is_pinned == 1 ? 'event--pinned' : '', props.post.status == 0 ? 'event--disabled' : '']}>
+            <Feed.Event
+                id={'post_' + props.post.id}
+                className={[
+                    visibleCommentSections.includes(props.post.id) == 0 ? 'event--no-comments-visible' : '',
+                    props.post.is_pinned == 1 ? 'event--pinned' : '',
+                    props.post.status == 0 ? 'event--disabled' : '',
+                ]}
+            >
                 <Feed.Label className="user-avatar">
                     <Link to={'/app/user/' + props.post.email}>
                         {props.post.avatar == '' ? <img loading="lazy" src={unknownAvatar} /> : <img loading="lazy" src={process.env.REACT_APP_API_URL + '/' + props.post.avatar.replace('./', '')} />}
@@ -263,7 +270,7 @@ export default function PostItem(props) {
                         </a>
                         {localStorage.getItem('user_admin') !== undefined && localStorage.getItem('user_admin') == '1' && (
                             <Dropdown
-                                trigger={(
+                                trigger={
                                     <a
                                         href="#"
                                         className="administrate-button"
@@ -274,14 +281,36 @@ export default function PostItem(props) {
                                         <span>Administrate</span>
                                         <Tool size={16} strokeWidth={2.5} />
                                     </a>
-                                )}
-                                direction='left'
+                                }
+                                direction="left"
                             >
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => {pinPost(props.post.id)}} text={`${props.post.is_pinned == 1 ? 'Unpin' : 'Pin'} this Post`} />
-                                    <Dropdown.Item onClick={() => {disablePost(props.post.id)}} text={`${props.post.status == 1 ? 'Disable' : 'Enable'} this Post`} />
-                                    <Dropdown.Item onClick={() => {setShowDeleteCommentsModal(true)}} text='Clear all Comments' description='Caution!' />
-                                    <Dropdown.Item onClick={() => {setShowDeleteLikesModal(true)}} text='Clear all Likes' description='Caution!' />
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            pinPost(props.post.id)
+                                        }}
+                                        text={`${props.post.is_pinned == 1 ? 'Unpin' : 'Pin'} this Post`}
+                                    />
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            disablePost(props.post.id)
+                                        }}
+                                        text={`${props.post.status == 1 ? 'Disable' : 'Enable'} this Post`}
+                                    />
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowDeleteCommentsModal(true)
+                                        }}
+                                        text="Clear all Comments"
+                                        description="Caution!"
+                                    />
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowDeleteLikesModal(true)
+                                        }}
+                                        text="Clear all Likes"
+                                        description="Caution!"
+                                    />
                                 </Dropdown.Menu>
                             </Dropdown>
                         )}
@@ -315,7 +344,13 @@ export default function PostItem(props) {
                         <Button disabled={isLoading} color="black" onClick={() => setShowDeleteCommentsModal(false)}>
                             Cancel
                         </Button>
-                        <Button disabled={isLoading} color="red" onClick={() => {clearComments(props.post.id)}}>
+                        <Button
+                            disabled={isLoading}
+                            color="red"
+                            onClick={() => {
+                                clearComments(props.post.id)
+                            }}
+                        >
                             Delete irreversibly
                         </Button>
                     </Modal.Actions>
@@ -332,13 +367,18 @@ export default function PostItem(props) {
                         <Button disabled={isLoading} color="black" onClick={() => setShowDeleteLikesModal(false)}>
                             Cancel
                         </Button>
-                        <Button disabled={isLoading} color="red" onClick={() => {clearLikes(props.post.id)}}>
+                        <Button
+                            disabled={isLoading}
+                            color="red"
+                            onClick={() => {
+                                clearLikes(props.post.id)
+                            }}
+                        >
                             Delete irreversibly
                         </Button>
                     </Modal.Actions>
                 </W_Modal>
             )}
-
         </React.Fragment>
     )
 }

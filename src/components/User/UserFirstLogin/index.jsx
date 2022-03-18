@@ -29,7 +29,7 @@ class FirstLogin extends React.Component {
             isLoading: false,
             bannerPreviewUrl: unknownBanner,
             avatarPreviewUrl: unknownAvatar,
-            notificationType: 'inapp'
+            notificationType: 'inapp',
         }
 
         this.handleSloganChange = this.handleSloganChange.bind(this)
@@ -300,7 +300,14 @@ class FirstLogin extends React.Component {
                         </Form.Field>
                         <Form.Field>
                             <label>Notification Type</label>
-                            <Dropdown placeholder="Select your Notification Type" fluid selection options={notificationOptions} value={this.state.notificationType} onChange={this.handleNotificationChange} />
+                            <Dropdown
+                                placeholder="Select your Notification Type"
+                                fluid
+                                selection
+                                options={notificationOptions}
+                                value={this.state.notificationType}
+                                onChange={this.handleNotificationChange}
+                            />
                         </Form.Field>
                     </Form>
                 </Modal.Content>
