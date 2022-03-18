@@ -27,6 +27,7 @@
         "react-infinite-scroll-component": "^6.0.0",
         "react-ionicons": "^4.0.5",
         "react-markdown": "^7.1.1",
+        "react-mentions": "^4.3.1",
         "react-newline-to-break": "^1.0.6",
         "react-router-dom": "^6.2.1",
         "react-scripts": "4.0.1",

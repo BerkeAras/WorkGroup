@@ -1,8 +1,3 @@
-.ui.comments .reply.form textarea {
-    height: 5em !important;
-    margin-top: 20px;
-}
-
 .comments-group {
     .avatar {
         margin-top: 0 !important;
@@ -15,6 +10,14 @@
     }
 }
 
+.MentionsInputComment__input {
+    min-height: unset !important;
+    max-height: unset !important;
+    line-height: unset !important;
+    font-family: 'PT Sans', sans-serif !important;
+    font-size: 16px !important;
+}
+
 .empty-comments {
     display: inline-block;
     width: 100%;
@@ -24,4 +27,77 @@
     color: rgba(0, 0, 0, 0.4);
     font-style: italic;
     letter-spacing: 0.3px;
+}
+
+.MentionsInputComment--singleLine .MentionsInputComment__control {
+    display: inline-block;
+    width: 130px;
+}
+
+.MentionsInputComment--singleLine .MentionsInputComment__highlighter {
+    padding: 1px;
+    border: 2px inset transparent;
+}
+
+.MentionsInputComment--singleLine .MentionsInputComment__input {
+    padding: 1px;
+    border: 2px inset;
+}
+
+.MentionsInputComment--multiLine .MentionsInputComment__control {
+    font-size: 16px;
+    font-family: 'PT Sans', sans-serif !important;
+}
+
+.MentionsInputComment--multiLine .MentionsInputComment__highlighter {
+    border: 1px solid transparent;
+    padding: 9px;
+    min-height: 63px;
+    padding: 0.78571429em 1em !important;
+}
+
+.MentionsInputComment--multiLine .MentionsInputComment__highlighter strong {
+    font-weight: inherit;
+    background: #c5d0d652;
+    border-bottom: 2px solid #2185d0;
+    padding: 1px;
+    margin-left: -1px;
+}
+
+.MentionsInputComment--multiLine .MentionsInputComment__input {
+    border: 1px solid silver;
+    padding: 9px;
+    outline: 0;
+}
+
+.MentionsInputComment__suggestions {
+    margin-top: 0 !important;
+    top: 100% !important;
+    left: 0% !important;
+    bottom: 0% !important;
+    width: 100% !important;
+}
+
+.MentionsInputComment__suggestions__list {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+}
+
+.MentionsInputComment__suggestions__item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #d4d4d5;
+}
+
+.MentionsInputComment__suggestions__item--focused {
+    background-color: #eeeeee;
+}
+
+.MentionsInputComment__mention {
+    position: relative;
+    z-index: 1;
+    color: blue;
+    text-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white, -1px -1px 1px white;
+    text-decoration: underline;
+    pointer-events: none;
 }
