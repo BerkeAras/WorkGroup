@@ -6,7 +6,7 @@ import ConfigContext from '../../../store/ConfigContext'
 // Icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUsers, faCalendarDay, faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { User, Search, Hash, Users, Zap, AlertTriangle, Folder, FileText } from 'react-feather'
+import { User, Search, Hash, Users, Zap, AlertTriangle, Folder, FileText, BookOpen } from 'react-feather'
 library.add(faUsers)
 library.add(faCalendarDay)
 library.add(faHashtag)
@@ -21,6 +21,7 @@ const SearchField = () => {
     const [topicResult, setTopicResult] = useState([])
     const [knowledgeBaseFoldersResult, setKnowledgeBaseFoldersResult] = useState([])
     const [knowledgeBaseFilesResult, setKnowledgeBaseFilesResult] = useState([])
+    const [postsResult, setPostsResult] = useState([])
     const [isLoadingResults, setIsLoadingResults] = useState(false)
     const [minimumSearchLength, setMinimumSearchLength] = useState(3)
 
@@ -51,6 +52,7 @@ const SearchField = () => {
             setTopicResult([])
             setKnowledgeBaseFoldersResult([])
             setKnowledgeBaseFilesResult([])
+            setPostsResult([])
             setIsLoadingResults(false)
         } else {
             controller.abort()
@@ -76,12 +78,14 @@ const SearchField = () => {
                     let topicResult = result[2]
                     let knowledgeBaseFolders = result[3]
                     let knowledgeBaseFiles = result[4]
+                    let postResult = result[5]
 
                     setUserResult(userResult)
                     setGroupResult(groupResult)
                     setTopicResult(topicResult)
                     setKnowledgeBaseFoldersResult(knowledgeBaseFolders)
                     setKnowledgeBaseFilesResult(knowledgeBaseFiles)
+                    setPostsResult(Object.keys(postResult).map((key) => postResult[key]))
 
                     setIsLoadingResults(false)
                 })
@@ -123,7 +127,7 @@ const SearchField = () => {
                         value={searchQuery}
                         onFocus={searchFieldFocus}
                         onChange={searchQueryChangeHandler}
-                        placeholder="Search for colleagues, groups, events and more..."
+                        placeholder="Search for colleagues, groups, files and more..."
                     />
                     {isLoadingResults && <span className="loader"></span>}
                 </form>
@@ -204,6 +208,23 @@ const SearchField = () => {
                                 })}
                             </>
                         )}
+                        {(postsResult && postsResult.length > 0) && (
+                            <>
+                                <span className="divider">Posts</span>
+                                {postsResult.map((postResult) => {
+                                    return (
+                                        <li key={postResult.id}>
+                                            <Link
+                                                onClick={() => document.activeElement.blur()}
+                                                to={'/app/post/' + postResult.id}
+                                            >
+                                                <BookOpen size={18} strokeWidth={2.7} /> {postResult.post_content}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+                            </>
+                        )}
 
                         {userResult &&
                             groupResult &&
@@ -214,6 +235,7 @@ const SearchField = () => {
                             topicResult.length == 0 &&
                             knowledgeBaseFoldersResult.length == 0 &&
                             knowledgeBaseFilesResult.length == 0 &&
+                            postsResult.length == 0 &&
                             searchQuery.length >= minimumSearchLength && (
                                 <center className="search-error">
                                     <AlertTriangle size={35} strokeWidth={2} />
@@ -227,12 +249,13 @@ const SearchField = () => {
                             topicResult.length == 0 &&
                             knowledgeBaseFoldersResult.length == 0 &&
                             knowledgeBaseFilesResult.length == 0 &&
+                            postsResult.length == 0 &&
                             searchQuery.length < minimumSearchLength) ||
                             searchQuery.length == 0) && (
                             <center className="search-error">
                                 <Zap size={35} strokeWidth={2} />
                                 <br />
-                                <span>Search for colleagues, groups, events and more...</span>
+                                <span>Search for colleagues, groups, files and more...</span>
                             </center>
                         )}
                     </ul>

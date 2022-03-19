@@ -2,9 +2,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import './style.scss'
-import { Button, Input, Message, Card } from 'semantic-ui-react'
+import { Button, Input, Message } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 import ConfigContext from '../../../store/ConfigContext'
+import validateEmail from '../../../utils/validateEmail'
 
 class PasswordReset extends React.Component {
     static contextType = ConfigContext
@@ -59,6 +60,13 @@ class PasswordReset extends React.Component {
 
         if (this.state.email.trim() !== '') {
             setTimeout(() => {
+
+                if (!validateEmail(this.state.email.trim())) {
+                    this.setState({ error: 'mail_not_valid' })
+                    this.setState({ isResetting: false })
+                    return;
+                }
+
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -185,7 +193,9 @@ class PasswordReset extends React.Component {
         return (
             <>
                 <div className="loginContainer">
-                    <img className="logo" alt="Logo" src={logo} />
+                    <Link to="/">
+                        <img className="logo" alt="Logo" src={logo} />
+                    </Link>
                     <>
                         {this.state.showPinCard == '0' && (
                             <>
@@ -226,6 +236,16 @@ class PasswordReset extends React.Component {
                                                 ) : (
                                                     <div />
                                                 )}
+
+                                                {this.state.error === 'mail_not_valid' ? (
+                                                    <Message negative>
+                                                        <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                                        <p>Your E-Mail Address does not look correct. Are you sure you entered it correctly?</p>
+                                                    </Message>
+                                                ) : (
+                                                    <div />
+                                                )}
+
                                                 {this.state.success ? (
                                                     <Message positive>
                                                         <Message.Header>Please check your email inbox to reset your password.</Message.Header>
@@ -235,7 +255,7 @@ class PasswordReset extends React.Component {
                                                 )}
 
                                                 <form className="" onSubmit={this.handleSubmit}>
-                                                    <Input fluid onChange={this.emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                                    <Input fluid onChange={this.emailChangeHandler} autoComplete="email" type="email" placeholder="E-Mail" id="userEmail" />
                                                     <br />
                                                     {this.state.isResetting ? (
                                                         <Button loading primary type="submit">
@@ -358,9 +378,9 @@ class PasswordReset extends React.Component {
                                     )}
 
                                     <form className="" onSubmit={this.handlePasswordSubmit}>
-                                        <Input fluid onChange={this.password1ChangeHandler} type="password" placeholder="New Password" id="userPassword1" />
+                                        <Input fluid onChange={this.password1ChangeHandler} type="password" autoComplete="new-password" placeholder="New Password" id="userPassword1" />
                                         <br />
-                                        <Input fluid onChange={this.password2ChangeHandler} type="password" placeholder="Repeat your Password" id="userPassword2" />
+                                        <Input fluid onChange={this.password2ChangeHandler} type="password" autoComplete="new-password" placeholder="Repeat your Password" id="userPassword2" />
                                         <br />
                                         {this.state.isResetting ? (
                                             <Button loading primary type="submit">

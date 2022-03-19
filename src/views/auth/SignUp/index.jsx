@@ -6,6 +6,7 @@ import { Button, Input, Message, Loader } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 import PropTypes from 'prop-types'
 import ConfigContext from '../../../store/ConfigContext'
+import validateEmail from '../../../utils/validateEmail'
 
 const SignUpWrapper = () => {
     const [isWaitingForActivation, setIsWaitingForActivation] = useState(false)
@@ -13,7 +14,9 @@ const SignUpWrapper = () => {
     return (
         <>
             <div className="loginContainer">
-                <img className="logo" alt="Logo" src={logo} />
+                <Link to="/">
+                    <img className="logo" alt="Logo" src={logo} />
+                </Link>
                 {!isWaitingForActivation ? <SignUp isWaitingForActivation={isWaitingForActivation} setIsWaitingForActivation={setIsWaitingForActivation} /> : <WaitActivation />}
             </div>
             <div className="loginBackground"></div>
@@ -55,12 +58,19 @@ const SignUp = (props) => {
                     setIsSigningUp(false)
                 } else {
                     setTimeout(() => {
+
+                        if (!validateEmail(email.trim())) {
+                            setError('mail_not_valid')
+                            setIsSigningUp(false)
+                            return;
+                        }
+
                         const requestOptions = {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                name: name,
-                                email: email,
+                                name: name.trim(),
+                                email: email.trim(),
                                 password: password,
                                 password_confirmation: passwordRepeat,
                             }),
@@ -144,15 +154,15 @@ const SignUp = (props) => {
                         <ErrorMsg errorCode={'no_permission'} />
                     ) : (
                         <form className="" onSubmit={(e) => handleSubmit(e)}>
-                            <Input autoFocus fluid onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" id="userName" />
+                            <Input autoFocus fluid onChange={(e) => setName(e.target.value)} type="text" autoComplete="name" placeholder="Name" id="userName" />
                             <br />
-                            <Input fluid onChange={(e) => setEmail(e.target.value)} type="email" placeholder="E-Mail" id="userEmail" />
+                            <Input fluid onChange={(e) => setEmail(e.target.value)} autoComplete="email" type="email" placeholder="E-Mail" id="userEmail" />
                             <small>Please enter your real e-mail address. You will need to confirm it in the next step.</small>
                             <br />
                             <br />
-                            <Input fluid onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" id="userPassword" />
+                            <Input fluid onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" type="password" placeholder="Password" id="userPassword" />
                             <br />
-                            <Input fluid onChange={(e) => setPasswordRepeat(e.target.value)} type="password" placeholder="Repeat password" id="userPasswordRepeat" />
+                            <Input fluid onChange={(e) => setPasswordRepeat(e.target.value)} autoComplete="new-password" type="password" placeholder="Repeat password" id="userPasswordRepeat" />
                             <br />
                             {isSigningUp ? (
                                 <Button loading primary type="submit">
@@ -186,6 +196,7 @@ const ErrorMsg = (props) => {
         password_too_short: 'Your password is too short! Please enter at least 8 characters.',
         no_permission: 'You do not have permission to sign up.',
         unknown_error: 'An unknown error occured! Please try again later.',
+        mail_not_valid: 'Your E-Mail Address does not look correct. Are you sure you entered it correctly?'
     }
 
     return (
