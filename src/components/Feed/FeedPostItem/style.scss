@@ -42,6 +42,11 @@
         }
         .menu {
             border-radius: 10px !important;
+            padding: 10px !important;
+            .item {
+                border-radius: 10px;
+                transition: all .1s;
+            }
         }
     }
     a.toggle-long-text-button {
@@ -231,7 +236,7 @@
     max-width: 100% !important;
 }
 
-.ui.feed > .event > .label {
+.ui.feed>.event>.label {
     height: 2.5em !important;
 }
 
@@ -272,6 +277,6 @@
     }
 }
 
-.ui.feed > .event > .content .extra.text {
+.ui.feed>.event>.content .extra.text {
     max-width: 100% !important;
 }
