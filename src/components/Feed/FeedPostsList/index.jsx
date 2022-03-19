@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { Feed, Modal, Loader, Button, Pagination } from 'semantic-ui-react'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { ThumbsUp, MessageCircle, Zap, FileText, Flag, CornerDownRight } from 'react-feather'
+import { Zap } from 'react-feather'
 import PropTypes from 'prop-types'
-import getFriendlyDate from '../../../utils/getFriendlyDate'
 import loadPosts from '../../../utils/loadPosts'
-import likePost from '../../../utils/likePost'
-import toggleComment from '../../../utils/toggleComment'
-import VirtualScroll from 'react-dynamic-virtual-scroll'
 import W_Modal from '../../W_Modal'
 
-import unknownAvatar from '../../../static/unknown.png'
-
-import CommentSection from '../FeedCommentSection'
 import ReportPost from '../FeedReportPost'
 import PostItem from '../FeedPostItem'
 
@@ -22,8 +14,6 @@ export default function PostsList(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [paginationPage, setPaginationPage] = useState(1)
     const [totalPaginationPages, setTotalPagionationPages] = useState(1)
-    const [isLoadingMore, setIsLoadingMore] = useState(false)
-    const [visibleCommentSections, setVisibleCommentSections] = useState([])
     const [emptyStates, setEmptyStates] = useState(["It's empty here. Start sharing something about your thoughts!", 'Your friends are shy. Get started and write your first post.'])
     const [imageModalVisible, setImageModalVisible] = useState(false)
     const [imageModalUrl, setImageModalUrl] = useState('')

@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 import { List, Loader, Pagination, Dropdown, Icon } from 'semantic-ui-react'
 import './style.scss'
 import unknownAvatar from '../../../static/unknown.png'
+import getFriendlyDate from '../../../utils/getFriendlyDate'
+import { format } from 'date-fns'
 
 import { Eye, Zap, Settings, Info } from 'react-feather'
 import UserInformation from '../../../components/Settings/SettingsUserInformation'
@@ -65,32 +67,6 @@ function SettingsUsers() {
         setPaginationPage(1)
         setUserOrder(value)
         loadUsers(1, value)
-    }
-
-    const getDate = (date) => {
-        if (date !== null) {
-            date = date.replace(/-/g, '/')
-        }
-        let newDate = new Date(date)
-
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-        let todaysDate = new Date()
-
-        let dateString = ''
-
-        if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-            todaysDate = new Date()
-            newDate = new Date(date)
-            let currentHours = newDate.getHours()
-            currentHours = ('0' + currentHours).slice(-2)
-
-            dateString = 'Today, ' + currentHours + ':' + (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()
-        } else {
-            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
-        }
-
-        return dateString
     }
 
     const showUserInformation = (member) => {
@@ -164,7 +140,9 @@ function SettingsUsers() {
                                                     <List.Header>
                                                         {member.name} <i>#{member.id}</i>
                                                     </List.Header>
-                                                    <List.Description>{getDate(member.created_at)}</List.Description>
+                                                    <List.Description title={format(new Date(member.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                                                        Joined {getFriendlyDate(new Date(member.created_at.replace(/-/g, '/')))}
+                                                    </List.Description>
                                                 </List.Content>
                                             </List.Item>
                                         </List>

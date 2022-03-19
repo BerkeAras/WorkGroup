@@ -4,10 +4,11 @@ import { Feed, Dropdown, Modal, Button } from 'semantic-ui-react'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { ThumbsUp, MessageCircle, FileText, Flag, CornerDownRight, Share2, Tool } from 'react-feather'
 import PropTypes from 'prop-types'
-import getFriendlyDate from '../../../utils/getFriendlyDate'
 import W_Modal from '../../W_Modal'
 import likePost from '../../../utils/likePost'
 import toggleComment from '../../../utils/toggleComment'
+import getFriendlyDate from '../../../utils/getFriendlyDate'
+import { format } from 'date-fns'
 
 import unknownAvatar from '../../../static/unknown.png'
 
@@ -193,7 +194,9 @@ export default function PostItem(props) {
                         <Link className={`${props.post.group_id !== 0 && `user--group-member `}user`} to={'/app/user/' + props.post.email}>
                             {props.post.group_id !== 0 && <CornerDownRight size={12} strokeWidth={2.5} />} {props.post.name}
                         </Link>
-                        <Feed.Date>{getFriendlyDate(new Date(props.post.created_at.replace(/-/g, '/')))}</Feed.Date>
+                        <Feed.Date title={format(new Date(props.post.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                            {getFriendlyDate(new Date(props.post.created_at.replace(/-/g, '/')))}
+                        </Feed.Date>
                     </Feed.Summary>
                     <Feed.Extra className={props.post.post_content.length > 465 ? 'collapsed' : ''} text>
                         <div dangerouslySetInnerHTML={{ __html: props.post.post_content }}></div>

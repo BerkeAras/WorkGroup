@@ -4,7 +4,8 @@ import './style.scss'
 import { Button, Loader, Modal, Input, Checkbox, List } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import { MoreVertical, Users, Zap } from 'react-feather'
-import { Link } from 'react-router-dom'
+import getFriendlyDate from '../../../utils/getFriendlyDate'
+import { format } from 'date-fns'
 import W_Modal from '../../W_Modal'
 
 import unknownBanner from '../../../static/banner.jpg'
@@ -83,29 +84,6 @@ function GroupBanner(props) {
         }
 
         reader.readAsDataURL(file)
-    }
-
-    const getDate = (date) => {
-        let newDate = new Date(date)
-
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-        let todaysDate = new Date()
-
-        let dateString = ''
-
-        if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-            todaysDate = new Date()
-            newDate = new Date(date)
-            let currentHours = newDate.getHours()
-            currentHours = ('0' + currentHours).slice(-2)
-
-            dateString = 'Today, ' + currentHours + ':' + (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()
-        } else {
-            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
-        }
-
-        return dateString
     }
 
     const avatarChange = (e) => {
@@ -424,7 +402,9 @@ function GroupBanner(props) {
                                         <List.Item>
                                             <List.Content>
                                                 <List.Header as="a">{request.name}</List.Header>
-                                                <List.Description as="a">{getDate(request.created_at.replace(/-/g, '/'))}</List.Description>
+                                                <List.Description as="a" title={format(new Date(request.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                                                    {getFriendlyDate(new Date(request.created_at.replace(/-/g, '/')))}
+                                                </List.Description>
                                             </List.Content>
                                         </List.Item>
                                     </List>
@@ -534,7 +514,9 @@ function GroupBanner(props) {
                                                         />
                                                     </div>
                                                     <List.Header as="a">{member.user.name}</List.Header>
-                                                    <List.Description as="a">Joined {getDate(member.created_at)}</List.Description>
+                                                    <List.Description as="a" title={format(new Date(member.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                                                        Joined {getFriendlyDate(new Date(member.created_at.replace(/-/g, '/')))}
+                                                    </List.Description>
                                                 </List.Content>
                                             </List.Item>
                                         </List>

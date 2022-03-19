@@ -6,6 +6,8 @@ import { Header, Loader, Button, Comment, Form, Feed } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import mentionStyles from './mentionStyles'
 import { ThumbsUp } from 'react-feather'
+import getFriendlyDate from '../../../utils/getFriendlyDate'
+import { format } from 'date-fns'
 
 import unknownAvatar from '../../../static/unknown.png'
 import likeComment from '../../../utils/likeComment'
@@ -97,29 +99,6 @@ class CommentSection extends React.Component {
         }
     }
 
-    getDate(date) {
-        let newDate = new Date(date.replace(/-/g, '/'))
-
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-        let todaysDate = new Date()
-
-        let dateString = ''
-
-        if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-            todaysDate = new Date()
-            newDate = new Date(date.replace(/-/g, '/'))
-            let currentHours = newDate.getHours()
-            currentHours = ('0' + currentHours).slice(-2)
-
-            dateString = 'Today, ' + currentHours + ':' + (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()
-        } else {
-            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
-        }
-
-        return dateString
-    }
-
     decodeHTMLEntities(text) {
         let textArea = document.createElement('textarea')
         textArea.innerHTML = text
@@ -205,7 +184,9 @@ class CommentSection extends React.Component {
                                             <Comment.Content>
                                                 <Comment.Author href={'/app/user/' + comment.email}>{comment.name}</Comment.Author>
                                                 <Comment.Metadata>
-                                                    <span>{this.getDate(comment.created_at)}</span>
+                                                    <span title={format(new Date(comment.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                                                        {getFriendlyDate(new Date(comment.created_at.replace(/-/g, '/')))}
+                                                    </span>
                                                 </Comment.Metadata>
                                                 <Comment.Text dangerouslySetInnerHTML={{ __html: this.decodeHTMLEntities(comment.comment_content) }}></Comment.Text>
                                                 <Comment.Actions>
