@@ -1,6 +1,6 @@
 {
     "name": "workgroup",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "private": true,
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
