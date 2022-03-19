@@ -4,6 +4,7 @@ import './style.scss'
 import { Button, Input, Message, Card } from 'semantic-ui-react'
 import logo from '../../../static/logo.svg'
 import ConfigContext from '../../../store/ConfigContext'
+import validateEmail from '../../../utils/validateEmail'
 
 const SignIn = () => {
     const contextValue = useContext(ConfigContext)
@@ -11,6 +12,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
     const [connectionError, setConnectionError] = useState(false)
+    const [mailError, setMailError] = useState(false)
     const [isLoggingIn, setIsLoggingIn] = useState(false)
     const [canLogin, setCanLogin] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -37,6 +39,13 @@ const SignIn = () => {
                     }),
                 }
 
+                if (!validateEmail(email)) {
+                    setError(false);
+                    setMailError(true)
+                    setIsLoggingIn(false)
+                    return;
+                }
+
                 // eslint-disable-next-line no-undef
                 fetch(process.env.REACT_APP_API_URL + '/api/auth/login', requestOptions).then((response) => {
                     if (response.status == 200) {
@@ -55,12 +64,14 @@ const SignIn = () => {
                             } else {
                                 setIsLoggedIn(false)
                                 setIsLoggingIn(false)
+                                setMailError(false)
                                 setError(true)
                             }
                         })
                     } else {
                         setIsLoggedIn(false)
                         setIsLoggingIn(false)
+                        setMailError(false)
                         setError(true)
                     }
                 })
@@ -92,7 +103,9 @@ const SignIn = () => {
     return (
         <>
             <div className="loginContainer">
-                <img className="logo" alt="Logo" src={logo} />
+                <Link to="/">
+                    <img className="logo" alt="Logo" src={logo} />
+                </Link>
                 <div className="formContainer">
                     {connectionError ? (
                         <Message negative>
@@ -106,13 +119,19 @@ const SignIn = () => {
                             {error && (
                                 <Message negative>
                                     <Message.Header>Oh no! An error occurred 😢.</Message.Header>
-                                    <p> E-Mail or password incorrect! </p>
+                                    <p>E-Mail or password incorrect!</p>
+                                </Message>
+                            )}
+                            {mailError && (
+                                <Message negative>
+                                    <Message.Header>Oh no! An error occurred 😢.</Message.Header>
+                                    <p>Your E-Mail Address does not look correct. Are you sure you entered it correctly?</p>
                                 </Message>
                             )}
                             <form className="" onSubmit={handleSubmit}>
-                                <Input fluid onChange={emailChangeHandler} type="email" placeholder="E-Mail" id="userEmail" />
+                                <Input fluid onChange={emailChangeHandler} type="email" autoComplete="email" placeholder="E-Mail" id="userEmail" />
                                 <br />
-                                <Input fluid onChange={passwordChangeHandler} type="password" placeholder="Password" id="userPassword" />
+                                <Input fluid onChange={passwordChangeHandler} type="password" autoComplete="current-password" placeholder="Password" id="userPassword" />
                                 <br />
                                 {isLoggingIn ? (
                                     <Button loading primary disabled={!canLogin} type="submit">
