@@ -6,8 +6,10 @@ body {
 .app {
     padding: 0;
     background: #f0f5f7;
-    overflow: auto !important;
+    overflow-x: hidden;
+    overflow-y: auto !important;
 }
+
 .main_content {
     padding: 0 calc((100% - 1200px) / 2);
 }
