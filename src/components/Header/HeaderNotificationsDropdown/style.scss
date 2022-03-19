@@ -89,10 +89,21 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+                    transform: all .1s;
                 }
             }
             &:hover {
                 background: #f7f7f7;
+            }
+            // Expand
+            &:hover,
+            &:focus {
+                max-height: fit-content;
+                height: fit-content;
+                p {
+                    text-overflow: unset;
+                    white-space: normal;
+                }
             }
             &--active {
                 background-color: #f7f7f7;
