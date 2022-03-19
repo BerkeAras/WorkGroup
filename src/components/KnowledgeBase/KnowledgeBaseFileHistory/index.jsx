@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { Modal, Button, Loader, List } from 'semantic-ui-react'
 import { Zap } from 'react-feather'
 import W_Modal from '../../W_Modal'
+import getFriendlyDate from '../../../utils/getFriendlyDate'
+import { format } from 'date-fns'
 
 function KnowledgeBaseFileHistory(props) {
     const { folderId, fileId } = useParams()
@@ -36,29 +38,6 @@ function KnowledgeBaseFileHistory(props) {
                 console.error(error)
             })
     }, [fileId])
-
-    const getDate = (date) => {
-        let newDate = new Date(date)
-
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-        let todaysDate = new Date()
-
-        let dateString = ''
-
-        if (newDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-            todaysDate = new Date()
-            newDate = new Date(date)
-            let currentHours = newDate.getHours()
-            currentHours = ('0' + currentHours).slice(-2)
-
-            dateString = 'Today, ' + currentHours + ':' + (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()
-        } else {
-            dateString = newDate.toLocaleDateString(process.env.REACT_APP_LOCALE, options)
-        }
-
-        return dateString
-    }
 
     const restoreFromHistory = () => {
         setIsLoading(true)
@@ -115,7 +94,9 @@ function KnowledgeBaseFileHistory(props) {
                                     >
                                         <List.Item>
                                             <List.Content>
-                                                <List.Header as="a">{getDate(fileHistoryItem.created_at.replace(/-/g, '/'))}</List.Header>
+                                                <List.Header as="a" title={format(new Date(fileHistoryItem.created_at.replace(/-/g, '/')), 'dd.MM.yyyy - HH:mm:ss')}>
+                                                    Joined {getFriendlyDate(new Date(fileHistoryItem.created_at.replace(/-/g, '/')))}
+                                                </List.Header>
                                                 <List.Description as="a">
                                                     File overwritten by <b>{fileHistoryItem.user_name}</b>.
                                                 </List.Description>
